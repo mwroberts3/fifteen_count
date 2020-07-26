@@ -7,9 +7,18 @@ body {
   font-size: 1.25rem;
   font-family: Verdana, Geneva, Tahoma, sans-serif; }
 
+.pad-1 {
+  padding: 10px; }
+
+.scoreboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 200px;
+  justify-content: center; }
+
 .players-hand {
-  margin: 350px auto 0 auto;
-  padding: 2rem;
+  margin: 50px auto 0 auto;
   padding-left: 1%;
   border: 1px solid black; }
 
@@ -17,12 +26,52 @@ input[type="submit"] {
   margin: 20px 0 0 65px;
   padding: 10px; }
 
-h3 {
-  text-align: center; }
-
-.show-hand {
+.players-hand {
   display: flex;
-  justify-content: space-evenly; }
-
-.card-in-hand {
-  width: 100px; }
+  flex-direction: column;
+  justify-content: center;
+  align-items: space-evenly; }
+  .players-hand h3 {
+    text-align: center; }
+  .players-hand input[type="submit"] {
+    width: 100px;
+    margin: auto; }
+  .players-hand card-t {
+    cursor: pointer;
+    transition: all 0.2s ease; }
+  .players-hand .show-hand {
+    display: flex;
+    justify-content: space-evenly; }
+    .players-hand .show-hand .checked {
+      transform: rotate(9deg);
+      border: 2px solid black;
+      border-radius: 7px; }
+  .players-hand .card-in-hand {
+    width: 100px; }
+  .players-hand .multi-values {
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
+    height: 100px; }
+  .players-hand .value-options-one {
+    width: 100px;
+    height: 100px;
+    padding-top: 20px;
+    border: 1px dotted black;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    border-collapse: collapse;
+    text-align: center;
+    font-size: 2rem;
+    cursor: pointer; }
+  .players-hand .value-options-two {
+    width: 100px;
+    height: 100px;
+    border: 1px dotted black;
+    border-collapse: collapse;
+    font-size: 2rem;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    text-align: center;
+    padding-top: 20px;
+    cursor: pointer; }
