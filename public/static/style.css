@@ -17,11 +17,6 @@ body {
   height: 200px;
   justify-content: center; }
 
-.players-hand {
-  margin: 50px auto 0 auto;
-  padding-left: 1%;
-  border: 1px solid black; }
-
 input[type="submit"] {
   margin: 20px 0 0 65px;
   padding: 10px; }
@@ -30,11 +25,15 @@ input[type="submit"] {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: space-evenly; }
+  align-items: space-evenly;
+  border: 1px solid black; }
   .players-hand h3 {
     text-align: center; }
-  .players-hand input[type="submit"] {
-    width: 100px;
+  .players-hand input[type="button"] {
+    width: 75%;
+    padding: 10px;
+    font-size: 1.25rem;
+    font-weight: bold;
     margin: auto; }
   .players-hand card-t {
     cursor: pointer;
@@ -45,14 +44,23 @@ input[type="submit"] {
     .players-hand .show-hand .checked {
       transform: rotate(9deg);
       border: 2px solid black;
+      background: black;
       border-radius: 7px; }
   .players-hand .card-in-hand {
     width: 100px; }
   .players-hand .multi-values {
+    margin: auto;
     display: flex;
-    justify-content: space-between;
-    width: 200px;
-    height: 100px; }
+    justify-content: space-evenly;
+    width: 600px;
+    height: 100px;
+    margin-bottom: 20px; }
+  .players-hand .fifteen-count {
+    padding: 20px;
+    width: 400px; }
+  .players-hand .combo-sacrifice {
+    transform: rotate(90deg);
+    z-index: -2; }
   .players-hand .value-options-one {
     width: 100px;
     height: 100px;

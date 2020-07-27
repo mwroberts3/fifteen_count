@@ -78,21 +78,28 @@ deck = deck.filter(function (element) {
 });
 
 // DRAW HAND OF 10 CARDS
-let handSize = 10;
+let drawSize = 10;
 let hand = [];
-for (i = 0; i < handSize; i++) {
-  hand.splice(i, 0, deck.pop());
-}
+
+const drawCards = (drawSize) => {
+  for (i = 0; i < drawSize; i++) {
+    hand.splice(i, 0, deck.pop());
+  }
+};
+drawCards(drawSize);
+
 // write to webpage
+const playersHand = document.querySelector(".show-hand");
 const showHand = () => {
-  let handList = document.querySelector(".show-hand");
+  html = ``;
+  playersHand.innerHTML = html;
   hand.forEach((card) => {
     if (card["suit"] !== null) {
       html += `<div class="card-in-hand"><card-t rank="${card["face"]}" suit="${card["suit"]}" valueA ="${card["valueA"]}" valueB ="${card["valueB"]}"></card-t></div>`;
     } else {
       html += `<div class="card-in-hand joker"><card-t rank="1" suit="joker" suitcolor="#fff" cardcolor="dodgerblue" letters="J" valueA = "-1" valueB = "0"></div>`;
     }
-    handList.innerHTML = html;
+    playersHand.innerHTML = html;
   });
 };
 showHand();
@@ -109,8 +116,8 @@ fifteenCountDisplay.innerHTML = `Fifteen Count: ${fifteenCount}`;
 PointsDisplay.innerHTML = `Points: ${pointsInPlay}`;
 
 // PLAYING THE GAME
-const cardsInHand = document.querySelectorAll(".card-in-hand");
 const valueOptionOne = document.querySelector(".value-options-one");
+let globalCardsInHand = [];
 const valueOptionTwo = document.querySelector(".value-options-two");
 const submitCards = document.querySelector(".submit-cards");
 const comboMessage = document.querySelector(".combo-message");
@@ -118,7 +125,19 @@ const sameColorRed = (color) => color == "hearts" || color == "diamonds";
 const sameColorBlack = (color) => color == "clubs" || color == "spades";
 let pointsValidity = false;
 let firstSubmit = false;
+let comboSubmit = false;
+let comboSkip = false;
 let comboCardcount = 0;
+
+const reset = () => {
+  pointsValidity = false;
+  firstSubmit = false;
+  comboSubmit = false;
+  comboSkip = false;
+  comboCardcount = 0;
+  submitCards.value = "Play Cards";
+  comboMessage.innerText = "";
+};
 
 // Combo Check
 const comboCheck = () => {
@@ -164,14 +183,28 @@ const comboCheck = () => {
 
 // submitting cards
 submitCards.addEventListener("click", () => {
+  if (comboSkip === true) {
+    reDeal(globalCardsInHand, hand);
+    showHand();
+    reset();
+    selectCard();
+  }
   if (pointsValidity === true) {
     firstSubmit = true;
     totalPoints += pointsInPlay;
     pointsInPlay = 0;
     fifteenCount = 0;
     submitCards.value = "Draw cards";
-    comboMessage.innerText = "LAY MASSIVE COMBOS!";
+    comboMessage.innerText = "COMBO ROUND!";
+    comboSkip = true;
   }
+  if (pointsValidity === true && comboSubmit === true) {
+    reDeal(globalCardsInHand, hand);
+    showHand();
+    reset();
+    selectCard();
+  }
+
   totalPointsDisplay.innerHTML = `Total: ${totalPoints}`;
   fifteenCountDisplay.innerHTML = `Fifteen Count: ${fifteenCount}`;
   PointsDisplay.innerHTML = `Points: ${pointsInPlay}`;
@@ -180,90 +213,98 @@ submitCards.addEventListener("click", () => {
 });
 
 // Selecting Cards to Play
-cardsInHand.forEach((card) => {
-  let valueA = parseInt(
-    card.querySelector("card-t").getAttribute("valueA"),
-    10
-  );
-  let valueB = parseInt(
-    card.querySelector("card-t").getAttribute("valueB"),
-    10
-  );
-  // let cardRank = card.querySelector("card-t").getAttribute("rank");
-  card.addEventListener("click", (e) => {
-    if (card.classList.contains("checked")) {
-      card.classList.toggle("checked");
-      valueOptionOne.innerText = "-";
-      valueOptionTwo.innerText = "-";
-      if (valueB > 0 && card.classList.contains("A")) {
-        fifteenCount -= valueA;
-        card.classList.toggle("A");
-        fifteenCountDisplay.innerHTML = `Fifteen Count: ${fifteenCount}`;
-      } else if (valueB > 0 && card.classList.contains("B")) {
-        fifteenCount -= valueB;
-        card.classList.toggle("B");
-        fifteenCountDisplay.innerHTML = `Fifteen Count: ${fifteenCount}`;
-      } else if (valueB === 0) {
-        fifteenCount -= valueA;
-      } else {
-      }
-      comboCheck();
-      fifteenCountDisplay.innerHTML = `Fifteen Count: ${fifteenCount}`;
-
-      console.log("Fifteen Count:", fifteenCount);
-    } else if (firstSubmit === true) {
-      if (!card.classList.contains("checked")) {
-        console.log("unchecked cards being found");
+function selectCard() {
+  let cardsInHand = document.querySelectorAll(".card-in-hand");
+  globalCardsInHand = cardsInHand;
+  cardsInHand.forEach((card) => {
+    let valueA = parseInt(
+      card.querySelector("card-t").getAttribute("valueA"),
+      10
+    );
+    let valueB = parseInt(
+      card.querySelector("card-t").getAttribute("valueB"),
+      10
+    );
+    // let cardRank = card.querySelector("card-t").getAttribute("rank");
+    card.addEventListener("click", () => {
+      if (card.classList.contains("checked")) {
         card.classList.toggle("checked");
-        doubleComboCheck(valueA, comboCardcount);
-      }
-    } else {
-      if (valueB > 0) {
-        valueOptionOne.innerText = valueA;
-        valueOptionTwo.innerText = valueB;
-        valueOptionOne.addEventListener("click", () => {
-          if (
-            !card.classList.contains("A") &&
-            !card.classList.contains("B") &&
-            card.classList.contains("checked")
-          ) {
-            fifteenCount += valueA;
-            fifteenCountDisplay.innerHTML = `Fifteen Count: ${fifteenCount}`;
-            card.classList.toggle("A");
-            comboCheck();
-          }
-        });
-        valueOptionTwo.addEventListener("click", () => {
-          if (
-            !card.classList.contains("B") &&
-            !card.classList.contains("A") &&
-            card.classList.contains("checked")
-          ) {
-            fifteenCount += valueB;
-            fifteenCountDisplay.innerHTML = `Fifteen Count: ${fifteenCount}`;
-            card.classList.toggle("B");
-            comboCheck();
-          }
-        });
-      } else if (valueB === 0) {
         valueOptionOne.innerText = "-";
         valueOptionTwo.innerText = "-";
-        fifteenCount += valueA;
+        if (valueB > 0 && card.classList.contains("A")) {
+          fifteenCount -= valueA;
+          card.classList.toggle("A");
+          fifteenCountDisplay.innerHTML = `Fifteen Count: ${fifteenCount}`;
+        } else if (valueB > 0 && card.classList.contains("B")) {
+          fifteenCount -= valueB;
+          card.classList.toggle("B");
+          fifteenCountDisplay.innerHTML = `Fifteen Count: ${fifteenCount}`;
+        } else if (valueB === 0) {
+          fifteenCount -= valueA;
+        } else {
+        }
+        comboCheck();
         fifteenCountDisplay.innerHTML = `Fifteen Count: ${fifteenCount}`;
+
+        console.log("Fifteen Count:", fifteenCount);
+      } else if (firstSubmit === true) {
+        if (!card.classList.contains("checked")) {
+          console.log("unchecked cards being found");
+          card.classList.toggle("combo-sacrifice");
+          doubleComboCheck(valueA, comboCardcount);
+        }
+      } else {
+        if (valueB > 0) {
+          valueOptionOne.innerText = valueA;
+          valueOptionTwo.innerText = valueB;
+          valueOptionOne.addEventListener("click", () => {
+            if (
+              !card.classList.contains("A") &&
+              !card.classList.contains("B") &&
+              card.classList.contains("checked")
+            ) {
+              fifteenCount += valueA;
+              fifteenCountDisplay.innerHTML = `Fifteen Count: ${fifteenCount}`;
+              card.classList.toggle("A");
+              comboCheck();
+            }
+          });
+          valueOptionTwo.addEventListener("click", () => {
+            if (
+              !card.classList.contains("B") &&
+              !card.classList.contains("A") &&
+              card.classList.contains("checked")
+            ) {
+              fifteenCount += valueB;
+              fifteenCountDisplay.innerHTML = `Fifteen Count: ${fifteenCount}`;
+              card.classList.toggle("B");
+              comboCheck();
+            }
+          });
+        } else if (valueB === 0) {
+          valueOptionOne.innerText = "-";
+          valueOptionTwo.innerText = "-";
+          fifteenCount += valueA;
+          fifteenCountDisplay.innerHTML = `Fifteen Count: ${fifteenCount}`;
+        }
+        fifteenCountDisplay.innerHTML = `Fifteen Count: ${fifteenCount}`;
+        card.classList.toggle("checked");
+
+        comboCheck();
+
+        // console.log(cardRank);
+        // console.log(valueA, valueB);
+        // console.log("Fifteen Count:", fifteenCount);
       }
-      fifteenCountDisplay.innerHTML = `Fifteen Count: ${fifteenCount}`;
-      card.classList.toggle("checked");
-
-      comboCheck();
-
-      // console.log(cardRank);
-      // console.log(valueA, valueB);
-      // console.log("Fifteen Count:", fifteenCount);
-    }
+    });
   });
-});
+}
+
+selectCard();
 
 function doubleComboCheck(valueA, comboCardcount) {
+  comboSubmit = true;
+  comboSkip = false;
   let checkedCards = document.querySelectorAll(".checked");
   let checkedCardSuits = [];
   checkedCards.forEach((card) => {
@@ -281,6 +322,48 @@ function doubleComboCheck(valueA, comboCardcount) {
   totalPoints += valueA * comboCardcount;
   totalPointsDisplay.innerHTML = `Total: ${totalPoints}`;
   console.log(valueA, comboCardcount, totalPoints);
+}
+
+function reDeal(cardsInHand, hand) {
+  let lostCards = 0;
+  let cardsSacrified = [];
+  // console.log(cardsInHand, hand);
+  cardsInHand.forEach((card) => {
+    if (card.classList.contains("combo-sacrifice")) {
+      lostCards++;
+      cardsSacrified.push(card);
+    }
+    if (card.classList.contains("checked")) {
+      cardsSacrified.push(card);
+    }
+  });
+  console.log(
+    lostCards,
+    cardsSacrified,
+    cardsSacrified[0].children[0]["suit"],
+    cardsSacrified[0].children[0]["rank"],
+    hand[0]["face"]
+  );
+
+  for (let j = 0; j < cardsSacrified.length; j++) {
+    for (let i = 0; i < hand.length; i++) {
+      if (
+        cardsSacrified[j].children[0]["suit"] == hand[i]["suit"] &&
+        cardsSacrified[j].children[0]["rank"] == hand[i]["face"]
+      ) {
+        hand.splice(i, 1);
+      } else if (
+        cardsSacrified[j].children[0]["suit"] == "joker" &&
+        hand[i]["suit"] == null
+      ) {
+        hand.splice(i, 1);
+      }
+    }
+  }
+
+  drawSize = cardsSacrified.length - lostCards;
+  drawCards(drawSize);
+  console.log(drawSize, hand);
 }
 
 // *************DEBUG CONSOLE*****************
