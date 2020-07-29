@@ -22,19 +22,26 @@ input[type="submit"] {
   padding: 10px; }
 
 .players-hand {
+  width: 98%;
+  margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: space-evenly;
-  border: 1px solid black; }
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: rgba(255, 217, 146, 0.5);
+  z-index: -2; }
   .players-hand h3 {
     text-align: center; }
   .players-hand input[type="button"] {
-    width: 75%;
+    width: 40%;
     padding: 10px;
     font-size: 1.25rem;
     font-weight: bold;
     margin: auto; }
+    .players-hand input[type="button"] :focus {
+      border: none; }
   .players-hand card-t {
     cursor: pointer;
     transition: all 0.2s ease; }
@@ -42,7 +49,7 @@ input[type="submit"] {
     display: flex;
     justify-content: space-evenly; }
     .players-hand .show-hand .checked {
-      transform: rotate(9deg);
+      transform: rotate(14deg);
       border: 2px solid black;
       background: black;
       border-radius: 7px; }
@@ -60,26 +67,28 @@ input[type="submit"] {
     width: 400px; }
   .players-hand .combo-sacrifice {
     transform: rotate(90deg);
-    z-index: -2; }
+    z-index: -1; }
   .players-hand .value-options-one {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     padding-top: 20px;
     border: 1px dotted black;
-    border-bottom-left-radius: 10px;
-    border-top-left-radius: 10px;
+    border-bottom-left-radius: 50%;
+    border-top-left-radius: 50%;
     border-collapse: collapse;
     text-align: center;
     font-size: 2rem;
-    cursor: pointer; }
+    cursor: pointer;
+    background: #fff; }
   .players-hand .value-options-two {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     border: 1px dotted black;
     border-collapse: collapse;
     font-size: 2rem;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
     text-align: center;
     padding-top: 20px;
+    background: #fff;
     cursor: pointer; }
