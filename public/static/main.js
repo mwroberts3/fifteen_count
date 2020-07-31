@@ -148,6 +148,7 @@ let globalCardsInHand = [];
 const valueOptionTwo = document.querySelector(".value-options-two");
 const submitCards = document.querySelector(".submit-cards");
 const comboMessage = document.querySelector(".combo-message");
+const hudMessage = document.querySelector(".hud-message");
 const sameColorRed = (color) => color == "hearts" || color == "diamonds";
 const sameColorBlack = (color) => color == "clubs" || color == "spades";
 let pointsValidity = false;
@@ -173,7 +174,7 @@ const comboCheck = () => {
   comboCardcount = 0;
   pointsInPlay = 0;
   pointsValidity = false;
-  // console.log(checkedCards.length);
+  console.log(checkedCards.length);
   checkedCards.forEach((card) => {
     if (
       card.children[0]["rank"] == "ace" &&
@@ -215,6 +216,8 @@ const cardsSubmit = () => {
     showHand();
     reset();
     selectCard();
+    playersHandArea.classList.toggle("combo-round");
+    hudMessage.innerText = "Player's Hand";
   }
   if (pointsValidity === true) {
     firstSubmit = true;
@@ -222,8 +225,9 @@ const cardsSubmit = () => {
     pointsInPlay = 0;
     fifteenCount = 0;
     submitCards.value = "Draw cards [Shift]";
-    comboMessage.innerText = "COMBO ROUND!";
     comboSkip = true;
+    playersHandArea.classList.toggle("combo-round");
+    hudMessage.innerText = "Combo Round!";
   }
   if (pointsValidity === true && comboSubmit === true) {
     reDeal(globalCardsInHand, hand);
@@ -284,7 +288,6 @@ function selectCard() {
         console.log("Fifteen Count:", fifteenCount);
       } else if (firstSubmit === true) {
         if (!card.classList.contains("checked")) {
-          console.log("unchecked cards being found");
           card.classList.toggle("combo-sacrifice");
           doubleComboCheck(valueA, comboCardcount);
         }
@@ -362,7 +365,6 @@ function doubleComboCheck(valueA, comboCardcount) {
   ) {
     comboCardcount *= 2;
   }
-  console.log(checkedCardSuits);
   submitCards.value = "combo submit / draw cards [Shift]";
   totalPoints += valueA * comboCardcount;
   totalPointsDisplay.innerHTML = `Total: ${totalPoints}`;
@@ -370,40 +372,65 @@ function doubleComboCheck(valueA, comboCardcount) {
 }
 
 function reDeal(cardsInHand, hand) {
-  let lostCards = 0;
-  let cardsSacrified = [];
+  let checkedCards = document.querySelectorAll(".checked");
+  let cardsPlayed = [];
   // console.log(cardsInHand, hand);
   cardsInHand.forEach((card) => {
     if (card.classList.contains("combo-sacrifice")) {
-      lostCards++;
-      cardsSacrified.push(card);
-    }
-    if (card.classList.contains("checked")) {
-      cardsSacrified.push(card);
+      cardsPlayed.push(card);
+    } else if (card.classList.contains("checked")) {
+      cardsPlayed.push(card);
     }
   });
 
-  for (let j = 0; j < cardsSacrified.length; j++) {
+  for (let j = 0; j < cardsPlayed.length; j++) {
     for (let i = 0; i < hand.length; i++) {
       if (
-        cardsSacrified[j].children[0]["suit"] == hand[i]["suit"] &&
-        cardsSacrified[j].children[0]["rank"] == hand[i]["face"]
+        cardsPlayed[j].children[0]["suit"] == hand[i]["suit"] &&
+        cardsPlayed[j].children[0]["rank"] == hand[i]["face"]
       ) {
         hand.splice(i, 1);
+        break;
       } else if (
-        cardsSacrified[j].children[0]["suit"] == "joker" &&
+        cardsPlayed[j].children[0]["suit"] == "joker" &&
         hand[i]["suit"] == null
       ) {
         hand.splice(i, 1);
+        break;
       }
     }
   }
 
-  drawSize = cardsSacrified.length - lostCards;
-  totalCardsplayed += cardsSacrified.length;
+  // console.log(
+  //   "cards played:",
+  //   cardsPlayed.length,
+  //   "cards not played:",
+  //   cardsNotPlayedErrorCheck.length,
+  //   "hand length: ",
+  //   hand.length,
+  //   "hand: ",
+  //   hand
+  // );
+
+  // let reCard = { suit: "", color: "", face: "", valueA: 0, valueB: 0 };
+  // if (hand.length !== cardsNotPlayedErrorCheck.length) {
+  //   for (i = 0; i < hand.length; i++) {
+  //     hand.splice(i, 1);
+  //   }
+  //   for (i = 0; i < cardsNotPlayedErrorCheck.length; i++) {
+  //     reCard.suit = cardsNotPlayedErrorCheck[i].children[0]["suit"];
+  //     reCard.face = cardsNotPlayedErrorCheck[i].children[0]["rank"];
+  //     reCard.valueA = cardsNotPlayedErrorCheck[i].children[0]["valueA"];
+  //     reCard.valueB = cardsNotPlayedErrorCheck[i].children[0]["valueB"];
+  //     hand.splice(i, 1, reCard);
+  //   }
+  // }
+
+  // drawSize = cardsPlayed.length - lostCards;
+  totalCardsplayed += cardsPlayed.length;
   totalCardsPlayedDisplay.innerHTML = `Total Cards Played: ${totalCardsplayed}`;
-  deckCheck(drawSize);
-  drawCards(drawSize);
+  deckCheck(checkedCards.length);
+  drawCards(checkedCards.length);
 }
 
 function deckCheck(drawSize) {
