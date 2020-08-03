@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fifteen Count - Arcade Mode</title>
+    <link rel="stylesheet" href="static/style.css" />
+  </head>
+  <body>
+    <div class="gui-container">
+      <div class="scoreboard">
+        <div class="timer-container">
+          <div class="timer">3:00</div>
+        </div>
+        <div class="total-points"></div>
+        <div class="points-in-play"></div>
+        <div class="total-cards-played"></div>
+      </div>
+      <form>
+        <div class="players-hand">
+          <h4 class="hud-message">Player's Hand</h4>
+          <div class="pad-1"></div>
+          <div class="show-hand"></div>
+          <div class="pad-1"></div>
+          <div class="multi-values">
+            <div class="value-options-one">-</div>
+            <div class="value-options-two">-</div>
+            <div class="fifteen-count"></div>
+          </div>
+          <input
+            class="submit-cards"
+            type="button"
+            value="Play Cards [Shift]"
+          />
+        </div>
+      </form>
+    </div>
+    <script src="static/main.js"></script>
+    <script src="static/elements.cardmeister.full.js"></script>
+  </body>
+</html>

@@ -1,5 +1,34 @@
-const startGame = document.querySelector(".start-game");
-startGame.addEventListener("click", () => threeMinuteTimer());
+// DISPLAY POINTS
+const totalPointsDisplay = document.querySelector(".total-points");
+const fifteenCountDisplay = document.querySelector(".fifteen-count");
+const PointsDisplay = document.querySelector(".points-in-play");
+const totalCardsPlayedDisplay = document.querySelector(".total-cards-played");
+let totalPoints = 0;
+let fifteenCount = 0;
+let pointsInPlay = 0;
+let totalCardsplayed = 0;
+totalPointsDisplay.innerHTML = `Total: ${totalPoints}`;
+fifteenCountDisplay.innerHTML = `Fifteen Count: ${fifteenCount}`;
+PointsDisplay.innerHTML = `Points: ${pointsInPlay}`;
+totalCardsPlayedDisplay.innerHTML = `Cards Played: ${totalCardsplayed}`;
+
+// GAMEPLAY VARIABLES & SWITCHES
+const playersHandArea = document.querySelector(".players-hand");
+const valueOptionOne = document.querySelector(".value-options-one");
+let globalCardsInHand = [];
+const valueOptionTwo = document.querySelector(".value-options-two");
+const submitCards = document.querySelector(".submit-cards");
+const comboMessage = document.querySelector(".combo-message");
+const hudMessage = document.querySelector(".hud-message");
+const sameColorRed = (color) => color == "hearts" || color == "diamonds";
+const sameColorBlack = (color) => color == "clubs" || color == "spades";
+let pointsValidity = false;
+let firstSubmit = false;
+let comboSubmit = false;
+let comboSkip = false;
+let countdownStart = true;
+let comboCardcount = 0;
+let roundBonusTimer = 0;
 
 let html = ``;
 // BUILD THE DECK
@@ -116,46 +145,38 @@ showHand();
 
 // SET 3 MINUTE TIMER
 const timer = document.querySelector(".timer");
+let minutesLeft = 2;
+let secondsLeft = 0;
+let threeTimerStart = 0;
 function threeMinuteTimer() {
-  let seconds = 180;
+  threeTimerStart = new Date().getTime();
+  // hudMessage.innerText = "TIME IS UP!";
+  // playersHand.style.display = "none";
   setInterval(() => {
-    timer.innerHTML = seconds;
-    seconds--;
-    if (seconds < 0) {
-      timer.innerHTML = "TIME IS UP!";
+    let threeTimerFinish = new Date().getTime();
+    if (threeTimerFinish - threeTimerStart >= 60000) {
+      secondsLeft--;
+      timer.innerText = `${minutesLeft}:0${secondsLeft}`;
+      minutesLeft--;
+      if (minutesLeft === -1) {
+        hudMessage.innerText = "TIME IS UP!";
+        playersHand.style.display = "none";
+      } else {
+        threeTimerStart = new Date().getTime();
+      }
+    } else {
+      secondsLeft = Math.round(
+        60 - (threeTimerFinish - threeTimerStart) / 1000
+      );
+      if (secondsLeft < 10) {
+        timer.innerText = `${minutesLeft}:0${secondsLeft}`;
+      } else {
+        timer.innerText = `${minutesLeft}:${secondsLeft}`;
+      }
     }
   }, 1000);
+  // console.log(threeTimerStart.getTime());
 }
-
-// DISPLAY POINTS
-const totalPointsDisplay = document.querySelector(".total-points");
-const fifteenCountDisplay = document.querySelector(".fifteen-count");
-const PointsDisplay = document.querySelector(".points-in-play");
-const totalCardsPlayedDisplay = document.querySelector(".total-cards-played");
-let totalPoints = 0;
-let fifteenCount = 0;
-let pointsInPlay = 0;
-let totalCardsplayed = 0;
-totalPointsDisplay.innerHTML = `Total: ${totalPoints}`;
-fifteenCountDisplay.innerHTML = `Fifteen Count: ${fifteenCount}`;
-PointsDisplay.innerHTML = `Points: ${pointsInPlay}`;
-totalCardsPlayedDisplay.innerHTML = `Total Cards Played: ${totalCardsplayed}`;
-
-// GAMEPLAY VARIABLES & SWITCHES
-const playersHandArea = document.querySelector(".players-hand");
-const valueOptionOne = document.querySelector(".value-options-one");
-let globalCardsInHand = [];
-const valueOptionTwo = document.querySelector(".value-options-two");
-const submitCards = document.querySelector(".submit-cards");
-const comboMessage = document.querySelector(".combo-message");
-const hudMessage = document.querySelector(".hud-message");
-const sameColorRed = (color) => color == "hearts" || color == "diamonds";
-const sameColorBlack = (color) => color == "clubs" || color == "spades";
-let pointsValidity = false;
-let firstSubmit = false;
-let comboSubmit = false;
-let comboSkip = false;
-let comboCardcount = 0;
 
 const reset = () => {
   pointsValidity = false;
@@ -164,7 +185,7 @@ const reset = () => {
   comboSkip = false;
   comboCardcount = 0;
   submitCards.value = "Play Cards [Shift]";
-  comboMessage.innerText = "";
+  // comboMessage.innerText = "";
 };
 
 // Combo Check
@@ -211,6 +232,7 @@ const comboCheck = () => {
 
 // submitting cards
 const cardsSubmit = () => {
+  let checkedCards = document.querySelectorAll(".checked");
   if (comboSkip === true) {
     reDeal(globalCardsInHand, hand);
     showHand();
@@ -228,6 +250,11 @@ const cardsSubmit = () => {
     comboSkip = true;
     playersHandArea.classList.toggle("combo-round");
     hudMessage.innerText = "Combo Round!";
+    // adds 7 seconds to clock, if combo of 5 or more cards is played
+    if (checkedCards.length >= 5) {
+      threeTimerStart += 8000;
+      console.log(secondsLeft);
+    }
   }
   if (pointsValidity === true && comboSubmit === true) {
     reDeal(globalCardsInHand, hand);
@@ -243,17 +270,60 @@ const cardsSubmit = () => {
   // console.log(pointsValidity);
 };
 
-// accepts shift key or button click to trigger next phase
+// BUTTON SUBMIT
+// accepts shift key or button click or doubleclick to trigger next phase
 document.addEventListener("keyup", (e) => {
   if (e.keyCode === 16) {
-    cardsSubmit();
+    roundBonusCheck();
   }
 });
-submitCards.addEventListener("click", cardsSubmit);
-playersHandArea.addEventListener("dblclick", cardsSubmit);
+submitCards.addEventListener("click", roundBonusCheck);
+playersHandArea.addEventListener("dblclick", roundBonusCheck);
+
+function roundBonusCheck() {
+  let roundBonusTimerCheck = new Date();
+  let roundBonusPoints = 0;
+  let roundBonuses = [
+    0.1,
+    1.09,
+    1.08,
+    1.07,
+    1.06,
+    1.05,
+    1.04,
+    1.03,
+    1.02,
+    1.01,
+  ];
+  let checkedCards = document.querySelectorAll(".checked").length;
+  let diff =
+    (roundBonusTimerCheck.getTime() - roundBonusTimer.getTime()) / 1000;
+  diff = Math.round(diff);
+
+  if (diff <= 9 && firstSubmit === false && pointsValidity === true) {
+    roundBonusPoints = pointsInPlay * roundBonuses[diff] - pointsInPlay;
+    roundBonusPoints = Math.round(roundBonusPoints);
+    totalPoints += roundBonusPoints + checkedCards;
+  }
+  console.log(
+    "round time:",
+    diff,
+    "points in play:",
+    pointsInPlay,
+    "speed bonus points:",
+    roundBonusPoints,
+    "checked cards: ",
+    checkedCards,
+    "total bonus points: ",
+    roundBonusPoints + checkedCards
+  );
+
+  cardsSubmit();
+}
 
 // Selecting Cards to Play
 function selectCard() {
+  roundBonusTimer = new Date();
   let cardsInHand = document.querySelectorAll(".card-in-hand");
   globalCardsInHand = cardsInHand;
   cardsInHand.forEach((card) => {
@@ -267,6 +337,10 @@ function selectCard() {
     );
     // let cardRank = card.querySelector("card-t").getAttribute("rank");
     card.addEventListener("click", () => {
+      if (countdownStart) {
+        threeMinuteTimer();
+        countdownStart = false;
+      }
       if (card.classList.contains("checked")) {
         card.classList.toggle("checked");
         valueOptionOne.innerText = "-";
@@ -401,32 +475,6 @@ function reDeal(cardsInHand, hand) {
     }
   }
 
-  // console.log(
-  //   "cards played:",
-  //   cardsPlayed.length,
-  //   "cards not played:",
-  //   cardsNotPlayedErrorCheck.length,
-  //   "hand length: ",
-  //   hand.length,
-  //   "hand: ",
-  //   hand
-  // );
-
-  // let reCard = { suit: "", color: "", face: "", valueA: 0, valueB: 0 };
-  // if (hand.length !== cardsNotPlayedErrorCheck.length) {
-  //   for (i = 0; i < hand.length; i++) {
-  //     hand.splice(i, 1);
-  //   }
-  //   for (i = 0; i < cardsNotPlayedErrorCheck.length; i++) {
-  //     reCard.suit = cardsNotPlayedErrorCheck[i].children[0]["suit"];
-  //     reCard.face = cardsNotPlayedErrorCheck[i].children[0]["rank"];
-  //     reCard.valueA = cardsNotPlayedErrorCheck[i].children[0]["valueA"];
-  //     reCard.valueB = cardsNotPlayedErrorCheck[i].children[0]["valueB"];
-  //     hand.splice(i, 1, reCard);
-  //   }
-  // }
-
-  // drawSize = cardsPlayed.length - lostCards;
   totalCardsplayed += cardsPlayed.length;
   totalCardsPlayedDisplay.innerHTML = `Total Cards Played: ${totalCardsplayed}`;
   deckCheck(checkedCards.length);
