@@ -512,6 +512,7 @@ async function scoreRanking() {
   const now = new Date();
 
   // if score is enough to be in top 100, store it in highscore database and prompt for name
+  // USE querySnapshot.size to determine number of entries in top 100
   // get collection from Firestore, sort descending by score, place in ranking where appropriate, delete 100th ranked score(or at least don't show it)
 
   console.log("total points: ", totalPoints);
@@ -520,8 +521,8 @@ async function scoreRanking() {
   db.collection("highscores")
     .add({
       date: firebase.firestore.Timestamp.fromDate(now),
-      score: totalPoints,
       name: "test",
+      score: totalPoints,
       cards_played: totalCardsPlayed,
     })
     .then(() => {
