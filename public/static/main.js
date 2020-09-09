@@ -6,11 +6,11 @@ const totalCardsPlayedDisplay = document.querySelector(".total-cards-played");
 let totalPoints = 0;
 let fifteenCount = 0;
 let pointsInPlay = 0;
-let totalCardsplayed = 0;
+let totalCardsPlayed = 0;
 totalPointsDisplay.innerHTML = `Total: ${totalPoints}`;
 fifteenCountDisplay.innerHTML = `Fifteen Count: ${fifteenCount}`;
 PointsDisplay.innerHTML = `Points: ${pointsInPlay}`;
-totalCardsPlayedDisplay.innerHTML = `Cards Played: ${totalCardsplayed}`;
+totalCardsPlayedDisplay.innerHTML = `Cards Played: ${totalCardsPlayed}`;
 
 // GAMEPLAY VARIABLES & SWITCHES
 const playersHandArea = document.querySelector(".players-hand");
@@ -143,7 +143,7 @@ const showHand = () => {
 
 showHand();
 
-// SET 3 MINUTE TIMER
+// SET 3 MINUTE GAMEPLAY TIMER
 const timer = document.querySelector(".timer");
 let minutesLeft = 2;
 let secondsLeft = 0;
@@ -152,15 +152,15 @@ function threeMinuteTimer() {
   threeTimerStart = new Date().getTime();
   // hudMessage.innerText = "TIME IS UP!";
   // playersHand.style.display = "none";
-  setInterval(() => {
+  const threeMinuteTimerInterval = setInterval(() => {
     let threeTimerFinish = new Date().getTime();
     if (threeTimerFinish - threeTimerStart >= 60000) {
       secondsLeft--;
       timer.innerText = `${minutesLeft}:0${secondsLeft}`;
       minutesLeft--;
       if (minutesLeft === -1) {
-        hudMessage.innerText = "TIME IS UP!";
-        playersHand.style.display = "none";
+        scoreRanking();
+        clearInterval(threeMinuteTimerInterval);
       } else {
         threeTimerStart = new Date().getTime();
       }
@@ -230,7 +230,7 @@ const comboCheck = () => {
   // console.log(fifteenCount);
 };
 
-// submitting cards
+// SUBMITTING CARDS
 const cardsSubmit = () => {
   let checkedCards = document.querySelectorAll(".checked");
   if (comboSkip === true) {
@@ -321,7 +321,7 @@ function roundBonusCheck() {
   cardsSubmit();
 }
 
-// Selecting Cards to Play
+// SELECTING CARDS
 function selectCard() {
   roundBonusTimer = new Date();
   let cardsInHand = document.querySelectorAll(".card-in-hand");
@@ -475,8 +475,8 @@ function reDeal(cardsInHand, hand) {
     }
   }
 
-  totalCardsplayed += cardsPlayed.length;
-  totalCardsPlayedDisplay.innerHTML = `Total Cards Played: ${totalCardsplayed}`;
+  totalCardsPlayed += cardsPlayed.length;
+  totalCardsPlayedDisplay.innerHTML = `Total Cards Played: ${totalCardsPlayed}`;
   deckCheck(checkedCards.length);
   drawCards(checkedCards.length);
 }
@@ -500,4 +500,32 @@ function reBuildDeck() {
     deck.push(card);
   });
   console.log(tempDeck, deck);
+}
+
+// POST GAME FUNCTIONS
+// in addition to global rankings, may also be worth storing in local storage
+// when entering name, might want to find a regular expression that with block swear words
+async function scoreRanking() {
+  hudMessage.innerText = "TIME IS UP!";
+  playersHand.style.display = "none";
+
+  const now = new Date();
+
+  // if score is enough to be in top 100, store it in highscore database and prompt for name
+  // get collection from Firestore, sort descending by score, place in ranking where appropriate, delete 100th ranked score(or at least don't show it)
+
+  console.log("total points: ", totalPoints);
+  console.log("total cards played: ", totalCardsPlayed);
+
+  db.collection("highscores")
+    .add({
+      date: firebase.firestore.Timestamp.fromDate(now),
+      score: totalPoints,
+      name: "test",
+      cards_played: totalCardsPlayed,
+    })
+    .then(() => {
+      console.log("score added");
+    })
+    .catch((err) => console.log(err));
 }
