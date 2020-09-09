@@ -1,7 +1,6 @@
 const scoreDisplay = document.querySelector(".score-display");
 
 db.collection("highscores")
-  .where("score", ">", 1500)
   .orderBy("score", "desc")
   .get()
   .then((querySnapshot) => {

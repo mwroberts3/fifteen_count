@@ -145,7 +145,7 @@ showHand();
 
 // SET 3 MINUTE GAMEPLAY TIMER
 const timer = document.querySelector(".timer");
-let minutesLeft = 2;
+let minutesLeft = 0;
 let secondsLeft = 0;
 let threeTimerStart = 0;
 function threeMinuteTimer() {
@@ -508,9 +508,6 @@ function reBuildDeck() {
 async function scoreRanking() {
   hudMessage.innerText = "TIME IS UP!";
   playersHand.style.display = "none";
-
-  const now = new Date();
-
   // if score is enough to be in top 100, store it in highscore database and prompt for name
   // USE querySnapshot.size to determine number of entries in top 100
   // get collection from Firestore, sort descending by score, place in ranking where appropriate, delete 100th ranked score(or at least don't show it)
@@ -518,6 +515,33 @@ async function scoreRanking() {
   console.log("total points: ", totalPoints);
   console.log("total cards played: ", totalCardsPlayed);
 
+  let highscoreRank = 0;
+
+  db.collection("highscores")
+    .orderBy("score", "desc")
+    .get()
+    .then((snapshot) => {
+      // CHANGE HIGHSCORE COUNT TO 100
+      if (snapshot.size < 10) {
+        newHighscore();
+      } else {
+        snapshot.forEach((doc) => {
+          highscoreRank++;
+          console.log(doc.data().score);
+          if (totalPoints > doc.data().score) {
+            console.log("greater score");
+          } else if (totalPoints === doc.data().score) {
+            console.log("equal score");
+          } else if (totalPoints < doc.data().score) {
+            console.log("lesser score");
+          }
+        });
+      }
+    });
+}
+
+function newHighscore() {
+  const now = new Date();
   db.collection("highscores")
     .add({
       date: firebase.firestore.Timestamp.fromDate(now),
