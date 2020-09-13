@@ -1,18 +1,16 @@
 const scoreDisplay = document.querySelector(".score-display");
 
 db.collection("highscores")
+  .where("hidden", "==", false)
   .orderBy("score", "desc")
   .get()
   .then((querySnapshot) => {
-    if (querySnapshot.size >= 3) {
-      console.log("right on the money");
-    }
     querySnapshot.forEach((doc) => {
       // console.log(doc.data().score);
       scoreDisplay.innerHTML += `
       <li>${doc.data().score} - ${doc.data().cards_played} - ${
-        doc.data().name
-      } - ${doc.data().date}</li>
+        doc.data().seconds_played
+      } - ${doc.data().name} - ${doc.data().date.toDate()}</li>
       `;
     });
   });

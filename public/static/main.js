@@ -7,10 +7,9 @@ let totalPoints = 0;
 let fifteenCount = 0;
 let pointsInPlay = 0;
 let totalCardsPlayed = 0;
-totalPointsDisplay.innerHTML = `Total: ${totalPoints}`;
-fifteenCountDisplay.innerHTML = `Fifteen Count: ${fifteenCount}`;
-PointsDisplay.innerHTML = `Points: ${pointsInPlay}`;
-totalCardsPlayedDisplay.innerHTML = `Cards Played: ${totalCardsPlayed}`;
+totalPointsDisplay.innerHTML = `${totalPoints} Points`;
+fifteenCountDisplay.innerHTML = `${fifteenCount}`;
+totalCardsPlayedDisplay.innerHTML = `${totalCardsPlayed} Cards Played`;
 
 // GAMEPLAY VARIABLES & SWITCHES
 const playersHandArea = document.querySelector(".players-hand");
@@ -53,7 +52,6 @@ const buildDeck = (deck) => {
     "ace",
   ];
   const valueA = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 15];
-  const valueB = 0;
 
   for (let i = 0; i < suits.length; i++) {
     for (let j = 0; j < face.length; j++) {
@@ -121,6 +119,7 @@ const drawCards = (drawSize) => {
     hand.splice(i, 0, deck.pop());
   }
   console.log("deck size:", deck.length, "drawsize:", drawSize);
+  hudMessage.innerText = "Count Round";
 };
 drawCards(drawSize);
 
@@ -143,10 +142,10 @@ const showHand = () => {
 
 showHand();
 
-// SET 3 MINUTE GAMEPLAY TIMER
+// SET 100 SECOND GAMEPLAY TIMER
 const timer = document.querySelector(".timer");
-let minutesLeft = 0;
-let secondsLeft = 0;
+let totalSeconds = 100;
+let secondsLeft = 99;
 let threeTimerStart = 0;
 function threeMinuteTimer() {
   threeTimerStart = new Date().getTime();
@@ -154,25 +153,13 @@ function threeMinuteTimer() {
   // playersHand.style.display = "none";
   const threeMinuteTimerInterval = setInterval(() => {
     let threeTimerFinish = new Date().getTime();
-    if (threeTimerFinish - threeTimerStart >= 60000) {
+    if (threeTimerFinish - threeTimerStart >= 1000) {
+      timer.textContent = `${secondsLeft}`;
       secondsLeft--;
-      timer.innerText = `${minutesLeft}:0${secondsLeft}`;
-      minutesLeft--;
-      if (minutesLeft === -1) {
-        scoreRanking();
-        clearInterval(threeMinuteTimerInterval);
-      } else {
-        threeTimerStart = new Date().getTime();
-      }
-    } else {
-      secondsLeft = Math.round(
-        60 - (threeTimerFinish - threeTimerStart) / 1000
-      );
-      if (secondsLeft < 10) {
-        timer.innerText = `${minutesLeft}:0${secondsLeft}`;
-      } else {
-        timer.innerText = `${minutesLeft}:${secondsLeft}`;
-      }
+    }
+    if (secondsLeft === -1) {
+      scoreReview();
+      clearInterval(threeMinuteTimerInterval);
     }
   }, 1000);
   // console.log(threeTimerStart.getTime());
@@ -220,8 +207,8 @@ const comboCheck = () => {
       pointsInPlay *= 2;
     }
   }
-  PointsDisplay.innerHTML = `Points: ${pointsInPlay}`;
-  fifteenCountDisplay.innerHTML = `Fifteen Count: ${fifteenCount}`;
+
+  fifteenCountDisplay.innerHTML = `${fifteenCount}`;
 
   // *****COMBO CHECK DEBUG CONSOLE*****
   // console.log("red combo:", checkedCardSuits.every(sameColorRed));
@@ -239,7 +226,7 @@ const cardsSubmit = () => {
     reset();
     selectCard();
     playersHandArea.classList.toggle("combo-round");
-    hudMessage.innerText = "Player's Hand";
+    hudMessage.innerText = "Count Round";
   }
   if (pointsValidity === true) {
     firstSubmit = true;
@@ -250,10 +237,15 @@ const cardsSubmit = () => {
     comboSkip = true;
     playersHandArea.classList.toggle("combo-round");
     hudMessage.innerText = "Combo Round!";
-    // adds 7 seconds to clock, if combo of 5 or more cards is played
-    if (checkedCards.length >= 5) {
-      threeTimerStart += 8000;
+    // adds 7 seconds to clock, if at least half-amount of cards in hand are played
+    if (checkedCards.length >= globalCardsInHand.length / 2) {
+      secondsLeft += 8;
+      totalSeconds += 7;
       console.log(secondsLeft);
+    }
+    if (checkedCards.length === globalCardsInHand.length) {
+      secondsLeft += 22;
+      totalSeconds += 21;
     }
   }
   if (pointsValidity === true && comboSubmit === true) {
@@ -263,9 +255,9 @@ const cardsSubmit = () => {
     selectCard();
   }
 
-  totalPointsDisplay.innerHTML = `Total: ${totalPoints}`;
-  fifteenCountDisplay.innerHTML = `Fifteen Count: ${fifteenCount}`;
-  PointsDisplay.innerHTML = `Points: ${pointsInPlay}`;
+  totalPointsDisplay.innerHTML = `${totalPoints} Points`;
+  fifteenCountDisplay.innerHTML = `${fifteenCount}`;
+
   // console.log("clicking works");
   // console.log(pointsValidity);
 };
@@ -348,16 +340,16 @@ function selectCard() {
         if (valueB > 0 && card.classList.contains("A")) {
           fifteenCount -= valueA;
           card.classList.toggle("A");
-          fifteenCountDisplay.innerHTML = `Fifteen Count: ${fifteenCount}`;
+          fifteenCountDisplay.innerHTML = `${fifteenCount}`;
         } else if (valueB > 0 && card.classList.contains("B")) {
           fifteenCount -= valueB;
           card.classList.toggle("B");
-          fifteenCountDisplay.innerHTML = `Fifteen Count: ${fifteenCount}`;
+          fifteenCountDisplay.innerHTML = `${fifteenCount}`;
         } else if (valueB === 0) {
           fifteenCount -= valueA;
         }
         comboCheck();
-        fifteenCountDisplay.innerHTML = `Fifteen Count: ${fifteenCount}`;
+        fifteenCountDisplay.innerHTML = `${fifteenCount}`;
 
         console.log("Fifteen Count:", fifteenCount);
       } else if (firstSubmit === true) {
@@ -376,9 +368,23 @@ function selectCard() {
               card.classList.contains("checked")
             ) {
               fifteenCount += valueA;
-              fifteenCountDisplay.innerHTML = `Fifteen Count: ${fifteenCount}`;
+              fifteenCountDisplay.innerHTML = `${fifteenCount}`;
               card.classList.toggle("A");
               comboCheck();
+            }
+          });
+          document.addEventListener("keyup", (e) => {
+            if (e.keyCode === 16) {
+              if (
+                !card.classList.contains("A") &&
+                !card.classList.contains("B") &&
+                card.classList.contains("checked")
+              ) {
+                fifteenCount += valueA;
+                fifteenCountDisplay.innerHTML = `${fifteenCount}`;
+                card.classList.toggle("A");
+                comboCheck();
+              }
             }
           });
           valueOptionTwo.addEventListener("click", () => {
@@ -388,18 +394,32 @@ function selectCard() {
               card.classList.contains("checked")
             ) {
               fifteenCount += valueB;
-              fifteenCountDisplay.innerHTML = `Fifteen Count: ${fifteenCount}`;
+              fifteenCountDisplay.innerHTML = `${fifteenCount}`;
               card.classList.toggle("B");
               comboCheck();
+            }
+          });
+          document.addEventListener("keyup", (e) => {
+            if (e.keyCode === 17) {
+              if (
+                !card.classList.contains("B") &&
+                !card.classList.contains("A") &&
+                card.classList.contains("checked")
+              ) {
+                fifteenCount += valueB;
+                fifteenCountDisplay.innerHTML = `${fifteenCount}`;
+                card.classList.toggle("B");
+                comboCheck();
+              }
             }
           });
         } else if (valueB === 0) {
           valueOptionOne.innerText = "-";
           valueOptionTwo.innerText = "-";
           fifteenCount += valueA;
-          fifteenCountDisplay.innerHTML = `Fifteen Count: ${fifteenCount}`;
+          fifteenCountDisplay.innerHTML = `${fifteenCount}`;
         }
-        fifteenCountDisplay.innerHTML = `Fifteen Count: ${fifteenCount}`;
+        fifteenCountDisplay.innerHTML = `${fifteenCount}`;
         card.classList.toggle("checked");
 
         comboCheck();
@@ -417,15 +437,16 @@ selectCard();
 function doubleComboCheck(valueA, comboCardcount) {
   comboSubmit = true;
   comboSkip = false;
+  comboCardcount = 0;
   let checkedCards = document.querySelectorAll(".checked");
   let sacrificedCards = document.querySelectorAll(".combo-sacrifice");
   let checkedCardSuits = [];
+  console.log("checked cards", checkedCards, checkedCards.length);
   checkedCards.forEach((card) => {
     if (card.children[0]["suit"] != "joker") {
       checkedCardSuits.push(card.children[0]["suit"]);
-    }
-    if (card.children[0]["rank"] == "ace") {
-      comboCardcount = 1;
+      comboCardcount++;
+      console.log("comboCardcount", comboCardcount);
     }
   });
   sacrificedCards.forEach((card) => {
@@ -440,13 +461,14 @@ function doubleComboCheck(valueA, comboCardcount) {
     comboCardcount *= 2;
   }
   submitCards.value = "combo submit / draw cards [Shift]";
+  totalPointsDisplay.innerHTML = `${totalPoints} + ${valueA * comboCardcount}`;
   totalPoints += valueA * comboCardcount;
-  totalPointsDisplay.innerHTML = `Total: ${totalPoints}`;
   console.log(valueA, comboCardcount, totalPoints);
 }
 
 function reDeal(cardsInHand, hand) {
   let checkedCards = document.querySelectorAll(".checked");
+  let sacrificedCards = document.querySelectorAll(".combo-sacrifice");
   let cardsPlayed = [];
   // console.log(cardsInHand, hand);
   cardsInHand.forEach((card) => {
@@ -476,9 +498,19 @@ function reDeal(cardsInHand, hand) {
   }
 
   totalCardsPlayed += cardsPlayed.length;
-  totalCardsPlayedDisplay.innerHTML = `Total Cards Played: ${totalCardsPlayed}`;
-  deckCheck(checkedCards.length);
-  drawCards(checkedCards.length);
+  totalCardsPlayedDisplay.innerHTML = `${totalCardsPlayed} Cards Played`;
+
+  // Check to see if all cards in hand were played, for possible replenish bonus
+  console.log("hand length", hand.length);
+  let numberCheckedCards = 0;
+  if (hand.length === 0 && sacrificedCards.length === 0) {
+    numberCheckedCards = 10;
+  } else {
+    numberCheckedCards = checkedCards.length;
+  }
+
+  deckCheck(numberCheckedCards);
+  drawCards(numberCheckedCards);
 }
 
 function deckCheck(drawSize) {
@@ -505,52 +537,68 @@ function reBuildDeck() {
 // POST GAME FUNCTIONS
 // in addition to global rankings, may also be worth storing in local storage
 // when entering name, might want to find a regular expression that with block swear words
-async function scoreRanking() {
+
+function scoreReview() {
   hudMessage.innerText = "TIME IS UP!";
   playersHand.style.display = "none";
-  // if score is enough to be in top 100, store it in highscore database and prompt for name
-  // USE querySnapshot.size to determine number of entries in top 100
-  // get collection from Firestore, sort descending by score, place in ranking where appropriate, delete 100th ranked score(or at least don't show it)
-
-  console.log("total points: ", totalPoints);
-  console.log("total cards played: ", totalCardsPlayed);
-
-  let highscoreRank = 0;
+  console.log("total seconds", totalSeconds);
 
   db.collection("highscores")
+    .where("hidden", "==", false)
     .orderBy("score", "desc")
+    .limit(50)
     .get()
     .then((snapshot) => {
-      // CHANGE HIGHSCORE COUNT TO 100
-      if (snapshot.size < 10) {
-        newHighscore();
+      let scoreRank = 0;
+      highscoresArr = snapshot.docs.map((doc) => doc.data().score);
+
+      highscoresArr.forEach((score) => {
+        if (totalPoints > score) {
+          scoreRank++;
+        }
+      });
+
+      scoreRank = highscoresArr.length - scoreRank;
+
+      if (highscoresArr.length < 50) {
+        addNametoScore(scoreRank);
+      } else if (totalPoints > highscoresArr[highscoresArr.length - 1]) {
+        addNametoScore(scoreRank);
       } else {
-        snapshot.forEach((doc) => {
-          highscoreRank++;
-          console.log(doc.data().score);
-          if (totalPoints > doc.data().score) {
-            console.log("greater score");
-          } else if (totalPoints === doc.data().score) {
-            console.log("equal score");
-          } else if (totalPoints < doc.data().score) {
-            console.log("lesser score");
-          }
-        });
+        newHighscore("DIDN'T QUALIFY");
       }
+
+      console.log(highscoresArr);
     });
 }
 
-function newHighscore() {
+function addNametoScore(scoreRank) {
+  const inputNameForm = document.getElementById("new-highscore-form");
+
+  // Add score ranking to popup
+  inputNameForm.querySelector("span").textContent = `${scoreRank + 1}`;
+
+  // show popup and ask for name
+  inputNameForm.classList.toggle("hidden");
+  inputNameForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    newHighscore(inputNameForm.querySelector("input").value);
+  });
+}
+
+function newHighscore(name) {
   const now = new Date();
   db.collection("highscores")
     .add({
       date: firebase.firestore.Timestamp.fromDate(now),
-      name: "test",
+      name: name,
       score: totalPoints,
       cards_played: totalCardsPlayed,
+      seconds_played: totalSeconds,
+      hidden: false,
     })
     .then(() => {
-      console.log("score added");
+      location.reload();
     })
     .catch((err) => console.log(err));
 }

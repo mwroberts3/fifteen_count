@@ -9,16 +9,25 @@
   <body>
     <div class="gui-container">
       <div class="scoreboard">
-        <div class="timer-container">
-          <div class="timer">3:00</div>
+        <div class="menu-hud">
+          <div>Arcade Mode</div>
+          <div class="menu-options">
+            <div>Home</div>
+            <div>Restart</div>
+          </div>
         </div>
-        <div class="total-points"></div>
-        <div class="points-in-play"></div>
-        <div class="total-cards-played"></div>
+        <div class="main-hud">
+          <div class="total-points"></div>
+
+          <div class="total-cards-played"></div>
+        </div>
+      </div>
+      <div class="timer-container">
+        <div class="timer">100</div>
       </div>
       <form>
         <div class="players-hand">
-          <h4 class="hud-message">Player's Hand</h4>
+          <h4 class="hud-message">Count Round</h4>
           <div class="pad-1"></div>
           <div class="show-hand"></div>
           <div class="pad-1"></div>
@@ -33,6 +42,13 @@
             value="Play Cards [Shift]"
           />
         </div>
+      </form>
+
+      <form id="new-highscore-form" class="hidden">
+        <h3>Congratulations! New Highscore!</h3>
+        <p>#<span></span></p>
+        <label for="name">Name</label>
+        <input type="text" />
       </form>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/1.30.1/date_fns.min.js"></script>

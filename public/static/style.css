@@ -4,20 +4,43 @@
   box-sizing: border-box; }
 
 body {
+  margin: 0 auto;
+  max-width: 1200px;
+  min-width: 769px;
   font-size: 1.25rem;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center; }
+  font-family: Verdana, Geneva, Tahoma, sans-serif; }
+
+a {
+  color: #fff;
+  text-decoration: none; }
 
 .container {
-  max-width: 1100px;
-  min-width: 550px;
   margin: 0 auto; }
 
 .pad-1 {
   padding: 10px; }
+
+.main-btn {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  background-image: linear-gradient(#444, #666);
+  color: white;
+  font-size: 1.25rem; }
+  .main-btn:hover {
+    opacity: 0.9; }
+
+.light-menu-btn {
+  background-image: linear-gradient(#666, #888); }
+
+.center {
+  width: 20%;
+  margin: 0 auto; }
+
+.hidden {
+  display: none; }
 
 .index-header {
   width: 100%; }
@@ -27,10 +50,10 @@ body {
 
 .gamemode-select-container {
   width: 100%;
-  background: #333;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  padding: 10px; }
+  background: #222;
+  border-radius: 10px;
+  padding: 10px;
+  border: 2px solid #888; }
   .gamemode-select-container h3 {
     color: #f5ca5e;
     text-align: center; }
@@ -44,45 +67,89 @@ body {
       list-style: none;
       display: flex;
       justify-content: center; }
+      .gamemode-select-container ul li button {
+        width: 50%; }
       .gamemode-select-container ul li a {
         text-align: center;
-        width: 100%; }
-    .gamemode-select-container ul button {
-      width: 50%;
-      padding: 8px;
-      margin-top: 5px;
-      border-radius: 5px;
-      cursor: pointer;
-      background-image: linear-gradient(#444, #666);
-      color: white;
-      font-size: 1.25rem; }
-    .gamemode-select-container ul .misc-menu-btn {
-      background-image: linear-gradient(#666, #888); }
+        width: 50%; }
+
+.how-to-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem; }
+  .how-to-container .how-to-section {
+    background: #ddd;
+    border: 1px solid #000;
+    border-radius: 10px; }
+    .how-to-container .how-to-section p {
+      margin: 10px; }
+
+.gui-container {
+  margin-top: 30px;
+  position: relative; }
 
 .scoreboard {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 200px;
+  height: 100px;
   justify-content: space-evenly;
   border: solid 1px black;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   margin: auto;
-  background: black;
+  background: #222;
   color: white;
-  max-width: 1100px; }
-  .scoreboard .timer-container {
-    font-size: 2rem;
-    color: greenyellow;
-    font-family: "Courier New", Courier, monospace; }
+  max-width: 1200px; }
+
+.menu-hud {
+  width: 94%;
+  display: flex;
+  justify-content: space-between;
+  color: #777;
+  font-size: 0.9rem; }
+  .menu-hud .menu-options {
+    display: flex; }
+    .menu-hud .menu-options div {
+      padding: 0 10px; }
+
+.main-hud {
+  position: relative;
+  width: 85%;
+  display: flex;
+  justify-content: space-between; }
+  .main-hud div {
+    width: 33.33%;
+    text-align: center; }
+
+.timer-container {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #98fd00;
+  font-family: "Courier New", Courier, monospace; }
+  .timer-container div {
+    width: 80px;
+    height: 80px;
+    border: 2px solid white;
+    background: black;
+    border-radius: 50%;
+    position: absolute;
+    top: 50px;
+    right: 50%;
+    margin-right: -40px;
+    margin-top: -40px;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
 
 input[type="submit"] {
   margin: 20px 0 0 65px;
   padding: 10px; }
 
 .players-hand {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: auto;
   padding: 10px 0;
   display: flex;
@@ -120,45 +187,65 @@ input[type="submit"] {
       background: black;
       border-radius: 7px; }
   .players-hand .card-in-hand {
-    width: 100px; }
+    width: 115px; }
   .players-hand .multi-values {
     margin: auto;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     width: 600px;
     height: 100px;
     margin-bottom: 20px; }
-  .players-hand .fifteen-count {
-    padding: 20px;
-    width: 400px; }
   .players-hand .combo-sacrifice {
     transform: rotate(90deg);
     z-index: -1; }
   .players-hand .value-options-one {
-    width: 80px;
+    width: 25%;
     height: 80px;
     padding-top: 20px;
-    border: 1px dotted black;
-    border-bottom-left-radius: 50%;
-    border-top-left-radius: 50%;
+    border: 2px solid #ccc;
+    border-bottom-left-radius: 10%;
+    border-top-left-radius: 10%;
     border-collapse: collapse;
     text-align: center;
     font-size: 2rem;
     cursor: pointer;
-    background: #fff; }
+    background: #eee; }
   .players-hand .value-options-two {
-    width: 80px;
+    width: 25%;
     height: 80px;
-    border: 1px dotted black;
+    border: 2px solid #ccc;
     border-collapse: collapse;
     font-size: 2rem;
-    border-top-right-radius: 50%;
-    border-bottom-right-radius: 50%;
+    border-top-right-radius: 10%;
+    border-bottom-right-radius: 10%;
     text-align: center;
     padding-top: 20px;
-    background: #fff;
+    background: #eee;
     cursor: pointer; }
+  .players-hand .fifteen-count {
+    width: 50%;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; }
 
 .combo-round {
   background: rgba(162, 162, 255, 0.7);
   z-index: 2; }
+
+#new-highscore-form {
+  position: absolute;
+  top: 50%;
+  margin-top: -100px;
+  left: 25%;
+  right: 25%;
+  background: #333355;
+  border: 1px solid white;
+  border-radius: 10px;
+  color: white;
+  width: 50%;
+  height: 200px; }
+  #new-highscore-form h3,
+  #new-highscore-form p {
+    text-align: center; }
