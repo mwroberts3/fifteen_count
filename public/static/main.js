@@ -19,6 +19,7 @@ const valueOptionTwo = document.querySelector(".value-options-two");
 const submitCards = document.querySelector(".submit-cards");
 const comboMessage = document.querySelector(".combo-message");
 const hudMessage = document.querySelector(".hud-message");
+const swapCard = document.querySelector(".swap-card");
 const sameColorRed = (color) => color == "hearts" || color == "diamonds";
 const sameColorBlack = (color) => color == "clubs" || color == "spades";
 let pointsValidity = false;
@@ -28,6 +29,7 @@ let comboSkip = false;
 let countdownStart = true;
 let comboCardcount = 0;
 let roundBonusTimer = 0;
+let secondsBonus = 9;
 
 let html = ``;
 // BUILD THE DECK
@@ -119,15 +121,15 @@ const drawCards = (drawSize) => {
     hand.splice(i, 0, deck.pop());
   }
   console.log("deck size:", deck.length, "drawsize:", drawSize);
-  hudMessage.innerText = "Count Round";
+  hudMessage.innerText = "Count";
 };
 drawCards(drawSize);
 
 // write to webpage
-const playersHand = document.querySelector(".show-hand");
+const currentHand = document.querySelector(".show-hand");
 const showHand = () => {
   html = ``;
-  playersHand.innerHTML = html;
+  currentHand.innerHTML = html;
   hand.forEach((card) => {
     if (card["suit"] == "hearts" || card["suit"] == "diamonds") {
       html += `<div class="card-in-hand"><card-t rank="${card["face"]}" suit="${card["suit"]}" valueA ="${card["valueA"]}" valueB ="${card["valueB"]}" cardcolor = "crimson" suitcolor="white" courtcolors="gold,red,green,orange,#000,4"></card-t></div>`;
@@ -136,7 +138,7 @@ const showHand = () => {
     } else {
       html += `<div class="card-in-hand joker"><card-t rank="1" suit="joker" suitcolor="#fff" cardcolor="dodgerblue" letters="J" valueA = "-1" valueB = "0"></div>`;
     }
-    playersHand.innerHTML = html;
+    currentHand.innerHTML = html;
   });
 };
 
@@ -150,14 +152,14 @@ let threeTimerStart = 0;
 function threeMinuteTimer() {
   threeTimerStart = new Date().getTime();
   // hudMessage.innerText = "TIME IS UP!";
-  // playersHand.style.display = "none";
+  // currentHand.style.display = "none";
   const threeMinuteTimerInterval = setInterval(() => {
     let threeTimerFinish = new Date().getTime();
     if (threeTimerFinish - threeTimerStart >= 1000) {
       timer.textContent = `${secondsLeft}`;
       secondsLeft--;
     }
-    if (secondsLeft === -1) {
+    if (secondsLeft <= -1) {
       scoreReview();
       clearInterval(threeMinuteTimerInterval);
     }
@@ -226,7 +228,7 @@ const cardsSubmit = () => {
     reset();
     selectCard();
     playersHandArea.classList.toggle("combo-round");
-    hudMessage.innerText = "Count Round";
+    hudMessage.innerText = "Count";
   }
   if (pointsValidity === true) {
     firstSubmit = true;
@@ -236,12 +238,21 @@ const cardsSubmit = () => {
     submitCards.value = "Draw cards [Shift]";
     comboSkip = true;
     playersHandArea.classList.toggle("combo-round");
-    hudMessage.innerText = "Combo Round!";
+    hudMessage.innerText = "Combo!";
     // adds 7 seconds to clock, if at least half-amount of cards in hand are played
     if (checkedCards.length >= globalCardsInHand.length / 2) {
-      secondsLeft += 8;
-      totalSeconds += 7;
-      console.log(secondsLeft);
+      if (secondsBonus < 3) {
+        secondsBonus = 3;
+      }
+
+      console.log("seconds left", secondsLeft);
+      secondsLeft += secondsBonus + 1;
+      totalSeconds += secondsBonus;
+
+      console.log("seconds bonus +", secondsBonus);
+      secondsBonus--;
+
+      console.log("seconds left", secondsLeft);
     }
     if (checkedCards.length === globalCardsInHand.length) {
       secondsLeft += 22;
@@ -466,6 +477,28 @@ function doubleComboCheck(valueA, comboCardcount) {
   console.log(valueA, comboCardcount, totalPoints);
 }
 
+// SWAP CARD FUNCTION(s)
+swapCard.addEventListener("click", swapCardFunction);
+document.addEventListener("keyup", (e) => {
+  if (e.keyCode === 67) {
+    swapCardFunction();
+  }
+});
+
+function swapCardFunction() {
+  let cardsInHand = document.querySelectorAll(".card-in-hand");
+  console.log("swapped");
+  currentHand.lastChild.classList.toggle("checked");
+  reDeal(cardsInHand, hand);
+  showHand();
+  reset();
+  selectCard();
+  secondsLeft -= 2;
+  fifteenCount = 0;
+  fifteenCountDisplay.textContent = `${fifteenCount}`;
+}
+
+// REDEAL FUNCTION
 function reDeal(cardsInHand, hand) {
   let checkedCards = document.querySelectorAll(".checked");
   let sacrificedCards = document.querySelectorAll(".combo-sacrifice");
@@ -476,6 +509,7 @@ function reDeal(cardsInHand, hand) {
       cardsPlayed.push(card);
     } else if (card.classList.contains("checked")) {
       cardsPlayed.push(card);
+      console.log("cards played", cardsPlayed);
     }
   });
 
@@ -505,6 +539,7 @@ function reDeal(cardsInHand, hand) {
   let numberCheckedCards = 0;
   if (hand.length === 0 && sacrificedCards.length === 0) {
     numberCheckedCards = 10;
+    secondsBonus = 9;
   } else {
     numberCheckedCards = checkedCards.length;
   }
@@ -513,34 +548,11 @@ function reDeal(cardsInHand, hand) {
   drawCards(numberCheckedCards);
 }
 
-function deckCheck(drawSize) {
-  if (deck.length <= drawSize) {
-    console.log("deck is less than drawsize");
-    reBuildDeck();
-  }
-}
-
-function reBuildDeck() {
-  let tempDeck = [];
-  deck.forEach((card) => {
-    tempDeck.push(card);
-  });
-  deck = [];
-  buildDeck(deck);
-  deck = shuffle(deck, cardCount);
-  tempDeck.forEach((card) => {
-    deck.push(card);
-  });
-  console.log(tempDeck, deck);
-}
-
-// POST GAME FUNCTIONS
-// in addition to global rankings, may also be worth storing in local storage
+// HIGHSCORE CHECK & RANKING FUNCTIONS
 // when entering name, might want to find a regular expression that with block swear words
-
 function scoreReview() {
   hudMessage.innerText = "TIME IS UP!";
-  playersHand.style.display = "none";
+  currentHand.style.display = "none";
   console.log("total seconds", totalSeconds);
 
   db.collection("highscores")
@@ -601,4 +613,26 @@ function newHighscore(name) {
       location.reload();
     })
     .catch((err) => console.log(err));
+}
+
+// DECK CHECK AND REBUILD FUNCTIONS
+function deckCheck(drawSize) {
+  if (deck.length <= drawSize) {
+    console.log("deck is less than drawsize");
+    reBuildDeck();
+  }
+}
+
+function reBuildDeck() {
+  let tempDeck = [];
+  deck.forEach((card) => {
+    tempDeck.push(card);
+  });
+  deck = [];
+  buildDeck(deck);
+  deck = shuffle(deck, cardCount);
+  tempDeck.forEach((card) => {
+    deck.push(card);
+  });
+  console.log(tempDeck, deck);
 }
