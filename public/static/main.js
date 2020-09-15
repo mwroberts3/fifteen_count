@@ -29,7 +29,8 @@ let comboSkip = false;
 let countdownStart = true;
 let comboCardcount = 0;
 let roundBonusTimer = 0;
-let secondsBonus = 9;
+let secondsBonus = 12;
+let fullHandBonus = 35;
 
 let html = ``;
 // BUILD THE DECK
@@ -255,8 +256,10 @@ const cardsSubmit = () => {
       console.log("seconds left", secondsLeft);
     }
     if (checkedCards.length === globalCardsInHand.length) {
-      secondsLeft += 22;
-      totalSeconds += 21;
+      secondsLeft += fullHandBonus;
+      totalSeconds += fullHandBonus;
+
+      fullHandBonus--;
     }
   }
   if (pointsValidity === true && comboSubmit === true) {
@@ -509,7 +512,7 @@ function reDeal(cardsInHand, hand) {
       cardsPlayed.push(card);
     } else if (card.classList.contains("checked")) {
       cardsPlayed.push(card);
-      console.log("cards played", cardsPlayed);
+      // console.log("cards played", cardsPlayed);
     }
   });
 
@@ -539,7 +542,7 @@ function reDeal(cardsInHand, hand) {
   let numberCheckedCards = 0;
   if (hand.length === 0 && sacrificedCards.length === 0) {
     numberCheckedCards = 10;
-    secondsBonus = 9;
+    secondsBonus = 12;
   } else {
     numberCheckedCards = checkedCards.length;
   }
