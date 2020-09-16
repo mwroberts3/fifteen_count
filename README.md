@@ -37,3 +37,5 @@ things to fix as of 7/26/20:
 -the other new idea of having the time bonus limit be have of hand seems like a decent idea
 
 -NEED PAUSE BUTTON
+
+-swap card button swaps ALL checked cards, not just the last one in the hand

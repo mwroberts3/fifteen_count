@@ -132,12 +132,26 @@ const showHand = () => {
   html = ``;
   currentHand.innerHTML = html;
   hand.forEach((card) => {
-    if (card["suit"] == "hearts" || card["suit"] == "diamonds") {
-      html += `<div class="card-in-hand"><card-t rank="${card["face"]}" suit="${card["suit"]}" valueA ="${card["valueA"]}" valueB ="${card["valueB"]}" cardcolor = "crimson" suitcolor="white" courtcolors="gold,red,green,orange,#000,4"></card-t></div>`;
+    console.log(card["valueA"]);
+    if (card["suit"] === "hearts" || card["suit"] === "diamonds") {
+      html += `
+      <div class="card-in-hand card-sprite red-${card["face"]}">
+        <card-t rank="${card["face"]}" suit="${card["suit"]}" valueA ="${card["valueA"]}" valueB ="${card["valueB"]}">
+        </card-t>
+      </div>
+      `;
     } else if (card["suit"] == "spades" || card["suit"] == "clubs") {
-      html += `<div class="card-in-hand"><card-t rank="${card["face"]}" suit="${card["suit"]}" valueA ="${card["valueA"]}" valueB ="${card["valueB"]}" cardcolor="black" suitcolor="#fff"></card-t></div>`;
+      html += `
+      <div class="card-in-hand card-sprite black-${card["face"]}">
+        <card-t rank="${card["face"]}" suit="${card["suit"]}" valueA ="${card["valueA"]}" valueB ="${card["valueB"]}">
+        </card-t>
+      </div>`;
     } else {
-      html += `<div class="card-in-hand joker"><card-t rank="1" suit="joker" suitcolor="#fff" cardcolor="dodgerblue" letters="J" valueA = "-1" valueB = "0"></div>`;
+      html += `
+      <div class="card-in-hand card-sprite joker">
+        <card-t rank="1" suit="joker" valueA = "-1" valueB = "0">
+        </card-t>
+      </div>`;
     }
     currentHand.innerHTML = html;
   });
@@ -150,11 +164,9 @@ const timer = document.querySelector(".timer");
 let totalSeconds = 100;
 let secondsLeft = 99;
 let threeTimerStart = 0;
-function threeMinuteTimer() {
-  threeTimerStart = new Date().getTime();
-  // hudMessage.innerText = "TIME IS UP!";
-  // currentHand.style.display = "none";
-  const threeMinuteTimerInterval = setInterval(() => {
+  let gameTimer  = setInterval(timerFunction, 1000)
+
+  function timerFunction() {
     let threeTimerFinish = new Date().getTime();
     if (threeTimerFinish - threeTimerStart >= 1000) {
       timer.textContent = `${secondsLeft}`;
@@ -162,11 +174,9 @@ function threeMinuteTimer() {
     }
     if (secondsLeft <= -1) {
       scoreReview();
-      clearInterval(threeMinuteTimerInterval);
+      clearInterval(gameTimer );
     }
-  }, 1000);
-  // console.log(threeTimerStart.getTime());
-}
+  }
 
 const reset = () => {
   pointsValidity = false;
@@ -188,15 +198,15 @@ const comboCheck = () => {
   console.log(checkedCards.length);
   checkedCards.forEach((card) => {
     if (
-      card.children[0]["rank"] == "ace" &&
+      card.children[0].getAttribute("rank") == "ace" &&
       fifteenCount === 15 &&
       checkedCards.length === 1
     ) {
       pointsInPlay = 15;
       pointsValidity = true;
       console.log("true ace");
-    } else if (card.children[0]["suit"] != "joker") {
-      checkedCardSuits.push(card.children[0]["suit"]);
+    } else if (card.children[0].getAttribute("rank") != "joker") {
+      checkedCardSuits.push(card.children[0].getAttribute("suit"));
       comboCardcount++;
     }
   });
@@ -344,7 +354,6 @@ function selectCard() {
     // let cardRank = card.querySelector("card-t").getAttribute("rank");
     card.addEventListener("click", () => {
       if (countdownStart) {
-        threeMinuteTimer();
         countdownStart = false;
       }
       if (card.classList.contains("checked")) {
@@ -457,15 +466,15 @@ function doubleComboCheck(valueA, comboCardcount) {
   let checkedCardSuits = [];
   console.log("checked cards", checkedCards, checkedCards.length);
   checkedCards.forEach((card) => {
-    if (card.children[0]["suit"] != "joker") {
-      checkedCardSuits.push(card.children[0]["suit"]);
+    if (card.children[0].getAttribute("suit") != "joker") {
+      checkedCardSuits.push(card.children[0].getAttribute("suit"));
       comboCardcount++;
       console.log("comboCardcount", comboCardcount);
     }
   });
   sacrificedCards.forEach((card) => {
-    if (card.children[0]["suit"] != "joker") {
-      checkedCardSuits.push(card.children[0]["suit"]);
+    if (card.children[0].getAttribute("suit") != "joker") {
+      checkedCardSuits.push(card.children[0].getAttribute("suit"));
     }
   });
   if (
@@ -480,7 +489,7 @@ function doubleComboCheck(valueA, comboCardcount) {
   console.log(valueA, comboCardcount, totalPoints);
 }
 
-// SWAP CARD FUNCTION(s)
+// SWAP CARD FUNCTION(s) & Event Listeners
 swapCard.addEventListener("click", swapCardFunction);
 document.addEventListener("keyup", (e) => {
   if (e.keyCode === 67) {
@@ -491,7 +500,8 @@ document.addEventListener("keyup", (e) => {
 function swapCardFunction() {
   let cardsInHand = document.querySelectorAll(".card-in-hand");
   console.log("swapped");
-  currentHand.lastChild.classList.toggle("checked");
+  console.log(cardsInHand[cardsInHand.length - 1].classList);
+  cardsInHand[cardsInHand.length - 1].classList.toggle("checked");
   reDeal(cardsInHand, hand);
   showHand();
   reset();
@@ -506,26 +516,29 @@ function reDeal(cardsInHand, hand) {
   let checkedCards = document.querySelectorAll(".checked");
   let sacrificedCards = document.querySelectorAll(".combo-sacrifice");
   let cardsPlayed = [];
-  // console.log(cardsInHand, hand);
+  console.log("cards in hand", cardsInHand);
+  console.log("hand", hand);
   cardsInHand.forEach((card) => {
     if (card.classList.contains("combo-sacrifice")) {
       cardsPlayed.push(card);
     } else if (card.classList.contains("checked")) {
       cardsPlayed.push(card);
-      // console.log("cards played", cardsPlayed);
+      console.log("cards played", cardsPlayed);
     }
   });
 
   for (let j = 0; j < cardsPlayed.length; j++) {
     for (let i = 0; i < hand.length; i++) {
+      console.log(cardsPlayed[j].children[0].getAttribute("suit"));
+      console.log(hand[i]["suit"]);
       if (
-        cardsPlayed[j].children[0]["suit"] == hand[i]["suit"] &&
-        cardsPlayed[j].children[0]["rank"] == hand[i]["face"]
+        cardsPlayed[j].children[0].getAttribute("suit") == hand[i]["suit"] &&
+        cardsPlayed[j].children[0].getAttribute("rank") == hand[i]["face"]
       ) {
         hand.splice(i, 1);
         break;
       } else if (
-        cardsPlayed[j].children[0]["suit"] == "joker" &&
+        cardsPlayed[j].children[0].getAttribute("suit") == "joker" &&
         hand[i]["suit"] == null
       ) {
         hand.splice(i, 1);
@@ -639,3 +652,49 @@ function reBuildDeck() {
   });
   console.log(tempDeck, deck);
 }
+
+// Pause Function(s) & Event Listeners
+let gamePause = false;
+let pauseScreen = document.querySelector("#pause-screen");
+let pauseButton = document.querySelector(".menu-options");
+let timeRemaining = document.querySelector(".time-remaining");
+
+pauseButton.addEventListener("click", pauseGame);
+document.addEventListener("keyup", (e) => {
+  if (e.keyCode === 32 && !gamePause) {
+    pauseGame();
+  } else if (e.keyCode === 32 && gamePause) {
+    resumeGame();
+  }
+})
+
+function pauseGame() {
+  gamePause = true;
+  clearInterval(gameTimer );
+  pauseScreen.classList.remove("hidden");
+  timeRemaining.textContent = `${secondsLeft + 1}`;
+  
+  setInterval(() => {
+    timeRemaining.innerHTML = `&nbsp;&nbsp;`;
+  }, 500)
+
+  setInterval(() => {
+    timeRemaining.textContent = `${secondsLeft + 1}`;
+  }, 1000)
+  
+  
+  
+  pauseScreen.addEventListener("click", (e) => {
+    console.log(e);
+    if (e.target.tagName !== "BUTTON") {
+      resumeGame();
+    }
+  });
+}
+
+function resumeGame() {
+  gameTimer  = setInterval(timerFunction, 1000);
+  gamePause = false;
+  pauseScreen.classList.add("hidden");
+}
+

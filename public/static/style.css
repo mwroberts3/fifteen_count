@@ -12,8 +12,10 @@ body {
   background: #ccc; }
 
 a {
-  color: #fff;
+  color: #777;
   text-decoration: none; }
+  a:hover {
+    text-decoration: none; }
 
 .container {
   margin: 0 auto; }
@@ -41,7 +43,7 @@ a {
   margin: 0 auto; }
 
 .hidden {
-  display: none; }
+  visibility: hidden !important; }
 
 .index-header {
   width: 100%; }
@@ -114,7 +116,10 @@ a {
   .menu-hud .menu-options {
     display: flex; }
     .menu-hud .menu-options div {
-      padding: 0 10px; }
+      cursor: pointer;
+      margin: 0 10px; }
+      .menu-hud .menu-options div:hover {
+        color: #ddd; }
 
 .main-hud {
   position: relative;
@@ -166,7 +171,7 @@ input[type="submit"] {
   .players-hand h4 {
     text-align: center; }
   .players-hand input[type="button"] {
-    width: 40%;
+    width: 30%;
     padding: 10px;
     font-size: 1.25rem;
     font-weight: bold;
@@ -179,17 +184,14 @@ input[type="submit"] {
       border: none; }
   .players-hand card-t {
     cursor: pointer;
-    transition: all 0.2s ease; }
+    transition: all 0.2s ease;
+    border-radius: 10px;
+    color: white; }
   .players-hand .show-hand {
     display: flex;
     justify-content: space-evenly; }
     .players-hand .show-hand .checked {
-      transform: rotate(14deg);
-      border: 2px solid black;
-      background: black;
-      border-radius: 7px; }
-  .players-hand .card-in-hand {
-    width: 115px; }
+      transform: rotate(14deg); }
   .players-hand .combo-sacrifice {
     transform: rotate(90deg);
     z-index: -1; }
@@ -273,3 +275,18 @@ input[type="submit"] {
   #new-highscore-form h3,
   #new-highscore-form p {
     text-align: center; }
+
+#pause-screen {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  border-radius: 10px;
+  color: white;
+  background: #0b2215;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+  #pause-screen * {
+    padding: 5px; }

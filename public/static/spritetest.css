@@ -1,0 +1,115 @@
+.card-sprite {
+  border: 2px solid black;
+  border-radius: 15px;
+  min-width: 100px;
+  min-height: 154px;
+  cursor: pointer;
+}
+
+.red-two {
+  background: url("/public/static/spritesheet.png") 0 0;
+}
+
+.red-three {
+  background: url("/public/static/spritesheet.png") -144.5px 0;
+}
+
+.red-four {
+  background: url("/public/static/spritesheet.png") -289px 0;
+}
+
+.red-five {
+  background: url("/public/static/spritesheet.png") -433.5px 0;
+}
+
+.red-six {
+  background: url("/public/static/spritesheet.png") -578px 0;
+}
+
+.red-seven {
+  background: url("/public/static/spritesheet.png") -722.5px 0;
+}
+
+.red-eight {
+  background: url("/public/static/spritesheet.png") -867px 0;
+}
+
+.red-nine {
+  background: url("/public/static/spritesheet.png") -1011.5px 0;
+}
+
+.red-ten {
+  background: url("/public/static/spritesheet.png") -1156px 0;
+}
+
+.red-jack {
+  background: url("/public/static/spritesheet.png") -1300.5px 0;
+}
+
+.red-queen {
+  background: url("/public/static/spritesheet.png") -1300.5px 0;
+}
+
+.red-king {
+  background: url("/public/static/spritesheet.png") -1300.5px 0;
+}
+
+.red-ace {
+  background: url("/public/static/spritesheet.png") -1444.5px 0;
+}
+
+.black-two {
+  background: url("/public/static/spritesheet.png") 0 -231px;
+}
+
+.black-three {
+  background: url("/public/static/spritesheet.png") -144.5px -231px;
+}
+
+.black-four {
+  background: url("/public/static/spritesheet.png") -289px -231px;
+}
+
+.black-five {
+  background: url("/public/static/spritesheet.png") -433.5px -231px;
+}
+
+.black-six {
+  background: url("/public/static/spritesheet.png") -578px -231px;
+}
+
+.black-seven {
+  background: url("/public/static/spritesheet.png") -722.5px -231px;
+}
+
+.black-eight {
+  background: url("/public/static/spritesheet.png") -867px -231px;
+}
+
+.black-nine {
+  background: url("/public/static/spritesheet.png") -1011.5px -231px;
+}
+
+.black-ten {
+  background: url("/public/static/spritesheet.png") -1156px -231px;
+}
+
+.black-jack {
+  background: url("/public/static/spritesheet.png") -1300.5px -231px;
+}
+
+.black-queen {
+  background: url("/public/static/spritesheet.png") -1300.5px -231px;
+}
+
+.black-king {
+  background: url("/public/static/spritesheet.png") -1300.5px -231px;
+}
+
+.black-ace {
+  background: url("/public/static/spritesheet.png") -1445px -231px;
+}
+
+.joker {
+  background: url("/public/static/spritesheet.png") 0 -465px;
+}
