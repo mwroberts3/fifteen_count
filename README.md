@@ -32,10 +32,4 @@ things to fix as of 7/26/20:
 
 -Maybe add a function to remove right-most card for a new one at the cost of time...maybe start at -3 seconds per swap
 
--was able to use all cards to get Fifteen Count 1/~10 times
-
--the other new idea of having the time bonus limit be have of hand seems like a decent idea
-
--NEED PAUSE BUTTON
-
--swap card button swaps ALL checked cards, not just the last one in the hand
+-some sort of highscore window should still pop up, even if not connected to the internet...right now it skips the highscore window if not connected

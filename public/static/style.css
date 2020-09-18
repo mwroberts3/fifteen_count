@@ -17,6 +17,9 @@ a {
   a:hover {
     text-decoration: none; }
 
+button:focus {
+  outline: none; }
+
 .container {
   margin: 0 auto; }
 
@@ -43,7 +46,7 @@ a {
   margin: 0 auto; }
 
 .hidden {
-  visibility: hidden !important; }
+  display: none !important; }
 
 .index-header {
   width: 100%; }
@@ -84,12 +87,35 @@ a {
   font-size: 1rem; }
   .how-to-container .how-to-section {
     background: #ddd;
-    border: 1px solid #000;
+    border: 4px solid #ddd;
     border-radius: 10px; }
     .how-to-container .how-to-section p {
-      margin: 10px; }
+      padding: 0 10px; }
+    .how-to-container .how-to-section h3,
+    .how-to-container .how-to-section h4 {
+      text-align: center; }
+    .how-to-container .how-to-section h4 {
+      margin-top: 10px; }
+
+.high-score-container {
+  background: #ddd;
+  border: 4px solid #ddd;
+  border-radius: 10px; }
+  .high-score-container p {
+    text-align: center; }
+  .high-score-container h3 {
+    text-align: center; }
+  .high-score-container table {
+    margin: 0 auto;
+    padding: 5px; }
+    .high-score-container table td {
+      text-align: center; }
+    .high-score-container table .points-display {
+      font-size: 1.65rem; }
 
 .gui-container {
+  border: 4px solid #ddd;
+  border-radius: 10px;
   margin-top: 30px;
   position: relative; }
 
@@ -99,7 +125,6 @@ a {
   align-items: center;
   height: 100px;
   justify-content: space-evenly;
-  border: solid 1px black;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   margin: auto;
@@ -162,7 +187,6 @@ input[type="submit"] {
   flex-direction: column;
   justify-content: center;
   align-items: space-evenly;
-  border: 1px solid black;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   background: rgba(255, 217, 146, 0.7);
@@ -171,6 +195,7 @@ input[type="submit"] {
   .players-hand h4 {
     text-align: center; }
   .players-hand input[type="button"] {
+    cursor: pointer;
     width: 30%;
     padding: 10px;
     font-size: 1.25rem;
@@ -263,18 +288,38 @@ input[type="submit"] {
 #new-highscore-form {
   position: absolute;
   top: 50%;
-  margin-top: -100px;
+  margin-top: -150px;
   left: 25%;
   right: 25%;
-  background: #333355;
-  border: 1px solid white;
+  background: #222;
+  border: 4px solid #ddd;
   border-radius: 10px;
   color: white;
   width: 50%;
-  height: 200px; }
+  height: 300px;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
   #new-highscore-form h3,
   #new-highscore-form p {
+    margin-bottom: 15px; }
+  #new-highscore-form div {
+    display: block;
+    width: 40%;
     text-align: center; }
+  #new-highscore-form input[type="text"] {
+    width: 60%;
+    height: 27px;
+    border-radius: 5px;
+    padding: 3px;
+    border: none; }
+  #new-highscore-form input[type="submit"] {
+    width: 100%;
+    margin-left: 0; }
+  #new-highscore-form input:focus {
+    outline: none; }
 
 #pause-screen {
   position: absolute;

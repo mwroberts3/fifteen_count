@@ -4,10 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fifteen Count - Highscores</title>
+    <link rel="stylesheet" href="static/style.css" />
   </head>
   <body>
-    <div class="container">
-      <ol class="score-display"></ol>
+    <div class="pad-1"></div>
+    <div class="high-score-container">
+      <table class="score-display">
+        <h3>Top 1000 Scores</h3>
+        <p class="error-msg"></p>
+        <th>&nbsp;</th>
+        <th>Points</th>
+        <th>Cards Played / PPC</th>
+        <th>Seconds</th>
+        <th>Name</th>
+        <th>Date</th>
+      </table>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
@@ -27,6 +38,11 @@
       firebase.initializeApp(firebaseConfig);
       const db = firebase.firestore();
     </script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.28.0/moment.min.js"
+      integrity="sha512-Q1f3TS3vSt1jQ8AwP2OuenztnLU6LwxgyyYOG1jgMW/cbEMHps/3wjvnl1P3WTrF3chJUWEoxDUEjMxDV8pujg=="
+      crossorigin="anonymous"
+    ></script>
     <script src="static/retrieveHighScores.js"></script>
   </body>
 </html>

@@ -499,8 +499,14 @@ document.addEventListener("keyup", (e) => {
 
 function swapCardFunction() {
   let cardsInHand = document.querySelectorAll(".card-in-hand");
-  console.log("swapped");
-  console.log(cardsInHand[cardsInHand.length - 1].classList);
+
+  // unchecked, already checked cards
+  cardsInHand.forEach((card) => {
+    if (card.classList.contains("checked")) {
+      card.classList.toggle("checked");
+    }
+  })
+
   cardsInHand[cardsInHand.length - 1].classList.toggle("checked");
   reDeal(cardsInHand, hand);
   showHand();
