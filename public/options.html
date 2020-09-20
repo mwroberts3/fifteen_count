@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Options</title>
+    <link rel="stylesheet" href="static/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="pad-1"></div>
+      <nav class="how-to-nav">
+        <ul>
+          <li class="controls option-selected">Controls</li>
+          <li class="appearance">Appearance</li>
+          <li class="about-game">About</li>
+        </ul>
+      </nav>
+      <div class="options-container">
+        <section id="controls">
+          <h2>Controls</h2>
+          <p>Click to change key:</p>
+          <p>
+            <span class="game-btn actionBtn">[Shift]</span>Sumbit cards, choose
+            higher value option
+          </p>
+          <p>
+            <span class="game-btn lowValBtn">[Ctrl]</span>choose lower value
+            option
+          </p>
+          <p><span class="game-btn pauseBtn">[A]</span>Uncheck all cards</p>
+          <p><span class="game-btn uncheckAllBtn">[C]</span>Swap card</p>
+          <p><span class="game-btn pauseBtn">[Space]</span>Pause game</p>
+        </section>
+        <section id="appearance" class="hidden">
+          <h2>Appearance</h2>
+          choose card colors and background
+        </section>
+        <section id="about-game" class="hidden">
+          <h2>About Game</h2>
+          this game was created in 2020
+        </section>
+      </div>
+      <div class="center">
+        <a href="index.html">
+          <button class="main-btn">Back</button>
+        </a>
+      </div>
+      <div class="pad-1"></div>
+      <div class="button-select hidden">
+        <p>Please select new button</p>
+      </div>
+    </div>
+    <script src="static/options.js"></script>
+    <script src="static/main.js"></script>
+  </body>
+</html>

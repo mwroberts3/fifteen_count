@@ -18,13 +18,13 @@ db.collection("highscores")
           </span>
         </td>
         <td>
-          ${doc.data().cards_played} /           ${Math.round(doc.data().score / doc.data().cards_played)}
+        ${doc.data().name}
+      </td>
+        <td>
+          ${doc.data().cards_played}(${Math.round(doc.data().score / doc.data().cards_played)})
         </td>
         <td>
           ${doc.data().seconds_played}
-        </td>
-        <td>
-          ${doc.data().name}
         </td>
         <td>
           ${moment(doc.data().date.toDate()).format('MMM D YYYY')}
@@ -33,4 +33,4 @@ db.collection("highscores")
       `;
       scoreRank++;
     });
-  }).catch((err) => errorMsg.textContent = `not connected to internet`);
+  }).catch((err) => errorMsg.textContent = `not connected to internet, ${err}`);

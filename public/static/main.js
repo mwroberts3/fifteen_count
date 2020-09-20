@@ -1,4 +1,45 @@
-// DISPLAY POINTS
+// CONTROL OPTIONS (from options page)
+// IN PROGRESS
+// not sure how to change these on one screen and use on another without local storage...not sure if local storage works with steam...maybe with steam tools or maybe vue can do this, or electron tools
+const actionBtn = "ShiftLeft";
+const lowValBtn = "ControlLeft";
+const uncheckAllBtn = "KeyA";
+const swapCard = "KeyC";
+const pauseBtn = "Space";
+
+const buttonOptions = document.querySelector("#controls");
+const buttonSelectPopup = document.querySelector(".button-select");
+
+if (buttonOptions) {
+  buttonOptions.addEventListener("click", (e) => {
+    if (e.target.tagName === "SPAN"){
+      buttonSelectPopup.classList.remove("hidden");
+      let buttonToReplace = e.target;
+  
+      document.addEventListener("keyup", (e) => {
+        console.log(e.code);
+        buttonSelectPopup.classList.add("hidden");
+        buttonToReplace.textContent = `[${e.code}]`;
+        buttonToReplace = '';
+      })
+    }
+  });
+}
+// *************************************
+
+// DOM sections
+const playersHandArea = document.querySelector(".players-hand");
+const valueOptionOne = document.querySelector(".value-options-one");
+let globalCardsInHand = [];
+const valueOptionTwo = document.querySelector(".value-options-two");
+const submitCards = document.querySelector(".submit-cards");
+const comboMessage = document.querySelector(".combo-message");
+const hudMessage = document.querySelector(".hud-message");
+const swapButton = document.querySelector(".swap-container");
+const sameColorRed = (color) => color == "hearts" || color == "diamonds";
+const sameColorBlack = (color) => color == "clubs" || color == "spades";
+
+// Display
 const totalPointsDisplay = document.querySelector(".total-points");
 const fifteenCountDisplay = document.querySelector(".fifteen-count");
 const PointsDisplay = document.querySelector(".points-in-play");
@@ -11,29 +52,22 @@ totalPointsDisplay.innerHTML = `${totalPoints} Points`;
 fifteenCountDisplay.innerHTML = `${fifteenCount}`;
 totalCardsPlayedDisplay.innerHTML = `${totalCardsPlayed} Cards Played`;
 
-// GAMEPLAY VARIABLES & SWITCHES
-const playersHandArea = document.querySelector(".players-hand");
-const valueOptionOne = document.querySelector(".value-options-one");
-let globalCardsInHand = [];
-const valueOptionTwo = document.querySelector(".value-options-two");
-const submitCards = document.querySelector(".submit-cards");
-const comboMessage = document.querySelector(".combo-message");
-const hudMessage = document.querySelector(".hud-message");
-const swapCard = document.querySelector(".swap-card");
-const sameColorRed = (color) => color == "hearts" || color == "diamonds";
-const sameColorBlack = (color) => color == "clubs" || color == "spades";
+// Gameplay variables & switches
 let pointsValidity = false;
 let firstSubmit = false;
 let comboSubmit = false;
 let comboSkip = false;
 let countdownStart = true;
 let comboCardcount = 0;
+
 let roundBonusTimer = 0;
+
 let secondsBonus = 12;
 let fullHandBonus = 35;
 
 let html = ``;
-// BUILD THE DECK
+
+// Build Deck
 let cardCount = 54;
 let deck = [];
 
@@ -91,6 +125,7 @@ const buildDeck = (deck) => {
 };
 
 buildDeck(deck);
+
 
 // SHUFFLE DECK
 const shuffle = (deck, cardCount) => {
@@ -159,12 +194,18 @@ const showHand = () => {
 
 showHand();
 
-// SET 100 SECOND GAMEPLAY TIMER
+
+// Set 100 second game timer and set-up bonus time display
 const timer = document.querySelector(".timer");
 let totalSeconds = 100;
 let secondsLeft = 99;
 let threeTimerStart = 0;
-  let gameTimer  = setInterval(timerFunction, 1000)
+
+
+const bonusTimeDisplay = document.querySelector(".bonus-time")
+
+  
+let gameTimer  = setInterval(timerFunction, 1000)
 
   function timerFunction() {
     let threeTimerFinish = new Date().getTime();
@@ -173,6 +214,8 @@ let threeTimerStart = 0;
       secondsLeft--;
     }
     if (secondsLeft <= -1) {
+      pauseButton.removeEventListener("click", pauseGame);
+      document.removeEventListener("keyup", buttonPause); 
       scoreReview();
       clearInterval(gameTimer );
     }
@@ -184,6 +227,8 @@ const reset = () => {
   comboSubmit = false;
   comboSkip = false;
   comboCardcount = 0;
+  setSwapPermission();
+  setUncheckAllPermission();
   submitCards.value = "Play Cards [Shift]";
   // comboMessage.innerText = "";
 };
@@ -232,7 +277,19 @@ const comboCheck = () => {
 
 // SUBMITTING CARDS
 const cardsSubmit = () => {
+  // make sure multi-value cards have a value selected
   let checkedCards = document.querySelectorAll(".checked");
+  checkedCards.forEach((card) => {
+    console.log(card.children[0].getAttribute("rank"));
+    if (!card.classList.contains("value-selected") && pointsValidity) {
+      if (card.children[0].getAttribute("rank") === "jack" || card.children[0].getAttribute("rank") === "queen" || card.children[0].getAttribute("rank") === "king" || card.children[0].getAttribute("rank") === "ace"){
+        card.classList.remove("checked");
+      }
+    }
+  });
+
+  checkedCards = document.querySelectorAll(".checked");
+
   if (comboSkip === true) {
     reDeal(globalCardsInHand, hand);
     showHand();
@@ -242,7 +299,6 @@ const cardsSubmit = () => {
     hudMessage.innerText = "Count";
   }
   if (pointsValidity === true) {
-    firstSubmit = true;
     totalPoints += pointsInPlay;
     pointsInPlay = 0;
     fifteenCount = 0;
@@ -251,23 +307,50 @@ const cardsSubmit = () => {
     playersHandArea.classList.toggle("combo-round");
     hudMessage.innerText = "Combo!";
     // adds 7 seconds to clock, if at least half-amount of cards in hand are played
-    if (checkedCards.length >= globalCardsInHand.length / 2) {
+    if (checkedCards.length >= globalCardsInHand.length / 2 && !firstSubmit) {
+
       if (secondsBonus < 3) {
         secondsBonus = 3;
       }
 
       console.log("seconds left", secondsLeft);
+
       secondsLeft += secondsBonus + 1;
       totalSeconds += secondsBonus;
 
+      bonusTimeDisplay.textContent = `+${secondsBonus}`
+      setTimeout(() => {
+
+        bonusTimeDisplay.textContent = ``;
+      }, 1000)
+
+
       console.log("seconds bonus +", secondsBonus);
+
       secondsBonus--;
 
       console.log("seconds left", secondsLeft);
     }
+
+    firstSubmit = true;
+    setSwapPermission();
+    setUncheckAllPermission();
+
     if (checkedCards.length === globalCardsInHand.length) {
       secondsLeft += fullHandBonus;
       totalSeconds += fullHandBonus;
+
+      // these will have game skip combo round after playing a full hand
+      comboSubmit = true;
+      playersHandArea.classList.toggle("combo-round");
+
+      bonusTimeDisplay.textContent = `+${(secondsBonus + 1) + fullHandBonus}`
+
+      setTimeout(() => {
+
+        bonusTimeDisplay.textContent = ``;
+      }, 1000)
+
 
       fullHandBonus--;
     }
@@ -293,12 +376,18 @@ document.addEventListener("keyup", (e) => {
     roundBonusCheck();
   }
 });
+
 submitCards.addEventListener("click", roundBonusCheck);
 playersHandArea.addEventListener("dblclick", roundBonusCheck);
 
+
+
 function roundBonusCheck() {
+
   let roundBonusTimerCheck = new Date();
+
   let roundBonusPoints = 0;
+
   let roundBonuses = [
     0.1,
     1.09,
@@ -313,12 +402,19 @@ function roundBonusCheck() {
   ];
   let checkedCards = document.querySelectorAll(".checked").length;
   let diff =
+
+
     (roundBonusTimerCheck.getTime() - roundBonusTimer.getTime()) / 1000;
   diff = Math.round(diff);
 
   if (diff <= 9 && firstSubmit === false && pointsValidity === true) {
+
+
     roundBonusPoints = pointsInPlay * roundBonuses[diff] - pointsInPlay;
+
+
     roundBonusPoints = Math.round(roundBonusPoints);
+
     totalPoints += roundBonusPoints + checkedCards;
   }
   console.log(
@@ -326,11 +422,15 @@ function roundBonusCheck() {
     diff,
     "points in play:",
     pointsInPlay,
+
     "speed bonus points:",
+
     roundBonusPoints,
     "checked cards: ",
     checkedCards,
+
     "total bonus points: ",
+
     roundBonusPoints + checkedCards
   );
 
@@ -339,9 +439,15 @@ function roundBonusCheck() {
 
 // SELECTING CARDS
 function selectCard() {
+
+  setSwapPermission();
+  setUncheckAllPermission();
+
   roundBonusTimer = new Date();
   let cardsInHand = document.querySelectorAll(".card-in-hand");
   globalCardsInHand = cardsInHand;
+
+
   cardsInHand.forEach((card) => {
     let valueA = parseInt(
       card.querySelector("card-t").getAttribute("valueA"),
@@ -351,22 +457,23 @@ function selectCard() {
       card.querySelector("card-t").getAttribute("valueB"),
       10
     );
-    // let cardRank = card.querySelector("card-t").getAttribute("rank");
     card.addEventListener("click", () => {
       if (countdownStart) {
         countdownStart = false;
       }
-      if (card.classList.contains("checked")) {
+      if (card.classList.contains("checked") && !firstSubmit) {
         card.classList.toggle("checked");
         valueOptionOne.innerText = "-";
         valueOptionTwo.innerText = "-";
         if (valueB > 0 && card.classList.contains("A")) {
           fifteenCount -= valueA;
           card.classList.toggle("A");
+          card.classList.remove("value-selected");
           fifteenCountDisplay.innerHTML = `${fifteenCount}`;
         } else if (valueB > 0 && card.classList.contains("B")) {
           fifteenCount -= valueB;
           card.classList.toggle("B");
+          card.classList.remove("value-selected");
           fifteenCountDisplay.innerHTML = `${fifteenCount}`;
         } else if (valueB === 0) {
           fifteenCount -= valueA;
@@ -375,8 +482,11 @@ function selectCard() {
         fifteenCountDisplay.innerHTML = `${fifteenCount}`;
 
         console.log("Fifteen Count:", fifteenCount);
-      } else if (firstSubmit === true) {
-        if (!card.classList.contains("checked")) {
+      } 
+      // after initial checked cards have been played
+      else if (firstSubmit) {
+        // allows players to combo any card except a joker
+        if (!card.classList.contains("checked") && card.children[0].getAttribute("suit") !== "joker") {
           card.classList.toggle("combo-sacrifice");
           doubleComboCheck(valueA, comboCardcount);
         }
@@ -393,6 +503,7 @@ function selectCard() {
               fifteenCount += valueA;
               fifteenCountDisplay.innerHTML = `${fifteenCount}`;
               card.classList.toggle("A");
+              card.classList.add("value-selected");
               comboCheck();
             }
           });
@@ -406,6 +517,7 @@ function selectCard() {
                 fifteenCount += valueA;
                 fifteenCountDisplay.innerHTML = `${fifteenCount}`;
                 card.classList.toggle("A");
+                card.classList.add("value-selected");
                 comboCheck();
               }
             }
@@ -419,6 +531,7 @@ function selectCard() {
               fifteenCount += valueB;
               fifteenCountDisplay.innerHTML = `${fifteenCount}`;
               card.classList.toggle("B");
+              card.classList.add("value-selected");
               comboCheck();
             }
           });
@@ -432,6 +545,7 @@ function selectCard() {
                 fifteenCount += valueB;
                 fifteenCountDisplay.innerHTML = `${fifteenCount}`;
                 card.classList.toggle("B");
+                card.classList.add("value-selected");
                 comboCheck();
               }
             }
@@ -490,14 +604,24 @@ function doubleComboCheck(valueA, comboCardcount) {
 }
 
 // SWAP CARD FUNCTION(s) & Event Listeners
-swapCard.addEventListener("click", swapCardFunction);
-document.addEventListener("keyup", (e) => {
-  if (e.keyCode === 67) {
-    swapCardFunction();
+function setSwapPermission() {
+  console.log(firstSubmit);
+  if (firstSubmit) {
+    swapButton.removeEventListener("click", swapButtonFunction);
+    document.removeEventListener("keyup", swapButtonPush);
+  } else if (!firstSubmit){
+    swapButton.addEventListener("click", swapButtonFunction);
+    document.addEventListener("keyup", swapButtonPush);
   }
-});
+}
 
-function swapCardFunction() {
+function swapButtonPush(e) {
+  if (e.keyCode === 67) {
+    swapButtonFunction();
+  }
+}
+
+function swapButtonFunction() {
   let cardsInHand = document.querySelectorAll(".card-in-hand");
 
   // unchecked, already checked cards
@@ -515,6 +639,13 @@ function swapCardFunction() {
   secondsLeft -= 2;
   fifteenCount = 0;
   fifteenCountDisplay.textContent = `${fifteenCount}`;
+  bonusTimeDisplay.style.color = "rgba(51, 131, 235, 0.9)";
+  bonusTimeDisplay.textContent = `-3`;
+      setTimeout(() => {
+
+        bonusTimeDisplay.textContent = ``;
+        bonusTimeDisplay.style.color = "rgba(245, 217, 61, 0.9)";
+      }, 1000)
 }
 
 // REDEAL FUNCTION
@@ -557,10 +688,12 @@ function reDeal(cardsInHand, hand) {
   totalCardsPlayedDisplay.innerHTML = `${totalCardsPlayed} Cards Played`;
 
   // Check to see if all cards in hand were played, for possible replenish bonus
+
   console.log("hand length", hand.length);
   let numberCheckedCards = 0;
   if (hand.length === 0 && sacrificedCards.length === 0) {
     numberCheckedCards = 10;
+
     secondsBonus = 12;
   } else {
     numberCheckedCards = checkedCards.length;
@@ -575,8 +708,12 @@ function reDeal(cardsInHand, hand) {
 function scoreReview() {
   hudMessage.innerText = "TIME IS UP!";
   currentHand.style.display = "none";
-  console.log("total seconds", totalSeconds);
 
+  // gameplay analytics
+  console.log("total clicks", totalClicks);
+  console.log("total seconds", totalSeconds);
+  console.log("total points", totalPoints);
+  
   db.collection("highscores")
     .where("hidden", "==", false)
     .orderBy("score", "desc")
@@ -666,13 +803,15 @@ let pauseButton = document.querySelector(".menu-options");
 let timeRemaining = document.querySelector(".time-remaining");
 
 pauseButton.addEventListener("click", pauseGame);
-document.addEventListener("keyup", (e) => {
+document.addEventListener("keyup", buttonPause); 
+
+function buttonPause(e) {
   if (e.keyCode === 32 && !gamePause) {
     pauseGame();
   } else if (e.keyCode === 32 && gamePause) {
     resumeGame();
   }
-})
+}
 
 function pauseGame() {
   gamePause = true;
@@ -704,3 +843,37 @@ function resumeGame() {
   pauseScreen.classList.add("hidden");
 }
 
+// Uncheck all cards
+function setUncheckAllPermission() {
+  if (!firstSubmit) {
+    document.addEventListener("keyup", uncheckAllCards)
+  } else {
+    document.removeEventListener("keyup", uncheckAllCards)
+  }
+}
+
+function uncheckAllCards(e) {
+  let checkedCards = document.querySelectorAll(".checked");
+  if (e.code === "ArrowLeft") {
+    fifteenCount = 0;
+    checkedCards.forEach((card) => {
+      card.classList.toggle("checked");
+      card.classList.remove("value-selected");
+      fifteenCountDisplay.textContent = `${fifteenCount}`
+      valueOptionOne.textContent = "-"
+      valueOptionTwo.textContent = "-"
+      if (card.classList.contains("A")) {
+        card.classList.toggle("A");
+      } else if (card.classList.contains("B")) {
+        card.classList.toggle("B");
+      }
+    });
+  }
+}
+
+// GAMEPLAY ANALYTICS
+let totalClicks = 0;
+
+document.addEventListener("click", () => {
+  totalClicks++;
+});
