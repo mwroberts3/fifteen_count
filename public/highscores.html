@@ -8,19 +8,26 @@
   </head>
   <body>
     <div class="pad-1"></div>
-    <div class="high-score-container">
-      <table class="score-display">
-        <h3>Top 1000 Scores</h3>
-        <p class="error-msg"></p>
-        <th>&nbsp;</th>
-        <th>Points</th>
-        <th>Name</th>
-        <th>Cards Played(PPC)</th>
-        <th>Seconds</th>
-        <th>Date</th>
-      </table>
+    <div class="container">
+      <div class="high-score-container">
+        <table class="score-display">
+          <h3>Top 1000 Scores</h3>
+          <p class="error-msg"></p>
+          <th>&nbsp;</th>
+          <th>Points</th>
+          <th>Name</th>
+          <th>Cards Played(PPC)</th>
+          <th>Seconds</th>
+          <th>Date</th>
+        </table>
+      </div>
+      <div class="pad-1"></div>
+      <div class="center">
+        <a href="index.html">
+          <button class="main-btn">Back</button>
+        </a>
+      </div>
     </div>
-
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-firestore.js"></script>
     <script>

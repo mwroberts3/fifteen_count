@@ -48,9 +48,20 @@ let totalPoints = 0;
 let fifteenCount = 0;
 let pointsInPlay = 0;
 let totalCardsPlayed = 0;
-totalPointsDisplay.innerHTML = `${totalPoints} Points`;
+totalPointsDisplay.innerHTML = `${totalPoints}`;
 fifteenCountDisplay.innerHTML = `${fifteenCount}`;
-totalCardsPlayedDisplay.innerHTML = `${totalCardsPlayed} Cards Played`;
+totalCardsPlayedDisplay.innerHTML = `
+<div style="
+  width: 60px; 
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+  ">
+  ${totalCardsPlayed} 
+</div>
+<img src="static/cards-icon.png"/>
+`;
 
 // Gameplay variables & switches
 let pointsValidity = false;
@@ -362,7 +373,7 @@ const cardsSubmit = () => {
     selectCard();
   }
 
-  totalPointsDisplay.innerHTML = `${totalPoints} Points`;
+  totalPointsDisplay.innerHTML = `${totalPoints}`;
   fifteenCountDisplay.innerHTML = `${fifteenCount}`;
 
   // console.log("clicking works");
@@ -685,7 +696,18 @@ function reDeal(cardsInHand, hand) {
   }
 
   totalCardsPlayed += cardsPlayed.length;
-  totalCardsPlayedDisplay.innerHTML = `${totalCardsPlayed} Cards Played`;
+  totalCardsPlayedDisplay.innerHTML = `
+  <div style="
+    width: 60px; 
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;  
+    ">
+    ${totalCardsPlayed} 
+  </div>
+  <img src="static/cards-icon.png"/>
+  `;
 
   // Check to see if all cards in hand were played, for possible replenish bonus
 

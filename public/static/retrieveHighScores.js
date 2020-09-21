@@ -33,4 +33,4 @@ db.collection("highscores")
       `;
       scoreRank++;
     });
-  }).catch((err) => errorMsg.textContent = `not connected to internet, ${err}`);
+  }).catch(err => console.log(err));
