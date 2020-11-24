@@ -1,31 +1,61 @@
-// CONTROL OPTIONS (from options page)
-// IN PROGRESS
-// not sure how to change these on one screen and use on another without local storage...not sure if local storage works with steam...maybe with steam tools or maybe vue can do this, or electron tools
-const actionBtn = "ShiftLeft";
-const lowValBtn = "ControlLeft";
-const uncheckAllBtn = "KeyA";
-const swapCard = "KeyC";
-const pauseBtn = "Space";
+const highScoresFunc = require('./add-arcade-highscore');
 
-const buttonOptions = document.querySelector("#controls");
-const buttonSelectPopup = document.querySelector(".button-select");
+// Check for custom control settings
+let controls = [];
+let actionBtn,
+lowValBtn,
+uncheckcardsBtn,
+swapBtn,
+pauseBtn;
 
-if (buttonOptions) {
-  buttonOptions.addEventListener("click", (e) => {
-    if (e.target.tagName === "SPAN"){
-      buttonSelectPopup.classList.remove("hidden");
-      let buttonToReplace = e.target;
-  
-      document.addEventListener("keyup", (e) => {
-        console.log(e.code);
-        buttonSelectPopup.classList.add("hidden");
-        buttonToReplace.textContent = `[${e.code}]`;
-        buttonToReplace = '';
-      })
+let highScoresStats = [];
+let highscoreToBeat;
+
+if (!localStorage.getItem('controls')) {
+  controls = [
+    {buttonName: "actionBtn", button: "ShiftLeft"},
+    {buttonName: "lowValBtn", button: "ControlLeft"},
+    {buttonName: "uncheckcardsBtn", button: "KeyZ"},
+    {buttonName: "swapBtn", button: "AltLeft"},
+    {buttonName: "pauseBtn", button: "Space"},
+  ];
+  localStorage.setItem('controls', JSON.stringify(controls));
+} 
+if (localStorage.getItem('controls')) {
+  controls = JSON.parse(localStorage.getItem('controls'))
+
+  for (let i = 0; i < controls.length; i++){
+    if (controls[i]['buttonName'] === 'actionBtn') {
+      actionBtn = controls[i]['button']
     }
-  });
+    if (controls[i]['buttonName'] === 'lowValBtn') {
+      lowValBtn = controls[i]['button']
+    }
+    if (controls[i]['buttonName'] === 'uncheckcardsBtn') {
+      uncheckcardsBtn = controls[i]['button']
+    }
+    if (controls[i]['buttonName'] === 'swapBtn') {
+      swapBtn = controls[i]['button']
+    }
+    if (controls[i]['buttonName'] === 'pauseBtn') {
+      pauseBtn = controls[i]['button']
+    }
+  }
+
+  console.log(actionBtn, lowValBtn, uncheckcardsBtn, swapBtn, pauseBtn);
 }
-// *************************************
+
+// Check for highscore
+const personalHighscoreDisplay = document.querySelector('#personal-highscore-display');
+
+if (localStorage.getItem('highscore')) {
+  highScoresStats = JSON.parse(localStorage.getItem('highscore'));
+  highscoreToBeat = highScoresStats[0]['totalPoints']
+  personalHighscoreDisplay.childNodes[1].textContent = highscoreToBeat;
+} else {
+  highscoreToBeat = 0;
+  personalHighscoreDisplay.childNodes[1].textContent = highscoreToBeat;
+}
 
 // DOM sections
 const playersHandArea = document.querySelector(".players-hand");
@@ -33,16 +63,15 @@ const valueOptionOne = document.querySelector(".value-options-one");
 let globalCardsInHand = [];
 const valueOptionTwo = document.querySelector(".value-options-two");
 const submitCards = document.querySelector(".submit-cards");
-const comboMessage = document.querySelector(".combo-message");
 const hudMessage = document.querySelector(".hud-message");
 const swapButton = document.querySelector(".swap-container");
 const sameColorRed = (color) => color == "hearts" || color == "diamonds";
 const sameColorBlack = (color) => color == "clubs" || color == "spades";
+const currentHand = document.querySelector(".show-hand");
 
-// Display
+// Player Display
 const totalPointsDisplay = document.querySelector(".total-points");
 const fifteenCountDisplay = document.querySelector(".fifteen-count");
-const PointsDisplay = document.querySelector(".points-in-play");
 const totalCardsPlayedDisplay = document.querySelector(".total-cards-played");
 let totalPoints = 0;
 let fifteenCount = 0;
@@ -60,7 +89,7 @@ totalCardsPlayedDisplay.innerHTML = `
   ">
   ${totalCardsPlayed} 
 </div>
-<img src="static/cards-icon.png"/>
+<img src="img/cards-icon.png"/>
 `;
 
 // Gameplay variables & switches
@@ -78,11 +107,42 @@ let fullHandBonus = 35;
 
 let html = ``;
 
-// Build Deck
+// Deck and first draw variables
 let cardCount = 54;
 let deck = [];
+let drawSize = 10;
+let hand = [];
 
-const buildDeck = (deck) => {
+// Timer variables
+const timer = document.querySelector(".timer");
+let totalSeconds = 100;
+let secondsLeft = 99;
+let threeTimerStart = 0;
+const bonusTimeDisplay = document.querySelector(".bonus-time");
+
+// Setting up deck & displaying for play
+buildDeck(deck);
+deck = shuffle(deck, cardCount);
+drawCards(drawSize);
+showHand();
+let gameTimer = setInterval(timerFunction, 1000);
+
+// Init gameplay loop
+selectCard();
+
+// Button submit
+document.addEventListener("keyup", (e) => {
+  if (e.code === actionBtn) {
+    roundBonusCheck();
+  }
+});
+
+// Bonus check
+submitCards.addEventListener("click", roundBonusCheck);
+playersHandArea.addEventListener("dblclick", roundBonusCheck);
+
+// Build deck
+function buildDeck(deck) {
   const suits = ["clubs", "diamonds", "hearts", "spades"];
   const face = [
     "two",
@@ -94,12 +154,12 @@ const buildDeck = (deck) => {
     "eight",
     "nine",
     "ten",
-    "jack",
-    "queen",
-    "king",
-    "ace",
+    "ten-one",
+    "eleven-one",
+    "twelve-one",
+    "fifteen-one",
   ];
-  const valueA = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 15];
+  const valueA = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 11, 12, 15];
 
   for (let i = 0; i < suits.length; i++) {
     for (let j = 0; j < face.length; j++) {
@@ -108,10 +168,10 @@ const buildDeck = (deck) => {
       card.face = face[j];
       card.valueA = valueA[j];
       if (
-        card.face == "jack" ||
-        card.face == "queen" ||
-        card.face == "king" ||
-        card.face == "ace"
+        card.face == "ten-one" ||
+        card.face == "eleven-one" ||
+        card.face == "twelve-one" ||
+        card.face == "fifteen-one"
       ) {
         card.valueB = 1;
       } else {
@@ -133,13 +193,10 @@ const buildDeck = (deck) => {
     let card = { suit: null, face: "joker", valueA: -1, valueB: 0 };
     deck.push(card);
   }
-};
+}
 
-buildDeck(deck);
-
-
-// SHUFFLE DECK
-const shuffle = (deck, cardCount) => {
+// Shuffle Deck
+function shuffle(deck, cardCount) {
   for (let i = 0; i < 1400; i++) {
     let rand1 = Math.random();
     shuffle1 = Math.round(rand1 * cardCount);
@@ -156,25 +213,20 @@ const shuffle = (deck, cardCount) => {
     return element !== undefined;
   });
   return deck;
-};
-deck = shuffle(deck, cardCount);
+}
 
-// DRAW HAND OF 10 CARDS
-let drawSize = 10;
-let hand = [];
-
-const drawCards = (drawSize) => {
+// Draw hand of ten cards
+function drawCards(drawSize) {
   for (i = 0; i < drawSize; i++) {
     hand.splice(i, 0, deck.pop());
   }
   console.log("deck size:", deck.length, "drawsize:", drawSize);
   hudMessage.innerText = "Count";
-};
-drawCards(drawSize);
+  submitCards.value = `Play Cards [${actionBtn}]`;
+}
 
-// write to webpage
-const currentHand = document.querySelector(".show-hand");
-const showHand = () => {
+// display hand to player
+function showHand() {
   html = ``;
   currentHand.innerHTML = html;
   hand.forEach((card) => {
@@ -201,23 +253,9 @@ const showHand = () => {
     }
     currentHand.innerHTML = html;
   });
-};
-
-showHand();
-
+}
 
 // Set 100 second game timer and set-up bonus time display
-const timer = document.querySelector(".timer");
-let totalSeconds = 100;
-let secondsLeft = 99;
-let threeTimerStart = 0;
-
-
-const bonusTimeDisplay = document.querySelector(".bonus-time")
-
-  
-let gameTimer  = setInterval(timerFunction, 1000)
-
   function timerFunction() {
     let threeTimerFinish = new Date().getTime();
     if (threeTimerFinish - threeTimerStart >= 1000) {
@@ -227,12 +265,12 @@ let gameTimer  = setInterval(timerFunction, 1000)
     if (secondsLeft <= -1) {
       pauseButton.removeEventListener("click", pauseGame);
       document.removeEventListener("keyup", buttonPause); 
-      scoreReview();
+      highScoresFunc.scoreReview(hudMessage, currentHand, totalPoints, totalCardsPlayed, totalSeconds);
       clearInterval(gameTimer );
     }
   }
 
-const reset = () => {
+function reset() {
   pointsValidity = false;
   firstSubmit = false;
   comboSubmit = false;
@@ -240,12 +278,11 @@ const reset = () => {
   comboCardcount = 0;
   setSwapPermission();
   setUncheckAllPermission();
-  submitCards.value = "Play Cards [Shift]";
-  // comboMessage.innerText = "";
-};
+  submitCards.value = `Play Cards [${actionBtn}]`;
+}
 
 // Combo Check
-const comboCheck = () => {
+function comboCheck() {
   let checkedCardSuits = [];
   let checkedCards = document.querySelectorAll(".checked");
   comboCardcount = 0;
@@ -254,13 +291,12 @@ const comboCheck = () => {
   console.log(checkedCards.length);
   checkedCards.forEach((card) => {
     if (
-      card.children[0].getAttribute("rank") == "ace" &&
+      card.children[0].getAttribute("rank") == "fifteen-one" &&
       fifteenCount === 15 &&
       checkedCards.length === 1
     ) {
       pointsInPlay = 15;
       pointsValidity = true;
-      console.log("true ace");
     } else if (card.children[0].getAttribute("rank") != "joker") {
       checkedCardSuits.push(card.children[0].getAttribute("suit"));
       comboCardcount++;
@@ -278,22 +314,16 @@ const comboCheck = () => {
   }
 
   fifteenCountDisplay.innerHTML = `${fifteenCount}`;
+}
 
-  // *****COMBO CHECK DEBUG CONSOLE*****
-  // console.log("red combo:", checkedCardSuits.every(sameColorRed));
-  // console.log("black combo:", checkedCardSuits.every(sameColorBlack));
-  // console.log(checkedCardSuits, comboCardcount);
-  // console.log(fifteenCount);
-};
-
-// SUBMITTING CARDS
-const cardsSubmit = () => {
+// Submitting cards
+function cardsSubmit() {
   // make sure multi-value cards have a value selected
   let checkedCards = document.querySelectorAll(".checked");
   checkedCards.forEach((card) => {
     console.log(card.children[0].getAttribute("rank"));
     if (!card.classList.contains("value-selected") && pointsValidity) {
-      if (card.children[0].getAttribute("rank") === "jack" || card.children[0].getAttribute("rank") === "queen" || card.children[0].getAttribute("rank") === "king" || card.children[0].getAttribute("rank") === "ace"){
+      if (card.children[0].getAttribute("rank") === "ten-one" || card.children[0].getAttribute("rank") === "eleven-one" || card.children[0].getAttribute("rank") === "twelve-one" || card.children[0].getAttribute("rank") === "fifteen-one"){
         card.classList.remove("checked");
       }
     }
@@ -313,7 +343,7 @@ const cardsSubmit = () => {
     totalPoints += pointsInPlay;
     pointsInPlay = 0;
     fifteenCount = 0;
-    submitCards.value = "Draw cards [Shift]";
+    submitCards.value = `Draw Cards [${actionBtn}]`;
     comboSkip = true;
     playersHandArea.classList.toggle("combo-round");
     hudMessage.innerText = "Combo!";
@@ -374,31 +404,13 @@ const cardsSubmit = () => {
   }
 
   totalPointsDisplay.innerHTML = `${totalPoints}`;
+  newHighscoreCheck();
   fifteenCountDisplay.innerHTML = `${fifteenCount}`;
-
-  // console.log("clicking works");
-  // console.log(pointsValidity);
-};
-
-// BUTTON SUBMIT
-// accepts shift key or button click or doubleclick to trigger next phase
-document.addEventListener("keyup", (e) => {
-  if (e.keyCode === 16) {
-    roundBonusCheck();
-  }
-});
-
-submitCards.addEventListener("click", roundBonusCheck);
-playersHandArea.addEventListener("dblclick", roundBonusCheck);
-
-
+}
 
 function roundBonusCheck() {
-
   let roundBonusTimerCheck = new Date();
-
   let roundBonusPoints = 0;
-
   let roundBonuses = [
     0.1,
     1.09,
@@ -413,7 +425,6 @@ function roundBonusCheck() {
   ];
   let checkedCards = document.querySelectorAll(".checked").length;
   let diff =
-
 
     (roundBonusTimerCheck.getTime() - roundBonusTimer.getTime()) / 1000;
   diff = Math.round(diff);
@@ -448,8 +459,9 @@ function roundBonusCheck() {
   cardsSubmit();
 }
 
-// SELECTING CARDS
+// Selecting cards
 function selectCard() {
+  let sacrificedCards = document.querySelectorAll(".combo-sacrifice");
 
   setSwapPermission();
   setUncheckAllPermission();
@@ -519,7 +531,7 @@ function selectCard() {
             }
           });
           document.addEventListener("keyup", (e) => {
-            if (e.keyCode === 16) {
+            if (e.code === actionBtn) {
               if (
                 !card.classList.contains("A") &&
                 !card.classList.contains("B") &&
@@ -547,7 +559,7 @@ function selectCard() {
             }
           });
           document.addEventListener("keyup", (e) => {
-            if (e.keyCode === 17) {
+            if (e.code === lowValBtn) {
               if (
                 !card.classList.contains("B") &&
                 !card.classList.contains("A") &&
@@ -580,8 +592,6 @@ function selectCard() {
   });
 }
 
-selectCard();
-
 function doubleComboCheck(valueA, comboCardcount) {
   comboSubmit = true;
   comboSkip = false;
@@ -593,28 +603,43 @@ function doubleComboCheck(valueA, comboCardcount) {
   checkedCards.forEach((card) => {
     if (card.children[0].getAttribute("suit") != "joker") {
       checkedCardSuits.push(card.children[0].getAttribute("suit"));
-      comboCardcount++;
       console.log("comboCardcount", comboCardcount);
     }
   });
   sacrificedCards.forEach((card) => {
     if (card.children[0].getAttribute("suit") != "joker") {
       checkedCardSuits.push(card.children[0].getAttribute("suit"));
+      console.log(checkedCardSuits);
     }
   });
+  comboCardcount = checkedCardSuits.length - 1;
+  console.log(comboCardcount);
   if (
     checkedCardSuits.every(sameColorRed) == true ||
     checkedCardSuits.every(sameColorBlack) == true
   ) {
     comboCardcount *= 2;
   }
-  submitCards.value = "combo submit / draw cards [Shift]";
+  submitCards.value = `Combo Submit / Draw Cards [${actionBtn}]`;
   totalPointsDisplay.innerHTML = `${totalPoints} + ${valueA * comboCardcount}`;
   totalPoints += valueA * comboCardcount;
+  newHighscoreCheck();
   console.log(valueA, comboCardcount, totalPoints);
 }
 
-// SWAP CARD FUNCTION(s) & Event Listeners
+// check for newHighscore
+let highscoreDefeated = false;
+function newHighscoreCheck() {
+  if (totalPoints > highscoreToBeat) {
+    if (!highscoreDefeated) {
+      hudMessage.textContent = 'NEW HIGHSCORE!'
+    }
+    personalHighscoreDisplay.childNodes[1].textContent = totalPoints;
+    highscoreDefeated = true;
+  } 
+}
+
+// Swap card function(s) & event listeners
 function setSwapPermission() {
   console.log(firstSubmit);
   if (firstSubmit) {
@@ -627,7 +652,7 @@ function setSwapPermission() {
 }
 
 function swapButtonPush(e) {
-  if (e.keyCode === 67) {
+  if (e.code === swapBtn) {
     swapButtonFunction();
   }
 }
@@ -659,7 +684,7 @@ function swapButtonFunction() {
       }, 1000)
 }
 
-// REDEAL FUNCTION
+// Redeal
 function reDeal(cardsInHand, hand) {
   let checkedCards = document.querySelectorAll(".checked");
   let sacrificedCards = document.querySelectorAll(".combo-sacrifice");
@@ -706,7 +731,7 @@ function reDeal(cardsInHand, hand) {
     ">
     ${totalCardsPlayed} 
   </div>
-  <img src="static/cards-icon.png"/>
+  <img src="img/cards-icon.png"/>
   `;
 
   // Check to see if all cards in hand were played, for possible replenish bonus
@@ -725,78 +750,7 @@ function reDeal(cardsInHand, hand) {
   drawCards(numberCheckedCards);
 }
 
-// HIGHSCORE CHECK & RANKING FUNCTIONS
-// when entering name, might want to find a regular expression that with block swear words
-function scoreReview() {
-  hudMessage.innerText = "TIME IS UP!";
-  currentHand.style.display = "none";
-
-  // gameplay analytics
-  console.log("total clicks", totalClicks);
-  console.log("total seconds", totalSeconds);
-  console.log("total points", totalPoints);
-  
-  db.collection("highscores")
-    .where("hidden", "==", false)
-    .orderBy("score", "desc")
-    .limit(50)
-    .get()
-    .then((snapshot) => {
-      let scoreRank = 0;
-      highscoresArr = snapshot.docs.map((doc) => doc.data().score);
-
-      highscoresArr.forEach((score) => {
-        if (totalPoints > score) {
-          scoreRank++;
-        }
-      });
-
-      scoreRank = highscoresArr.length - scoreRank;
-
-      if (highscoresArr.length < 50) {
-        addNametoScore(scoreRank);
-      } else if (totalPoints > highscoresArr[highscoresArr.length - 1]) {
-        addNametoScore(scoreRank);
-      } else {
-        newHighscore("DIDN'T QUALIFY");
-      }
-
-      console.log(highscoresArr);
-    });
-}
-
-function addNametoScore(scoreRank) {
-  const inputNameForm = document.getElementById("new-highscore-form");
-
-  // Add score ranking to popup
-  inputNameForm.querySelector("span").textContent = `${scoreRank + 1}`;
-
-  // show popup and ask for name
-  inputNameForm.classList.toggle("hidden");
-  inputNameForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    newHighscore(inputNameForm.querySelector("input").value);
-  });
-}
-
-function newHighscore(name) {
-  const now = new Date();
-  db.collection("highscores")
-    .add({
-      date: firebase.firestore.Timestamp.fromDate(now),
-      name: name,
-      score: totalPoints,
-      cards_played: totalCardsPlayed,
-      seconds_played: totalSeconds,
-      hidden: false,
-    })
-    .then(() => {
-      location.reload();
-    })
-    .catch((err) => console.log(err));
-}
-
-// DECK CHECK AND REBUILD FUNCTIONS
+// Deck check and rebuild functions
 function deckCheck(drawSize) {
   if (deck.length <= drawSize) {
     console.log("deck is less than drawsize");
@@ -821,17 +775,21 @@ function reBuildDeck() {
 // Pause Function(s) & Event Listeners
 let gamePause = false;
 let pauseScreen = document.querySelector("#pause-screen");
-let pauseButton = document.querySelector(".menu-options");
+let pauseInnerContainer = document.querySelector("#pause-inner-container");
+let pauseButton = document.querySelector("#pause-game-btn");
 let timeRemaining = document.querySelector(".time-remaining");
 
 pauseButton.addEventListener("click", pauseGame);
 document.addEventListener("keyup", buttonPause); 
 
 function buttonPause(e) {
-  if (e.keyCode === 32 && !gamePause) {
+  if (e.code === pauseBtn && !gamePause) {
     pauseGame();
-  } else if (e.keyCode === 32 && gamePause) {
-    resumeGame();
+  } else if (e.code === pauseBtn && gamePause) {
+    pauseInnerContainer.classList.add("fade-out");
+    setTimeout(() => {
+      resumeGame();
+    },900)
   }
 }
 
@@ -839,6 +797,7 @@ function pauseGame() {
   gamePause = true;
   clearInterval(gameTimer );
   pauseScreen.classList.remove("hidden");
+  pauseInnerContainer.classList.remove("fade-out");
   timeRemaining.textContent = `${secondsLeft + 1}`;
   
   setInterval(() => {
@@ -849,34 +808,51 @@ function pauseGame() {
     timeRemaining.textContent = `${secondsLeft + 1}`;
   }, 1000)
   
-  
-  
   pauseScreen.addEventListener("click", (e) => {
     console.log(e);
     if (e.target.tagName !== "BUTTON") {
-      resumeGame();
-    }
-  });
+      pauseInnerContainer.classList.add("fade-out");
+      setTimeout(() => {
+        resumeGame();
+      },900)
+    } else {
+        location.assign('title-screen.html');
+    } 
+      
+    });
 }
 
 function resumeGame() {
-  gameTimer  = setInterval(timerFunction, 1000);
+  gameTimer = setInterval(timerFunction, 1000);
   gamePause = false;
   pauseScreen.classList.add("hidden");
 }
 
 // Uncheck all cards
+let keysPressed = {};
 function setUncheckAllPermission() {
   if (!firstSubmit) {
-    document.addEventListener("keyup", uncheckAllCards)
+    document.addEventListener("keydown", uncheckVestibule)
+
+    document.addEventListener('keyup', () => {
+      delete keysPressed;
+   });
   } else {
-    document.removeEventListener("keyup", uncheckAllCards)
+    console.log("is the firstsubmit check working");
+
+    document.removeEventListener("keydown", uncheckVestibule)
   }
+}
+
+function uncheckVestibule(e) {
+  keysPressed[e.code] = true;
+  uncheckAllCards(e);
 }
 
 function uncheckAllCards(e) {
   let checkedCards = document.querySelectorAll(".checked");
-  if (e.code === "ArrowLeft") {
+  console.log(keysPressed, keysPressed.length);
+  if(e.code === uncheckcardsBtn) {
     fifteenCount = 0;
     checkedCards.forEach((card) => {
       card.classList.toggle("checked");
@@ -893,7 +869,7 @@ function uncheckAllCards(e) {
   }
 }
 
-// GAMEPLAY ANALYTICS
+// Gameplay analytics
 let totalClicks = 0;
 
 document.addEventListener("click", () => {

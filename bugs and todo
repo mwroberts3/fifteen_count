@@ -1,0 +1,41 @@
+Bugs:
+    -shouldn't be able to submit score if there isn't a name
+
+    -if it's on steam, maybe should just use steam account name for highscore
+    
+    -shouldn't be able to use a single key for more than one button
+    
+    -get around the pause-resume click delay, but maybe should add transition that lasts 900 milliseconds
+    
+    -text gets cut off in action button visual display if text is too long, for example if action button is controlLeft 
+    
+    -should probably have any custom fonts downloaded and available locally
+    
+    -action button locks when on the select combo screen if press alt key once and then try to push shift to submit combo
+    
+    -sometimes when time is up the countdown will still tic down to -1 or 
+    -2, should just have text in container be blank when timer reaches 0
+
+    -container size is a little janky, make sure that is consistent
+
+-s
+Gameplay Tweaks:
+    -minus cards should count towards combo count
+    -should probably a colorblind mode
+    -same color bonus should grow if combo cards played are same color, adds extra element of fun
+
+Sound and Skin Options for arcade:
+    -3 different track/skin Options (similar to Lumines)
+        1) classic
+        2) jungle
+        3) universe
+    -option to turn sound fxs on/off
+    -maybe have jungle and universe as unlockables
+
+Time Attack Mode:
+    -same skin and sound effects as classic, different music
+    -get 10 - 20 cards
+    -have 7 seconds to use the most cards possible to get to 15
+    -20 rounds
+    -should have a way to compound, so if you play a good combo, you have more cards to choose from in the next round
+

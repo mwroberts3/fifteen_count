@@ -1,0 +1,21 @@
+{
+  "name": "fifteen-count-electron",
+  "version": "1.0.0",
+  "description": "**_FIFTEEN COUNT_**\r https://github.com/cardmeister/cardmeister.github.io",
+  "main": "main.js",
+  "dependencies": {
+    "electron-window-state": "^5.0.3",
+    "moment": "^2.29.1"
+  },
+  "devDependencies": {
+    "node-sass": "^5.0.0",
+    "nodemon": "^2.0.6"
+  },
+  "scripts": {
+    "start": "electron .",
+    "watch": "nodemon --exec electron .",
+    "sass": "node-sass -w scss/ -o renderer/styles --recursive"
+  },
+  "author": "",
+  "license": "ISC"
+}
