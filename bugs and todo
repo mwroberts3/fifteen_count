@@ -1,4 +1,8 @@
 Bugs:
+    -pause screen should show name of button if it's a custom key
+
+    -links shouldn't be draggable on title screen
+
     -shouldn't be able to submit score if there isn't a name
 
     -if it's on steam, maybe should just use steam account name for highscore
@@ -18,11 +22,21 @@ Bugs:
 
     -container size is a little janky, make sure that is consistent
 
--s
+    -pause button not working properly, sometimes it still counts down when paused 
+
+    -the selected theme should be saved, and not reset to classic when going back into window in settings menu
+
+    -for some reason you can combo jokers again
+
 Gameplay Tweaks:
-    -minus cards should count towards combo count
     -should probably a colorblind mode
-    -same color bonus should grow if combo cards played are same color, adds extra element of fun
+
+    -swap penalty should go up the less cards you have in your hand
+    10 - 6 : -3 seconds
+    5 : -4 seconds
+    4 : -5 seconds
+    3 : -6 seconds
+    2 : -8 seconds 
 
 Sound and Skin Options for arcade:
     -3 different track/skin Options (similar to Lumines)

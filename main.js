@@ -13,15 +13,15 @@ function createWindow () {
     defaultWidth: 500, defaultHeight: 650
   })
 
-  
   // x: -391, y: -1080,
   mainWindow = new BrowserWindow({
-    x: 0, y: 0,
+    x: -391, y: -1080,
     width: 1300, height: 600,
     frame: true,
     fullscreenable: true,
     webPreferences: {
       nodeIntegration: true,
+      contextIsolation: false,
     }
   })
 

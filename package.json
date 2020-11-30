@@ -1,21 +1,29 @@
 {
-  "name": "fifteen-count-electron",
+  "name": "tentativeCardGame",
   "version": "1.0.0",
-  "description": "**_FIFTEEN COUNT_**\r https://github.com/cardmeister/cardmeister.github.io",
+  "description": "Game of quick counting and combos",
   "main": "main.js",
-  "dependencies": {
-    "electron-window-state": "^5.0.3",
-    "moment": "^2.29.1"
-  },
-  "devDependencies": {
-    "node-sass": "^5.0.0",
-    "nodemon": "^2.0.6"
-  },
   "scripts": {
     "start": "electron .",
     "watch": "nodemon --exec electron .",
-    "sass": "node-sass -w scss/ -o renderer/styles --recursive"
+    "reset": "git reset --hard",
+    "sass": "node-sass -w scss/ -o renderer/style/ --recursive"
   },
-  "author": "",
-  "license": "ISC"
+  "repository": "https://github.com/stackacademytv/master-electron",
+  "homepage": "https://github.com/stackacademytv/master-electron",
+  "keywords": [
+    "Electron",
+    "Master Electron",
+    "demo"
+  ],
+  "author": "mwroberts3",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "node-sass": "^5.0.0",
+    "nodemon": "^2.0.0"
+  },
+  "dependencies": {
+    "electron-window-state": "^5.0.3",
+    "moment": "^2.29.1"
+  }
 }

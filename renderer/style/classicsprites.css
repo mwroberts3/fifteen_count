@@ -1,0 +1,115 @@
+.card-sprite {
+  border: 2px solid #333;
+  border-radius: 15px;
+  min-width: 100px;
+  min-height: 154px;
+  cursor: pointer;
+}
+
+.red-two {
+  background: url("../img/classic_sprites.png") 0 0;
+}
+
+.red-three {
+  background: url("../img/classic_sprites.png") -144.5px 0;
+}
+
+.red-four {
+  background: url("../img/classic_sprites.png") -289px 0;
+}
+
+.red-five {
+  background: url("../img/classic_sprites.png") -433.5px 0;
+}
+
+.red-six {
+  background: url("../img/classic_sprites.png") -578px 0;
+}
+
+.red-seven {
+  background: url("../img/classic_sprites.png") -722.5px 0;
+}
+
+.red-eight {
+  background: url("../img/classic_sprites.png") -867px 0;
+}
+
+.red-nine {
+  background: url("../img/classic_sprites.png") -1011.5px 0;
+}
+
+.red-ten {
+  background: url("../img/classic_sprites.png") -1156px 0;
+}
+
+.red-ten-one {
+  background: url("../img/classic_sprites.png") -1300.5px 0;
+}
+
+.red-eleven-one {
+  background: url("../img/classic_sprites.png") -1589px 0;
+}
+
+.red-twelve-one {
+  background: url("../img/classic_sprites.png") -1733.5px 0;
+}
+
+.red-fifteen-one {
+  background: url("../img/classic_sprites.png") -1444.5px 0;
+}
+
+.black-two {
+  background: url("../img/classic_sprites.png") 0 -231px;
+}
+
+.black-three {
+  background: url("../img/classic_sprites.png") -144.5px -231px;
+}
+
+.black-four {
+  background: url("../img/classic_sprites.png") -289px -231px;
+}
+
+.black-five {
+  background: url("../img/classic_sprites.png") -433.5px -231px;
+}
+
+.black-six {
+  background: url("../img/classic_sprites.png") -578px -231px;
+}
+
+.black-seven {
+  background: url("../img/classic_sprites.png") -722.5px -231px;
+}
+
+.black-eight {
+  background: url("../img/classic_sprites.png") -867px -231px;
+}
+
+.black-nine {
+  background: url("../img/classic_sprites.png") -1011.5px -231px;
+}
+
+.black-ten {
+  background: url("../img/classic_sprites.png") -1156px -231px;
+}
+
+.black-ten-one {
+  background: url("../img/classic_sprites.png") -1300.5px -231px;
+}
+
+.black-eleven-one {
+  background: url("../img/classic_sprites.png") -1589px -231px;
+}
+
+.black-twelve-one {
+  background: url("../img/classic_sprites.png") -1733.5px -231px;
+}
+
+.black-fifteen-one {
+  background: url("../img/classic_sprites.png") -1445px -231px;
+}
+
+.joker {
+  background: url("../img/classic_sprites.png") 0 -465px;
+}

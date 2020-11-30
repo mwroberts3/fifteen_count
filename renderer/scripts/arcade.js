@@ -1,61 +1,9 @@
 const highScoresFunc = require('./add-arcade-highscore');
 
-// Check for custom control settings
-let controls = [];
-let actionBtn,
-lowValBtn,
-uncheckcardsBtn,
-swapBtn,
-pauseBtn;
+const utils = require('./utils');
 
-let highScoresStats = [];
-let highscoreToBeat;
-
-if (!localStorage.getItem('controls')) {
-  controls = [
-    {buttonName: "actionBtn", button: "ShiftLeft"},
-    {buttonName: "lowValBtn", button: "ControlLeft"},
-    {buttonName: "uncheckcardsBtn", button: "KeyZ"},
-    {buttonName: "swapBtn", button: "AltLeft"},
-    {buttonName: "pauseBtn", button: "Space"},
-  ];
-  localStorage.setItem('controls', JSON.stringify(controls));
-} 
-if (localStorage.getItem('controls')) {
-  controls = JSON.parse(localStorage.getItem('controls'))
-
-  for (let i = 0; i < controls.length; i++){
-    if (controls[i]['buttonName'] === 'actionBtn') {
-      actionBtn = controls[i]['button']
-    }
-    if (controls[i]['buttonName'] === 'lowValBtn') {
-      lowValBtn = controls[i]['button']
-    }
-    if (controls[i]['buttonName'] === 'uncheckcardsBtn') {
-      uncheckcardsBtn = controls[i]['button']
-    }
-    if (controls[i]['buttonName'] === 'swapBtn') {
-      swapBtn = controls[i]['button']
-    }
-    if (controls[i]['buttonName'] === 'pauseBtn') {
-      pauseBtn = controls[i]['button']
-    }
-  }
-
-  console.log(actionBtn, lowValBtn, uncheckcardsBtn, swapBtn, pauseBtn);
-}
-
-// Check for highscore
-const personalHighscoreDisplay = document.querySelector('#personal-highscore-display');
-
-if (localStorage.getItem('highscore')) {
-  highScoresStats = JSON.parse(localStorage.getItem('highscore'));
-  highscoreToBeat = highScoresStats[0]['totalPoints']
-  personalHighscoreDisplay.childNodes[1].textContent = highscoreToBeat;
-} else {
-  highscoreToBeat = 0;
-  personalHighscoreDisplay.childNodes[1].textContent = highscoreToBeat;
-}
+// Fadein
+utils.gamescreenFadeinFunc();
 
 // DOM sections
 const playersHandArea = document.querySelector(".players-hand");
@@ -65,14 +13,16 @@ const valueOptionTwo = document.querySelector(".value-options-two");
 const submitCards = document.querySelector(".submit-cards");
 const hudMessage = document.querySelector(".hud-message");
 const swapButton = document.querySelector(".swap-container");
-const sameColorRed = (color) => color == "hearts" || color == "diamonds";
-const sameColorBlack = (color) => color == "clubs" || color == "spades";
+const sameColorRed = (color) => color == "hearts" || color == "diamonds" || color == "joker";
+const sameColorBlack = (color) => color == "clubs" || color == "spades" || color == "joker";;
 const currentHand = document.querySelector(".show-hand");
 
 // Player Display
 const totalPointsDisplay = document.querySelector(".total-points");
+const comboPointsDisplay = document.querySelector(".combo-points");
 const fifteenCountDisplay = document.querySelector(".fifteen-count");
 const totalCardsPlayedDisplay = document.querySelector(".total-cards-played");
+const swapCostDisplay = document.querySelector(".two-sec-warning");
 let totalPoints = 0;
 let fifteenCount = 0;
 let pointsInPlay = 0;
@@ -104,8 +54,12 @@ let roundBonusTimer = 0;
 
 let secondsBonus = 12;
 let fullHandBonus = 35;
+let fullHandPointsBonus = 200;
 
 let html = ``;
+
+let freshPoints = 0;
+let totalComboPoints = 0;
 
 // Deck and first draw variables
 let cardCount = 54;
@@ -266,19 +220,27 @@ function showHand() {
       pauseButton.removeEventListener("click", pauseGame);
       document.removeEventListener("keyup", buttonPause); 
       highScoresFunc.scoreReview(hudMessage, currentHand, totalPoints, totalCardsPlayed, totalSeconds);
-      clearInterval(gameTimer );
+      clearInterval(gameTimer);
     }
   }
 
 function reset() {
+  let cardsInHand = document.querySelectorAll(".card-in-hand");
+
   pointsValidity = false;
   firstSubmit = false;
   comboSubmit = false;
   comboSkip = false;
   comboCardcount = 0;
+  totalPoints += totalComboPoints;
+  totalComboPoints = 0;
+  comboPointsDisplay.textContent = '';
+  totalPointsDisplay.innerHTML = `${totalPoints}`;
+
   setSwapPermission();
   setUncheckAllPermission();
   submitCards.value = `Play Cards [${actionBtn}]`;
+  swapCostDisplay.textContent = `${cardsInHand.length - 10}s`
 }
 
 // Combo Check
@@ -297,7 +259,7 @@ function comboCheck() {
     ) {
       pointsInPlay = 15;
       pointsValidity = true;
-    } else if (card.children[0].getAttribute("rank") != "joker") {
+    } else {
       checkedCardSuits.push(card.children[0].getAttribute("suit"));
       comboCardcount++;
     }
@@ -309,6 +271,7 @@ function comboCheck() {
       checkedCardSuits.every(sameColorRed) == true ||
       checkedCardSuits.every(sameColorBlack) == true
     ) {
+      console.log('checkedCardSuits:', checkedCardSuits);
       pointsInPlay *= 2;
     }
   }
@@ -336,16 +299,20 @@ function cardsSubmit() {
     showHand();
     reset();
     selectCard();
-    playersHandArea.classList.toggle("combo-round");
+    playersHandArea.style.backgroundImage = `url("./img/${themeSelection['bgImgPlayersHand']}")`;
     hudMessage.innerText = "Count";
   }
   if (pointsValidity === true) {
+    // console.log("points before: ", totalPoints);
+    // console.log('points added: ', pointsInPlay);
+    addFreshPointsToTotal(totalPoints, pointsInPlay);
     totalPoints += pointsInPlay;
+    // console.log("points added: ", totalPoints);
     pointsInPlay = 0;
     fifteenCount = 0;
     submitCards.value = `Draw Cards [${actionBtn}]`;
     comboSkip = true;
-    playersHandArea.classList.toggle("combo-round");
+    playersHandArea.style.backgroundImage = `url("./img/${themeSelection['bgImgCombo']}")`;
     hudMessage.innerText = "Combo!";
     // adds 7 seconds to clock, if at least half-amount of cards in hand are played
     if (checkedCards.length >= globalCardsInHand.length / 2 && !firstSubmit) {
@@ -358,6 +325,10 @@ function cardsSubmit() {
 
       secondsLeft += secondsBonus + 1;
       totalSeconds += secondsBonus;
+      console.log("total points before: ", totalPoints);
+      // addFreshPointsToTotal(totalPoints, secondsBonus);
+      totalPoints += secondsBonus;
+      console.log("total points after: ", totalPoints);
 
       bonusTimeDisplay.textContent = `+${secondsBonus}`
       setTimeout(() => {
@@ -380,11 +351,14 @@ function cardsSubmit() {
     if (checkedCards.length === globalCardsInHand.length) {
       secondsLeft += fullHandBonus;
       totalSeconds += fullHandBonus;
+      console.log("points before fullhand: ", totalPoints);
+      // addFreshPointsToTotal(totalPoints, (fullHandBonus + fullHandPointsBonus));
+      totalPoints += fullHandBonus;
+      totalPoints += fullHandPointsBonus;
+      console.log("points after fullhand: ", totalPoints);
 
       // these will have game skip combo round after playing a full hand
       comboSubmit = true;
-      playersHandArea.classList.toggle("combo-round");
-
       bonusTimeDisplay.textContent = `+${(secondsBonus + 1) + fullHandBonus}`
 
       setTimeout(() => {
@@ -394,16 +368,18 @@ function cardsSubmit() {
 
 
       fullHandBonus--;
+      fullHandPointsBonus += 200;
     }
   }
   if (pointsValidity === true && comboSubmit === true) {
+    playersHandArea.style.backgroundImage = `url("./img/${themeSelection['bgImgPlayersHand']}")`;
     reDeal(globalCardsInHand, hand);
     showHand();
     reset();
     selectCard();
   }
 
-  totalPointsDisplay.innerHTML = `${totalPoints}`;
+  // totalPointsDisplay.innerHTML = `${totalPoints}`;
   newHighscoreCheck();
   fifteenCountDisplay.innerHTML = `${fifteenCount}`;
 }
@@ -437,6 +413,7 @@ function roundBonusCheck() {
 
     roundBonusPoints = Math.round(roundBonusPoints);
 
+    // addFreshPointsToTotal(totalPoints, (roundBonusPoints + checkedCards));
     totalPoints += roundBonusPoints + checkedCards;
   }
   console.log(
@@ -461,8 +438,6 @@ function roundBonusCheck() {
 
 // Selecting cards
 function selectCard() {
-  let sacrificedCards = document.querySelectorAll(".combo-sacrifice");
-
   setSwapPermission();
   setUncheckAllPermission();
 
@@ -508,8 +483,7 @@ function selectCard() {
       } 
       // after initial checked cards have been played
       else if (firstSubmit) {
-        // allows players to combo any card except a joker
-        if (!card.classList.contains("checked") && card.children[0].getAttribute("suit") !== "joker") {
+        if (!card.classList.contains("checked")) {
           card.classList.toggle("combo-sacrifice");
           doubleComboCheck(valueA, comboCardcount);
         }
@@ -583,10 +557,6 @@ function selectCard() {
         card.classList.toggle("checked");
 
         comboCheck();
-
-        // console.log(cardRank);
-        // console.log(valueA, valueB);
-        // console.log("Fifteen Count:", fifteenCount);
       }
     });
   });
@@ -601,16 +571,12 @@ function doubleComboCheck(valueA, comboCardcount) {
   let checkedCardSuits = [];
   console.log("checked cards", checkedCards, checkedCards.length);
   checkedCards.forEach((card) => {
-    if (card.children[0].getAttribute("suit") != "joker") {
       checkedCardSuits.push(card.children[0].getAttribute("suit"));
       console.log("comboCardcount", comboCardcount);
-    }
   });
   sacrificedCards.forEach((card) => {
-    if (card.children[0].getAttribute("suit") != "joker") {
       checkedCardSuits.push(card.children[0].getAttribute("suit"));
       console.log(checkedCardSuits);
-    }
   });
   comboCardcount = checkedCardSuits.length - 1;
   console.log(comboCardcount);
@@ -618,11 +584,15 @@ function doubleComboCheck(valueA, comboCardcount) {
     checkedCardSuits.every(sameColorRed) == true ||
     checkedCardSuits.every(sameColorBlack) == true
   ) {
-    comboCardcount *= 2;
+    comboCardcount *= 1.5;
   }
+
+  totalComboPoints += Math.round(valueA * comboCardcount);
   submitCards.value = `Combo Submit / Draw Cards [${actionBtn}]`;
-  totalPointsDisplay.innerHTML = `${totalPoints} + ${valueA * comboCardcount}`;
-  totalPoints += valueA * comboCardcount;
+  comboPointsDisplay.textContent = `+ ${totalComboPoints}`;
+  // addFreshPointsToTotal(totalPoints, (valueA * comboCardcount))
+  // totalPoints += valueA * comboCardcount;
+
   newHighscoreCheck();
   console.log(valueA, comboCardcount, totalPoints);
 }
@@ -672,16 +642,19 @@ function swapButtonFunction() {
   showHand();
   reset();
   selectCard();
-  secondsLeft -= 2;
+  secondsLeft -= (10 - cardsInHand.length);
   fifteenCount = 0;
   fifteenCountDisplay.textContent = `${fifteenCount}`;
   bonusTimeDisplay.style.color = "rgba(51, 131, 235, 0.9)";
-  bonusTimeDisplay.textContent = `-3`;
-      setTimeout(() => {
 
-        bonusTimeDisplay.textContent = ``;
-        bonusTimeDisplay.style.color = "rgba(245, 217, 61, 0.9)";
-      }, 1000)
+  if (cardsInHand.length < 10) {
+    timer.textContent = `${secondsLeft + 1}`;
+    bonusTimeDisplay.textContent = `${(cardsInHand.length - 10)}`;
+        setTimeout(() => {
+          bonusTimeDisplay.textContent = ``;
+          bonusTimeDisplay.style.color = "rgba(245, 217, 61, 0.9)";
+        }, 1000)
+  }
 }
 
 // Redeal
@@ -770,6 +743,31 @@ function reBuildDeck() {
     deck.push(card);
   });
   console.log(tempDeck, deck);
+}
+
+function addFreshPointsToTotal(pointsOnDisplay, pointsToAdd) {
+  let i = 0;
+  if (pointsToAdd >= 0) {
+    const addingUpPoints = setInterval(() => {
+      if (i >= pointsToAdd) {
+        clearInterval(addingUpPoints);
+      } else {
+        pointsOnDisplay += 1;
+        totalPointsDisplay.innerHTML = `${pointsOnDisplay}`;
+      }
+      i++;
+    }, 20);
+  } else {
+    const subtractingDownPoints = setInterval(() => {
+      if (i < pointsToAdd) {
+        totalPointsDisplay.innerHTML = `${totalPoints}`;
+        clearInterval(subtractingDownPoints);
+      }
+      pointsOnDisplay -= 1;
+      totalPointsDisplay.innerHTML = `${pointsOnDisplay}`;
+      i--;
+    }, 20);
+  }
 }
 
 // Pause Function(s) & Event Listeners

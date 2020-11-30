@@ -14,7 +14,7 @@ body {
   min-width: 769px;
   font-size: 1.25rem;
   font-family: $body-font;
-  background: rgb(205, 243, 255);
+  background: #b3edff;
   user-select: none;
   -moz-user-select: none;
   -webkit-user-drag: none;
@@ -50,8 +50,12 @@ h2 {
   padding: 10px;
 }
 
-.pad-1 {
+.pad-l {
   padding: 10px;
+}
+
+.pad-2 {
+  padding: 7px;
 }
 
 .main-btn {
@@ -149,24 +153,20 @@ h2 {
 
 // HOW TO PLAY
 .how-to-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   font-size: 1rem;
 
   .how-to-section {
     background: $light-bg-col;
-    // border: $inner-menu-border;
     border-radius: 10px;
 
     p {
-      padding: 0 10px;
+      padding: 5px 10px;
     }
 
     h3,
     h4 {
       text-align: center;
+      padding-bottom: 7px;
     }
   }
 }
@@ -276,11 +276,20 @@ h2 {
   position: relative;
   width: 100%;
 
-  .theme-dropdown {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  .theme-selection-menu {
+    width: 80%;
+    margin: auto;
+
+    div {
+      margin: 5px;
+      padding: 0 5px;
+      cursor: pointer;
+    }
+
+    .selected-theme {
+      background: #fff;
+      border-radius: 5px;
+    }
   }
 }
 
@@ -302,7 +311,6 @@ h2 {
   margin-left: -200px;
 }
 
-// UI - ARCADE MODE
 #personal-highscore-display {
   font-size: 0.85rem;
   margin-left: 8px;
@@ -346,6 +354,11 @@ h2 {
     color: #ffff00;
   }
 
+  .combo-points {
+    color: #fff;
+    z-index: 5;
+  }
+
   .total-cards-played {
     display: flex;
     justify-content: center;
@@ -385,8 +398,14 @@ h2 {
   justify-content: space-between;
 
   div {
+    display: flex;
+    align-items: center;
     width: 33.33%;
     text-align: center;
+  }
+
+  div:first-of-type {
+    width: 50%;
   }
 }
 
@@ -441,7 +460,6 @@ input[type="submit"] {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   // background: $players-hand-bg-col;
-  background: url("../img/players-hand-bg.png");
   z-index: -2;
   color: $dark-text-col;
 
@@ -570,13 +588,6 @@ input[type="submit"] {
       font-size: 1rem;
     }
   }
-}
-
-.combo-round {
-  color: #fff;
-  // background: rgba(162, 162, 255, 0.7);
-  background: url("../img/players-hand-bg-combo-round.png");
-  z-index: 2;
 }
 
 // NEW HIGHSCORE

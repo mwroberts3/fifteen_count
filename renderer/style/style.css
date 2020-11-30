@@ -1,0 +1,484 @@
+@import url("https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+body {
+  margin: 0 auto;
+  width: 1200px;
+  min-width: 769px;
+  font-size: 1.25rem;
+  font-family: "Didact Gothic", sans-serif;
+  background: #b3edff;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none; }
+
+a {
+  color: #777;
+  text-decoration: none; }
+  a:hover {
+    text-decoration: none; }
+
+button:focus {
+  outline: none; }
+
+h2 {
+  text-align: center; }
+
+.container {
+  width: 100%;
+  position: relative;
+  margin: 20px auto 0;
+  background: #ddd;
+  border-radius: 10px;
+  border: 4px solid #fff;
+  padding: 10px; }
+
+.pad-l {
+  padding: 10px; }
+
+.pad-2 {
+  padding: 7px; }
+
+.main-btn {
+  width: 120px;
+  padding: 8px;
+  margin-top: 5px;
+  border-radius: 5px;
+  font-family: "Didact Gothic", sans-serif;
+  cursor: pointer;
+  background-image: linear-gradient(#444, #666);
+  color: white;
+  font-size: 1.25rem; }
+  .main-btn:hover {
+    opacity: 0.9; }
+
+.light-menu-btn {
+  background-image: linear-gradient(#666, #888); }
+
+.center {
+  text-align: center; }
+
+.hidden {
+  display: none !important; }
+
+.fade-out {
+  opacity: 0 !important; }
+
+.back-btn-container {
+  position: absolute;
+  top: 0;
+  right: 5px; }
+
+.title-font {
+  font-family: "Didact Gothic", sans-serif; }
+
+.submit-cards {
+  font-family: "Didact Gothic", sans-serif; }
+
+.index-header {
+  width: 100%; }
+  .index-header h1 {
+    text-align: center;
+    margin-bottom: 10px; }
+
+.gamemode-select-container {
+  width: 400px;
+  margin: 0 auto;
+  background: #222;
+  border-radius: 10px;
+  padding: 10px;
+  border: 2px solid #888; }
+  .gamemode-select-container h3 {
+    color: #fff;
+    text-align: center; }
+  .gamemode-select-container ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; }
+    .gamemode-select-container ul li {
+      width: 100%;
+      list-style: none;
+      display: flex;
+      justify-content: center; }
+      .gamemode-select-container ul li button {
+        width: 50%; }
+      .gamemode-select-container ul li a {
+        text-align: center;
+        width: 100%; }
+
+.how-to-container {
+  font-size: 1rem; }
+  .how-to-container .how-to-section {
+    background: #ddd;
+    border-radius: 10px; }
+    .how-to-container .how-to-section p {
+      padding: 5px 10px; }
+    .how-to-container .how-to-section h3,
+    .how-to-container .how-to-section h4 {
+      text-align: center;
+      padding-bottom: 7px; }
+
+.high-score-container {
+  background: #ddd;
+  border-radius: 10px; }
+  .high-score-container div:first-of-type {
+    width: 70%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    background: #efefef;
+    padding: 0 10px;
+    border-radius: 10px; }
+    .high-score-container div:first-of-type h4 {
+      margin: auto; }
+    .high-score-container div:first-of-type div:first-of-type {
+      font-size: 1.8rem; }
+    .high-score-container div:first-of-type div {
+      display: flex;
+      justify-content: center;
+      width: 20%;
+      margin: auto;
+      font-size: 1.1rem; }
+  .high-score-container p {
+    text-align: center; }
+  .high-score-container h3 {
+    text-align: center; }
+  .high-score-container table {
+    margin: 0 auto;
+    padding: 5px; }
+    .high-score-container table th,
+    .high-score-container table td {
+      text-align: center;
+      padding: 10px 30px; }
+    .high-score-container table .points-display {
+      font-size: 1.65rem; }
+
+.how-to-nav ul {
+  display: flex; }
+  .how-to-nav ul li {
+    padding: 5px 10px;
+    margin: 0 10px;
+    border-radius: 10px;
+    list-style: none;
+    cursor: pointer; }
+  .how-to-nav ul .option-selected {
+    background: #333;
+    color: #fff; }
+
+.options-container {
+  margin-top: 10px;
+  height: 445px; }
+  .options-container section {
+    padding: 0 10px; }
+    .options-container section p {
+      padding: 10px; }
+      .options-container section p span {
+        font-weight: bold;
+        cursor: pointer;
+        display: inline-block;
+        width: 170px; }
+        .options-container section p span:hover {
+          color: #cc9200; }
+
+#theme {
+  position: relative;
+  width: 100%; }
+  #theme .theme-selection-menu {
+    width: 80%;
+    margin: auto; }
+    #theme .theme-selection-menu div {
+      margin: 5px;
+      padding: 0 5px;
+      cursor: pointer; }
+    #theme .theme-selection-menu .selected-theme {
+      background: #fff;
+      border-radius: 5px; }
+
+.button-select {
+  height: 200px;
+  width: 400px;
+  background: #222;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border: 4px solid #fff;
+  border-radius: 10px;
+  position: absolute;
+  top: 50%;
+  margin-top: -100px;
+  left: 50%;
+  margin-left: -200px; }
+
+#personal-highscore-display {
+  font-size: 0.85rem;
+  margin-left: 8px;
+  margin-top: 3px;
+  font-weight: bold; }
+  #personal-highscore-display span {
+    font-weight: normal; }
+
+.gui-container {
+  border: 4px solid #fff;
+  border-radius: 10px;
+  margin-top: 5px;
+  position: relative;
+  width: 100%; }
+
+.scoreboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100px;
+  justify-content: space-evenly;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  margin: auto;
+  background-image: linear-gradient(#111, #333);
+  color: white;
+  max-width: 1200px; }
+  .scoreboard .total-points {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Courier New", Courier, monospace;
+    font-weight: normal;
+    font-size: 1.75rem;
+    color: #ffff00; }
+  .scoreboard .combo-points {
+    color: #fff;
+    z-index: 5; }
+  .scoreboard .total-cards-played {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Courier New", Courier, monospace;
+    font-weight: normal;
+    font-size: 1.75rem;
+    color: yellow; }
+
+.menu-hud {
+  width: 94%;
+  display: flex;
+  justify-content: space-between;
+  color: #777;
+  font-size: 0.9rem; }
+  .menu-hud .menu-options {
+    display: flex; }
+    .menu-hud .menu-options div {
+      cursor: pointer;
+      margin: 0 10px; }
+      .menu-hud .menu-options div:hover {
+        color: #ddd; }
+
+.main-hud {
+  position: relative;
+  width: 85%;
+  display: flex;
+  justify-content: space-between; }
+  .main-hud div {
+    display: flex;
+    align-items: center;
+    width: 33.33%;
+    text-align: center; }
+  .main-hud div:first-of-type {
+    width: 50%; }
+
+.timer {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #98fd00;
+  font-family: "Courier New", Courier, monospace;
+  width: 80px;
+  height: 80px;
+  border: 2px solid white;
+  background: black;
+  border-radius: 50%;
+  position: absolute;
+  top: 50px;
+  right: 50%;
+  margin-right: -40px;
+  margin-top: -40px;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.bonus-time {
+  width: 32px;
+  position: absolute;
+  top: 110px;
+  right: 50%;
+  margin-right: -14px;
+  margin-top: -47px;
+  font-size: 0.9rem;
+  color: rgba(245, 217, 61, 0.9);
+  display: flex;
+  justify-content: center; }
+
+input[type="submit"] {
+  margin: 20px 0 0 65px;
+  padding: 10px; }
+
+.players-hand {
+  height: 400px;
+  max-width: 1200px;
+  margin: auto;
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: space-evenly;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  z-index: -2;
+  color: #333; }
+  .players-hand h4 {
+    text-align: center; }
+  .players-hand input[type="button"] {
+    cursor: pointer;
+    width: 30%;
+    padding: 10px;
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin: auto;
+    color: #333;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 2px 2px #ddd; }
+    .players-hand input[type="button"] :focus {
+      border: none; }
+  .players-hand card-t {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 10px; }
+  .players-hand .show-hand {
+    display: flex;
+    justify-content: space-evenly; }
+    .players-hand .show-hand .checked {
+      transform: rotate(14deg); }
+  .players-hand .combo-sacrifice {
+    transform: rotate(90deg);
+    z-index: -1; }
+  .players-hand .multi-values {
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+    height: 80px;
+    margin-bottom: 20px; }
+  .players-hand .value-option-container {
+    display: flex; }
+  .players-hand .value-options-one {
+    width: 80px;
+    height: 80px;
+    padding-top: 20px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 2px 2px #ddd;
+    border-collapse: collapse;
+    box-shadow: 2px 2px #ddd;
+    text-align: center;
+    font-size: 2rem;
+    cursor: pointer;
+    background: #eee; }
+  .players-hand .value-options-two {
+    width: 80px;
+    height: 80px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 2px 2px #ddd;
+    font-size: 2rem;
+    border-top-right-radius: 10%;
+    border-bottom-right-radius: 10%;
+    text-align: center;
+    padding-top: 20px;
+    background: #eee;
+    cursor: pointer; }
+  .players-hand .fifteen-count {
+    border-radius: 10px;
+    color: #fff;
+    color: #000;
+    width: 120px;
+    height: 80px;
+    font-size: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; }
+  .players-hand .swap-container {
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 2px 2px #ddd;
+    width: 160px;
+    height: 80px;
+    background: #eee;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; }
+    .players-hand .swap-container .two-sec-warning {
+      font-size: 1rem; }
+
+#new-highscore-form {
+  position: absolute;
+  top: 50%;
+  margin-top: -150px;
+  left: 25%;
+  right: 25%;
+  background: #222;
+  border: 4px solid #fff;
+  border-radius: 10px;
+  color: white;
+  width: 50%;
+  height: 300px;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+  #new-highscore-form h3,
+  #new-highscore-form p {
+    margin-bottom: 15px; }
+  #new-highscore-form div {
+    display: block;
+    width: 40%;
+    text-align: center; }
+  #new-highscore-form input[type="text"] {
+    width: 60%;
+    height: 27px;
+    border-radius: 5px;
+    padding: 3px;
+    border: none; }
+  #new-highscore-form input[type="submit"] {
+    width: 100%;
+    margin-left: 0; }
+  #new-highscore-form input:focus {
+    outline: none; }
+
+#pause-screen {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  border-radius: 10px;
+  color: white;
+  background: linear-gradient(#222, #555);
+  height: 100%; }
+  #pause-screen #pause-inner-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 1s ease; }
+    #pause-screen #pause-inner-container * {
+      padding: 5px; }

@@ -3,15 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fifteen Count - Highscores</title>
-    <link rel="stylesheet" href="static/style.css" />
+    <title>Highscores</title>
+    <link rel="stylesheet" href="style/style.css" />
   </head>
   <body>
     <div class="pad-1"></div>
     <div class="container">
       <div class="high-score-container">
+        <div>
+          <h4>Your Highscore:</h4>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
         <table class="score-display">
-          <h3>Top 1000 Scores</h3>
+          <h3>Top Arcade 100 Scores</h3>
           <p class="error-msg"></p>
           <th>&nbsp;</th>
           <th>Points</th>
@@ -22,8 +29,8 @@
         </table>
       </div>
       <div class="pad-1"></div>
-      <div class="center">
-        <a href="index.html">
+      <div class="back-btn-container">
+        <a href="title-screen.html">
           <button class="main-btn">Back</button>
         </a>
       </div>
@@ -45,11 +52,8 @@
       firebase.initializeApp(firebaseConfig);
       const db = firebase.firestore();
     </script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.28.0/moment.min.js"
-      integrity="sha512-Q1f3TS3vSt1jQ8AwP2OuenztnLU6LwxgyyYOG1jgMW/cbEMHps/3wjvnl1P3WTrF3chJUWEoxDUEjMxDV8pujg=="
-      crossorigin="anonymous"
-    ></script>
-    <script src="static/retrieveHighScores.js"></script>
+    <script>
+      require("./scripts/retrieve-high-scores");
+    </script>
   </body>
 </html>
