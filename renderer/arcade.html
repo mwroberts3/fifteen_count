@@ -6,73 +6,76 @@
     <title>Fifteen Count - Arcade Mode</title>
     <link rel="stylesheet" href="style/style.css" />
     <link id="theme-spritesheet" rel="stylesheet" />
+    <link rel="stylesheet" href="style/universe.css" />
   </head>
   <body>
-    <audio id="bgm-selection" src="" autoplay></audio>
-    <div id="personal-highscore-display">Highscore&nbsp;<span></span></div>
-    <div class="gui-container">
-      <div class="scoreboard">
-        <div class="menu-hud">
-          <div>Arcade - <span id="theme-display"></span></div>
-          <div class="menu-options">
-            <div id="pause-game-btn">Pause</div>
-            <a href="arcade.html" draggable="false">
-              <div>Restart</div>
-            </a>
-            <a href="title-screen.html" draggable="false">
-              <div>Menu</div>
-            </a>
+    <audio id="bgm-selection" src="" autoplay loop></audio>
+    <div class="all-contents-container">
+      <h4 class="hud-message">Count!</h4>
+      <div class="gui-container">
+        <div class="scoreboard">
+          <div class="menu-hud">
+            <div>Arcade - <span id="theme-display"></span></div>
+            <div class="menu-options">
+              <div id="pause-game-btn">Pause</div>
+              <a href="arcade.html" draggable="false">
+                <div>Restart</div>
+              </a>
+              <a href="title-screen.html" draggable="false">
+                <div>Menu</div>
+              </a>
+            </div>
           </div>
+          <div class="main-hud">
+            <div>
+              <div class="total-points"></div>
+              <div class="combo-points"></div>
+            </div>
+            <div class="total-cards-played"></div>
+          </div>
+          <div class="timer">100</div>
         </div>
-        <div class="main-hud">
+        <div class="bonus-time"></div>
+        <form>
+          <div class="players-hand">
+            <div class="pad-1"></div>
+            <div class="show-hand"></div>
+            <div class="pad-1"></div>
+            <div class="multi-values">
+              <div class="value-option-container">
+                <div class="value-options-one">-</div>
+                <div class="value-options-two">-</div>
+              </div>
+              <div class="fifteen-count"></div>
+              <div class="swap-container">
+                <div class="swap-card">SWAP</div>
+                <div class="two-sec-warning">0s</div>
+              </div>
+            </div>
+            <input class="submit-cards" type="button" />
+          </div>
+        </form>
+
+        <form id="new-highscore-form" class="hidden">
+          <h3>Congratulations! New Highscore!</h3>
+          <p>#<span></span></p>
+          <label for="name">Enter Name</label>
+          <input type="text" />
           <div>
-            <div class="total-points"></div>
-            <div class="combo-points"></div>
+            <input type="submit" class="main-btn" />
           </div>
-          <div class="total-cards-played"></div>
+        </form>
+
+        <div id="pause-screen" class="hidden">
+          <div id="pause-inner-container">
+            <h4 class="time-remaining">&nbsp;&nbsp;</h4>
+            <h3>Paused</h3>
+            <p>Click the screen or press space bar to resume</p>
+            <button class="main-btn light-menu-btn">Main Menu</button>
+          </div>
         </div>
       </div>
-      <div class="timer">100</div>
-      <div class="bonus-time"></div>
-      <form>
-        <div class="players-hand">
-          <h4 class="hud-message">Count</h4>
-          <div class="pad-1"></div>
-          <div class="show-hand"></div>
-          <div class="pad-1"></div>
-          <div class="multi-values">
-            <div class="value-option-container">
-              <div class="value-options-one">-</div>
-              <div class="value-options-two">-</div>
-            </div>
-            <div class="fifteen-count"></div>
-            <div class="swap-container">
-              <div class="swap-card">SWAP</div>
-              <div class="two-sec-warning">0s</div>
-            </div>
-          </div>
-          <input class="submit-cards" type="button" />
-        </div>
-      </form>
-
-      <form id="new-highscore-form" class="hidden">
-        <h3>Congratulations! New Highscore!</h3>
-        <p>#<span></span></p>
-        <label for="name">Enter Name</label>
-        <input type="text" />
-        <div>
-          <input type="submit" class="main-btn" />
-        </div>
-      </form>
-
-      <div id="pause-screen" class="hidden">
-        <div id="pause-inner-container">
-          <h4 class="time-remaining">&nbsp;&nbsp;</h4>
-          <h3>Paused</h3>
-          <p>Click the screen or press space bar to resume</p>
-          <button class="main-btn light-menu-btn">Main Menu</button>
-        </div>
-      </div>
+      <div id="personal-highscore-display">Highscore&nbsp;<span></span></div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/1.30.1/date_fns.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>

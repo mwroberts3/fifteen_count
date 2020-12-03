@@ -16,7 +16,7 @@ function createWindow () {
   // x: -391, y: -1080,
   mainWindow = new BrowserWindow({
     x: -391, y: -1080,
-    width: 1300, height: 600,
+    width: 1300, height: 800,
     frame: true,
     fullscreenable: true,
     webPreferences: {
@@ -24,6 +24,9 @@ function createWindow () {
       contextIsolation: false,
     }
   })
+
+  // Removes app menu (no need for it)
+  mainWindow.removeMenu();
 
   // Load index.html into the new BrowserWindow
   mainWindow.loadFile('renderer/title-screen.html')

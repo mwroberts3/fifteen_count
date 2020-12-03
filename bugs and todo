@@ -1,15 +1,11 @@
 Bugs:
     -pause screen should show name of button if it's a custom key
 
-    -links shouldn't be draggable on title screen
-
     -shouldn't be able to submit score if there isn't a name
 
     -if it's on steam, maybe should just use steam account name for highscore
     
     -shouldn't be able to use a single key for more than one button
-    
-    -get around the pause-resume click delay, but maybe should add transition that lasts 900 milliseconds
     
     -text gets cut off in action button visual display if text is too long, for example if action button is controlLeft 
     
@@ -28,6 +24,11 @@ Bugs:
 
     -for some reason you can combo jokers again
 
+    -in the theme select menu, if you click the space between the options it deselects all
+
+    -when new highscore screen pops up, maybe the rest of the screen should fade out
+
+
 Gameplay Tweaks:
     -should probably a colorblind mode
 
@@ -36,7 +37,9 @@ Gameplay Tweaks:
     5 : -4 seconds
     4 : -5 seconds
     3 : -6 seconds
-    2 : -8 seconds 
+    2 : -8 seconds
+
+    -after you sacrfice a card the half-card second bonus should refill by three (but never above 12) 
 
 Sound and Skin Options for arcade:
     -3 different track/skin Options (similar to Lumines)

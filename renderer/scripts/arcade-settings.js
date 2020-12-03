@@ -68,7 +68,9 @@ if (!localStorage.getItem('theme-selection')) {
 
 // Apply selected theme settings
 themeDisplay.textContent = themeSelection['themeName'];
+const allContentsContainer = document.querySelector('.all-contents-container');
 
+allContentsContainer.classList.add(themeSelection['themeName']);
 document.getElementById('bgm-selection').src = themeSelection['bgm'];
 
 document.querySelector('body').style.background = themeSelection['bgCol'];

@@ -11,7 +11,7 @@
 body {
   margin: 0 auto;
   width: $maxwidth;
-  min-width: 769px;
+  height: 100vh;
   font-size: 1.25rem;
   font-family: $body-font;
   background: #b3edff;
@@ -31,7 +31,7 @@ a {
   }
 }
 
-button:focus {
+*:focus {
   outline: none;
 }
 
@@ -314,27 +314,31 @@ h2 {
 #personal-highscore-display {
   font-size: 0.85rem;
   margin-left: 8px;
-  margin-top: 3px;
   font-weight: bold;
+  height: 54px;
 
   span {
     font-weight: normal;
   }
 }
 
+.all-contents-container {
+  top: 50%;
+  transform: translateY(-50%);
+  position: relative;
+}
+
 .gui-container {
   border: $menu-border;
   border-radius: 10px;
-  margin-top: 5px;
-  position: relative;
-  width: 100%;
 }
 
 .scoreboard {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100px;
+  height: 120px;
   justify-content: space-evenly;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -409,6 +413,12 @@ h2 {
   }
 }
 
+.hud-message {
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 30px;
+}
+
 .timer {
   font-size: 2rem;
   font-weight: bold;
@@ -420,14 +430,13 @@ h2 {
   background: black;
   border-radius: 50%;
   position: absolute;
-  top: 50px;
+  top: 60px;
   right: 50%;
   margin-right: -40px;
   margin-top: -40px;
   display: flex;
   justify-content: center;
   align-items: center;
-  // border: 2px solid white;
 }
 
 .bonus-time {
@@ -660,5 +669,26 @@ input[type="submit"] {
     * {
       padding: 5px;
     }
+  }
+}
+
+// Themes
+.Universe {
+  .hud-message {
+    color: $universe-primary-col;
+  }
+
+  .fifteen-count {
+    color: $universe-primary-col;
+  }
+}
+
+.Jungle {
+  .hud-message {
+    color: $jungle-primary-col;
+  }
+
+  .fifteen-count {
+    color: $jungle-primary-col;
   }
 }

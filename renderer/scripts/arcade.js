@@ -58,7 +58,6 @@ let fullHandPointsBonus = 200;
 
 let html = ``;
 
-let freshPoints = 0;
 let totalComboPoints = 0;
 
 // Deck and first draw variables
@@ -82,6 +81,7 @@ showHand();
 let gameTimer = setInterval(timerFunction, 1000);
 
 // Init gameplay loop
+addFreshPointsToTotal();
 selectCard();
 
 // Button submit
@@ -174,8 +174,7 @@ function drawCards(drawSize) {
   for (i = 0; i < drawSize; i++) {
     hand.splice(i, 0, deck.pop());
   }
-  console.log("deck size:", deck.length, "drawsize:", drawSize);
-  hudMessage.innerText = "Count";
+  hudMessage.innerText = "Count!";
   submitCards.value = `Play Cards [${actionBtn}]`;
 }
 
@@ -184,7 +183,6 @@ function showHand() {
   html = ``;
   currentHand.innerHTML = html;
   hand.forEach((card) => {
-    console.log(card["valueA"]);
     if (card["suit"] === "hearts" || card["suit"] === "diamonds") {
       html += `
       <div class="card-in-hand card-sprite red-${card["face"]}">
@@ -217,10 +215,16 @@ function showHand() {
       secondsLeft--;
     }
     if (secondsLeft <= -1) {
+      pointsOnDisplay = totalPoints;
       pauseButton.removeEventListener("click", pauseGame);
       document.removeEventListener("keyup", buttonPause); 
+      totalPointsDisplay.innerHTML = `${totalPoints}`;
+      if (highscoreDefeated) {
+        personalHighscoreDisplay.childNodes[1].textContent = pointsOnDisplay;
+      }
       highScoresFunc.scoreReview(hudMessage, currentHand, totalPoints, totalCardsPlayed, totalSeconds);
       clearInterval(gameTimer);
+      clearInterval(addUpPointsLive);
     }
   }
 
@@ -235,7 +239,6 @@ function reset() {
   totalPoints += totalComboPoints;
   totalComboPoints = 0;
   comboPointsDisplay.textContent = '';
-  totalPointsDisplay.innerHTML = `${totalPoints}`;
 
   setSwapPermission();
   setUncheckAllPermission();
@@ -250,7 +253,6 @@ function comboCheck() {
   comboCardcount = 0;
   pointsInPlay = 0;
   pointsValidity = false;
-  console.log(checkedCards.length);
   checkedCards.forEach((card) => {
     if (
       card.children[0].getAttribute("rank") == "fifteen-one" &&
@@ -271,7 +273,6 @@ function comboCheck() {
       checkedCardSuits.every(sameColorRed) == true ||
       checkedCardSuits.every(sameColorBlack) == true
     ) {
-      console.log('checkedCardSuits:', checkedCardSuits);
       pointsInPlay *= 2;
     }
   }
@@ -284,7 +285,6 @@ function cardsSubmit() {
   // make sure multi-value cards have a value selected
   let checkedCards = document.querySelectorAll(".checked");
   checkedCards.forEach((card) => {
-    console.log(card.children[0].getAttribute("rank"));
     if (!card.classList.contains("value-selected") && pointsValidity) {
       if (card.children[0].getAttribute("rank") === "ten-one" || card.children[0].getAttribute("rank") === "eleven-one" || card.children[0].getAttribute("rank") === "twelve-one" || card.children[0].getAttribute("rank") === "fifteen-one"){
         card.classList.remove("checked");
@@ -300,14 +300,10 @@ function cardsSubmit() {
     reset();
     selectCard();
     playersHandArea.style.backgroundImage = `url("./img/${themeSelection['bgImgPlayersHand']}")`;
-    hudMessage.innerText = "Count";
+    hudMessage.innerText = "Count!";
   }
   if (pointsValidity === true) {
-    // console.log("points before: ", totalPoints);
-    // console.log('points added: ', pointsInPlay);
-    addFreshPointsToTotal(totalPoints, pointsInPlay);
     totalPoints += pointsInPlay;
-    // console.log("points added: ", totalPoints);
     pointsInPlay = 0;
     fifteenCount = 0;
     submitCards.value = `Draw Cards [${actionBtn}]`;
@@ -321,14 +317,9 @@ function cardsSubmit() {
         secondsBonus = 3;
       }
 
-      console.log("seconds left", secondsLeft);
-
       secondsLeft += secondsBonus + 1;
       totalSeconds += secondsBonus;
-      console.log("total points before: ", totalPoints);
-      // addFreshPointsToTotal(totalPoints, secondsBonus);
       totalPoints += secondsBonus;
-      console.log("total points after: ", totalPoints);
 
       bonusTimeDisplay.textContent = `+${secondsBonus}`
       setTimeout(() => {
@@ -336,12 +327,7 @@ function cardsSubmit() {
         bonusTimeDisplay.textContent = ``;
       }, 1000)
 
-
-      console.log("seconds bonus +", secondsBonus);
-
       secondsBonus--;
-
-      console.log("seconds left", secondsLeft);
     }
 
     firstSubmit = true;
@@ -351,11 +337,8 @@ function cardsSubmit() {
     if (checkedCards.length === globalCardsInHand.length) {
       secondsLeft += fullHandBonus;
       totalSeconds += fullHandBonus;
-      console.log("points before fullhand: ", totalPoints);
-      // addFreshPointsToTotal(totalPoints, (fullHandBonus + fullHandPointsBonus));
       totalPoints += fullHandBonus;
       totalPoints += fullHandPointsBonus;
-      console.log("points after fullhand: ", totalPoints);
 
       // these will have game skip combo round after playing a full hand
       comboSubmit = true;
@@ -379,8 +362,6 @@ function cardsSubmit() {
     selectCard();
   }
 
-  // totalPointsDisplay.innerHTML = `${totalPoints}`;
-  newHighscoreCheck();
   fifteenCountDisplay.innerHTML = `${fifteenCount}`;
 }
 
@@ -413,25 +394,8 @@ function roundBonusCheck() {
 
     roundBonusPoints = Math.round(roundBonusPoints);
 
-    // addFreshPointsToTotal(totalPoints, (roundBonusPoints + checkedCards));
     totalPoints += roundBonusPoints + checkedCards;
   }
-  console.log(
-    "round time:",
-    diff,
-    "points in play:",
-    pointsInPlay,
-
-    "speed bonus points:",
-
-    roundBonusPoints,
-    "checked cards: ",
-    checkedCards,
-
-    "total bonus points: ",
-
-    roundBonusPoints + checkedCards
-  );
 
   cardsSubmit();
 }
@@ -478,13 +442,11 @@ function selectCard() {
         }
         comboCheck();
         fifteenCountDisplay.innerHTML = `${fifteenCount}`;
-
-        console.log("Fifteen Count:", fifteenCount);
       } 
       // after initial checked cards have been played
       else if (firstSubmit) {
-        if (!card.classList.contains("checked")) {
-          card.classList.toggle("combo-sacrifice");
+        if (!card.classList.contains("checked") && !card.classList.contains('joker')) {
+          card.classList.add("combo-sacrifice");
           doubleComboCheck(valueA, comboCardcount);
         }
       } else {
@@ -569,17 +531,13 @@ function doubleComboCheck(valueA, comboCardcount) {
   let checkedCards = document.querySelectorAll(".checked");
   let sacrificedCards = document.querySelectorAll(".combo-sacrifice");
   let checkedCardSuits = [];
-  console.log("checked cards", checkedCards, checkedCards.length);
   checkedCards.forEach((card) => {
       checkedCardSuits.push(card.children[0].getAttribute("suit"));
-      console.log("comboCardcount", comboCardcount);
   });
   sacrificedCards.forEach((card) => {
       checkedCardSuits.push(card.children[0].getAttribute("suit"));
-      console.log(checkedCardSuits);
   });
   comboCardcount = checkedCardSuits.length - 1;
-  console.log(comboCardcount);
   if (
     checkedCardSuits.every(sameColorRed) == true ||
     checkedCardSuits.every(sameColorBlack) == true
@@ -590,28 +548,28 @@ function doubleComboCheck(valueA, comboCardcount) {
   totalComboPoints += Math.round(valueA * comboCardcount);
   submitCards.value = `Combo Submit / Draw Cards [${actionBtn}]`;
   comboPointsDisplay.textContent = `+ ${totalComboPoints}`;
-  // addFreshPointsToTotal(totalPoints, (valueA * comboCardcount))
-  // totalPoints += valueA * comboCardcount;
-
-  newHighscoreCheck();
-  console.log(valueA, comboCardcount, totalPoints);
 }
 
 // check for newHighscore
 let highscoreDefeated = false;
 function newHighscoreCheck() {
-  if (totalPoints > highscoreToBeat) {
-    if (!highscoreDefeated) {
+  if (!highscoreDefeated) {
+    if (pointsOnDisplay > highscoreToBeat) {
       hudMessage.textContent = 'NEW HIGHSCORE!'
-    }
-    personalHighscoreDisplay.childNodes[1].textContent = totalPoints;
-    highscoreDefeated = true;
-  } 
+      highscoreDefeated = true;
+      setTimeout(() => { 
+        if (firstSubmit) {
+          hudMessage.innerText = "Combo!";
+        } else {
+          hudMessage.innerText = "Count!";
+        }
+      }, 2000)
+    } 
+  }
 }
 
 // Swap card function(s) & event listeners
 function setSwapPermission() {
-  console.log(firstSubmit);
   if (firstSubmit) {
     swapButton.removeEventListener("click", swapButtonFunction);
     document.removeEventListener("keyup", swapButtonPush);
@@ -662,21 +620,16 @@ function reDeal(cardsInHand, hand) {
   let checkedCards = document.querySelectorAll(".checked");
   let sacrificedCards = document.querySelectorAll(".combo-sacrifice");
   let cardsPlayed = [];
-  console.log("cards in hand", cardsInHand);
-  console.log("hand", hand);
   cardsInHand.forEach((card) => {
     if (card.classList.contains("combo-sacrifice")) {
       cardsPlayed.push(card);
     } else if (card.classList.contains("checked")) {
       cardsPlayed.push(card);
-      console.log("cards played", cardsPlayed);
     }
   });
 
   for (let j = 0; j < cardsPlayed.length; j++) {
     for (let i = 0; i < hand.length; i++) {
-      console.log(cardsPlayed[j].children[0].getAttribute("suit"));
-      console.log(hand[i]["suit"]);
       if (
         cardsPlayed[j].children[0].getAttribute("suit") == hand[i]["suit"] &&
         cardsPlayed[j].children[0].getAttribute("rank") == hand[i]["face"]
@@ -708,8 +661,6 @@ function reDeal(cardsInHand, hand) {
   `;
 
   // Check to see if all cards in hand were played, for possible replenish bonus
-
-  console.log("hand length", hand.length);
   let numberCheckedCards = 0;
   if (hand.length === 0 && sacrificedCards.length === 0) {
     numberCheckedCards = 10;
@@ -726,7 +677,6 @@ function reDeal(cardsInHand, hand) {
 // Deck check and rebuild functions
 function deckCheck(drawSize) {
   if (deck.length <= drawSize) {
-    console.log("deck is less than drawsize");
     reBuildDeck();
   }
 }
@@ -742,33 +692,23 @@ function reBuildDeck() {
   tempDeck.forEach((card) => {
     deck.push(card);
   });
-  console.log(tempDeck, deck);
 }
 
-function addFreshPointsToTotal(pointsOnDisplay, pointsToAdd) {
-  let i = 0;
-  if (pointsToAdd >= 0) {
-    const addingUpPoints = setInterval(() => {
-      if (i >= pointsToAdd) {
-        clearInterval(addingUpPoints);
-      } else {
-        pointsOnDisplay += 1;
-        totalPointsDisplay.innerHTML = `${pointsOnDisplay}`;
-      }
-      i++;
-    }, 20);
-  } else {
-    const subtractingDownPoints = setInterval(() => {
-      if (i < pointsToAdd) {
-        totalPointsDisplay.innerHTML = `${totalPoints}`;
-        clearInterval(subtractingDownPoints);
-      }
-      pointsOnDisplay -= 1;
+// Live points updates
+let pointsOnDisplay = 0;
+function addFreshPointsToTotal() {
+
+  const addUpPointsLive = setInterval(() => {
+    if (pointsOnDisplay < totalPoints) {
+      pointsOnDisplay++;
       totalPointsDisplay.innerHTML = `${pointsOnDisplay}`;
-      i--;
-    }, 20);
-  }
-}
+    } 
+    if (pointsOnDisplay > highscoreToBeat) {
+      personalHighscoreDisplay.childNodes[1].textContent = pointsOnDisplay;
+    }
+      newHighscoreCheck();
+  }, 20);
+};
 
 // Pause Function(s) & Event Listeners
 let gamePause = false;
@@ -807,7 +747,6 @@ function pauseGame() {
   }, 1000)
   
   pauseScreen.addEventListener("click", (e) => {
-    console.log(e);
     if (e.target.tagName !== "BUTTON") {
       pauseInnerContainer.classList.add("fade-out");
       setTimeout(() => {
@@ -816,7 +755,6 @@ function pauseGame() {
     } else {
         location.assign('title-screen.html');
     } 
-      
     });
 }
 
@@ -836,8 +774,6 @@ function setUncheckAllPermission() {
       delete keysPressed;
    });
   } else {
-    console.log("is the firstsubmit check working");
-
     document.removeEventListener("keydown", uncheckVestibule)
   }
 }
@@ -849,7 +785,6 @@ function uncheckVestibule(e) {
 
 function uncheckAllCards(e) {
   let checkedCards = document.querySelectorAll(".checked");
-  console.log(keysPressed, keysPressed.length);
   if(e.code === uncheckcardsBtn) {
     fifteenCount = 0;
     checkedCards.forEach((card) => {
@@ -867,9 +802,3 @@ function uncheckAllCards(e) {
   }
 }
 
-// Gameplay analytics
-let totalClicks = 0;
-
-document.addEventListener("click", () => {
-  totalClicks++;
-});
