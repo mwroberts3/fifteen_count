@@ -419,6 +419,21 @@ h2 {
   font-size: 30px;
 }
 
+.time-bonus-indicator {
+  position: absolute;
+  top: 105px;
+  width: 120px;
+  height: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.bonus-block {
+  width: 8px;
+  margin: 1px;
+  background: rgb(21, 255, 21);
+}
+
 .timer {
   font-size: 2rem;
   font-weight: bold;

@@ -28,6 +28,19 @@ Bugs:
 
     -when new highscore screen pops up, maybe the rest of the screen should fade out
 
+    -shouldn't be able to keep pressing swap card button after timer runs out
+
+    -if the card to be swapped has an earlier one in the hand, the first of type gets swapped
+
+    -for some reason can open another window if holding control and click restart
+
+    -if you play more than 1000 cards, gets too close to the cards icon
+
+    -need to add exit button to the title screen
+
+    -sometimes timer jumps to 0 if even with a couple seconds left...
+
+    -swapping cards should subtract from total seconds
 
 Gameplay Tweaks:
     -should probably a colorblind mode
@@ -39,7 +52,14 @@ Gameplay Tweaks:
     3 : -6 seconds
     2 : -8 seconds
 
-    -after you sacrfice a card the half-card second bonus should refill by three (but never above 12) 
+    -there needs to somekind of cards played bonus
+        -what about a card jackpot...
+        -every 100s or so a random card in the hand is selected, if that card is played in the next submit than all the cards you've played up to that point will be added to your total
+            -two rounds chances to use it
+            -use it in 1st, same color x5 multiplier
+            -use it in 1st, same color x3 multiplier
+            -use it in 2st, same color x3 multiplier
+            -use it in 2st, diff color x1 multiplier
 
 Sound and Skin Options for arcade:
     -3 different track/skin Options (similar to Lumines)

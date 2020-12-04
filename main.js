@@ -26,7 +26,7 @@ function createWindow () {
   })
 
   // Removes app menu (no need for it)
-  mainWindow.removeMenu();
+  // mainWindow.removeMenu();
 
   // Load index.html into the new BrowserWindow
   mainWindow.loadFile('renderer/title-screen.html')

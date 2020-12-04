@@ -71,6 +71,7 @@ const timer = document.querySelector(".timer");
 let totalSeconds = 100;
 let secondsLeft = 99;
 let threeTimerStart = 0;
+let elapsedTime = 0;
 const bonusTimeDisplay = document.querySelector(".bonus-time");
 
 // Setting up deck & displaying for play
@@ -81,7 +82,12 @@ showHand();
 let gameTimer = setInterval(timerFunction, 1000);
 
 // Init gameplay loop
+let jackpotLive = false;
+let jackpotInit = false;
+let jackpotRandTiming;
+let jackpotSecondsThreshold = 50;
 addFreshPointsToTotal();
+setSecondsBonusIndicator();
 selectCard();
 
 // Button submit
@@ -213,9 +219,14 @@ function showHand() {
     if (threeTimerFinish - threeTimerStart >= 1000) {
       timer.textContent = `${secondsLeft}`;
       secondsLeft--;
+      elapsedTime++;
     }
-    if (secondsLeft <= -1) {
+    if (secondsLeft <= 0) {
+      clearInterval(gameTimer);
+      timer.textContent = '0';
       pointsOnDisplay = totalPoints;
+      firstSubmit = true;
+      setSwapPermission();
       pauseButton.removeEventListener("click", pauseGame);
       document.removeEventListener("keyup", buttonPause); 
       totalPointsDisplay.innerHTML = `${totalPoints}`;
@@ -223,13 +234,19 @@ function showHand() {
         personalHighscoreDisplay.childNodes[1].textContent = pointsOnDisplay;
       }
       highScoresFunc.scoreReview(hudMessage, currentHand, totalPoints, totalCardsPlayed, totalSeconds);
-      clearInterval(gameTimer);
-      clearInterval(addUpPointsLive);
     }
   }
 
 function reset() {
   let cardsInHand = document.querySelectorAll(".card-in-hand");
+
+  // refill some bonus time (3 secs per round with sacrifice)
+  if (comboSubmit) {
+    secondsBonus += 3;
+    if (secondsBonus > 12) {
+      secondsBonus = 12;
+    }
+  }
 
   pointsValidity = false;
   firstSubmit = false;
@@ -297,6 +314,7 @@ function cardsSubmit() {
   if (comboSkip === true) {
     reDeal(globalCardsInHand, hand);
     showHand();
+    jackpotSelect();
     reset();
     selectCard();
     playersHandArea.style.backgroundImage = `url("./img/${themeSelection['bgImgPlayersHand']}")`;
@@ -310,7 +328,39 @@ function cardsSubmit() {
     comboSkip = true;
     playersHandArea.style.backgroundImage = `url("./img/${themeSelection['bgImgCombo']}")`;
     hudMessage.innerText = "Combo!";
-    // adds 7 seconds to clock, if at least half-amount of cards in hand are played
+
+    // Check for jackpot bonus
+    if (jackpotLive) {
+      if (!firstSubmit) {
+        checkedCardSuits = [];
+        console.log(checkedCards);        
+        let jackCheckedCheck = Array.from(checkedCards);       
+        jackCheckedCheck = jackCheckedCheck.filter(card => card.classList.contains('jackpot-card'));
+
+        if (jackCheckedCheck.length === 0) {
+          totalCardsPlayed = Math.round(totalCardsPlayed/2);
+        } else {
+          checkedCards.forEach((card) => {
+              checkedCardSuits.push(card.children[0].getAttribute("suit"));
+          });
+          checkedCards.forEach((card) => {
+            if (card.classList.contains('jackpot-card')){
+              if (checkedCardSuits.every(sameColorRed) == true ||
+              checkedCardSuits.every(sameColorBlack) == true) {
+                console.log(totalPoints, (totalCardsPlayed * 2), totalPoints + (totalCardsPlayed * 2));
+                totalPoints += (totalCardsPlayed * 2);
+              } else {
+                console.log(totalPoints, totalCardsPlayed, totalPoints + totalCardsPlayed);
+                totalPoints += totalCardsPlayed;
+              }
+            }
+          });
+        }
+      }
+      jackpotLive = false;
+    }
+
+    // add seconds to clock, if at least half-amount of cards in hand are played
     if (checkedCards.length >= globalCardsInHand.length / 2 && !firstSubmit) {
 
       if (secondsBonus < 3) {
@@ -319,6 +369,8 @@ function cardsSubmit() {
 
       secondsLeft += secondsBonus + 1;
       totalSeconds += secondsBonus;
+
+      console.log(totalPoints, secondsBonus, totalPoints+secondsBonus);
       totalPoints += secondsBonus;
 
       bonusTimeDisplay.textContent = `+${secondsBonus}`
@@ -358,10 +410,11 @@ function cardsSubmit() {
     playersHandArea.style.backgroundImage = `url("./img/${themeSelection['bgImgPlayersHand']}")`;
     reDeal(globalCardsInHand, hand);
     showHand();
+    jackpotSelect();
     reset();
     selectCard();
   }
-
+  setSecondsBonusIndicator();
   fifteenCountDisplay.innerHTML = `${fifteenCount}`;
 }
 
@@ -570,7 +623,7 @@ function newHighscoreCheck() {
 
 // Swap card function(s) & event listeners
 function setSwapPermission() {
-  if (firstSubmit) {
+  if (firstSubmit || secondsLeft <= 0) {
     swapButton.removeEventListener("click", swapButtonFunction);
     document.removeEventListener("keyup", swapButtonPush);
   } else if (!firstSubmit){
@@ -588,16 +641,23 @@ function swapButtonPush(e) {
 function swapButtonFunction() {
   let cardsInHand = document.querySelectorAll(".card-in-hand");
 
-  // unchecked, already checked cards
+  // uncheck already checked cards
   cardsInHand.forEach((card) => {
     if (card.classList.contains("checked")) {
       card.classList.toggle("checked");
     }
   })
 
+  // swapping with jackpot card in hand erases jackpot
+  if (jackpotLive) {
+    totalCardsPlayed = Math.round(totalCardsPlayed/2);
+    jackpotLive = false;
+  }
+
   cardsInHand[cardsInHand.length - 1].classList.toggle("checked");
   reDeal(cardsInHand, hand);
   showHand();
+  jackpotSelect();
   reset();
   selectCard();
   secondsLeft -= (10 - cardsInHand.length);
@@ -662,10 +722,13 @@ function reDeal(cardsInHand, hand) {
 
   // Check to see if all cards in hand were played, for possible replenish bonus
   let numberCheckedCards = 0;
-  if (hand.length === 0 && sacrificedCards.length === 0) {
+  if (hand.length === 0 && sacrificedCards.length === 0 && cardsInHand.length > 1) {
     numberCheckedCards = 10;
 
-    secondsBonus = 12;
+    secondsBonus++;
+  } else if (cardsInHand.length === 1 && firstSubmit){
+    numberCheckedCards = 10;
+    secondsBonus++;
   } else {
     numberCheckedCards = checkedCards.length;
   }
@@ -694,11 +757,29 @@ function reBuildDeck() {
   });
 }
 
+// Jackpot card
+function jackpotSelect() {
+  let cardsInHand = document.querySelectorAll('.card-in-hand');
+
+  if (!jackpotInit) {
+    jackpotRandTiming = Math.floor(Math.random() * (jackpotSecondsThreshold - (jackpotSecondsThreshold - 49)) + (jackpotSecondsThreshold - 49));
+    console.log("jackpot rand timing", jackpotRandTiming);
+    jackpotInit = true;
+  }
+  console.log(elapsedTime);
+  if (elapsedTime >= jackpotRandTiming && jackpotInit) {
+      cardsInHand[Math.floor(Math.random() * (cardsInHand.length - 0) + 0)].classList.add('jackpot-card');
+      jackpotInit = false;
+      jackpotSecondsThreshold += 50;
+      jackpotLive = true;
+  }
+}
+
 // Live points updates
 let pointsOnDisplay = 0;
 function addFreshPointsToTotal() {
 
-  const addUpPointsLive = setInterval(() => {
+setInterval(() => {
     if (pointsOnDisplay < totalPoints) {
       pointsOnDisplay++;
       totalPointsDisplay.innerHTML = `${pointsOnDisplay}`;
@@ -709,6 +790,37 @@ function addFreshPointsToTotal() {
       newHighscoreCheck();
   }, 20);
 };
+
+function setSecondsBonusIndicator(){
+const timeBonusIndicatorCont = document.querySelector('.time-bonus-indicator');
+const bonusColSpec = [
+  {key: 12, hex: '#419B41'},
+  {key: 11, hex: '#4CA82B'},
+  {key: 10, hex: '#80C837'},
+  {key: 9, hex: '#ACD62A'},
+  {key: 8, hex: '#E0E61A'},
+  {key: 7, hex: '#EFCE10'},
+  {key: 6, hex: '#E6AA19'},
+  {key: 5, hex: '#E27A1D'},
+  {key: 4, hex: '#DE5003'},
+  {key: 3, hex: '#C93C38'},
+];
+
+if (secondsBonus < 3) {
+  secondsBonus = 3;
+}
+
+let bonusSecCol = bonusColSpec.filter(color => color.key === secondsBonus);
+bonusSecCol = bonusSecCol[0]['hex'];
+
+timeBonusIndicatorCont.innerHTML = '';
+for (let i = 0; i < secondsBonus; i++){
+  let bonusBlock = document.createElement('div');
+  bonusBlock.classList.add('bonus-block');
+  bonusBlock.style.background = bonusSecCol;
+  timeBonusIndicatorCont.appendChild(bonusBlock);
+}
+}
 
 // Pause Function(s) & Event Listeners
 let gamePause = false;
