@@ -15,7 +15,7 @@ function createWindow () {
 
   // x: -391, y: -1080,
   mainWindow = new BrowserWindow({
-    x: -391, y: -1080,
+    x: 0, y: 0,
     width: 1300, height: 800,
     frame: true,
     fullscreenable: true,

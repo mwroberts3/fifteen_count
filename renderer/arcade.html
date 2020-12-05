@@ -6,10 +6,58 @@
     <title>Fifteen Count - Arcade Mode</title>
     <link rel="stylesheet" href="style/style.css" />
     <link id="theme-spritesheet" rel="stylesheet" />
-    <link rel="stylesheet" href="style/universe.css" />
     <style>
+      @keyframes jackpot {
+        from {
+          border: 5px solid blue;
+        }
+        to {
+          border: 5px solid lime;
+        }
+      }
+
       .jackpot-card {
-        border: 5px solid lime;
+        animation-name: jackpot;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+      }
+
+      .players-hand {
+        --players-bg-img: url("./img/jungle-bg-1.png");
+        --players-bg-opacity: 1;
+        --players-bg-img-2: url("./img/jungle-bg-3.png");
+        --players-bg-opacity-2: 0;
+      }
+
+      .players-hand::before {
+        content: "";
+        background-image: var(--players-bg-img);
+        background-size: cover;
+        position: absolute;
+        border-bottom-right-radius: 8px;
+        border-bottom-left-radius: 8px;
+        top: 178px;
+        right: 4px;
+        bottom: 58px;
+        left: 4px;
+        opacity: var(--players-bg-opacity);
+        z-index: -2;
+      }
+
+      .players-hand::after {
+        content: "";
+        background-image: var(--players-bg-img-2);
+        background-size: cover;
+        position: absolute;
+        border-bottom-right-radius: 8px;
+        border-bottom-left-radius: 8px;
+        top: 178px;
+        right: 4px;
+        bottom: 58px;
+        left: 4px;
+        opacity: var(--players-bg-opacity-2);
+        z-index: -2;
       }
     </style>
   </head>

@@ -60,7 +60,7 @@ let themeSelection = [];
 const themeDisplay = document.querySelector('#theme-display');
 
 if (!localStorage.getItem('theme-selection')) {
-  themeSelection = { index: 0, themeName: "Classic", bgImgPlayersHand: "classic-bg.png", bgImgCombo: "classic-bg-combo-round.png", bgCol: "#b3edff", cardSprites: "style/classicsprites.css", bgm: "bgm/Theme-Classic.mp3" };
+  themeSelection = { index: 0, themeName: "Classic", bgImgPlayersHand: ["classic-bg.png"], bgImgCombo: "classic-bg-combo-round.png", bgCol: "#b3edff", cardSprites: "style/classicsprites.css", bgm: "bgm/Theme-Classic.mp3" };
   localStorage.setItem('theme-selection', JSON.stringify(themeSelection));
 } else {
   themeSelection = JSON.parse(localStorage.getItem('theme-selection'))
@@ -83,4 +83,47 @@ if (themeSelection['index'] === 1 || themeSelection['index'] === 2) {
 
 document.getElementById('theme-spritesheet').href = themeSelection['cardSprites'];
 
-document.querySelector(".players-hand").style.backgroundImage = `url("./img/${themeSelection['bgImgPlayersHand']}")`;
+
+const bgTimerIntervals = [];
+setPlayersHandBg();
+
+
+function setPlayersHandBg() {
+  document.querySelector('.players-hand').style.removeProperty('background-image');
+  let playersHandBgAbr = document.querySelector('.players-hand').style;
+  if (themeSelection['bgImgPlayersHand'].length === 1) {
+    playersHandBgAbr.setProperty('--players-bg-img', `url("./img/${themeSelection['bgImgPlayersHand'][0]}")`)
+  } else {
+    let iOpa = 1;
+    let jOpa = 0;
+    let opaChange = 0.008;
+    let bgImgSwitch = false;
+
+    setInterval(() => {
+      playersHandBgAbr.setProperty('--players-bg-opacity', `${iOpa}`);
+      iOpa += -opaChange;
+    },34);
+
+    setInterval(() => {
+      playersHandBgAbr.setProperty('--players-bg-opacity-2', `${jOpa}`);
+      jOpa += opaChange;
+    },34);
+    
+    setInterval(() => {
+      opaChange = -opaChange;
+      if (!bgImgSwitch) {
+        playersHandBgAbr.setProperty('--players-bg-img', `url("./img/${themeSelection['bgImgPlayersHand'][Math.floor(Math.random() * 8)]}")`);
+        bgImgSwitch = true;
+      } else if (bgImgSwitch) {
+        playersHandBgAbr.setProperty('--players-bg-img-2', `url("./img/${themeSelection['bgImgPlayersHand'][Math.floor(Math.random() * 8)]}")`);
+        bgImgSwitch = false;
+      }
+    },4000);
+  }
+}
+
+// function clearBgImgIntervals() {
+//   clearInterval(bgTimer1);
+//   clearInterval(bgTimer2);
+//   clearInterval(bgTimer3);
+// }

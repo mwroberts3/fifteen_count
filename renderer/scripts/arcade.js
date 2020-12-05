@@ -69,7 +69,7 @@ let hand = [];
 // Timer variables
 const timer = document.querySelector(".timer");
 let totalSeconds = 100;
-let secondsLeft = 99;
+let secondsLeft = 500;
 let threeTimerStart = 0;
 let elapsedTime = 0;
 const bonusTimeDisplay = document.querySelector(".bonus-time");
@@ -317,7 +317,8 @@ function cardsSubmit() {
     jackpotSelect();
     reset();
     selectCard();
-    playersHandArea.style.backgroundImage = `url("./img/${themeSelection['bgImgPlayersHand']}")`;
+    // setPlayersHandBg();
+    document.querySelector('.players-hand').style.removeProperty('background-image');
     hudMessage.innerText = "Count!";
   }
   if (pointsValidity === true) {
@@ -328,6 +329,7 @@ function cardsSubmit() {
     comboSkip = true;
     playersHandArea.style.backgroundImage = `url("./img/${themeSelection['bgImgCombo']}")`;
     hudMessage.innerText = "Combo!";
+    // clearBgImgIntervals();
 
     // Check for jackpot bonus
     if (jackpotLive) {
@@ -407,7 +409,8 @@ function cardsSubmit() {
     }
   }
   if (pointsValidity === true && comboSubmit === true) {
-    playersHandArea.style.backgroundImage = `url("./img/${themeSelection['bgImgPlayersHand']}")`;
+    // setPlayersHandBg();
+    document.querySelector('.players-hand').style.removeProperty('background-image');
     reDeal(globalCardsInHand, hand);
     showHand();
     jackpotSelect();
@@ -899,6 +902,7 @@ function uncheckAllCards(e) {
   let checkedCards = document.querySelectorAll(".checked");
   if(e.code === uncheckcardsBtn) {
     fifteenCount = 0;
+    pointsValidity = false;
     checkedCards.forEach((card) => {
       card.classList.toggle("checked");
       card.classList.remove("value-selected");

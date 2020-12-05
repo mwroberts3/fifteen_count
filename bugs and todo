@@ -42,6 +42,8 @@ Bugs:
 
     -swapping cards should subtract from total seconds
 
+    -unchecking cards that were a 15 count and then submitting shouldn't work
+
 Gameplay Tweaks:
     -should probably a colorblind mode
 
