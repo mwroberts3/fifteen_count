@@ -1,6 +1,6 @@
 .card-sprite {
-  border: 2px solid #333;
-  border-radius: 15px;
+  border: 2px solid gold;
+  border-radius: 25px;
   min-width: 100px;
   min-height: 154px;
   cursor: pointer;
@@ -8,54 +8,67 @@
 
 .red-two {
   background: url("../img/jungle_sprites.png") 0 0;
+  border: 2px solid limegreen;
 }
 
 .red-three {
   background: url("../img/jungle_sprites.png") -144.5px 0;
+  border: 2px solid limegreen;
 }
 
 .red-four {
   background: url("../img/jungle_sprites.png") -289px 0;
+  border: 2px solid limegreen;
 }
 
 .red-five {
   background: url("../img/jungle_sprites.png") -433.5px 0;
+  border: 2px solid limegreen;
 }
 
 .red-six {
   background: url("../img/jungle_sprites.png") -578px 0;
+  border: 2px solid limegreen;
 }
 
 .red-seven {
   background: url("../img/jungle_sprites.png") -722.5px 0;
+  border: 2px solid limegreen;
 }
 
 .red-eight {
   background: url("../img/jungle_sprites.png") -867px 0;
+  border: 2px solid limegreen;
 }
 
 .red-nine {
   background: url("../img/jungle_sprites.png") -1011.5px 0;
+  border: 2px solid limegreen;
 }
 
 .red-ten {
   background: url("../img/jungle_sprites.png") -1156px 0;
+  border: 2px solid limegreen;
 }
 
 .red-ten-one {
   background: url("../img/jungle_sprites.png") -1300.5px 0;
+  border: 2px solid limegreen;
 }
 
 .red-eleven-one {
   background: url("../img/jungle_sprites.png") -1589px 0;
+  border: 2px solid limegreen;
 }
 
 .red-twelve-one {
   background: url("../img/jungle_sprites.png") -1733.5px 0;
+  border: 2px solid limegreen;
 }
 
 .red-fifteen-one {
   background: url("../img/jungle_sprites.png") -1444.5px 0;
+  border: 2px solid limegreen;
 }
 
 .black-two {
@@ -112,4 +125,55 @@
 
 .joker {
   background: url("../img/jungle_sprites.png") 0 -465px;
+  border: 2px solid indianred;
+}
+
+html {
+  position: relative;
+}
+
+body {
+  animation-name: background-shift;
+  animation-duration: 100s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate-reverse;
+}
+
+.background-helper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url("../img/jungle-outer-bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1;
+}
+
+@keyframes background-shift {
+  0% {
+    background: #ccead5;
+  }
+  7% {
+    background: #84eba3;
+  }
+  22% {
+    background: #4b8a5e;
+  }
+  35% {
+    background: #427752;
+  }
+  52% {
+    background: #524bb8;
+  }
+  70% {
+    background: #1d1957;
+  }
+  79% {
+    background: #4f2488;
+  }
+  100% {
+    background: #23a795;
+  }
 }

@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Russo+One&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap");
 * {
   margin: 0;
@@ -222,7 +223,7 @@ h2 {
   font-size: 0.85rem;
   margin-left: 8px;
   font-weight: bold;
-  height: 54px; }
+  height: 59px; }
   #personal-highscore-display span {
     font-weight: normal; }
 
@@ -252,7 +253,7 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: "Courier New", Courier, monospace;
+    font-family: "Russo One", sans-serif;
     font-weight: normal;
     font-size: 1.75rem;
     color: #ffff00; }
@@ -263,10 +264,10 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: "Courier New", Courier, monospace;
+    font-family: "Russo One", sans-serif;
     font-weight: normal;
     font-size: 1.75rem;
-    color: yellow; }
+    color: #ffff00; }
 
 .menu-hud {
   width: 94%;
@@ -295,10 +296,21 @@ h2 {
   .main-hud div:first-of-type {
     width: 50%; }
 
+.bonus-notice {
+  position: absolute;
+  top: 17px;
+  right: 97px;
+  width: 80px !important;
+  text-align: center;
+  color: #aaa;
+  font-family: "Russo One", sans-serif;
+  font-size: 22px; }
+
 .hud-message {
   text-align: center;
   margin-bottom: 15px;
-  font-size: 30px; }
+  text-shadow: 2px 2px #000;
+  font-size: 45px; }
 
 .time-bonus-indicator {
   position: absolute;
@@ -317,7 +329,7 @@ h2 {
   font-size: 2rem;
   font-weight: bold;
   color: #98fd00;
-  font-family: "Courier New", Courier, monospace;
+  font-family: "Russo One", sans-serif;
   width: 80px;
   height: 80px;
   border: 2px solid white;
@@ -335,7 +347,7 @@ h2 {
 .bonus-time {
   width: 32px;
   position: absolute;
-  top: 110px;
+  top: 200px;
   right: 50%;
   margin-right: -14px;
   margin-top: -47px;
@@ -449,6 +461,84 @@ input[type="submit"] {
     .players-hand .swap-container .two-sec-warning {
       font-size: 1rem; }
 
+@keyframes jackpot {
+  from {
+    border: 5px solid blue; }
+  to {
+    border: 5px solid lime; } }
+
+.jackpot-card {
+  animation-name: jackpot;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate; }
+
+.players-hand {
+  --players-bg-img: url("../img/jungle-bg-1.png");
+  --players-bg-opacity: 1;
+  --players-bg-img-2: url("../img/jungle-bg-3.png");
+  --players-bg-opacity-2: 0; }
+
+.players-hand::before {
+  content: "";
+  background-image: var(--players-bg-img);
+  background-size: cover;
+  position: absolute;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  top: 178px;
+  right: 4px;
+  bottom: 58px;
+  left: 4px;
+  opacity: var(--players-bg-opacity);
+  z-index: -2; }
+
+.players-hand::after {
+  content: "";
+  background-image: var(--players-bg-img-2);
+  background-size: cover;
+  position: absolute;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  top: 178px;
+  right: 4px;
+  bottom: 58px;
+  left: 4px;
+  opacity: var(--players-bg-opacity-2);
+  z-index: -2; }
+
+#points-breakdown-view {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  top: 59px;
+  left: 4px;
+  background: #000;
+  color: #fff;
+  width: 1192px;
+  height: 519px;
+  z-index: 4;
+  border-radius: 8px; }
+  #points-breakdown-view div {
+    display: flex;
+    align-items: center;
+    width: 75%; }
+    #points-breakdown-view div div {
+      width: 33%;
+      margin-left: 20px; }
+  #points-breakdown-view progress[value] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 250px;
+    height: 20px; }
+  #points-breakdown-view progress[value]::-webkit-progress-bar {
+    background-color: #000; }
+  #points-breakdown-view progress[value]::-webkit-progress-value {
+    background-color: #ffff00;
+    border-radius: 3px; }
+
 #new-highscore-form {
   position: absolute;
   top: 50%;
@@ -511,7 +601,12 @@ input[type="submit"] {
   color: #fff; }
 
 .Jungle .hud-message {
-  color: #fff; }
+  color: #fff !important; }
 
 .Jungle .fifteen-count {
+  color: #fff !important;
+  -webkit-text-stroke: 0.5px #000;
+  font-size: 55px !important; }
+
+.Jungle #personal-highscore-display {
   color: #fff; }

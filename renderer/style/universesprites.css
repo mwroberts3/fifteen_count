@@ -1,6 +1,6 @@
 .card-sprite {
-  border: 2px solid #333;
-  border-radius: 15px;
+  border: 2px solid #fff;
+  border-radius: 35%;
   min-width: 100px;
   min-height: 154px;
   cursor: pointer;
@@ -112,4 +112,41 @@
 
 .joker {
   background: url("../img/universe_sprites.png") 0 -465px;
+}
+
+html {
+  overflow: hidden;
+}
+
+.gui-container {
+  border: 4px solid #000;
+}
+
+.background-helper {
+  position: absolute;
+  top: -75%;
+  left: -25%;
+  width: 150%;
+  height: 250%;
+  background: url("../img/universe-outer-bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  transform: rotate(0);
+  animation-name: background-rotation;
+  animation-duration: 300s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes background-rotation {
+  0% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
 }

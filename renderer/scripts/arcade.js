@@ -2,6 +2,10 @@ const highScoresFunc = require('./add-arcade-highscore');
 
 const utils = require('./utils');
 
+const { pointsReview } = require('./points-review');
+
+const { hudMessage } = require('./hud-messages');
+
 // Fadein
 utils.gamescreenFadeinFunc();
 
@@ -11,7 +15,7 @@ const valueOptionOne = document.querySelector(".value-options-one");
 let globalCardsInHand = [];
 const valueOptionTwo = document.querySelector(".value-options-two");
 const submitCards = document.querySelector(".submit-cards");
-const hudMessage = document.querySelector(".hud-message");
+const hudMessageDisplay = document.querySelector(".hud-message");
 const swapButton = document.querySelector(".swap-container");
 const sameColorRed = (color) => color == "hearts" || color == "diamonds" || color == "joker";
 const sameColorBlack = (color) => color == "clubs" || color == "spades" || color == "joker";;
@@ -24,6 +28,7 @@ const fifteenCountDisplay = document.querySelector(".fifteen-count");
 const totalCardsPlayedDisplay = document.querySelector(".total-cards-played");
 const swapCostDisplay = document.querySelector(".two-sec-warning");
 let totalPoints = 0;
+const pointsBreakdown = {cardPoints: 0, comboPoints: 0, timePoints: 0, fullClearPoints: 0, jackpotPoints: 0, speedPoints: 0};
 let fifteenCount = 0;
 let pointsInPlay = 0;
 let totalCardsPlayed = 0;
@@ -69,7 +74,7 @@ let hand = [];
 // Timer variables
 const timer = document.querySelector(".timer");
 let totalSeconds = 100;
-let secondsLeft = 500;
+let secondsLeft = 99;
 let threeTimerStart = 0;
 let elapsedTime = 0;
 const bonusTimeDisplay = document.querySelector(".bonus-time");
@@ -89,6 +94,9 @@ let jackpotSecondsThreshold = 50;
 addFreshPointsToTotal();
 setSecondsBonusIndicator();
 selectCard();
+const incomingHudMessages = setInterval(() => {
+  hudMessage(firstSubmit, jackpotLive, incomingHudMessages);
+},10)
 
 // Button submit
 document.addEventListener("keyup", (e) => {
@@ -180,7 +188,6 @@ function drawCards(drawSize) {
   for (i = 0; i < drawSize; i++) {
     hand.splice(i, 0, deck.pop());
   }
-  hudMessage.innerText = "Count!";
   submitCards.value = `Play Cards [${actionBtn}]`;
 }
 
@@ -233,6 +240,9 @@ function showHand() {
       if (highscoreDefeated) {
         personalHighscoreDisplay.childNodes[1].textContent = pointsOnDisplay;
       }
+      let scoreReviewCheck = pointsReview(pointsBreakdown, totalPoints);
+
+      console.log(scoreReviewCheck);
       highScoresFunc.scoreReview(hudMessage, currentHand, totalPoints, totalCardsPlayed, totalSeconds);
     }
   }
@@ -254,6 +264,7 @@ function reset() {
   comboSkip = false;
   comboCardcount = 0;
   totalPoints += totalComboPoints;
+  pointsBreakdown.comboPoints += totalComboPoints;
   totalComboPoints = 0;
   comboPointsDisplay.textContent = '';
 
@@ -319,16 +330,15 @@ function cardsSubmit() {
     selectCard();
     // setPlayersHandBg();
     document.querySelector('.players-hand').style.removeProperty('background-image');
-    hudMessage.innerText = "Count!";
   }
   if (pointsValidity === true) {
     totalPoints += pointsInPlay;
+    pointsBreakdown.cardPoints += pointsInPlay;
     pointsInPlay = 0;
     fifteenCount = 0;
     submitCards.value = `Draw Cards [${actionBtn}]`;
     comboSkip = true;
     playersHandArea.style.backgroundImage = `url("./img/${themeSelection['bgImgCombo']}")`;
-    hudMessage.innerText = "Combo!";
     // clearBgImgIntervals();
 
     // Check for jackpot bonus
@@ -351,9 +361,11 @@ function cardsSubmit() {
               checkedCardSuits.every(sameColorBlack) == true) {
                 console.log(totalPoints, (totalCardsPlayed * 2), totalPoints + (totalCardsPlayed * 2));
                 totalPoints += (totalCardsPlayed * 2);
+                pointsBreakdown.jackpotPoints += totalCardsPlayed * 2;
               } else {
                 console.log(totalPoints, totalCardsPlayed, totalPoints + totalCardsPlayed);
                 totalPoints += totalCardsPlayed;
+                pointsBreakdown.jackpotPoints += totalCardsPlayed;
               }
             }
           });
@@ -372,8 +384,9 @@ function cardsSubmit() {
       secondsLeft += secondsBonus + 1;
       totalSeconds += secondsBonus;
 
-      console.log(totalPoints, secondsBonus, totalPoints+secondsBonus);
-      totalPoints += secondsBonus;
+      totalPoints += secondsBonus;  
+
+      pointsBreakdown.timePoints += secondsBonus;
 
       bonusTimeDisplay.textContent = `+${secondsBonus}`
       setTimeout(() => {
@@ -385,6 +398,7 @@ function cardsSubmit() {
     }
 
     firstSubmit = true;
+    // hudMessage(jackpotLive, firstSubmit);
     setSwapPermission();
     setUncheckAllPermission();
 
@@ -393,6 +407,9 @@ function cardsSubmit() {
       totalSeconds += fullHandBonus;
       totalPoints += fullHandBonus;
       totalPoints += fullHandPointsBonus;
+
+      pointsBreakdown.fullClearPoints += fullHandPointsBonus;
+      pointsBreakdown.timePoints += fullHandBonus
 
       // these will have game skip combo round after playing a full hand
       comboSubmit = true;
@@ -438,7 +455,6 @@ function roundBonusCheck() {
   ];
   let checkedCards = document.querySelectorAll(".checked").length;
   let diff =
-
     (roundBonusTimerCheck.getTime() - roundBonusTimer.getTime()) / 1000;
   diff = Math.round(diff);
 
@@ -450,7 +466,9 @@ function roundBonusCheck() {
 
     roundBonusPoints = Math.round(roundBonusPoints);
 
-    totalPoints += roundBonusPoints + checkedCards;
+    totalPoints += roundBonusPoints;
+
+    pointsBreakdown.speedPoints += roundBonusPoints;
   }
 
   cardsSubmit();
@@ -611,13 +629,13 @@ let highscoreDefeated = false;
 function newHighscoreCheck() {
   if (!highscoreDefeated) {
     if (pointsOnDisplay > highscoreToBeat) {
-      hudMessage.textContent = 'NEW HIGHSCORE!'
+      hudMessageDisplay.textContent = 'NEW HIGHSCORE!'
       highscoreDefeated = true;
       setTimeout(() => { 
         if (firstSubmit) {
-          hudMessage.innerText = "Combo!";
+          hudMessageDisplay.innerText = "!";
         } else {
-          hudMessage.innerText = "Count!";
+          hudMessageDisplay.innerText = "!";
         }
       }, 2000)
     } 
@@ -769,7 +787,6 @@ function jackpotSelect() {
     console.log("jackpot rand timing", jackpotRandTiming);
     jackpotInit = true;
   }
-  console.log(elapsedTime);
   if (elapsedTime >= jackpotRandTiming && jackpotInit) {
       cardsInHand[Math.floor(Math.random() * (cardsInHand.length - 0) + 0)].classList.add('jackpot-card');
       jackpotInit = false;

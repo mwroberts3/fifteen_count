@@ -73,7 +73,7 @@ const allContentsContainer = document.querySelector('.all-contents-container');
 allContentsContainer.classList.add(themeSelection['themeName']);
 document.getElementById('bgm-selection').src = themeSelection['bgm'];
 
-document.querySelector('body').style.background = themeSelection['bgCol'];
+// document.querySelector('body').style.background = themeSelection['bgCol'];
 
 if (themeSelection['index'] === 1 || themeSelection['index'] === 2) {
   console.log('theme is 1 or 2');
@@ -86,13 +86,14 @@ document.getElementById('theme-spritesheet').href = themeSelection['cardSprites'
 
 const bgTimerIntervals = [];
 setPlayersHandBg();
+document.querySelector('.players-hand').style.removeProperty('background-image');
 
 
 function setPlayersHandBg() {
   document.querySelector('.players-hand').style.removeProperty('background-image');
   let playersHandBgAbr = document.querySelector('.players-hand').style;
   if (themeSelection['bgImgPlayersHand'].length === 1) {
-    playersHandBgAbr.setProperty('--players-bg-img', `url("./img/${themeSelection['bgImgPlayersHand'][0]}")`)
+    playersHandBgAbr.setProperty('--players-bg-img', `url("../img/${themeSelection['bgImgPlayersHand'][0]}")`)
   } else {
     let iOpa = 1;
     let jOpa = 0;
@@ -112,10 +113,10 @@ function setPlayersHandBg() {
     setInterval(() => {
       opaChange = -opaChange;
       if (!bgImgSwitch) {
-        playersHandBgAbr.setProperty('--players-bg-img', `url("./img/${themeSelection['bgImgPlayersHand'][Math.floor(Math.random() * 8)]}")`);
+        playersHandBgAbr.setProperty('--players-bg-img', `url("../img/${themeSelection['bgImgPlayersHand'][Math.floor(Math.random() * 8)]}")`);
         bgImgSwitch = true;
       } else if (bgImgSwitch) {
-        playersHandBgAbr.setProperty('--players-bg-img-2', `url("./img/${themeSelection['bgImgPlayersHand'][Math.floor(Math.random() * 8)]}")`);
+        playersHandBgAbr.setProperty('--players-bg-img-2', `url("../img/${themeSelection['bgImgPlayersHand'][Math.floor(Math.random() * 8)]}")`);
         bgImgSwitch = false;
       }
     },4000);

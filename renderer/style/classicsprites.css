@@ -113,3 +113,37 @@
 .joker {
   background: url("../img/classic_sprites.png") 0 -465px;
 }
+
+body {
+  animation-name: background-shift;
+  animation-duration: 100s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate-reverse;
+}
+
+@keyframes background-shift {
+  0% {
+    background-color: #b3edff;
+  }
+  7% {
+    background-color: #79e0ff;
+  }
+  22% {
+    background-color: #267992;
+  }
+  35% {
+    background-color: #8261b8;
+  }
+  52% {
+    background-color: #4b3969;
+  }
+  70% {
+    background-color: #892da0;
+  }
+  79% {
+    background-color: #ce2a40;
+  }
+  100% {
+    background-color: #ff7a8b;
+  }
+}

@@ -6,65 +6,13 @@
     <title>Fifteen Count - Arcade Mode</title>
     <link rel="stylesheet" href="style/style.css" />
     <link id="theme-spritesheet" rel="stylesheet" />
-    <style>
-      @keyframes jackpot {
-        from {
-          border: 5px solid blue;
-        }
-        to {
-          border: 5px solid lime;
-        }
-      }
-
-      .jackpot-card {
-        animation-name: jackpot;
-        animation-duration: 2s;
-        animation-iteration-count: infinite;
-        animation-direction: alternate;
-      }
-
-      .players-hand {
-        --players-bg-img: url("./img/jungle-bg-1.png");
-        --players-bg-opacity: 1;
-        --players-bg-img-2: url("./img/jungle-bg-3.png");
-        --players-bg-opacity-2: 0;
-      }
-
-      .players-hand::before {
-        content: "";
-        background-image: var(--players-bg-img);
-        background-size: cover;
-        position: absolute;
-        border-bottom-right-radius: 8px;
-        border-bottom-left-radius: 8px;
-        top: 178px;
-        right: 4px;
-        bottom: 58px;
-        left: 4px;
-        opacity: var(--players-bg-opacity);
-        z-index: -2;
-      }
-
-      .players-hand::after {
-        content: "";
-        background-image: var(--players-bg-img-2);
-        background-size: cover;
-        position: absolute;
-        border-bottom-right-radius: 8px;
-        border-bottom-left-radius: 8px;
-        top: 178px;
-        right: 4px;
-        bottom: 58px;
-        left: 4px;
-        opacity: var(--players-bg-opacity-2);
-        z-index: -2;
-      }
-    </style>
+    <style></style>
   </head>
+  <div class="background-helper"></div>
   <body>
     <audio id="bgm-selection" src="" autoplay loop></audio>
     <div class="all-contents-container">
-      <h4 class="hud-message">Count!</h4>
+      <h4 class="hud-message"></h4>
       <div class="gui-container">
         <div class="scoreboard">
           <div class="time-bonus-indicator"></div>
@@ -86,6 +34,7 @@
               <div class="combo-points"></div>
             </div>
             <div class="total-cards-played"></div>
+            <div class="bonus-notice">BONUS</div>
           </div>
           <div class="timer">100</div>
         </div>
@@ -109,6 +58,43 @@
             <input class="submit-cards" type="button" />
           </div>
         </form>
+
+        <div id="points-breakdown-view" class="hidden">
+          <div class="point-type">
+            <div>Checked Cards</div>
+            <div class="reg-card-points">2000</div>
+            <progress value="50" max=""></progress>
+          </div>
+          <div class="point-type">
+            <div>Combos</div>
+            <div class="combo-card-points">600</div>
+            <progress value="27" max=""></progress>
+          </div>
+          <div class="point-type">
+            <div>Full Clear</div>
+            <div class="full-clear-points">421</div>
+            <progress value="15" max=""></progress>
+          </div>
+          <div class="point-type">
+            <div>Jackpot</div>
+            <div class="jackpot-points">541</div>
+            <progress value="10" max=""></progress>
+          </div>
+          <div class="point-type">
+            <div>Speed</div>
+            <div class="speed-points">88</div>
+            <progress value="5" max=""></progress>
+          </div>
+          <div class="point-type">
+            <div>Time</div>
+            <div class="time-points">200</div>
+            <progress value="7" max=""></progress>
+          </div>
+          <div>
+            <div>Total Points</div>
+            <div class="total-points-review-display"></div>
+          </div>
+        </div>
 
         <form id="new-highscore-form" class="hidden">
           <h3>Congratulations! New Highscore!</h3>
