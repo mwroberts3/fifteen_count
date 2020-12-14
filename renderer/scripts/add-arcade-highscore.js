@@ -46,8 +46,6 @@ exports.scoreReview = (hudMessage, currentHand, totalPoints, totalCardsPlayed, t
         } else {
           newHighscore("DIDN'T QUALIFY", totalPoints, totalCardsPlayed, totalSeconds);
         }
-  
-        console.log(highscoresArr);
       });
   }
   
@@ -61,7 +59,11 @@ exports.scoreReview = (hudMessage, currentHand, totalPoints, totalCardsPlayed, t
     inputNameForm.classList.toggle("hidden");
     inputNameForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      newHighscore(inputNameForm.querySelector("input").value, totalPoints, totalCardsPlayed, totalSeconds);
+      if (!inputNameForm.querySelector("input").value) {
+        inputNameForm.firstElementChild.textContent = 'please enter name';
+      } else {
+        newHighscore(inputNameForm.querySelector("input").value, totalPoints, totalCardsPlayed, totalSeconds);
+      }
     });
   }
   

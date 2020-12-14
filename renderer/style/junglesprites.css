@@ -3,7 +3,7 @@
   border-radius: 25px;
   min-width: 100px;
   min-height: 154px;
-  cursor: pointer;
+  cursor: url("../img/cursor.png"), auto !important;
 }
 
 .red-two {
@@ -128,8 +128,23 @@
   border: 2px solid indianred;
 }
 
+.hud-message {
+  color: #fff !important;
+}
+
+.fifteen-count {
+  color: #fff !important;
+  -webkit-text-stroke: 0.5px #000;
+  font-size: 55px !important;
+}
+
+#personal-highscore-display {
+  color: #fff;
+}
+
 html {
   position: relative;
+  cursor: url("../img/cursor.png"), auto !important;
 }
 
 body {

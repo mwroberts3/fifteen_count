@@ -6,6 +6,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  cursor: $custom-pointer;
 }
 
 body {
@@ -50,6 +51,15 @@ h2 {
   padding: 10px;
 }
 
+.title-screen-container {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .pad-l {
   padding: 10px;
 }
@@ -64,7 +74,7 @@ h2 {
   margin-top: 5px;
   border-radius: 5px;
   font-family: $body-font;
-  cursor: pointer;
+  cursor: $custom-pointer;
   background-image: linear-gradient(#444, #666);
   color: white;
   font-size: 1.25rem;
@@ -116,7 +126,7 @@ h2 {
 
 .gamemode-select-container {
   width: $maxwidth/3;
-  margin: 0 auto;
+  margin: auto;
   background: $dark-bg-col;
   border-radius: 10px;
   padding: 10px;
@@ -151,6 +161,27 @@ h2 {
   }
 }
 
+.title-screen-footer {
+  height: 63px;
+  text-align: center;
+  color: #999;
+  font-size: 12px;
+}
+
+.title-banner-container {
+  position: relative;
+}
+
+.title-subtitle {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 18px;
+  color: #999;
+  font-style: italic;
+}
+
 // HOW TO PLAY
 .how-to-container {
   font-size: 1rem;
@@ -176,9 +207,9 @@ h2 {
   background: $light-bg-col;
   border-radius: 10px;
 
-  div:first-of-type {
+  .personal-highscore-container {
     width: 70%;
-    margin: auto;
+    margin: 0 auto 7px;
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
@@ -228,7 +259,8 @@ h2 {
 }
 
 // SETTINGS
-.how-to-nav {
+.how-to-nav,
+.high-score-mode-select {
   ul {
     display: flex;
 
@@ -238,7 +270,7 @@ h2 {
       // border: 2px solid #999;
       border-radius: 10px;
       list-style: none;
-      cursor: pointer;
+      cursor: $custom-pointer;
     }
 
     .option-selected {
@@ -260,7 +292,7 @@ h2 {
 
       span {
         font-weight: bold;
-        cursor: pointer;
+        cursor: $custom-pointer;
         display: inline-block;
         width: 170px;
 
@@ -283,7 +315,7 @@ h2 {
     div {
       margin: 5px;
       padding: 0 5px;
-      cursor: pointer;
+      cursor: $custom-pointer;
     }
 
     .selected-theme {
@@ -329,8 +361,8 @@ h2 {
 }
 
 .gui-container {
-  border: $menu-border;
-  border-radius: 10px;
+  border: 4px solid #fff;
+  border-radius: 15px;
 }
 
 .scoreboard {
@@ -371,7 +403,23 @@ h2 {
     font-weight: normal;
     font-size: 1.75rem;
     color: $gameplay-font-col;
+
+    div {
+      width: 40%;
+      margin: 0 5%;
+    }
   }
+}
+
+.bonus-notice {
+  position: absolute;
+  top: 17px;
+  right: 90px;
+  width: 80px !important;
+  text-align: center;
+  color: #aaa;
+  font-family: $gameplay-font;
+  font-size: 22px;
 }
 
 .menu-hud {
@@ -385,7 +433,7 @@ h2 {
     display: flex;
 
     div {
-      cursor: pointer;
+      cursor: $custom-pointer;
       margin: 0 10px;
 
       &:hover {
@@ -413,22 +461,12 @@ h2 {
   }
 }
 
-.bonus-notice {
-  position: absolute;
-  top: 17px;
-  right: 97px;
-  width: 80px !important;
-  text-align: center;
-  color: #aaa;
-  font-family: $gameplay-font;
-  font-size: 22px;
-}
-
 .hud-message {
   text-align: center;
   margin-bottom: 15px;
-  text-shadow: 2px 2px #000;
   font-size: 45px;
+  font-family: $gameplay-font-2;
+  -webkit-text-stroke: 1.5px black;
 }
 
 .time-bonus-indicator {
@@ -505,7 +543,7 @@ input[type="submit"] {
   }
 
   input[type="button"] {
-    cursor: pointer;
+    cursor: $custom-pointer;
     width: 30%;
     padding: 10px;
     font-size: 1.25rem;
@@ -522,7 +560,7 @@ input[type="submit"] {
   }
 
   card-t {
-    cursor: pointer;
+    cursor: $custom-pointer;
     transition: all 0.2s ease;
     border-radius: 10px;
   }
@@ -573,7 +611,7 @@ input[type="submit"] {
     box-shadow: 2px 2px #ddd;
     text-align: center;
     font-size: 2rem;
-    cursor: pointer;
+    cursor: $custom-pointer;
     background: $players-btn-bg-col;
     // display: none;
   }
@@ -590,7 +628,7 @@ input[type="submit"] {
     text-align: center;
     padding-top: 20px;
     background: $players-btn-bg-col;
-    cursor: pointer;
+    cursor: $custom-pointer;
     // display: none;
   }
 
@@ -605,6 +643,8 @@ input[type="submit"] {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-family: $gameplay-font-2;
+    -webkit-text-stroke: 2px black;
   }
 
   .swap-container {
@@ -615,7 +655,7 @@ input[type="submit"] {
     width: 160px;
     height: 80px;
     background: #eee;
-    cursor: pointer;
+    cursor: $custom-pointer;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -686,7 +726,7 @@ input[type="submit"] {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  top: 59px;
+  top: 80px;
   left: 4px;
   background: #000;
   color: #fff;
@@ -794,32 +834,5 @@ input[type="submit"] {
     * {
       padding: 5px;
     }
-  }
-}
-
-// Themes
-.Universe {
-  .hud-message {
-    color: $universe-primary-col;
-  }
-
-  .fifteen-count {
-    color: $universe-primary-col;
-  }
-}
-
-.Jungle {
-  .hud-message {
-    color: $jungle-primary-col !important;
-  }
-
-  .fifteen-count {
-    color: $jungle-primary-col !important;
-    -webkit-text-stroke: 0.5px #000;
-    font-size: 55px !important;
-  }
-
-  #personal-highscore-display {
-    color: $jungle-primary-col;
   }
 }

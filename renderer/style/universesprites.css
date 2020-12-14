@@ -114,6 +114,15 @@
   background: url("../img/universe_sprites.png") 0 -465px;
 }
 
+.hud-message {
+  color: #fff;
+  -webkit-text-stroke: 1.5px #fff;
+}
+
+.fifteen-count {
+  color: #fff;
+}
+
 html {
   overflow: hidden;
 }

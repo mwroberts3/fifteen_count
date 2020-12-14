@@ -13,105 +13,109 @@
     <audio id="bgm-selection" src="" autoplay loop></audio>
     <div class="all-contents-container">
       <h4 class="hud-message"></h4>
-      <div class="gui-container">
-        <div class="scoreboard">
-          <div class="time-bonus-indicator"></div>
-          <div class="menu-hud">
-            <div>Arcade - <span id="theme-display"></span></div>
-            <div class="menu-options">
-              <div id="pause-game-btn">Pause</div>
-              <a href="arcade.html" draggable="false">
-                <div>Restart</div>
-              </a>
-              <a href="title-screen.html" draggable="false">
-                <div>Menu</div>
-              </a>
+      <div class="border-animation-outline">
+        <div class="gui-container">
+          <div class="scoreboard">
+            <div class="time-bonus-indicator"></div>
+            <div class="menu-hud">
+              <div>Arcade - <span id="theme-display"></span></div>
+              <div class="menu-options">
+                <div id="pause-game-btn">Pause</div>
+                <a href="arcade.html" draggable="false">
+                  <div>Restart</div>
+                </a>
+                <a href="title-screen.html" draggable="false">
+                  <div>Menu</div>
+                </a>
+              </div>
             </div>
+            <div class="main-hud">
+              <div>
+                <div class="total-points"></div>
+                <div class="combo-points"></div>
+              </div>
+              <div class="total-cards-played"></div>
+              <div class="bonus-notice">BONUS</div>
+            </div>
+            <div class="timer">100</div>
           </div>
-          <div class="main-hud">
+          <div class="bonus-time"></div>
+          <form>
+            <div class="players-hand">
+              <div class="pad-1"></div>
+              <div class="show-hand"></div>
+              <div class="pad-1"></div>
+              <div class="multi-values">
+                <div class="value-option-container">
+                  <div class="value-options-one">-</div>
+                  <div class="value-options-two">-</div>
+                </div>
+                <div class="fifteen-count"></div>
+                <div class="swap-container">
+                  <div class="swap-card">SWAP</div>
+                  <div class="two-sec-warning">0s</div>
+                </div>
+              </div>
+              <input class="submit-cards" type="button" />
+            </div>
+          </form>
+
+          <div id="points-breakdown-view" class="hidden">
+            <div class="point-type">
+              <div>Checked Cards</div>
+              <div class="reg-card-points">2000</div>
+              <progress value="50" max=""></progress>
+            </div>
+            <div class="point-type">
+              <div>Combos</div>
+              <div class="combo-card-points">600</div>
+              <progress value="27" max=""></progress>
+            </div>
+            <div class="point-type">
+              <div>Full Clear</div>
+              <div class="full-clear-points">421</div>
+              <progress value="15" max=""></progress>
+            </div>
+            <div class="point-type">
+              <div>Jackpot</div>
+              <div class="jackpot-points">541</div>
+              <progress value="10" max=""></progress>
+            </div>
+            <div class="point-type">
+              <div>Speed</div>
+              <div class="speed-points">88</div>
+              <progress value="5" max=""></progress>
+            </div>
+            <div class="point-type">
+              <div>Time</div>
+              <div class="time-points">200</div>
+              <progress value="7" max=""></progress>
+            </div>
             <div>
-              <div class="total-points"></div>
-              <div class="combo-points"></div>
+              <div>Total Points</div>
+              <div class="total-points-review-display"></div>
             </div>
-            <div class="total-cards-played"></div>
-            <div class="bonus-notice">BONUS</div>
           </div>
-          <div class="timer">100</div>
-        </div>
-        <div class="bonus-time"></div>
-        <form>
-          <div class="players-hand">
-            <div class="pad-1"></div>
-            <div class="show-hand"></div>
-            <div class="pad-1"></div>
-            <div class="multi-values">
-              <div class="value-option-container">
-                <div class="value-options-one">-</div>
-                <div class="value-options-two">-</div>
-              </div>
-              <div class="fifteen-count"></div>
-              <div class="swap-container">
-                <div class="swap-card">SWAP</div>
-                <div class="two-sec-warning">0s</div>
-              </div>
+
+          <form id="new-highscore-form" class="hidden">
+            <div>&nbsp;</div>
+            <h3>Congratulations! New Highscore!</h3>
+            <p>#<span></span></p>
+            <label for="name">Enter Name</label>
+            <input type="text" />
+            <div>
+              <input type="submit" class="main-btn" />
             </div>
-            <input class="submit-cards" type="button" />
-          </div>
-        </form>
+            <div>&nbsp;</div>
+          </form>
 
-        <div id="points-breakdown-view" class="hidden">
-          <div class="point-type">
-            <div>Checked Cards</div>
-            <div class="reg-card-points">2000</div>
-            <progress value="50" max=""></progress>
-          </div>
-          <div class="point-type">
-            <div>Combos</div>
-            <div class="combo-card-points">600</div>
-            <progress value="27" max=""></progress>
-          </div>
-          <div class="point-type">
-            <div>Full Clear</div>
-            <div class="full-clear-points">421</div>
-            <progress value="15" max=""></progress>
-          </div>
-          <div class="point-type">
-            <div>Jackpot</div>
-            <div class="jackpot-points">541</div>
-            <progress value="10" max=""></progress>
-          </div>
-          <div class="point-type">
-            <div>Speed</div>
-            <div class="speed-points">88</div>
-            <progress value="5" max=""></progress>
-          </div>
-          <div class="point-type">
-            <div>Time</div>
-            <div class="time-points">200</div>
-            <progress value="7" max=""></progress>
-          </div>
-          <div>
-            <div>Total Points</div>
-            <div class="total-points-review-display"></div>
-          </div>
-        </div>
-
-        <form id="new-highscore-form" class="hidden">
-          <h3>Congratulations! New Highscore!</h3>
-          <p>#<span></span></p>
-          <label for="name">Enter Name</label>
-          <input type="text" />
-          <div>
-            <input type="submit" class="main-btn" />
-          </div>
-        </form>
-
-        <div id="pause-screen" class="hidden">
-          <div id="pause-inner-container">
-            <h4 class="time-remaining">&nbsp;&nbsp;</h4>
-            <h3>Paused</h3>
-            <p>Click the screen or press space bar to resume</p>
-            <button class="main-btn light-menu-btn">Main Menu</button>
+          <div id="pause-screen" class="hidden">
+            <div id="pause-inner-container">
+              <h4 class="time-remaining">&nbsp;&nbsp;</h4>
+              <h3>Paused</h3>
+              <p>Click the screen or press space bar to resume</p>
+              <button class="main-btn light-menu-btn">Main Menu</button>
+            </div>
           </div>
         </div>
       </div>

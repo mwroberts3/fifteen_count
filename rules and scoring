@@ -1,0 +1,15 @@
+count round:
+-eached checked card worth 15
+    -if same color *2
+
+combo round: 
+    -face value of the checked card
+        -if same color * 1.5
+
+full clear (harmonia):
+    -point bonus starts at 50 and adds 50 to bonus time everytime a fullhand is cleared
+
+jackpot: 
+    -points that equal cardsplayed jackpot
+    -if same color *2
+        -if miss out on jackpot bonus is /2

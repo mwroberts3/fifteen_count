@@ -60,7 +60,7 @@ let themeSelection = [];
 const themeDisplay = document.querySelector('#theme-display');
 
 if (!localStorage.getItem('theme-selection')) {
-  themeSelection = { index: 0, themeName: "Classic", bgImgPlayersHand: ["classic-bg.png"], bgImgCombo: "classic-bg-combo-round.png", bgCol: "#b3edff", cardSprites: "style/classicsprites.css", bgm: "bgm/Theme-Classic.mp3" };
+  themeSelection = { index: 0, themeName: "Classic", bgImgPlayersHand: ["classic-bg.png"], bgImgCombo: "classic-bg-combo-round.png", bgCol: "#b3edff", cardSprites: "style/classicsprites.css", bgm: "bgm/Theme-Classic.mp3", fifteenCountGradient: ['#fff', '#eee', '#ddd', '#ccc', '#bbb', '#aaa', '#999', '#888', '#777', '#666', '#555', '#444', '#333', '#222', '#111', '#000'] };
   localStorage.setItem('theme-selection', JSON.stringify(themeSelection));
 } else {
   themeSelection = JSON.parse(localStorage.getItem('theme-selection'))
@@ -73,7 +73,7 @@ const allContentsContainer = document.querySelector('.all-contents-container');
 allContentsContainer.classList.add(themeSelection['themeName']);
 document.getElementById('bgm-selection').src = themeSelection['bgm'];
 
-// document.querySelector('body').style.background = themeSelection['bgCol'];
+let fifteenCountColRange = themeSelection['fifteenCountGradient'];
 
 if (themeSelection['index'] === 1 || themeSelection['index'] === 2) {
   console.log('theme is 1 or 2');
@@ -122,9 +122,3 @@ function setPlayersHandBg() {
     },4000);
   }
 }
-
-// function clearBgImgIntervals() {
-//   clearInterval(bgTimer1);
-//   clearInterval(bgTimer2);
-//   clearInterval(bgTimer3);
-// }

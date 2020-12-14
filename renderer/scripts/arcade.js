@@ -28,12 +28,11 @@ const fifteenCountDisplay = document.querySelector(".fifteen-count");
 const totalCardsPlayedDisplay = document.querySelector(".total-cards-played");
 const swapCostDisplay = document.querySelector(".two-sec-warning");
 let totalPoints = 0;
-const pointsBreakdown = {cardPoints: 0, comboPoints: 0, timePoints: 0, fullClearPoints: 0, jackpotPoints: 0, speedPoints: 0};
+const pointsBreakdown = {cardPoints: 0, comboPoints: 0, timePoints: 0, fullClearPoints: 0, jackpotPoints: 0, speedPoints: 0, fullClearTimes: 0};
 let fifteenCount = 0;
 let pointsInPlay = 0;
 let totalCardsPlayed = 0;
 totalPointsDisplay.innerHTML = `${totalPoints}`;
-fifteenCountDisplay.innerHTML = `${fifteenCount}`;
 totalCardsPlayedDisplay.innerHTML = `
 <div style="
   width: 60px; 
@@ -59,7 +58,7 @@ let roundBonusTimer = 0;
 
 let secondsBonus = 12;
 let fullHandBonus = 35;
-let fullHandPointsBonus = 200;
+let fullHandPointsBonus = 50;
 
 let html = ``;
 
@@ -86,6 +85,9 @@ drawCards(drawSize);
 showHand();
 let gameTimer = setInterval(timerFunction, 1000);
 
+// Hud message flags
+let fullHandPlayed = false;
+
 // Init gameplay loop
 let jackpotLive = false;
 let jackpotInit = false;
@@ -94,8 +96,8 @@ let jackpotSecondsThreshold = 50;
 addFreshPointsToTotal();
 setSecondsBonusIndicator();
 selectCard();
-const incomingHudMessages = setInterval(() => {
-  hudMessage(firstSubmit, jackpotLive, incomingHudMessages);
+let incomingHudMessages = setInterval(() => {
+  hudMessage(firstSubmit, jackpotLive, incomingHudMessages, fullHandPlayed);
 },10)
 
 // Button submit
@@ -103,7 +105,7 @@ document.addEventListener("keyup", (e) => {
   if (e.code === actionBtn) {
     roundBonusCheck();
   }
-});
+}); 
 
 // Bonus check
 submitCards.addEventListener("click", roundBonusCheck);
@@ -224,11 +226,21 @@ function showHand() {
   function timerFunction() {
     let threeTimerFinish = new Date().getTime();
     if (threeTimerFinish - threeTimerStart >= 1000) {
+      // console.log(secondsLeft);
       timer.textContent = `${secondsLeft}`;
       secondsLeft--;
       elapsedTime++;
     }
-    if (secondsLeft <= 0) {
+    if (secondsLeft <= 4) {
+      timer.style.color = 'red';
+    } else {
+      timer.style.color = 'rgb(152, 253, 0)';
+    }
+    if (secondsLeft === -1) {
+      clearInterval(incomingHudMessages);
+      hudMessageDisplay.textContent = `TIME IS UP!`;
+    }
+    if (secondsLeft <= -2) {
       clearInterval(gameTimer);
       timer.textContent = '0';
       pointsOnDisplay = totalPoints;
@@ -242,7 +254,6 @@ function showHand() {
       }
       let scoreReviewCheck = pointsReview(pointsBreakdown, totalPoints);
 
-      console.log(scoreReviewCheck);
       highScoresFunc.scoreReview(hudMessage, currentHand, totalPoints, totalCardsPlayed, totalSeconds);
     }
   }
@@ -271,7 +282,13 @@ function reset() {
   setSwapPermission();
   setUncheckAllPermission();
   submitCards.value = `Play Cards [${actionBtn}]`;
-  swapCostDisplay.textContent = `${cardsInHand.length - 10}s`
+  swapCostDisplay.textContent = `${cardsInHand.length - 10}s`;
+
+  // Hud messaging reset
+  clearInterval(incomingHudMessages);
+  incomingHudMessages = setInterval(() => {
+    hudMessage(firstSubmit, jackpotLive, incomingHudMessages, fullHandPlayed);
+  },10)
 }
 
 // Combo Check
@@ -305,11 +322,14 @@ function comboCheck() {
     }
   }
 
-  fifteenCountDisplay.innerHTML = `${fifteenCount}`;
+  setFifteenCountColor();
+  // fifteenCountDisplay.innerHTML = `${fifteenCount}`;
 }
 
 // Submitting cards
 function cardsSubmit() {
+  // hud message flag
+  fullHandPlayed = false;
   // make sure multi-value cards have a value selected
   let checkedCards = document.querySelectorAll(".checked");
   checkedCards.forEach((card) => {
@@ -352,6 +372,7 @@ function cardsSubmit() {
         if (jackCheckedCheck.length === 0) {
           totalCardsPlayed = Math.round(totalCardsPlayed/2);
         } else {
+          totalCardsPlayed = Math.round(totalCardsPlayed * 1.5);
           checkedCards.forEach((card) => {
               checkedCardSuits.push(card.children[0].getAttribute("suit"));
           });
@@ -398,7 +419,7 @@ function cardsSubmit() {
     }
 
     firstSubmit = true;
-    // hudMessage(jackpotLive, firstSubmit);
+    hudMessageDisplay.textContent = 'Combo!';
     setSwapPermission();
     setUncheckAllPermission();
 
@@ -407,6 +428,8 @@ function cardsSubmit() {
       totalSeconds += fullHandBonus;
       totalPoints += fullHandBonus;
       totalPoints += fullHandPointsBonus;
+
+      pointsBreakdown['fullClearTimes']++;
 
       pointsBreakdown.fullClearPoints += fullHandPointsBonus;
       pointsBreakdown.timePoints += fullHandBonus
@@ -422,10 +445,31 @@ function cardsSubmit() {
 
 
       fullHandBonus--;
-      fullHandPointsBonus += 200;
+      fullHandPointsBonus += 50;
+
+      // For hud message
+      fullHandPlayed = true;
+
+      // Full hand border animation
+      let i = 0;
+      let borderAniCol = [
+        `${themeSelection['bgCol']}`,
+        "yellow",
+        `${themeSelection['bgCol']}`
+      ]
+
+      const borderAnimation = setInterval(() => {
+        i++;
+        document.querySelector(".gui-container").style.border = `4px solid ${borderAniCol[i]}`;
+
+        if (i === 3)  {
+          clearInterval(borderAnimation);
+          document.querySelector(".gui-container").style.border = `4px solid white`;
+        }
+      }, 100);
     }
   }
-  if (pointsValidity === true && comboSubmit === true) {
+  if (pointsValidity === true && comboSubmit === true) { 
     // setPlayersHandBg();
     document.querySelector('.players-hand').style.removeProperty('background-image');
     reDeal(globalCardsInHand, hand);
@@ -435,7 +479,8 @@ function cardsSubmit() {
     selectCard();
   }
   setSecondsBonusIndicator();
-  fifteenCountDisplay.innerHTML = `${fifteenCount}`;
+  setFifteenCountColor();
+  // fifteenCountDisplay.innerHTML = `${fifteenCount}`;
 }
 
 function roundBonusCheck() {
@@ -505,17 +550,20 @@ function selectCard() {
           fifteenCount -= valueA;
           card.classList.toggle("A");
           card.classList.remove("value-selected");
-          fifteenCountDisplay.innerHTML = `${fifteenCount}`;
+          setFifteenCountColor();
+          // fifteenCountDisplay.innerHTML = `${fifteenCount}`;
         } else if (valueB > 0 && card.classList.contains("B")) {
           fifteenCount -= valueB;
           card.classList.toggle("B");
           card.classList.remove("value-selected");
-          fifteenCountDisplay.innerHTML = `${fifteenCount}`;
+          setFifteenCountColor();
+          // fifteenCountDisplay.innerHTML = `${fifteenCount}`;
         } else if (valueB === 0) {
           fifteenCount -= valueA;
         }
         comboCheck();
-        fifteenCountDisplay.innerHTML = `${fifteenCount}`;
+        setFifteenCountColor();
+        // fifteenCountDisplay.innerHTML = `${fifteenCount}`;
       } 
       // after initial checked cards have been played
       else if (firstSubmit) {
@@ -534,7 +582,8 @@ function selectCard() {
               card.classList.contains("checked")
             ) {
               fifteenCount += valueA;
-              fifteenCountDisplay.innerHTML = `${fifteenCount}`;
+              setFifteenCountColor();
+              // fifteenCountDisplay.innerHTML = `${fifteenCount}`;
               card.classList.toggle("A");
               card.classList.add("value-selected");
               comboCheck();
@@ -548,7 +597,8 @@ function selectCard() {
                 card.classList.contains("checked")
               ) {
                 fifteenCount += valueA;
-                fifteenCountDisplay.innerHTML = `${fifteenCount}`;
+                setFifteenCountColor();
+                // fifteenCountDisplay.innerHTML = `${fifteenCount}`;
                 card.classList.toggle("A");
                 card.classList.add("value-selected");
                 comboCheck();
@@ -562,7 +612,8 @@ function selectCard() {
               card.classList.contains("checked")
             ) {
               fifteenCount += valueB;
-              fifteenCountDisplay.innerHTML = `${fifteenCount}`;
+              setFifteenCountColor();
+              // fifteenCountDisplay.innerHTML = `${fifteenCount}`;
               card.classList.toggle("B");
               card.classList.add("value-selected");
               comboCheck();
@@ -576,7 +627,8 @@ function selectCard() {
                 card.classList.contains("checked")
               ) {
                 fifteenCount += valueB;
-                fifteenCountDisplay.innerHTML = `${fifteenCount}`;
+                setFifteenCountColor();
+                // fifteenCountDisplay.innerHTML = `${fifteenCount}`;
                 card.classList.toggle("B");
                 card.classList.add("value-selected");
                 comboCheck();
@@ -587,9 +639,11 @@ function selectCard() {
           valueOptionOne.innerText = "-";
           valueOptionTwo.innerText = "-";
           fifteenCount += valueA;
-          fifteenCountDisplay.innerHTML = `${fifteenCount}`;
+          setFifteenCountColor();
+          // fifteenCountDisplay.innerHTML = `${fifteenCount}`;
         }
-        fifteenCountDisplay.innerHTML = `${fifteenCount}`;
+        setFifteenCountColor();
+        // fifteenCountDisplay.innerHTML = `${fifteenCount}`;
         card.classList.toggle("checked");
 
         comboCheck();
@@ -629,14 +683,13 @@ let highscoreDefeated = false;
 function newHighscoreCheck() {
   if (!highscoreDefeated) {
     if (pointsOnDisplay > highscoreToBeat) {
+      clearInterval(incomingHudMessages);
       hudMessageDisplay.textContent = 'NEW HIGHSCORE!'
       highscoreDefeated = true;
       setTimeout(() => { 
-        if (firstSubmit) {
-          hudMessageDisplay.innerText = "!";
-        } else {
-          hudMessageDisplay.innerText = "!";
-        }
+        incomingHudMessages = setInterval(() => {
+          hudMessage(firstSubmit, jackpotLive, incomingHudMessages, fullHandPlayed);
+        },10);
       }, 2000)
     } 
   }
@@ -683,7 +736,7 @@ function swapButtonFunction() {
   selectCard();
   secondsLeft -= (10 - cardsInHand.length);
   fifteenCount = 0;
-  fifteenCountDisplay.textContent = `${fifteenCount}`;
+  // fifteenCountDisplay.textContent = `${fifteenCount}`;
   bonusTimeDisplay.style.color = "rgba(51, 131, 235, 0.9)";
 
   if (cardsInHand.length < 10) {
@@ -842,6 +895,22 @@ for (let i = 0; i < secondsBonus; i++){
 }
 }
 
+function setFifteenCountColor() {
+  fifteenCountDisplay.style.color = fifteenCountColRange[fifteenCount];
+  fifteenCountDisplay.setAttribute("style", `-webkit-text-stroke: 2px ${fifteenCountColRange[fifteenCount]}`);
+
+if (fifteenCount > 15) {
+  fifteenCountDisplay.setAttribute("style", `-webkit-text-stroke: 2px ${fifteenCountColRange[15]}`);
+
+}
+  
+  if (fifteenCount > 0) {
+    fifteenCountDisplay.textContent = `${fifteenCount}`;
+  } else {
+    fifteenCountDisplay.textContent = ``;
+  }
+}
+
 // Pause Function(s) & Event Listeners
 let gamePause = false;
 let pauseScreen = document.querySelector("#pause-screen");
@@ -923,7 +992,8 @@ function uncheckAllCards(e) {
     checkedCards.forEach((card) => {
       card.classList.toggle("checked");
       card.classList.remove("value-selected");
-      fifteenCountDisplay.textContent = `${fifteenCount}`
+      setFifteenCountColor();
+      // fifteenCountDisplay.textContent = `${fifteenCount}`
       valueOptionOne.textContent = "-"
       valueOptionTwo.textContent = "-"
       if (card.classList.contains("A")) {

@@ -44,7 +44,12 @@ Bugs:
 
     -unchecking cards that were a 15 count and then submitting shouldn't work
 
+    -score review gets skipped if the score is not within top scores
+
 Gameplay Tweaks:
+    -full clear worth too much
+    -jackpot should be worth more
+
     -should probably a colorblind mode
 
     -swap penalty should go up the less cards you have in your hand
@@ -64,6 +69,8 @@ Gameplay Tweaks:
             -use it in 2st, diff color x1 multiplier
 
 -buttons in player's hand needs some kind of animation when clicked
+
+-maybe have an unlockable chaos mode where the 15 count changes to a different number -- or does something like 'at least 20', or 'less than 10'
 
 Sound and Skin Options for arcade:
     -3 different track/skin Options (similar to Lumines)

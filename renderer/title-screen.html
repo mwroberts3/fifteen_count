@@ -3,48 +3,58 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fifteen Count</title>
+    <title>Harmonia</title>
     <link rel="stylesheet" href="style/style.css" />
   </head>
   <body>
     <audio src="bgm/scraps-titlesong.mp3" autoplay loop></audio>
-    <div class="index-header">
-      <h1>Fifteen Count</h1>
-    </div>
-    <div class="gamemode-select-container">
-      <ul>
-        <li>
-          <a href="arcade.html" draggable="false">
-            <button class="main-btn">Arcade</button>
-          </a>
-        </li>
-        <li>
-          <a href="#" draggable="false">
-            <button class="main-btn"><strike>Time Attack</strike></button>
-          </a>
-        </li>
-        <li>
-          <div class="pad-1"></div>
-        </li>
-        <li>
-          <a href="options.html" draggable="false">
-            <button class="main-btn light-menu-btn">Settings</button>
-          </a>
-        </li>
-        <li>
-          <a href="highscores.html" draggable="false">
-            <button class="main-btn light-menu-btn">Highscores</button>
-          </a>
-        </li>
-        <li>
-          <a href="howtoplay.html" draggable="false">
-            <button class="main-btn light-menu-btn">How to Play</button>
-          </a>
-        </li>
-        <li>
-          <button class="main-btn light-menu-btn exit-game">Exit</button>
-        </li>
-      </ul>
+    <div class="title-screen-container">
+      <div>
+        <div class="title-banner-container">
+          <img src="./img/title-screen-logo.png" />
+          <div class="title-subtitle">
+            <p>a card game of quick count, reflex and skill</p>
+          </div>
+        </div>
+        <div class="gamemode-select-container">
+          <ul>
+            <li>
+              <a href="arcade.html" draggable="false">
+                <button class="main-btn">Arcade</button>
+              </a>
+            </li>
+            <li>
+              <a href="time-attack" draggable="false">
+                <button class="main-btn">Time Attack</button>
+              </a>
+            </li>
+            <li>
+              <div class="pad-1"></div>
+            </li>
+            <li>
+              <a href="options.html" draggable="false">
+                <button class="main-btn light-menu-btn">Settings</button>
+              </a>
+            </li>
+            <li>
+              <a href="highscores.html" draggable="false">
+                <button class="main-btn light-menu-btn">Highscores</button>
+              </a>
+            </li>
+            <li>
+              <a href="howtoplay.html" draggable="false">
+                <button class="main-btn light-menu-btn">How to Play</button>
+              </a>
+            </li>
+            <li>
+              <button class="main-btn light-menu-btn exit-game">Exit</button>
+            </li>
+          </ul>
+        </div>
+        <div class="title-screen-footer">
+          <p>Harmonia &copy; 2020 Sky Drips Green</p>
+        </div>
+      </div>
     </div>
   </body>
   <script src="scripts/title-screen.js"></script>
