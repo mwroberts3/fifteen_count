@@ -41,12 +41,31 @@
           </button>
         </section>
         <section id="theme" class="hidden">
-          <h2>Theme and Sounds</h2>
+          <h2>Arcade Mode Theme</h2>
           <div class="theme-selection-menu">
-            <div class="selected-theme" data-index="0">Classic</div>
-            <div data-index="1">Jungle <span>LOCKED (5000 points)</span></div>
-            <div data-index="2">
-              Universe <span>LOCKED (10000 points)</span>
+            <div data-index="0" class="unlocked">Classic</div>
+            <div data-index="1" class="locked">Jungle</div>
+            <div data-index="2" class="locked">Cosmos</div>
+            <div data-index="3" class="locked">Future</div>
+            <div data-index="4" class="locked">Indigo</div>
+          </div>
+          <h2>Sound</h2>
+          <div class="music-options-selection">
+            <div>
+              <input
+                id="BGM-check"
+                type="checkbox"
+                data-musicType="BGM"
+                checked
+              />BGM
+            </div>
+            <div>
+              <input
+                id="SFX-check"
+                type="checkbox"
+                data-musicType="SFX"
+                checked
+              />SFX
             </div>
           </div>
         </section>
@@ -54,6 +73,7 @@
           <h2>About Game</h2>
           <p>version 1.0.0</p>
           <p>this game was created in 2020</p>
+          <p>Music by Marauders</p>
         </section>
       </div>
       <div class="back-btn-container">

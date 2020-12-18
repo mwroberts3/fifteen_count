@@ -3,8 +3,9 @@ count round:
     -if same color *2
 
 combo round: 
-    -face value of the checked card
-        -if same color * 1.5
+    -face value of the checked card * the previously checked and sacrificed cards
+        -if same color as previously checked and sacrficed cards then value of sacrficed card is multipled by 1.75
+        -sacrificing a card that is not the same color as previous cards erases this point bonus for subsequently sacrificed cards
 
 full clear (harmonia):
     -point bonus starts at 50 and adds 50 to bonus time everytime a fullhand is cleared

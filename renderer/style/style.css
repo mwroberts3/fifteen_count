@@ -123,10 +123,12 @@ h2 {
         width: 100%; }
 
 .title-screen-footer {
-  height: 63px;
+  margin-top: 10px;
+  height: 53px;
   text-align: center;
   color: #999;
-  font-size: 12px; }
+  font-size: 12px;
+  font-family: "Ink Free", sans-serif; }
 
 .title-banner-container {
   position: relative; }
@@ -222,15 +224,22 @@ h2 {
   position: relative;
   width: 100%; }
   #theme .theme-selection-menu {
-    width: 80%;
+    width: 35%;
     margin: auto; }
     #theme .theme-selection-menu div {
-      margin: 5px;
-      padding: 0 5px;
+      text-align: center;
+      padding: 3px 5px;
       cursor: url("../img/cursor.png"), auto !important; }
     #theme .theme-selection-menu .selected-theme {
       background: #fff;
       border-radius: 5px; }
+    #theme .theme-selection-menu .locked {
+      color: #666; }
+  #theme .music-options-selection {
+    display: flex;
+    justify-content: space-evenly;
+    width: 35%;
+    margin: auto; }
 
 .button-select {
   height: 200px;
@@ -524,7 +533,7 @@ input[type="submit"] {
   border-bottom-left-radius: 8px;
   top: 178px;
   right: 4px;
-  bottom: 58px;
+  bottom: 60px;
   left: 4px;
   opacity: var(--players-bg-opacity);
   z-index: -2; }
@@ -538,7 +547,7 @@ input[type="submit"] {
   border-bottom-left-radius: 8px;
   top: 178px;
   right: 4px;
-  bottom: 58px;
+  bottom: 60px;
   left: 4px;
   opacity: var(--players-bg-opacity-2);
   z-index: -2; }
@@ -549,14 +558,14 @@ input[type="submit"] {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  top: 80px;
+  top: 75px;
   left: 4px;
   background: #000;
   color: #fff;
   width: 1192px;
-  height: 519px;
+  height: 520px;
   z-index: 4;
-  border-radius: 8px; }
+  border-radius: 10px; }
   #points-breakdown-view div {
     display: flex;
     align-items: center;

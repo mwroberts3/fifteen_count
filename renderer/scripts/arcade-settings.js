@@ -71,7 +71,6 @@ themeDisplay.textContent = themeSelection['themeName'];
 const allContentsContainer = document.querySelector('.all-contents-container');
 
 allContentsContainer.classList.add(themeSelection['themeName']);
-document.getElementById('bgm-selection').src = themeSelection['bgm'];
 
 let fifteenCountColRange = themeSelection['fifteenCountGradient'];
 
@@ -122,3 +121,32 @@ function setPlayersHandBg() {
     },4000);
   }
 }
+
+// Set sound option settings
+let userSelectedSoundSettings = {};
+if (!localStorage.getItem('sound-settings')) {
+  let tempSoundSettings = {
+    BGM: true, SFX: true
+  }
+  localStorage.setItem('sound-settings', JSON.stringify(tempSoundSettings));
+  userSelectedSoundSettings = tempSoundSettings;
+} else {
+  userSelectedSoundSettings = JSON.parse(localStorage.getItem('sound-settings'));
+}
+
+// Set BGM
+if (userSelectedSoundSettings.BGM) {
+  document.getElementById('bgm-selection').src = themeSelection['bgm'];
+}
+
+// Load gameplay sound fx
+let checkCardSFX = new Audio('./soundfx/check-card.wav');
+let sacrificeCardSFX = new Audio('./soundfx/sacrifice-card.wav');
+let uncheckAllCardsSFX = new Audio('./soundfx/uncheck-all-cards.wav');
+let swapCardSFX = new Audio('./soundfx/swap-card.wav');
+let firstSubmitSFX = new Audio('./soundfx/first-submit.wav');
+let comboSubmitSFX = new Audio('./soundfx/combo-submit.wav');
+let fullClearSFX = new Audio('./soundfx/full-clear.wav');
+let newHighscoreSFX = new Audio('./soundfx/new-highscore.wav');
+
+

@@ -419,6 +419,12 @@ function cardsSubmit() {
     }
 
     firstSubmit = true;
+
+    // First submit sound effect
+    if (userSelectedSoundSettings.SFX) {
+      firstSubmitSFX.play();
+    }
+    
     hudMessageDisplay.textContent = 'Combo!';
     setSwapPermission();
     setUncheckAllPermission();
@@ -450,6 +456,11 @@ function cardsSubmit() {
       // For hud message
       fullHandPlayed = true;
 
+      // Full hand sound effect
+      if (userSelectedSoundSettings.SFX) {
+      fullClearSFX.play();
+      }
+
       // Full hand border animation
       let i = 0;
       let borderAniCol = [
@@ -470,7 +481,11 @@ function cardsSubmit() {
     }
   }
   if (pointsValidity === true && comboSubmit === true) { 
-    // setPlayersHandBg();
+    // combo submit sound effect
+    if (userSelectedSoundSettings.SFX) {
+    comboSubmitSFX.play();
+    }
+
     document.querySelector('.players-hand').style.removeProperty('background-image');
     reDeal(globalCardsInHand, hand);
     showHand();
@@ -544,6 +559,11 @@ function selectCard() {
       }
       if (card.classList.contains("checked") && !firstSubmit) {
         card.classList.toggle("checked");
+
+        if (userSelectedSoundSettings.SFX) {
+        checkCardSFX.play();
+        }
+
         valueOptionOne.innerText = "-";
         valueOptionTwo.innerText = "-";
         if (valueB > 0 && card.classList.contains("A")) {
@@ -569,6 +589,11 @@ function selectCard() {
       else if (firstSubmit) {
         if (!card.classList.contains("checked") && !card.classList.contains('joker')) {
           card.classList.add("combo-sacrifice");
+
+          if (userSelectedSoundSettings.SFX) {
+          sacrificeCardSFX.play();
+          }
+
           doubleComboCheck(valueA, comboCardcount);
         }
       } else {
@@ -646,6 +671,11 @@ function selectCard() {
         // fifteenCountDisplay.innerHTML = `${fifteenCount}`;
         card.classList.toggle("checked");
 
+        // checked card sound effect
+        if (userSelectedSoundSettings.SFX) {
+        checkCardSFX.play();
+        }
+
         comboCheck();
       }
     });
@@ -670,7 +700,7 @@ function doubleComboCheck(valueA, comboCardcount) {
     checkedCardSuits.every(sameColorRed) == true ||
     checkedCardSuits.every(sameColorBlack) == true
   ) {
-    comboCardcount *= 1.5;
+    comboCardcount *= 1.75;
   }
 
   totalComboPoints += Math.round(valueA * comboCardcount);
@@ -684,7 +714,13 @@ function newHighscoreCheck() {
   if (!highscoreDefeated) {
     if (pointsOnDisplay > highscoreToBeat) {
       clearInterval(incomingHudMessages);
-      hudMessageDisplay.textContent = 'NEW HIGHSCORE!'
+      hudMessageDisplay.textContent = 'NEW HIGHSCORE!';
+      if (highscoreToBeat !== 0) {
+        // New highscore sound effect
+        if (userSelectedSoundSettings.SFX) {
+        newHighscoreSFX.play();
+        }
+      }
       highscoreDefeated = true;
       setTimeout(() => { 
         incomingHudMessages = setInterval(() => {
@@ -747,6 +783,11 @@ function swapButtonFunction() {
           bonusTimeDisplay.style.color = "rgba(245, 217, 61, 0.9)";
         }, 1000)
   }
+
+  if (userSelectedSoundSettings.SFX) {
+    swapCardSFX.play();
+  }
+
 }
 
 // Redeal
@@ -1002,6 +1043,9 @@ function uncheckAllCards(e) {
         card.classList.toggle("B");
       }
     });
+    if (userSelectedSoundSettings.SFX) {
+      uncheckAllCardsSFX.play();
+    }
   }
 }
 

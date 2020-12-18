@@ -43,6 +43,9 @@ function createWindow () {
   })
 }
 
+// to view user data
+console.log(app.getPath('userData'));
+
 // Listen for exit click
 ipcMain.on( 'user-exit', () => {
   app.quit()

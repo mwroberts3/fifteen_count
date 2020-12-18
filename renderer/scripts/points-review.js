@@ -27,6 +27,7 @@ exports.pointsReview = (pointsBreakdown, totalPoints) => {
     displayPointPct(totalPoints, pointsBreakdown.timePoints, timePointsDisplay);
 
     totalPointsDisplay.innerHTML = `${totalPoints}`;
+    totalPointsDisplay.style.color = '#000';
 }
 
 function displayPointPct(totalPoints, pointTypeTotal, pointTypeDisplay) {
@@ -55,6 +56,7 @@ function displayPointPct(totalPoints, pointTypeTotal, pointTypeDisplay) {
         clearInterval(pointTypeTally);
         pointTypeDisplay.innerHTML = `${pointTypeTotal}`;
         pointTypeDisplay.nextElementSibling.value = `${pointTypeTotal}`;
+        totalPointsDisplay.style.color = '#fff';
         
         document.addEventListener('click', () =>{
                document.getElementById("new-highscore-form").style.zIndex = 6;
