@@ -1,3 +1,5 @@
+const { ipcRenderer } = require('electron');
+
 // Settings Container
 const optionsSelect = document.querySelector(".how-to-nav");
 const optionsDisplay = document.querySelectorAll("section");
@@ -200,3 +202,13 @@ document.querySelector(".music-options-selection").addEventListener('click', (e)
   }
   localStorage.setItem('sound-settings', JSON.stringify(tempSoundSettings)); 
 });
+
+// Display settings
+document.getElementById('window-test').addEventListener('click', () => {
+  ipcRenderer.send('window-selected', 'window selected')
+})
+
+document.getElementById('fullscreen-test').addEventListener('click', () => {
+  ipcRenderer.send('fullscreen-selected', false)
+})
+

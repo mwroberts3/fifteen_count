@@ -35,3 +35,8 @@ if (userSelectedSoundSettings.SFX) {
         }
     })
 }
+
+// Check for display settings
+setTimeout(() => {
+  ipcRenderer.send('display-settings', JSON.parse(localStorage.getItem('highscore')))
+}, 10);

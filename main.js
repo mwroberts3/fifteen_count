@@ -1,24 +1,18 @@
 // Modules
-const {app, BrowserWindow, screen, ipcMain} = require('electron')
+const { app, BrowserWindow, screen, ipcMain } = require('electron')
 const windowStateKeeper = require('electron-window-state')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
+let windowedWindow
 
 // Create a new BrowserWindow when `app` is ready
-function createWindow () {
-  // Win state keeper
-  let state = windowStateKeeper({
-    defaultWidth: 500, defaultHeight: 650
-  })
-
-  // x: -391, y: -1080,
+function createWindow() {
   mainWindow = new BrowserWindow({
-    x: 0, y: 0,
-    width: 1300, height: 800,
-    frame: true,
-    fullscreenable: true,
+    frame: false,
+    fullscreen: true,
+    resizable: false,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
@@ -26,30 +20,54 @@ function createWindow () {
   })
 
   // Removes app menu (no need for it)
-  // mainWindow.removeMenu();
+  mainWindow.removeMenu();
 
   // Load index.html into the new BrowserWindow
-  mainWindow.loadFile('renderer/title-screen.html')
+    mainWindow.loadFile('renderer/title-screen.html')
 
   // Manage new window state
-  state.manage(mainWindow)
+  // state.manage(mainWindow)
 
   // Open DevTools - Remove for PRODUCTION!
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 
   // Listen for window being closed
-  mainWindow.on('closed',  () => {
+  mainWindow.on('closed', () => {
     mainWindow = null
+  })
+
+  mainWindow.webContents.on('did-finish-load', () => {
+    ipcMain.on('display-settings', (e, msg) => {
+      console.log(msg);
+    })
   })
 }
 
 // to view user data
-console.log(app.getPath('userData'));
+// console.log(app.getPath('userData'));
 
 // Listen for exit click
-ipcMain.on( 'user-exit', () => {
+ipcMain.on('user-exit', () => {
   app.quit()
-} )
+})
+
+// Listen for display setting selection
+ipcMain.on('window-selected', (args, msg) => {
+  if (mainWindow) {
+    createWindowedwindow();
+  }
+})
+
+ipcMain.on('fullscreen-selected', (args, msg) => {
+  if (windowedWindow) {
+    createWindow();
+    mainWindow.loadFile('renderer/options.html')
+    windowedWindow.close();
+  }
+})
+
+
+
 
 // Electron `app` is ready
 app.on('ready', createWindow)
@@ -63,3 +81,30 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   if (mainWindow === null) createWindow()
 })
+
+// create windowed window
+function createWindowedwindow() {
+  windowedWindow = new BrowserWindow({
+    x: 0, y: 0,
+    minWidth: 1280, minHeight: 720,
+    frame: true,
+    fullscreenable: true,
+    resizable: true,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    }
+  })
+  
+  // Removes app menu (no need for it)
+  // windowedWindow.removeMenu();
+
+  // loads windowed window & closes previous
+  mainWindow.close();
+  windowedWindow.loadFile('renderer/options.html')
+  
+  // Listen for window being closed
+  windowedWindow.on('closed', () => {
+    windowedWindow = null
+  })
+}

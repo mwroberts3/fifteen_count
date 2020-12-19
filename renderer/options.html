@@ -12,7 +12,7 @@
       <nav class="how-to-nav">
         <ul>
           <li class="controls option-selected">Controls</li>
-          <li class="appearance">Display</li>
+          <li class="display">Display</li>
           <li class="theme">Theme / Sounds</li>
           <li class="about-game">About</li>
         </ul>
@@ -39,6 +39,21 @@
           <button id="reset-controls-btn" class="main-btn light-menu-btn">
             Reset
           </button>
+        </section>
+        <section id="display" class="hidden">
+          <h2>Display Settings</h2>
+          <p>Recommended System Resolution - 1366 x 768</p>
+          <p>Minimum System Resolution - 1280 x 720</p>
+          <input
+            type="radio"
+            name="display"
+            value="fullscreen"
+            checked
+          />Fullscreen
+          <input type="radio" name="display" value="fullscreen" />Window
+
+          <button id="fullscreen-test">fullscreen test</button>
+          <button id="window-test">window test</button>
         </section>
         <section id="theme" class="hidden">
           <h2>Arcade Mode Theme</h2>
