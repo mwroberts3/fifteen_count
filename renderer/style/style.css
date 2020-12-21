@@ -641,3 +641,45 @@ input[type="submit"] {
     transition: opacity 1s ease; }
     #pause-screen #pause-inner-container * {
       padding: 5px; }
+
+.ta-outer-boundaries {
+  position: relative;
+  width: 900px;
+  top: 50%;
+  height: 652px;
+  border-radius: 10px;
+  border: 2px solid #000;
+  transform: translateY(-50%);
+  margin: auto;
+  display: flex;
+  flex-direction: column; }
+  .ta-outer-boundaries .ta-timer-score-display {
+    height: 50px;
+    color: #fff;
+    background: #000;
+    display: flex;
+    justify-content: space-between; }
+    .ta-outer-boundaries .ta-timer-score-display div {
+      padding: 20px; }
+  .ta-outer-boundaries .ta-cards-display {
+    height: 575px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center; }
+    .ta-outer-boundaries .ta-cards-display .ta-card {
+      width: 100px;
+      height: 154px;
+      margin: 0 20px;
+      border-radius: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 50px;
+      color: #fff; }
+    .ta-outer-boundaries .ta-cards-display .ta-checked {
+      transform: rotate(14deg); }
+  .ta-outer-boundaries .ta-alltime-score-display {
+    height: 25px;
+    color: #fff;
+    background: #000; }

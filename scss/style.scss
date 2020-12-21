@@ -541,7 +541,6 @@ input[type="submit"] {
 }
 
 .players-hand {
-  // position: relative;
   height: 400px;
   max-width: $maxwidth;
   margin: auto;
@@ -847,5 +846,62 @@ input[type="submit"] {
     * {
       padding: 5px;
     }
+  }
+}
+
+// Time Attack
+.ta-outer-boundaries {
+  position: relative;
+  width: 900px;
+  top: 50%;
+  height: 652px;
+  border-radius: 10px;
+  border: 2px solid #000;
+  transform: translateY(-50%);
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+
+  .ta-timer-score-display {
+    height: 50px;
+    color: #fff;
+    background: #000;
+    display: flex;
+    justify-content: space-between;
+
+    div {
+      padding: 20px;
+    }
+  }
+
+  .ta-cards-display {
+    height: 575px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    .ta-card {
+      width: 100px;
+      height: 154px;
+      margin: 0 20px;
+      // border: 2px solid #000;
+      border-radius: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 50px;
+      color: #fff;
+    }
+
+    .ta-checked {
+      transform: rotate(14deg);
+    }
+  }
+
+  .ta-alltime-score-display {
+    height: 25px;
+    color: #fff;
+    background: #000;
   }
 }

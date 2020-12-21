@@ -65,3 +65,7 @@ Time Attack Mode:
     -20 rounds
     -should have a way to compound, so if you play a good combo, you have more cards to choose from in the next round
 
+
+
+TIME ATTACK BUGS:
+-if go over 15 then go back down, it should trigger the card redeal
