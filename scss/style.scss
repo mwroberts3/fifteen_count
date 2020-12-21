@@ -283,7 +283,7 @@ h2 {
 }
 
 .options-container {
-  margin-top: 10px;
+  margin: auto;
   height: 445px;
 
   section {
@@ -359,6 +359,7 @@ h2 {
 #personal-highscore-display {
   font-size: 0.85rem;
   margin-left: 8px;
+  margin-bottom: 12px;
   font-weight: bold;
   height: 59px;
 
@@ -393,6 +394,10 @@ h2 {
   color: white;
   max-width: $maxwidth;
 
+  // div:first-of-type {
+  //   position: relative;
+  // }
+
   .total-points {
     display: flex;
     justify-content: center;
@@ -404,6 +409,9 @@ h2 {
   }
 
   .combo-points {
+    position: absolute;
+    top: 16px;
+    left: 250px;
     color: #fff;
     z-index: 5;
   }
@@ -468,10 +476,6 @@ h2 {
     width: 33.33%;
     text-align: center;
   }
-
-  div:first-of-type {
-    width: 50%;
-  }
 }
 
 .hud-message {
@@ -495,6 +499,7 @@ h2 {
   width: 8px;
   margin: 1px;
   background: rgb(21, 255, 21);
+  border-radius: 2px;
 }
 
 .timer {
@@ -540,7 +545,7 @@ input[type="submit"] {
   height: 400px;
   max-width: $maxwidth;
   margin: auto;
-  padding: 10px 0;
+  padding: 20px 0 0;
   display: flex;
   flex-direction: column;
   justify-content: center;

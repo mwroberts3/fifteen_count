@@ -203,12 +203,21 @@ document.querySelector(".music-options-selection").addEventListener('click', (e)
   localStorage.setItem('sound-settings', JSON.stringify(tempSoundSettings)); 
 });
 
-// Display settings
-document.getElementById('window-test').addEventListener('click', () => {
-  ipcRenderer.send('window-selected', 'window selected')
+// Select Display preference
+if (localStorage.getItem('user-display-settings')) {
+  document.getElementById('window-select').checked = true;
+} else {
+  document.getElementById('fullscreen-select').checked = true;
+}
+
+// Display options
+document.getElementById('window-select').addEventListener('click', () => {
+  ipcRenderer.send('window-selected')
+  localStorage.setItem('user-display-settings', JSON.stringify({ window: true }))
 })
 
-document.getElementById('fullscreen-test').addEventListener('click', () => {
-  ipcRenderer.send('fullscreen-selected', false)
+document.getElementById('fullscreen-select').addEventListener('click', () => {
+  ipcRenderer.send('fullscreen-selected')
+  localStorage.removeItem('user-display-settings')
 })
 

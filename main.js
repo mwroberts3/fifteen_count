@@ -7,42 +7,6 @@ const windowStateKeeper = require('electron-window-state')
 let mainWindow
 let windowedWindow
 
-// Create a new BrowserWindow when `app` is ready
-function createWindow() {
-  mainWindow = new BrowserWindow({
-    frame: false,
-    fullscreen: true,
-    resizable: false,
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
-    }
-  })
-
-  // Removes app menu (no need for it)
-  mainWindow.removeMenu();
-
-  // Load index.html into the new BrowserWindow
-    mainWindow.loadFile('renderer/title-screen.html')
-
-  // Manage new window state
-  // state.manage(mainWindow)
-
-  // Open DevTools - Remove for PRODUCTION!
-  mainWindow.webContents.openDevTools();
-
-  // Listen for window being closed
-  mainWindow.on('closed', () => {
-    mainWindow = null
-  })
-
-  mainWindow.webContents.on('did-finish-load', () => {
-    ipcMain.on('display-settings', (e, msg) => {
-      console.log(msg);
-    })
-  })
-}
-
 // to view user data
 // console.log(app.getPath('userData'));
 
@@ -55,6 +19,10 @@ ipcMain.on('user-exit', () => {
 ipcMain.on('window-selected', (args, msg) => {
   if (mainWindow) {
     createWindowedwindow();
+    setTimeout(() => {
+      windowedWindow.setOpacity(1)
+    }, 500)
+    mainWindow.close();
   }
 })
 
@@ -62,12 +30,10 @@ ipcMain.on('fullscreen-selected', (args, msg) => {
   if (windowedWindow) {
     createWindow();
     mainWindow.loadFile('renderer/options.html')
+    mainWindow.setOpacity(1);
     windowedWindow.close();
   }
 })
-
-
-
 
 // Electron `app` is ready
 app.on('ready', createWindow)
@@ -87,6 +53,7 @@ function createWindowedwindow() {
   windowedWindow = new BrowserWindow({
     x: 0, y: 0,
     minWidth: 1280, minHeight: 720,
+    opacity: 0,
     frame: true,
     fullscreenable: true,
     resizable: true,
@@ -97,10 +64,9 @@ function createWindowedwindow() {
   })
   
   // Removes app menu (no need for it)
-  // windowedWindow.removeMenu();
+  windowedWindow.removeMenu();
 
   // loads windowed window & closes previous
-  mainWindow.close();
   windowedWindow.loadFile('renderer/options.html')
   
   // Listen for window being closed
@@ -108,3 +74,52 @@ function createWindowedwindow() {
     windowedWindow = null
   })
 }
+
+// Create a new BrowserWindow when `app` is ready
+function createWindow() {
+  mainWindow = new BrowserWindow({
+    frame: false,
+    fullscreen: true,
+    resizable: false,
+    opacity: 0,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    }
+  })
+
+  // Removes app menu (no need for it)
+  mainWindow.removeMenu();
+
+  // Load index.html into the new BrowserWindow
+  mainWindow.loadFile('renderer/title-screen.html')
+
+  // Manage new window state
+  // state.manage(mainWindow)
+
+  // Open DevTools - Remove for PRODUCTION!
+  // mainWindow.webContents.openDevTools();
+
+  // Listen for window being closed
+  mainWindow.on('closed', () => {
+    mainWindow = null
+  })
+
+  mainWindow.webContents.on('did-finish-load', () => {
+    mainWindow.webContents.send('display-settings-check');
+    ipcMain.on('display-settings', (e, windowed) => {
+      if (windowed) {
+        createWindowedwindow();
+        windowedWindow.setOpacity(0);
+        windowedWindow.loadFile('renderer/title-screen.html')
+        setTimeout(() => {
+          windowedWindow.setOpacity(1)
+        }, 1000)
+        mainWindow.close();
+      } else {
+        mainWindow.setOpacity(1);
+      }
+    })
+  })
+}
+

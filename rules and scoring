@@ -14,3 +14,4 @@ jackpot:
     -points that equal cardsplayed jackpot
     -if same color *2
         -if miss out on jackpot bonus is /2
+        -if make use of the bonus the pot doesn't decrease or increase

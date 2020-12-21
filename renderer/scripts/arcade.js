@@ -109,7 +109,7 @@ document.addEventListener("keyup", (e) => {
 
 // Bonus check
 submitCards.addEventListener("click", roundBonusCheck);
-playersHandArea.addEventListener("dblclick", roundBonusCheck);
+// playersHandArea.addEventListener("dblclick", roundBonusCheck);
 
 // Build deck
 function buildDeck(deck) {
@@ -278,6 +278,7 @@ function reset() {
   pointsBreakdown.comboPoints += totalComboPoints;
   totalComboPoints = 0;
   comboPointsDisplay.textContent = '';
+  comboPointsDisplay.classList.remove('combo-points-fadein');
 
   setSwapPermission();
   setUncheckAllPermission();
@@ -372,7 +373,7 @@ function cardsSubmit() {
         if (jackCheckedCheck.length === 0) {
           totalCardsPlayed = Math.round(totalCardsPlayed/2);
         } else {
-          totalCardsPlayed = Math.round(totalCardsPlayed * 1.5);
+          // totalCardsPlayed = Math.round(totalCardsPlayed * 1.5);
           checkedCards.forEach((card) => {
               checkedCardSuits.push(card.children[0].getAttribute("suit"));
           });
@@ -381,7 +382,7 @@ function cardsSubmit() {
               if (checkedCardSuits.every(sameColorRed) == true ||
               checkedCardSuits.every(sameColorBlack) == true) {
                 console.log(totalPoints, (totalCardsPlayed * 2), totalPoints + (totalCardsPlayed * 2));
-                totalPoints += (totalCardsPlayed * 2);
+                totalPoints +=(totalCardsPlayed * 2);
                 pointsBreakdown.jackpotPoints += totalCardsPlayed * 2;
               } else {
                 console.log(totalPoints, totalCardsPlayed, totalPoints + totalCardsPlayed);
@@ -705,7 +706,8 @@ function doubleComboCheck(valueA, comboCardcount) {
 
   totalComboPoints += Math.round(valueA * comboCardcount);
   submitCards.value = `Combo Submit / Draw Cards [${actionBtn}]`;
-  comboPointsDisplay.textContent = `+ ${totalComboPoints}`;
+  comboPointsDisplay.textContent = `+${totalComboPoints}`;
+  comboPointsDisplay.classList.add('combo-points-fadein');
 }
 
 // check for newHighscore
@@ -1007,22 +1009,12 @@ function resumeGame() {
 }
 
 // Uncheck all cards
-let keysPressed = {};
 function setUncheckAllPermission() {
   if (!firstSubmit) {
-    document.addEventListener("keydown", uncheckVestibule)
-
-    document.addEventListener('keyup', () => {
-      delete keysPressed;
-   });
+    document.addEventListener("keydown", uncheckAllCards)
   } else {
-    document.removeEventListener("keydown", uncheckVestibule)
+    document.removeEventListener("keydown", uncheckAllCards)
   }
-}
-
-function uncheckVestibule(e) {
-  keysPressed[e.code] = true;
-  uncheckAllCards(e);
 }
 
 function uncheckAllCards(e) {

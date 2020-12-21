@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Settings</title>
     <link rel="stylesheet" href="style/style.css" />
+    <style>
+      body {
+        height: 100%;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
@@ -31,7 +36,6 @@
             </p>
             <p>
               <span class="game-btn uncheckcardsBtn"></span>Uncheck all cards
-              (hold controlRight to activate)
             </p>
             <p><span class="game-btn swapBtn"></span>Swap card</p>
             <p><span class="game-btn pauseBtn"></span>Pause game</p>
@@ -45,15 +49,17 @@
           <p>Recommended System Resolution - 1366 x 768</p>
           <p>Minimum System Resolution - 1280 x 720</p>
           <input
+            id="fullscreen-select"
             type="radio"
             name="display"
             value="fullscreen"
-            checked
           />Fullscreen
-          <input type="radio" name="display" value="fullscreen" />Window
-
-          <button id="fullscreen-test">fullscreen test</button>
-          <button id="window-test">window test</button>
+          <input
+            id="window-select"
+            type="radio"
+            name="display"
+            value="fullscreen"
+          />Window
         </section>
         <section id="theme" class="hidden">
           <h2>Arcade Mode Theme</h2>
@@ -61,8 +67,8 @@
             <div data-index="0" class="unlocked">Classic</div>
             <div data-index="1" class="locked">Jungle</div>
             <div data-index="2" class="locked">Cosmos</div>
-            <div data-index="3" class="locked">Future</div>
-            <div data-index="4" class="locked">Indigo</div>
+            <!-- <div data-index="3" class="locked">Future</div>
+            <div data-index="4" class="locked">Indigo</div> -->
           </div>
           <h2>Sound</h2>
           <div class="music-options-selection">

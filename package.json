@@ -7,7 +7,8 @@
     "start": "electron .",
     "watch": "nodemon --exec electron .",
     "reset": "git reset --hard",
-    "sass": "node-sass -w scss/ -o renderer/style/ --recursive"
+    "sass": "node-sass -w scss/ -o renderer/style/ --recursive",
+    "build": "electron-builder --help"
   },
   "repository": "https://github.com/stackacademytv/master-electron",
   "homepage": "https://github.com/stackacademytv/master-electron",
@@ -19,6 +20,8 @@
   "author": "mwroberts3",
   "license": "CC0-1.0",
   "devDependencies": {
+    "electron": "^11.1.0",
+    "electron-builder": "^22.9.1",
     "node-sass": "^5.0.0",
     "nodemon": "^2.0.0"
   },
