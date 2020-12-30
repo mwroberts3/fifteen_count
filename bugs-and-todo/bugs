@@ -1,0 +1,51 @@
+Bugs:
+    -pause screen should show name of button if it's a custom key
+
+    -shouldn't be able to submit score if there isn't a name
+
+    -if it's on steam, maybe should just use steam account name for highscore
+    
+    -shouldn't be able to use a single key for more than one button
+    
+    -text gets cut off in action button visual display if text is too long, for example if action button is controlLeft 
+    
+    -should probably have any custom fonts downloaded and available locally
+    
+    -action button locks when on the select combo screen if press alt key once and then try to push shift to submit combo
+    
+    -sometimes when time is up the countdown will still tic down to -1 or 
+    -2, should just have text in container be blank when timer reaches 0
+
+    -container size is a little janky, make sure that is consistent
+
+    -pause button not working properly, sometimes it still counts down when paused 
+
+    -the selected theme should be saved, and not reset to classic when going back into window in settings menu
+
+    -for some reason you can combo jokers again
+
+    -in the theme select menu, if you click the space between the options it deselects all
+
+    -when new highscore screen pops up, maybe the rest of the screen should fade out
+
+    -shouldn't be able to keep pressing swap card button after timer runs out
+
+    -if the card to be swapped has an earlier one in the hand, the first of type gets swapped
+
+    -for some reason can open another window if holding control and click restart
+
+    -if you play more than 1000 cards, gets too close to the cards icon
+
+    -need to add exit button to the title screen
+
+    -sometimes timer jumps to 0 if even with a couple seconds left...
+
+    -swapping cards should subtract from total seconds
+
+    -unchecking cards that were a 15 count and then submitting shouldn't work
+
+    -score review gets skipped if the score is not within top scores
+
+    -border animation after fullclear should return to theme's original border color, not working in cosmos 
+
+

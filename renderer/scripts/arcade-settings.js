@@ -10,38 +10,24 @@ let highScoresStats = [];
 let highscoreToBeat;
 
 if (!localStorage.getItem('controls')) {
-  controls = [
-    {buttonName: "actionBtn", button: "ShiftLeft"},
-    {buttonName: "lowValBtn", button: "ControlLeft"},
-    {buttonName: "uncheckcardsBtn", button: "KeyZ"},
-    {buttonName: "swapBtn", button: "AltLeft"},
-    {buttonName: "pauseBtn", button: "Space"},
-  ];
+  controls = {
+    actionBtn: "ShiftLeft",
+    lowValBtn: "ControlLeft",
+    uncheckcardsBtn: "KeyZ",
+    swapBtn: "KeyX",
+    pauseBtn: "Space"
+  }
+
   localStorage.setItem('controls', JSON.stringify(controls));
 } 
 if (localStorage.getItem('controls')) {
   controls = JSON.parse(localStorage.getItem('controls'))
-
-  for (let i = 0; i < controls.length; i++){
-    if (controls[i]['buttonName'] === 'actionBtn') {
-      actionBtn = controls[i]['button']
-    }
-    if (controls[i]['buttonName'] === 'lowValBtn') {
-      lowValBtn = controls[i]['button']
-    }
-    if (controls[i]['buttonName'] === 'uncheckcardsBtn') {
-      uncheckcardsBtn = controls[i]['button']
-    }
-    if (controls[i]['buttonName'] === 'swapBtn') {
-      swapBtn = controls[i]['button']
-    }
-    if (controls[i]['buttonName'] === 'pauseBtn') {
-      pauseBtn = controls[i]['button']
-    }
+  actionBtn = controls.actionBtn;
+  lowValBtn = controls.lowValBtn;
+  uncheckcardsBtn = controls.uncheckcardsBtn;
+  swapBtn = controls.swapBtn;
+  pauseBtn = controls.pauseBtn;
   }
-
-  console.log(actionBtn, lowValBtn, uncheckcardsBtn, swapBtn, pauseBtn);
-}
 
 // Check for highscore
 const personalHighscoreDisplay = document.querySelector('#personal-highscore-display');

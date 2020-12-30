@@ -18,7 +18,7 @@ exports.scoreReview = (hudMessage, currentHand, totalPoints, totalCardsPlayed, t
         localStorage.setItem('highscore', JSON.stringify(highscoreStats));
       }
     } else {
-      highscoreStats.push({totalPoints, totalCardsPlayed, totalSeconds, date: moment().format('MMM Do YYYY')})
+      highscoreStats.push({totalPoints, totalCardsPlayed, totalSeconds, date: moment().format('MMM Do YYYY'), timeAttack: 0})
       localStorage.setItem('highscore', JSON.stringify(highscoreStats));
     }
 

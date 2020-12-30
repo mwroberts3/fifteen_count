@@ -96,6 +96,10 @@ h2 {
   display: none !important;
 }
 
+.hidden-vis {
+  visibility: hidden !important;
+}
+
 .fade-out {
   opacity: 0 !important;
 }
@@ -130,7 +134,6 @@ h2 {
   background: $dark-bg-col;
   border-radius: 10px;
   padding: 10px;
-  border: 2px solid #888;
 
   h3 {
     color: #fff;
@@ -389,7 +392,7 @@ h2 {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   margin: auto;
-  background-image: linear-gradient(#111, #333);
+  background-image: $header-gradient;
   // background: $dark-bg-col;
   color: white;
   max-width: $maxwidth;
@@ -449,17 +452,17 @@ h2 {
   justify-content: space-between;
   color: #777;
   font-size: 0.9rem;
+}
 
-  .menu-options {
-    display: flex;
+.menu-options {
+  display: flex;
 
-    div {
-      cursor: $custom-pointer;
-      margin: 0 10px;
+  div {
+    cursor: $custom-pointer;
+    margin: 0 10px;
 
-      &:hover {
-        color: #ddd;
-      }
+    &:hover {
+      color: #ddd;
     }
   }
 }
@@ -850,58 +853,199 @@ input[type="submit"] {
 }
 
 // Time Attack
+.maximum-res {
+  border: 1px solid black;
+  width: 1366px;
+  height: 768px;
+  display: flex;
+  justify-content: center;
+}
+
 .ta-outer-boundaries {
   position: relative;
-  width: 900px;
+  width: 904px;
   top: 50%;
-  height: 652px;
+  // height: 640px;
   border-radius: 10px;
-  border: 2px solid #000;
   transform: translateY(-50%);
   margin: auto;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 
   .ta-timer-score-display {
-    height: 50px;
+    position: relative;
+    height: 52px;
     color: #fff;
-    background: #000;
+    background-image: $header-gradient;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
     display: flex;
     justify-content: space-between;
 
-    div {
-      padding: 20px;
+    .menu-options:first-of-type {
+      margin-left: 8px;
+    }
+
+    .menu-options {
+      margin-top: 5px;
+      display: flex;
+      font-size: 0.9rem;
+      color: #777;
+
+      div {
+        cursor: $custom-pointer;
+        margin: 0 10px;
+
+        &:hover {
+          color: #ddd;
+        }
+      }
+    }
+
+    .ta-count-display {
+      position: absolute;
+      top: 7px;
+      right: 250px;
+      font-size: 2rem;
+      font-weight: bold;
+      font-style: italic;
+      color: rgb(152, 253, 0);
+    }
+
+    .ta-score-display {
+      position: absolute;
+      font-size: 2rem;
+      font-weight: bold;
+      font-family: $gameplay-font;
+      color: $gameplay-font-col;
+      top: 10px;
+      left: 200px;
+    }
+
+    .ta-timer-display {
+      font-size: 2rem;
+      font-weight: bold;
+      color: $timer-font-col;
+      font-family: $gameplay-font;
+      position: absolute;
+      top: 10px;
+      left: 425px;
     }
   }
 
   .ta-cards-display {
-    height: 575px;
+    height: 544px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    background-image: url("../img/time-attack-bg.png");
+    border: 2px solid black;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    z-index: -2;
 
     .ta-card {
+      position: relative;
       width: 100px;
       height: 154px;
       margin: 0 20px;
-      // border: 2px solid #000;
       border-radius: 15px;
       display: flex;
       justify-content: center;
       align-items: center;
       font-size: 50px;
       color: #fff;
+      z-index: -1;
+    }
+
+    .ta-bonus-card {
+      // background-image: url("./img/ta-bonus-card.png");
+    }
+
+    .ta-bomb-card {
+      border: 10px blueviolet solid;
     }
 
     .ta-checked {
-      transform: rotate(14deg);
+      animation-name: ta-checked-rotate;
+      animation-duration: 0.1s;
+      animation-timing-function: linear;
+      animation-iteration-count: 1;
+      animation-fill-mode: forwards;
+    }
+
+    @keyframes ta-checked-rotate {
+      0% {
+        transform: translateZ(1px) rotate(0);
+      }
+
+      100% {
+        transform: translateZ(1px) rotate(14deg);
+      }
     }
   }
 
   .ta-alltime-score-display {
-    height: 25px;
-    color: #fff;
-    background: #000;
+    font-size: 0.85rem;
+    font-weight: bold;
+    height: 20px;
+    color: #000;
+    display: inline;
+  }
+
+  .ta-highscore-itself {
+    display: inline;
+  }
+
+  .ta-highscore-offset {
+    height: 20px;
+  }
+}
+
+.bonus-card-overlay {
+  position: absolute;
+  top: 10px;
+  width: 80px;
+  height: 134px;
+  border-radius: 15px;
+  // background: #fff;
+  z-index: -2;
+}
+
+.ta-pause-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: $pause-box-gradient;
+  z-index: 2;
+  border-radius: 10px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .ta-pause-box-inner-container {
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  .game-paused-header {
+    font-family: $gameplay-font-2;
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+
+  .seconds-left {
+    font-family: $gameplay-font;
+    color: $timer-font-col;
+    font-size: 2rem;
   }
 }

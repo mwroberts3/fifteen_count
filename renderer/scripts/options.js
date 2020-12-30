@@ -1,5 +1,8 @@
 const { ipcRenderer } = require('electron');
 
+// Controls Popup
+const buttonSelectPopup = document.querySelector(".button-select");
+
 // Settings Container
 const optionsSelect = document.querySelector(".how-to-nav");
 const optionsDisplay = document.querySelectorAll("section");
@@ -9,6 +12,7 @@ optionsSelect.addEventListener("click", (e) => {
   console.log(e.target.tagName);
   if (e.target.tagName === 'LI'){
 
+    buttonSelectPopup.classList.add('hidden');
     e.target.classList.add("option-selected");
     
     Array.from(optionsSelect.children[0].children).forEach((option) => {
@@ -28,20 +32,17 @@ optionsSelect.addEventListener("click", (e) => {
 });
 
 // Controls
-const buttonOptions = document.querySelector("#controls");
-const buttonOptionsContainer = document.querySelector(".button-options-container");
-const buttonLabels = buttonOptionsContainer.querySelectorAll('span');
-const buttonSelectPopup = document.querySelector(".button-select");
+const buttonOptions = document.querySelector(".controls-select");
 const resetControlsBtn = document.querySelector('#reset-controls-btn');
 
-let controls = [];
-let defaultControls = [
-  {buttonName: "actionBtn", button: "ShiftLeft"},
-  {buttonName: "lowValBtn", button: "ControlLeft"},
-  {buttonName: "uncheckcardsBtn", button: "KeyZ"},
-  {buttonName: "swapBtn", button: "AltLeft"},
-  {buttonName: "pauseBtn", button: "Space"},
-];
+let controls = {};
+let defaultControls = {
+  actionBtn: "ShiftLeft",
+  lowValBtn: "ControlLeft",
+  uncheckcardsBtn: "KeyZ",
+  swapBtn: "KeyX",
+  pauseBtn: "Space"
+};
 
 const setControls = () => {
   if (!localStorage.getItem('controls')) {
@@ -55,44 +56,54 @@ const setControls = () => {
 setControls();
 
 const buttonsDisplay = () => {
-  for (let i = 0; i < buttonLabels.length; i++) {
-    for(let k = 0; k < controls.length; k++){
-      if (buttonLabels[i].classList.contains(controls[k]['buttonName'])) {
-        buttonLabels[i].textContent = controls[k]['button']
-      }
-    }
-  }
+  document.querySelector('.actionBtn').textContent = `${controls.actionBtn}`;
+  document.querySelector('.lowValBtn').textContent = `${controls.lowValBtn}`;
+  document.querySelector('.uncheckcardsBtn').textContent = `${controls.uncheckcardsBtn}`;
+  document.querySelector('.swapBtn').textContent = `${controls.swapBtn}`;
+  document.querySelector('.pauseBtn').textContent = `${controls.pauseBtn}`;
 };
 
 buttonsDisplay();
 
 // Set custom buttons
+let buttonToReplace;
+let buttonName;
   buttonOptions.addEventListener("click", (e) => {
     if (e.target.tagName === "SPAN"){
+      buttonSelectPopup.children[0].textContent = 'Please select new key';
       buttonSelectPopup.classList.remove("hidden");
-      let buttonToReplace = e.target;
-      let buttonName = e.target.classList[1];
-
-      document.addEventListener("keyup", (e) => {
-        buttonSelectPopup.classList.add("hidden");
-        buttonToReplace.textContent = `${e.code}`;
-        buttonToReplace = '';
-        controls = controls.filter(row => row.buttonName !== buttonName);
-        controls = controls.filter(row => row.buttonName !== '');
-        controls.push({buttonName, button: e.code});
-        buttonName = '';
-        controls.sort((a, b) => a.buttonName - b.buttonName);
-        localStorage.setItem('controls', JSON.stringify(controls));
-      })
-    }
+      buttonToReplace = e.target;
+      buttonName = e.target.classList[1];
+    }    
   });
 
-// Reset to default controls
-resetControlsBtn.addEventListener('click', () => {
-localStorage.removeItem('controls');
-  setControls();
-  buttonsDisplay();
-})
+  document.addEventListener("keyup", (e) => {
+    if (buttonToReplace) {
+      if (Object.values(controls).find(value => value === e.code) === undefined) {
+        buttonSelectPopup.classList.add("hidden");
+        buttonToReplace.textContent = `${e.code}`;
+        controls[`${buttonName}`] = e.code;
+        localStorage.setItem('controls', JSON.stringify(controls));
+      } else {
+        buttonSelectPopup.children[0].textContent = 'Key already in use'
+      }
+    }
+  })
+  
+  // Reset to default controls
+  resetControlsBtn.addEventListener('click', () => {
+    localStorage.removeItem('controls');
+    controls = {
+      actionBtn: "ShiftLeft",
+      lowValBtn: "ControlLeft",
+      uncheckcardsBtn: "KeyZ",
+      swapBtn: "KeyX",
+      pauseBtn: "Space"
+    }
+    localStorage.setItem('controls', JSON.stringify(controls));
+    buttonSelectPopup.classList.add('hidden');
+    buttonsDisplay();
+  })
 
 // Select theme dropdown
 const arcadeThemes = [

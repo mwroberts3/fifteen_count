@@ -64,7 +64,7 @@ function createWindowedwindow() {
   })
   
   // Removes app menu (no need for it)
-  windowedWindow.removeMenu();
+  // windowedWindow.removeMenu();
 
   // loads windowed window & closes previous
   windowedWindow.loadFile('renderer/options.html')

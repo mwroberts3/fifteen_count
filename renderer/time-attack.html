@@ -5,17 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style/style.css" />
     <title>Harmonia - Time Attack</title>
+    <audio id="bgm-selection" src="" autoplay loop></audio>
   </head>
   <body>
     <div class="ta-outer-boundaries">
       <div class="ta-timer-score-display">
-        <div class="ta-count-display"></div>
-        <div class="ta-score-display"></div>
-        <div class="ta-timer-display">11</div>
+        <div>
+          <div class="menu-options">Time Attack</div>
+        </div>
+        <div class="ta-count-display">0</div>
+        <div class="ta-score-display">0</div>
+        <div class="ta-timer-display">180</div>
+        <div>
+          <div class="menu-options">
+            <div id="pause-game-btn">Pause</div>
+            <a href="time-attack.html" draggable="false">
+              <div>Restart</div>
+            </a>
+            <a href="title-screen.html" draggable="false">
+              <div>Menu</div>
+            </a>
+          </div>
+        </div>
       </div>
       <div class="ta-cards-display"></div>
-      <div class="ta-alltime-score-display">Alltime Highscore</div>
+      <div class="ta-alltime-score-display">
+        Highscore
+        <div class="ta-highscore-itself"></div>
+      </div>
+      <div class="ta-pause-screen hidden">
+        <div class="ta-pause-box-inner-container">
+          <div class="game-paused-header">Paused</div>
+          <div class="seconds-left"></div>
+          <div>
+            Click anywhere in the rectangle or press&nbsp;<span
+              id="resume-game-key"
+            ></span
+            >&nbsp; to resume
+          </div>
+        </div>
+      </div>
     </div>
+    <script src="./scripts/time-attack-settings.js"></script>
     <script src="./scripts/time-attack.js"></script>
   </body>
 </html>

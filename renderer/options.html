@@ -24,25 +24,29 @@
       </nav>
       <div class="options-container">
         <section id="controls">
-          <h2>Controls</h2>
-          <p>Click to change key:</p>
-          <div class="button-options-container">
-            <p>
-              <span class="game-btn actionBtn"></span>Sumbit cards, choose
-              higher value option
-            </p>
-            <p>
-              <span class="game-btn lowValBtn"></span>choose lower value option
-            </p>
-            <p>
-              <span class="game-btn uncheckcardsBtn"></span>Uncheck all cards
-            </p>
-            <p><span class="game-btn swapBtn"></span>Swap card</p>
-            <p><span class="game-btn pauseBtn"></span>Pause game</p>
+          <div class="controls-select">
+            <h2>Controls</h2>
+            <p>Click to change key:</p>
+            <div class="button-options-container">
+              <p>
+                <span class="game-btn actionBtn"></span>Sumbit cards, choose
+                higher value option
+              </p>
+              <p>
+                <span class="game-btn lowValBtn"></span>choose lower value
+                option
+              </p>
+              <p>
+                <span class="game-btn uncheckcardsBtn"></span>Uncheck all cards
+                (for Time Attack as well)
+              </p>
+              <p><span class="game-btn swapBtn"></span>Swap card</p>
+              <p><span class="game-btn pauseBtn"></span>Pause game</p>
+            </div>
+            <button id="reset-controls-btn" class="main-btn light-menu-btn">
+              Reset
+            </button>
           </div>
-          <button id="reset-controls-btn" class="main-btn light-menu-btn">
-            Reset
-          </button>
         </section>
         <section id="display" class="hidden">
           <h2>Display Settings</h2>
@@ -104,7 +108,7 @@
       </div>
       <div class="pad-1"></div>
       <div class="button-select hidden">
-        <p>Please select new button</p>
+        <p>Please select new key</p>
       </div>
     </div>
     <script src="scripts/options.js">
