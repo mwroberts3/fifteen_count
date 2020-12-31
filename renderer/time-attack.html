@@ -13,9 +13,11 @@
         <div>
           <div class="menu-options">Time Attack</div>
         </div>
-        <div class="ta-count-display">0</div>
-        <div class="ta-score-display">0</div>
-        <div class="ta-timer-display">180</div>
+        <div class="ta-inner-timer-score-container">
+          <div class="ta-score-display">0</div>
+          <div class="ta-timer-display">180</div>
+          <div class="ta-count-display">0</div>
+        </div>
         <div>
           <div class="menu-options">
             <div id="pause-game-btn">Pause</div>
@@ -38,13 +40,67 @@
           <div class="game-paused-header">Paused</div>
           <div class="seconds-left"></div>
           <div>
-            Click anywhere in the rectangle or press&nbsp;<span
+            Click inside rectangle or press&nbsp;<span
               id="resume-game-key"
             ></span
             >&nbsp; to resume
           </div>
         </div>
       </div>
+
+      <div class="ta-game-over hidden">
+        <div class="ta-game-over-inner-container">
+          <h1>Game Over</h1>
+          <div></div>
+          <div>
+            <a href="time-attack.html">
+              <button class="main-btn light-menu-btn">Restart</button>
+            </a>
+            <a href="title-screen.html">
+              <button class="main-btn">Quit</button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <section id="time-attack-how-to-play" class="hidden">
+        <div class="how-to-play-slide">
+          <div class="slide-1-content">
+            <h1>How to Play Harmonia Time Attack</h1>
+            <p>It looks like this is your first time playing.</p>
+            <p>
+              The goal of Time Attack is to play as many cards as possible
+              within the 180 second timer
+            </p>
+            <p>
+              Unlike Arcade mode there is no way to add more seconds to the
+              clock. So all you have is 180 seconds. Make them count!
+            </p>
+          </div>
+          <div class="slide-2-content hidden">
+            <h1>Scoring Points</h1>
+            <p>
+              There are two special types of cards in Time Attack: the
+              <em>bonus</em> card and the <em>bomb</em> card.
+            </p>
+          </div>
+          <div class="slide-3-content hidden">
+            <h1>Tips</h1>
+            <p>
+              Allow bomb cards are to be avoided generally, you can also use
+              them to your advantage to clear a particularly tricky hand.
+            </p>
+            <p>
+              Try to play cards with high values as they come in. If you wait to
+              long to play the high value cards you could run into a dead end
+              and have to use a bomb card or restart the game.
+            </p>
+          </div>
+          <section class="btn-container">
+            <button class="next-how-to main-btn light-menu-btn">Next</button>
+            <button class="skip-how-to main-btn">Skip</button>
+          </section>
+        </div>
+      </section>
     </div>
     <script src="./scripts/time-attack-settings.js"></script>
     <script src="./scripts/time-attack.js"></script>

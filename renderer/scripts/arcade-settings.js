@@ -1,3 +1,24 @@
+// Check to see if first time playing
+// check to see if first time playing
+const arcadeHowTo = document.getElementById('arcade-how-to-play');
+let firsttimeCheck = {};
+if (!localStorage.getItem('firsttime-check')) {
+  arcadeHowTo.classList.remove('hidden');
+  firsttimeCheck.arcade = true;
+  localStorage.setItem('firsttime-check', JSON.stringify(firsttimeCheck));
+  document.querySelector('.gui-container').style.opacity = 0;
+  // howToSlideShow();
+} else {
+  firsttimeCheck = JSON.parse(localStorage.getItem('firsttime-check'));
+  if (!firsttimeCheck.arcade) {
+    arcadeHowTo.classList.remove('hidden');
+    firsttimeCheck.arcade = true;
+    localStorage.setItem('firsttime-check', JSON.stringify(firsttimeCheck));
+    document.querySelector('.gui-container').style.opacity = 0;
+    // howToSlideShow();
+  }
+}
+
 // Check for custom control settings
 let controls = [];
 let actionBtn,

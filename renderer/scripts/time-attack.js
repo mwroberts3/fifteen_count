@@ -30,20 +30,6 @@ const sameColorBlack = (color) => color == "black";
 let cardIndex;
 let shownHand = [];
 
-// Init gameplay
-const timeAttackTimer = setInterval(() => {
-    if (secondsLeft === 0) {
-        clearInterval(timeAttackTimer);
-
-        if (score > highscoreToBeat) {
-            highscoreStats[0]['timeAttack'] = score;
-            localStorage.setItem('highscore', JSON.stringify(highscoreStats));
-        }
-    }
-    timerDisplay.textContent = `${secondsLeft}`
-    secondsLeft--;
-}, 1000)
-
 class Card {
     constructor(face, suit, value, id) {
         this.face = face;
@@ -107,6 +93,36 @@ class Card {
     }
 }
 
+const timeAttackTimer = setInterval(() => {
+    if (secondsLeft === 0) {
+        clearInterval(timeAttackTimer);
+        
+        document.querySelector('.ta-game-over').classList.remove('hidden');
+        document.querySelector('.ta-game-over-inner-container').children[1].textContent = `${score}`;
+        
+        
+        if (score > highscoreToBeat) {
+            highscoreStats[0]['timeAttack'] = score;
+            localStorage.setItem('highscore', JSON.stringify(highscoreStats));
+        }
+    }
+    secondsLeft--;
+    timerDisplay.textContent = `${secondsLeft}`
+}, 1000)
+
+let pointsOnDisplay = 0;
+const timeAttackScore = setInterval(() => {
+        if (pointsOnDisplay < score) {
+            pointsOnDisplay++;
+        }
+        scoreDisplay.textContent = `${pointsOnDisplay}`;
+        if (secondsLeft === 0) {
+            pointsOnDisplay = score;
+            scoreDisplay.textContent = `${pointsOnDisplay}`;
+        }
+},100)
+
+// Init gameplay
 buildDeckTimeAttack(deck);
 shuffleTimeAttack(deck);
 buildAndShowHand(redrawAmount);
@@ -121,7 +137,7 @@ cardsDisplay.addEventListener('click', e => {
         console.log(cardIndex);
     }  
 
-    if (e.target.classList.contains('bonus-card-overlay')){
+    if (e.target.classList.contains('bonus-card-overlay') || e.target.classList.contains('bomb-icon')){
         cardIndex = [...e.target.parentNode.parentNode.children].indexOf(e.target.parentNode);
         activeHand[cardIndex].checkCard(cardIndex, shownHand);
         countDisplay.textContent = `${count}`; 
@@ -226,28 +242,37 @@ function shuffleTimeAttack() {
     shownHand = cardsDisplay.childNodes;
     
     let bombCardIndex1 = cardBonusIndex;
+    let bombIcon = document.createElement('div');
+    bombIcon.classList.add('bomb-icon');
     while (bombCardIndex1 === cardBonusIndex) {
         bombCardIndex1 = Math.floor(Math.random() * 18);    
         shownHand[bombCardIndex1].classList.add('ta-bomb-card');
+        shownHand[bombCardIndex1].appendChild(bombIcon);
         shownHand[cardBonusIndex].classList.remove('ta-bomb-card');
     }
-
+    
     // Add a second bomb card after 1 minute
     let bombCardIndex2 = cardBonusIndex;
+    let bombIcon2 = document.createElement('div');
+    bombIcon2.classList.add('bomb-icon');
     if (secondsLeft <= 120) {
         while (bombCardIndex2 === cardBonusIndex || bombCardIndex2 === bombCardIndex1) {
             bombCardIndex2 = Math.floor(Math.random() * 18);    
             shownHand[bombCardIndex2].classList.add('ta-bomb-card');
+            shownHand[bombCardIndex2].appendChild(bombIcon2);
             shownHand[cardBonusIndex].classList.remove('ta-bomb-card');
         }
     }
-
+    
     // Add a third bomb card after 2 minutes
     let bombCardIndex3 = cardBonusIndex;
+    let bombIcon3 = document.createElement('div');
+    bombIcon3.classList.add('bomb-icon');
     if (secondsLeft <= 60) {
         while (bombCardIndex3 === cardBonusIndex || bombCardIndex3 === bombCardIndex1 || bombCardIndex3 === bombCardIndex2) {
             bombCardIndex3 = Math.floor(Math.random() * 18);    
             shownHand[bombCardIndex3].classList.add('ta-bomb-card');
+            shownHand[bombCardIndex3].appendChild(bombIcon3);
             shownHand[cardBonusIndex].classList.remove('ta-bomb-card');
         }
     }
@@ -256,7 +281,7 @@ function shuffleTimeAttack() {
 function redealReset() {
       bonusAdded = false;
 
-          scoreDisplay.textContent = `${score}`;
+        //   scoreDisplay.textContent = `${score}`;
           count = 0;
           countDisplay.textContent = `${count}`;
           cardsDisplay.innerHTML = '';

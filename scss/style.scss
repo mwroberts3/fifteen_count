@@ -70,7 +70,7 @@ h2 {
 
 .main-btn {
   width: 120px;
-  padding: 8px;
+  padding: 6px;
   margin-top: 5px;
   border-radius: 5px;
   font-family: $body-font;
@@ -741,12 +741,12 @@ input[type="submit"] {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  top: 75px;
-  left: 4px;
+  top: 67px;
+  left: 0px;
   background: #000;
   color: #fff;
-  width: 1192px;
-  height: 520px;
+  width: 100%;
+  height: 550px;
   z-index: 4;
   border-radius: 10px;
 
@@ -852,6 +852,16 @@ input[type="submit"] {
   }
 }
 
+// Arcade How To
+#arcade-how-to-play {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1000px;
+  height: 650px;
+  background: #ddd;
+}
+
 // Time Attack
 .maximum-res {
   border: 1px solid black;
@@ -888,6 +898,7 @@ input[type="submit"] {
     }
 
     .menu-options {
+      width: 184px;
       margin-top: 5px;
       display: flex;
       font-size: 0.9rem;
@@ -903,10 +914,17 @@ input[type="submit"] {
       }
     }
 
+    .ta-inner-timer-score-container {
+      display: flex;
+      width: 100%;
+      justify-content: space-evenly;
+    }
+
     .ta-count-display {
-      position: absolute;
-      top: 7px;
-      right: 250px;
+      width: 33%;
+      display: flex;
+      justify-content: center;
+      padding-top: 4px;
       font-size: 2rem;
       font-weight: bold;
       font-style: italic;
@@ -914,23 +932,25 @@ input[type="submit"] {
     }
 
     .ta-score-display {
-      position: absolute;
+      width: 33%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       font-size: 2rem;
       font-weight: bold;
       font-family: $gameplay-font;
       color: $gameplay-font-col;
-      top: 10px;
-      left: 200px;
     }
 
     .ta-timer-display {
+      width: 33%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       font-size: 2rem;
       font-weight: bold;
       color: $timer-font-col;
       font-family: $gameplay-font;
-      position: absolute;
-      top: 10px;
-      left: 425px;
     }
   }
 
@@ -965,7 +985,16 @@ input[type="submit"] {
     }
 
     .ta-bomb-card {
-      border: 10px blueviolet solid;
+      // border: 10px blueviolet solid;
+    }
+
+    .bomb-icon {
+      position: absolute;
+      width: 45px;
+      height: 45px;
+      top: 2px;
+      right: 5px;
+      background-image: url("../img/bomb-icon.gif");
     }
 
     .ta-checked {
@@ -1020,7 +1049,7 @@ input[type="submit"] {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: $pause-box-gradient;
+  background-image: url("../img/ta-pause-background.png");
   z-index: 2;
   border-radius: 10px;
   color: #fff;
@@ -1047,5 +1076,70 @@ input[type="submit"] {
     font-family: $gameplay-font;
     color: $timer-font-col;
     font-size: 2rem;
+  }
+}
+
+.ta-game-over {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: $pause-box-gradient;
+  z-index: 2;
+  border-radius: 10px;
+  font-family: $gameplay-font-2;
+  font-weight: bold;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .ta-game-over-inner-container {
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+
+    h1 {
+      font-size: 4rem;
+    }
+
+    div:first-of-type {
+      font-family: $gameplay-font;
+      color: $gameplay-font-col;
+      font-size: 2rem;
+    }
+  }
+}
+
+#time-attack-how-to-play {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1000px;
+  height: 650px;
+  background: #ddd;
+  border-radius: 10px;
+  z-index: 3;
+
+  .how-to-play-slide {
+    position: relative;
+    padding: 10px;
+    height: 100%;
+
+    .btn-container {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+    }
+
+    div {
+      position: absolute;
+      top: 0;
+      left: 15px;
+    }
   }
 }
