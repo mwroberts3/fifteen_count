@@ -64,6 +64,8 @@ let html = ``;
 
 let totalComboPoints = 0;
 
+let gamePaused = false;
+
 // Deck and first draw variables
 let cardCount = 54;
 let deck = [];
@@ -92,7 +94,7 @@ let fullHandPlayed = false;
 let jackpotLive = false;
 let jackpotInit = false;
 let jackpotRandTiming;
-let jackpotSecondsThreshold = 50;
+let jackpotSecondsThreshold = 10;
 addFreshPointsToTotal();
 setSecondsBonusIndicator();
 selectCard();
@@ -246,8 +248,8 @@ function showHand() {
       pointsOnDisplay = totalPoints;
       firstSubmit = true;
       setSwapPermission();
-      pauseButton.removeEventListener("click", pauseGame);
-      document.removeEventListener("keyup", buttonPause); 
+      // pauseButton.removeEventListener("click", pauseGame);
+      // document.removeEventListener("keyup", buttonPause); 
       totalPointsDisplay.innerHTML = `${totalPoints}`;
       if (highscoreDefeated) {
         personalHighscoreDisplay.childNodes[1].textContent = pointsOnDisplay;
@@ -777,6 +779,10 @@ function swapButtonFunction() {
   // fifteenCountDisplay.textContent = `${fifteenCount}`;
   bonusTimeDisplay.style.color = "rgba(51, 131, 235, 0.9)";
 
+  if (secondsLeft <= 5) {
+    timer.style.color = 'red'
+  }
+
   if (cardsInHand.length < 10) {
     timer.textContent = `${secondsLeft + 1}`;
     bonusTimeDisplay.textContent = `${(cardsInHand.length - 10)}`;
@@ -880,11 +886,28 @@ function jackpotSelect() {
 
   if (!jackpotInit) {
     jackpotRandTiming = Math.floor(Math.random() * (jackpotSecondsThreshold - (jackpotSecondsThreshold - 49)) + (jackpotSecondsThreshold - 49));
-    console.log("jackpot rand timing", jackpotRandTiming);
     jackpotInit = true;
   }
+
   if (elapsedTime >= jackpotRandTiming && jackpotInit) {
-      cardsInHand[Math.floor(Math.random() * (cardsInHand.length - 0) + 0)].classList.add('jackpot-card');
+      let jackpotRandIndex = Math.floor(Math.random() * (cardsInHand.length - 0) + 0);
+
+      let jackpotOverlay = document.createElement('div');
+
+      jackpotOverlay.classList.add('jackpot-overlay');
+
+      let style = getComputedStyle(cardsInHand[jackpotRandIndex]);
+
+      console.log(style);
+
+      console.log(cardsInHand[jackpotRandIndex].classList[2]);
+
+      jackpotOverlay.style.background = `${style.background}`;
+
+      cardsInHand[jackpotRandIndex].appendChild(jackpotOverlay);
+
+      cardsInHand[jackpotRandIndex].classList.add('jackpot-special-border');
+
       jackpotInit = false;
       jackpotSecondsThreshold += 50;
       jackpotLive = true;
@@ -955,57 +978,53 @@ if (fifteenCount > 15) {
 }
 
 // Pause Function(s) & Event Listeners
-let gamePause = false;
 let pauseScreen = document.querySelector("#pause-screen");
-let pauseInnerContainer = document.querySelector("#pause-inner-container");
-let pauseButton = document.querySelector("#pause-game-btn");
-let timeRemaining = document.querySelector(".time-remaining");
 
-pauseButton.addEventListener("click", pauseGame);
-document.addEventListener("keyup", buttonPause); 
+// Pause game
+let secondsLeftAtPause;
+let pausedTimerSet;
 
-function buttonPause(e) {
-  if (e.code === pauseBtn && !gamePause) {
-    pauseGame();
-  } else if (e.code === pauseBtn && gamePause) {
-    pauseInnerContainer.classList.add("fade-out");
-    setTimeout(() => {
-      resumeGame();
-    },900)
-  }
-}
+// Button press
+document.addEventListener('keyup', (e) => {
+    if(e.code === pauseBtn) {
+        if (pauseScreen.classList.contains('hidden')) {
+            gamePaused = true;  
+            pauseScreen.classList.remove('hidden');
+            secondsLeftAtPause = secondsLeft;
+            displaySecondsWhilePaused();
+        } else {
+          gamePaused = false;
+            pauseScreen.classList.add('hidden');
+            secondsLeft = secondsLeftAtPause;
+            timer.textContent = `${secondsLeftAtPause + 1}`; 
+            clearInterval(pausedTimerSet);
+        }
+    }
+})
 
-function pauseGame() {
-  gamePause = true;
-  clearInterval(gameTimer );
-  pauseScreen.classList.remove("hidden");
-  pauseInnerContainer.classList.remove("fade-out");
-  timeRemaining.textContent = `${secondsLeft + 1}`;
-  
-  setInterval(() => {
-    timeRemaining.innerHTML = `&nbsp;&nbsp;`;
-  }, 500)
+// Menu click
+document.getElementById('pause-game-btn').addEventListener('click', () => {
+  if (pauseScreen.classList.contains('hidden')) {
+      gamePaused = true;  
+      pauseScreen.classList.remove('hidden');
+      secondsLeftAtPause = secondsLeft;
+      displaySecondsWhilePaused();
+  } 
+  pauseScreen.addEventListener('click', () => {
+    gamePaused = false;
+      pauseScreen.classList.add('hidden');
+      secondsLeft = secondsLeftAtPause;
+      timer.textContent = `${secondsLeftAtPause + 1}`; 
+      clearInterval(pausedTimerSet);
+  })
+})
 
-  setInterval(() => {
-    timeRemaining.textContent = `${secondsLeft + 1}`;
-  }, 1000)
-  
-  pauseScreen.addEventListener("click", (e) => {
-    if (e.target.tagName !== "BUTTON") {
-      pauseInnerContainer.classList.add("fade-out");
-      setTimeout(() => {
-        resumeGame();
-      },900)
-    } else {
-        location.assign('title-screen.html');
-    } 
-    });
-}
-
-function resumeGame() {
-  gameTimer = setInterval(timerFunction, 1000);
-  gamePause = false;
-  pauseScreen.classList.add("hidden");
+function displaySecondsWhilePaused() {
+  document.getElementById('resume-game-key').textContent = `${pauseBtn}`;
+  document.querySelector('.seconds-left').textContent = `${secondsLeftAtPause + 1}`;
+  pausedTimerSet = setInterval(() => {
+      document.querySelector('.seconds-left').classList.toggle('hidden-vis');
+  }, 500);
 }
 
 // Uncheck all cards
@@ -1026,7 +1045,6 @@ function uncheckAllCards(e) {
       card.classList.toggle("checked");
       card.classList.remove("value-selected");
       setFifteenCountColor();
-      // fifteenCountDisplay.textContent = `${fifteenCount}`
       valueOptionOne.textContent = "-"
       valueOptionTwo.textContent = "-"
       if (card.classList.contains("A")) {

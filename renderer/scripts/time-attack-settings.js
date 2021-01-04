@@ -102,11 +102,10 @@ let highscoreToBeat;
 
 if(localStorage.getItem('highscore')) {
     highscoreStats = JSON.parse(localStorage.getItem('highscore'));
-    if (highscoreStats[0]['timeAttack']) {
-        highscoreToBeat = highscoreStats[0]['timeAttack'];
-    }
+
+    highscoreToBeat = highscoreStats[0]['timeAttack']
 } else {
-    highscoreStats.push({totalPoints: 0, totalCardsPlayed: 0, totalSeconds: 0, date: 'na', timeAttack: 0})
+    highscoreStats.push({totalPoints: 0, totalCardsPlayed: 0, totalSeconds: 0, date: 'na', timeAttack: 0, taDate: ''})
     localStorage.setItem('highscore', JSON.stringify(highscoreStats));
     highscoreToBeat = 0;
 }

@@ -6,7 +6,11 @@
   box-sizing: border-box;
   cursor: url("../img/cursor.png"), auto !important; }
 
+html {
+  position: relative; }
+
 body {
+  position: relative;
   margin: 0 auto;
   width: 1200px;
   height: 100vh;
@@ -17,7 +21,9 @@ body {
   -moz-user-select: none;
   -webkit-user-drag: none;
   -webkit-user-select: none;
-  -ms-user-select: none; }
+  -ms-user-select: none;
+  opacity: 0;
+  transition: opacity 0.5s ease; }
 
 a {
   color: #777;
@@ -91,7 +97,20 @@ h2 {
   font-family: "Didact Gothic", sans-serif; }
 
 .submit-cards {
+  cursor: url("../img/cursor.png"), auto !important;
+  width: 30%;
+  padding: 10px;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: auto;
+  color: #333;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 2px 2px #ddd;
   font-family: "Didact Gothic", sans-serif; }
+
+.fade-in {
+  opacity: 1; }
 
 .index-header {
   width: 100%; }
@@ -145,7 +164,7 @@ h2 {
   font-style: italic; }
 
 .how-to-container {
-  font-size: 1rem; }
+  font-size: 1.25rem; }
   .how-to-container .how-to-section {
     background: #ddd;
     border-radius: 10px; }
@@ -211,7 +230,7 @@ h2 {
   margin: auto;
   height: 445px; }
   .options-container section {
-    padding: 0 10px; }
+    padding: 10px 10px 0; }
     .options-container section p {
       padding: 10px; }
       .options-container section p span {
@@ -222,9 +241,47 @@ h2 {
         .options-container section p span:hover {
           color: #cc9200; }
 
+.display-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+
+.checkbox-container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  height: 0;
+  width: 0; }
+
+.checkmark {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  height: 15px;
+  width: 15px;
+  background-image: url("../img/unchecked.png"); }
+
+.container input:checked ~ .checkmark {
+  background-image: url("../img/checked.png"); }
+
+#display h2 {
+  margin-bottom: 10px; }
+
 #theme {
   position: relative;
-  width: 100%; }
+  width: 100%;
+  height: 100%; }
   #theme .theme-selection-menu {
     width: 35%;
     margin: auto; }
@@ -566,7 +623,7 @@ input[type="submit"] {
   align-items: center;
   top: 67px;
   left: 0px;
-  background: #000;
+  background-image: url("../img/ta-pause-background.png");
   color: #fff;
   width: 100%;
   height: 550px;
@@ -632,18 +689,29 @@ input[type="submit"] {
   width: 100%;
   border-radius: 10px;
   color: white;
-  background: linear-gradient(#222, #555);
-  height: 100%; }
+  background-image: url("../img/ta-pause-background.png");
+  background-size: cover;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
   #pause-screen #pause-inner-container {
     width: 100%;
-    height: 100%;
+    height: 40%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    transition: opacity 1s ease; }
-    #pause-screen #pause-inner-container * {
-      padding: 5px; }
+    justify-content: space-evenly;
+    align-items: center; }
+
+.game-paused-header {
+  font-family: "Ink Free", sans-serif;
+  font-size: 2.5rem;
+  font-weight: bold; }
+
+.seconds-left {
+  font-family: "Russo One", sans-serif;
+  color: #98fd00;
+  font-size: 2rem; }
 
 #arcade-how-to-play {
   position: absolute;
@@ -804,14 +872,6 @@ input[type="submit"] {
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center; }
-  .ta-pause-screen .game-paused-header {
-    font-family: "Ink Free", sans-serif;
-    font-size: 2.5rem;
-    font-weight: bold; }
-  .ta-pause-screen .seconds-left {
-    font-family: "Russo One", sans-serif;
-    color: #98fd00;
-    font-size: 2rem; }
 
 .ta-game-over {
   position: absolute;
@@ -819,7 +879,7 @@ input[type="submit"] {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(#111, #333);
+  background-image: url("../img/ta-pause-background.png");
   z-index: 2;
   border-radius: 10px;
   font-family: "Ink Free", sans-serif;

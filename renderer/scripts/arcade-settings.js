@@ -1,5 +1,4 @@
 // Check to see if first time playing
-// check to see if first time playing
 const arcadeHowTo = document.getElementById('arcade-how-to-play');
 let firsttimeCheck = {};
 if (!localStorage.getItem('firsttime-check')) {
@@ -67,7 +66,7 @@ let themeSelection = [];
 const themeDisplay = document.querySelector('#theme-display');
 
 if (!localStorage.getItem('theme-selection')) {
-  themeSelection = { index: 0, themeName: "Classic", bgImgPlayersHand: ["classic-bg.png"], bgImgCombo: "classic-bg-combo-round.png", bgCol: "#b3edff", cardSprites: "style/classicsprites.css", bgm: "bgm/Theme-Classic.mp3", fifteenCountGradient: ['#fff', '#eee', '#ddd', '#ccc', '#bbb', '#aaa', '#999', '#888', '#777', '#666', '#555', '#444', '#333', '#222', '#111', '#000'] };
+  themeSelection = { index: 0, themeName: "Classic", bgImgPlayersHand: ["classic-bg.png"], bgImgCombo: "classic-bg-combo-round.png", bgCol: "#b3edff", cardSprites: "style/classicsprites.css", bgm: "bgm/Theme-Classic.mp3", fifteenCountGradient: ['#999', '#999', '#999', '#999', '#999', '#999', '#999', '#888', '#777', '#666', '#555', '#444', '#333', '#222', '#111', '#000'] };
   localStorage.setItem('theme-selection', JSON.stringify(themeSelection));
 } else {
   themeSelection = JSON.parse(localStorage.getItem('theme-selection'))

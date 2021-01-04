@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 // DOM sections
 const timerAndScoreDisplay = document.querySelector(".ta-timer-score-display"),
 timerDisplay = document.querySelector('.ta-timer-display'),
@@ -5,7 +7,7 @@ countDisplay = document.querySelector('.ta-count-display'),
 scoreDisplay = document.querySelector('.ta-score-display');
 
 const cardsDisplay = document.querySelector(".ta-cards-display");
-const taHighscoreDicount = document.querySelector(".ta-alltime-score-display");
+const taHighscoreDisplay = document.querySelector(".ta-alltime-score-display");
 
 let deck = [];
 let activeHand = [];
@@ -17,12 +19,13 @@ let redrawAmount = 18;
 let score = 0;
 let count = 0;
 let pointsAdded;
-let secondsLeft = 179;
+let secondsLeft = 10;
 let bonusUnleashed = false;
 let bombsOff = false;
 let bonusAdded = false;
 let bonusPoints = 0;
 let cardBonusIndex;
+let gamePaused = false;
 
 const sameColorRed = (color) => color == "red"; 
 const sameColorBlack = (color) => color == "black"; 
@@ -93,20 +96,27 @@ class Card {
     }
 }
 
+// Set 180 seconds timer
 const timeAttackTimer = setInterval(() => {
-    if (secondsLeft === 0) {
+    if (secondsLeft === 0 && !gamePaused) {
         clearInterval(timeAttackTimer);
         
         document.querySelector('.ta-game-over').classList.remove('hidden');
         document.querySelector('.ta-game-over-inner-container').children[1].textContent = `${score}`;
         
-        
         if (score > highscoreToBeat) {
+            console.log('is this working?')
             highscoreStats[0]['timeAttack'] = score;
+            highscoreStats[0]['taDate'] = moment().format('MMM Do YYYY');
             localStorage.setItem('highscore', JSON.stringify(highscoreStats));
         }
     }
     secondsLeft--;
+
+    if (secondsLeft <= 5) {
+        timerDisplay.style.color = 'red'
+      }
+
     timerDisplay.textContent = `${secondsLeft}`
 }, 1000)
 
@@ -411,14 +421,15 @@ let pausedTimerSet;
 document.addEventListener('keyup', (e) => {
     if(e.code === pauseBtn) {
         if (document.querySelector(".ta-pause-screen").classList.contains('hidden')) {
-            console.log('pausing');  
+            gamePaused = true;
             document.querySelector(".ta-pause-screen").classList.remove('hidden');
             secondsLeftAtPause = secondsLeft;
             displaySecondsWhilePaused();
         } else {
+            gamePaused = false;
             document.querySelector(".ta-pause-screen").classList.add('hidden');
             secondsLeft = secondsLeftAtPause;
-            timerDisplay.textContent = `${secondsLeftAtPause + 1}`; 
+            timerDisplay.textContent = `${secondsLeftAtPause}`; 
             clearInterval(pausedTimerSet);
         }
     }
@@ -426,23 +437,24 @@ document.addEventListener('keyup', (e) => {
 // Menu click
 document.getElementById('pause-game-btn').addEventListener('click', () => {
     if (document.querySelector(".ta-pause-screen").classList.contains('hidden')) {
-        console.log('pausing');  
+        gamePaused = true;
         document.querySelector(".ta-pause-screen").classList.remove('hidden');
         secondsLeftAtPause = secondsLeft;
         displaySecondsWhilePaused();
     } 
     document.querySelector(".ta-pause-screen").addEventListener('click', () => {
+        gamePaused = false;
         document.querySelector(".ta-pause-screen").classList.add('hidden');
         secondsLeft = secondsLeftAtPause;
-        timerDisplay.textContent = `${secondsLeftAtPause + 1}`; 
+        timerDisplay.textContent = `${secondsLeftAtPause}`; 
         clearInterval(pausedTimerSet);
     })
 })
 
 function displaySecondsWhilePaused() {
     document.getElementById('resume-game-key').textContent = `${pauseBtn}`;
-    document.querySelector('.seconds-left').textContent = `${secondsLeftAtPause + 1}`;
-    pausedTimerSet = setInterval(() => {
+    document.querySelector('.seconds-left').textContent = `${secondsLeftAtPause}`;
+    pausedTimerSet = setInterval(() => { 
         document.querySelector('.seconds-left').classList.toggle('hidden-vis');
     }, 500);
 }

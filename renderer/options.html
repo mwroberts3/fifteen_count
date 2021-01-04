@@ -4,12 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Settings</title>
+    <link rel="preload" href="img/unchecked.png" as="image" type="image/png" />
+    <link rel="preload" href="img/checked.png" as="image" type="image/png" />
     <link rel="stylesheet" href="style/style.css" />
-    <style>
-      body {
-        height: 100%;
-      }
-    </style>
   </head>
   <body>
     <div class="container">
@@ -50,20 +47,30 @@
         </section>
         <section id="display" class="hidden">
           <h2>Display Settings</h2>
-          <p>Recommended System Resolution - 1366 x 768</p>
-          <p>Minimum System Resolution - 1280 x 720</p>
-          <input
-            id="fullscreen-select"
-            type="radio"
-            name="display"
-            value="fullscreen"
-          />Fullscreen
-          <input
-            id="window-select"
-            type="radio"
-            name="display"
-            value="fullscreen"
-          />Window
+          <div class="display-container">
+            <p>Recommended System Resolution - 1366 x 768</p>
+            <p>Minimum System Resolution - 1280 x 720</p>
+            <div>
+              <label class="checkbox-container">
+                <input
+                  id="fullscreen-select"
+                  type="radio"
+                  name="display"
+                  value="fullscreen"
+                />Fullscreen
+                <span class="checkmark"></span>
+              </label>
+              <label class="checkbox-container">
+                <input
+                  id="window-select"
+                  type="radio"
+                  name="display"
+                  value="fullscreen"
+                />Window
+                <span class="checkmark"></span>
+              </label>
+            </div>
+          </div>
         </section>
         <section id="theme" class="hidden">
           <h2>Arcade Mode Theme</h2>
@@ -73,32 +80,38 @@
             <div data-index="2" class="locked">Cosmos</div>
             <!-- <div data-index="3" class="locked">Future</div>
             <div data-index="4" class="locked">Indigo</div> -->
+            <div class="pad-1"></div>
+            <div class="pad-1"></div>
+            <div class="pad-1"></div>
           </div>
           <h2>Sound</h2>
           <div class="music-options-selection">
-            <div>
+            <label class="checkbox-container">
               <input
                 id="BGM-check"
                 type="checkbox"
                 data-musicType="BGM"
                 checked
               />BGM
-            </div>
-            <div>
+              <span class="checkmark"></span>
+            </label>
+            <label class="checkbox-container">
               <input
                 id="SFX-check"
                 type="checkbox"
                 data-musicType="SFX"
                 checked
               />SFX
-            </div>
+              <span class="checkmark"></span>
+            </label>
           </div>
         </section>
         <section id="about-game" class="hidden">
           <h2>About Game</h2>
-          <p>version 1.0.0</p>
-          <p>this game was created in 2020</p>
+          <p><strong>Current Version:</strong> 1.0.0 (4/16/20)</p>
+          <p>Version 1.0.0 was initially released on Steam on April 16, 2020</p>
           <p>Music by Marauders</p>
+          <p>Created by Sky Drips Green Studios</p>
         </section>
       </div>
       <div class="back-btn-container">
@@ -111,6 +124,12 @@
         <p>Please select new key</p>
       </div>
     </div>
+    <script>
+      // fade-in
+      setTimeout(() => {
+        document.querySelector("body").classList.add("fade-in");
+      }, 10);
+    </script>
     <script src="scripts/options.js">
       // require("./scripts/options");
     </script>

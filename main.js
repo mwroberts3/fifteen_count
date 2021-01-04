@@ -89,10 +89,10 @@ function createWindow() {
   })
 
   // Removes app menu (no need for it)
-  mainWindow.removeMenu();
+  // mainWindow.removeMenu();
 
   // Load index.html into the new BrowserWindow
-  mainWindow.loadFile('renderer/title-screen.html')
+  mainWindow.loadFile('renderer/intro-screen.html')
 
   // Manage new window state
   // state.manage(mainWindow)
@@ -110,11 +110,11 @@ function createWindow() {
     ipcMain.on('display-settings', (e, windowed) => {
       if (windowed) {
         createWindowedwindow();
-        windowedWindow.setOpacity(0);
-        windowedWindow.loadFile('renderer/title-screen.html')
+        // windowedWindow.setOpacity(0);
+        windowedWindow.loadFile('renderer/intro-screen.html')
         setTimeout(() => {
           windowedWindow.setOpacity(1)
-        }, 1000)
+        }, 500)
         mainWindow.close();
       } else {
         mainWindow.setOpacity(1);

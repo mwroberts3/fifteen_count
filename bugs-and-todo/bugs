@@ -48,4 +48,6 @@ Bugs:
 
     -border animation after fullclear should return to theme's original border color, not working in cosmos 
 
+    -if play through arcade mode and score isn't in top 50? then it just automatically restarts
 
+    -can still get a gameover screen if game is paused but seconds timer keeps going

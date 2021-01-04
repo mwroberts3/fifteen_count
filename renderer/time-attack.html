@@ -35,6 +35,7 @@
         Highscore
         <div class="ta-highscore-itself"></div>
       </div>
+
       <div class="ta-pause-screen hidden">
         <div class="ta-pause-box-inner-container">
           <div class="game-paused-header">Paused</div>
@@ -42,8 +43,8 @@
           <div>
             Click inside rectangle or press&nbsp;<span
               id="resume-game-key"
-            ></span
-            >&nbsp; to resume
+            ></span>
+            to resume
           </div>
         </div>
       </div>
@@ -102,6 +103,12 @@
         </div>
       </section>
     </div>
+    <script>
+      // fade-in
+      setTimeout(() => {
+        document.querySelector("body").classList.add("fade-in");
+      }, 10);
+    </script>
     <script src="./scripts/time-attack-settings.js"></script>
     <script src="./scripts/time-attack.js"></script>
   </body>

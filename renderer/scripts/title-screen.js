@@ -36,7 +36,3 @@ if (userSelectedSoundSettings.SFX) {
     })
 }
 
-// Check for display settings
-  ipcRenderer.on('display-settings-check', () => {
-    ipcRenderer.send('display-settings', JSON.parse(localStorage.getItem('user-display-settings')))
-  })
