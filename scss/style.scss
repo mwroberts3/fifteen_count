@@ -30,6 +30,7 @@ body {
   -ms-user-select: none;
   opacity: 0;
   transition: opacity 0.5s ease;
+  overflow: hidden;
 }
 
 a {
@@ -50,8 +51,17 @@ h2 {
 }
 
 // UTILITIES
+.cursor {
+  display: none;
+  z-index: 3;
+  width: 25px;
+  height: 26px;
+  // background: #aaa;
+  position: absolute;
+  background: url("../img/cursor.png");
+}
+
 .container {
-  width: 100%;
   position: relative;
   margin: 20px auto 0;
   background: $light-bg-col;
@@ -519,7 +529,7 @@ h2 {
 }
 
 .menu-hud {
-  width: 94%;
+  width: 96%;
   display: flex;
   justify-content: space-between;
   color: #777;
@@ -531,7 +541,7 @@ h2 {
 
   div {
     cursor: $custom-pointer;
-    margin: 0 10px;
+    margin-left: 10px;
 
     &:hover {
       color: #ddd;
@@ -658,6 +668,8 @@ input[type="submit"] {
   }
 
   .show-hand {
+    margin: auto;
+    width: 98.5%;
     display: flex;
     justify-content: space-evenly;
 
@@ -902,13 +914,13 @@ input[type="submit"] {
 // PAUSE SCREEN
 #pause-screen {
   position: absolute;
-  top: 0;
-  width: 100%;
+  top: 80px;
+  width: calc(100% - 8px);
   border-radius: 10px;
   color: white;
   background-image: $pause-gameover-box-bg;
   background-size: cover;
-  height: 100%;
+  height: calc(100% - 143px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -937,12 +949,82 @@ input[type="submit"] {
 
 // Arcade How To
 #arcade-how-to-play {
+  padding: 10px;
   position: absolute;
   top: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 1000px;
   height: 650px;
   background: #ddd;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "head head"
+    "p1 p2"
+    "p1 img1"
+    "p1 p3"
+    "btn1 btn1";
+
+  .arcade-howto-page-two {
+    grid-template-areas:
+      "head head"
+      "p4 p6"
+      "p5 p6"
+      "img2 p7"
+      "btn1 btn1";
+  }
+
+  h2 {
+    grid-area: head;
+  }
+
+  #arcade-howto-p1 {
+    grid-area: p1;
+    padding-right: 10px;
+  }
+
+  #arcade-howto-p2 {
+    grid-area: p2;
+  }
+
+  #arcade-howto-p3 {
+    grid-area: p3;
+  }
+
+  #arcade-howto-img1 {
+    grid-area: img1;
+  }
+
+  #arcade-howto-p4 {
+    grid-area: p4;
+  }
+
+  #arcade-howto-p5 {
+    grid-area: p5;
+  }
+
+  #arcade-howto-p6 {
+    grid-area: p6;
+  }
+
+  #arcade-howto-p7 {
+    grid-area: p7;
+  }
+
+  #arcade-howto-p7 {
+    grid-area: img2;
+  }
+
+  #arcade-howto-buttons1 {
+    position: absolute;
+    top: calc(100% - 45px);
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    grid-area: btn1;
+  }
 }
 
 // Time Attack

@@ -94,7 +94,7 @@ let fullHandPlayed = false;
 let jackpotLive = false;
 let jackpotInit = false;
 let jackpotRandTiming;
-let jackpotSecondsThreshold = 10;
+let jackpotSecondsThreshold = 50;
 addFreshPointsToTotal();
 setSecondsBonusIndicator();
 selectCard();
@@ -903,6 +903,14 @@ function jackpotSelect() {
       console.log(cardsInHand[jackpotRandIndex].classList[2]);
 
       jackpotOverlay.style.background = `${style.background}`;
+
+      let backgroundShiftX = (jackpotOverlay.style.backgroundPositionX.substr(0, jackpotOverlay.style.backgroundPositionX.length - 2)) - 10;
+
+      let backgroundShiftY = (jackpotOverlay.style.backgroundPositionY.substr(0, jackpotOverlay.style.backgroundPositionY.length - 2)) - 10;
+
+      // console.log(+jackpotOverlay.style.backgroundPositionY.substr(0, jackpotOverlay.style.backgroundPositionY.length - 2));
+
+      jackpotOverlay.style.backgroundPosition = `${backgroundShiftX}px ${backgroundShiftY}px`;
 
       cardsInHand[jackpotRandIndex].appendChild(jackpotOverlay);
 

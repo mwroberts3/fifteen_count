@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style/style.css" />
     <title>Harmonia - Time Attack</title>
-    <audio id="bgm-selection" src="" autoplay loop></audio>
   </head>
   <body>
+    <audio id="bgm-selection" src="" autoplay loop></audio>
+    <div class="cursor"></div>
     <div class="ta-outer-boundaries">
       <div class="ta-timer-score-display">
         <div>
@@ -109,6 +110,7 @@
         document.querySelector("body").classList.add("fade-in");
       }, 10);
     </script>
+    <script src="scripts/custom-cursor.js"></script>
     <script src="./scripts/time-attack-settings.js"></script>
     <script src="./scripts/time-attack.js"></script>
   </body>

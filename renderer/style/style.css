@@ -4,7 +4,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  cursor: url("../img/cursor.png"), auto !important; }
+  cursor: default !important; }
 
 html {
   position: relative; }
@@ -23,7 +23,8 @@ body {
   -webkit-user-select: none;
   -ms-user-select: none;
   opacity: 0;
-  transition: opacity 0.5s ease; }
+  transition: opacity 0.5s ease;
+  overflow: hidden; }
 
 a {
   color: #777;
@@ -37,8 +38,15 @@ a {
 h2 {
   text-align: center; }
 
+.cursor {
+  display: none;
+  z-index: 3;
+  width: 25px;
+  height: 26px;
+  position: absolute;
+  background: url("../img/cursor.png"); }
+
 .container {
-  width: 100%;
   position: relative;
   margin: 20px auto 0;
   background: #ddd;
@@ -66,7 +74,7 @@ h2 {
   margin-top: 5px;
   border-radius: 5px;
   font-family: "Didact Gothic", sans-serif;
-  cursor: url("../img/cursor.png"), auto !important;
+  cursor: default !important;
   background-image: linear-gradient(#444, #666);
   color: white;
   font-size: 1.25rem; }
@@ -97,7 +105,7 @@ h2 {
   font-family: "Didact Gothic", sans-serif; }
 
 .submit-cards {
-  cursor: url("../img/cursor.png"), auto !important;
+  cursor: default !important;
   width: 30%;
   padding: 10px;
   font-size: 1.25rem;
@@ -220,7 +228,7 @@ h2 {
     margin: 0 10px;
     border-radius: 10px;
     list-style: none;
-    cursor: url("../img/cursor.png"), auto !important; }
+    cursor: default !important; }
   .how-to-nav ul .option-selected,
   .high-score-mode-select ul .option-selected {
     background: #333;
@@ -235,7 +243,7 @@ h2 {
       padding: 10px; }
       .options-container section p span {
         font-weight: bold;
-        cursor: url("../img/cursor.png"), auto !important;
+        cursor: default !important;
         display: inline-block;
         width: 170px; }
         .options-container section p span:hover {
@@ -288,7 +296,7 @@ h2 {
     #theme .theme-selection-menu div {
       text-align: center;
       padding: 3px 5px;
-      cursor: url("../img/cursor.png"), auto !important; }
+      cursor: default !important; }
     #theme .theme-selection-menu .selected-theme {
       background: #fff;
       border-radius: 5px; }
@@ -385,7 +393,7 @@ h2 {
   font-size: 22px; }
 
 .menu-hud {
-  width: 94%;
+  width: 96%;
   display: flex;
   justify-content: space-between;
   color: #777;
@@ -394,8 +402,8 @@ h2 {
 .menu-options {
   display: flex; }
   .menu-options div {
-    cursor: url("../img/cursor.png"), auto !important;
-    margin: 0 10px; }
+    cursor: default !important;
+    margin-left: 10px; }
     .menu-options div:hover {
       color: #ddd; }
 
@@ -482,7 +490,7 @@ input[type="submit"] {
   .players-hand h4 {
     text-align: center; }
   .players-hand input[type="button"] {
-    cursor: url("../img/cursor.png"), auto !important;
+    cursor: default !important;
     width: 30%;
     padding: 10px;
     font-size: 1.25rem;
@@ -495,10 +503,12 @@ input[type="submit"] {
     .players-hand input[type="button"] :focus {
       border: none; }
   .players-hand card-t {
-    cursor: url("../img/cursor.png"), auto !important;
+    cursor: default !important;
     transition: all 0.2s ease;
     border-radius: 10px; }
   .players-hand .show-hand {
+    margin: auto;
+    width: 98.5%;
     display: flex;
     justify-content: space-evenly; }
     .players-hand .show-hand .checked {
@@ -526,7 +536,7 @@ input[type="submit"] {
     box-shadow: 2px 2px #ddd;
     text-align: center;
     font-size: 2rem;
-    cursor: url("../img/cursor.png"), auto !important;
+    cursor: default !important;
     background: #eee; }
   .players-hand .value-options-two {
     width: 80px;
@@ -540,7 +550,7 @@ input[type="submit"] {
     text-align: center;
     padding-top: 20px;
     background: #eee;
-    cursor: url("../img/cursor.png"), auto !important; }
+    cursor: default !important; }
   .players-hand .fifteen-count {
     border-radius: 10px;
     color: #fff;
@@ -561,7 +571,7 @@ input[type="submit"] {
     width: 160px;
     height: 80px;
     background: #eee;
-    cursor: url("../img/cursor.png"), auto !important;
+    cursor: default !important;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -685,13 +695,13 @@ input[type="submit"] {
 
 #pause-screen {
   position: absolute;
-  top: 0;
-  width: 100%;
+  top: 80px;
+  width: calc(100% - 8px);
   border-radius: 10px;
   color: white;
   background-image: url("../img/ta-pause-background.png");
   background-size: cover;
-  height: 100%;
+  height: calc(100% - 143px);
   display: flex;
   justify-content: center;
   align-items: center; }
@@ -714,12 +724,48 @@ input[type="submit"] {
   font-size: 2rem; }
 
 #arcade-how-to-play {
+  padding: 10px;
   position: absolute;
   top: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 1000px;
   height: 650px;
-  background: #ddd; }
+  background: #ddd;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "head head" "p1 p2" "p1 img1" "p1 p3" "btn1 btn1"; }
+  #arcade-how-to-play .arcade-howto-page-two {
+    grid-template-areas: "head head" "p4 p6" "p5 p6" "img2 p7" "btn1 btn1"; }
+  #arcade-how-to-play h2 {
+    grid-area: head; }
+  #arcade-how-to-play #arcade-howto-p1 {
+    grid-area: p1;
+    padding-right: 10px; }
+  #arcade-how-to-play #arcade-howto-p2 {
+    grid-area: p2; }
+  #arcade-how-to-play #arcade-howto-p3 {
+    grid-area: p3; }
+  #arcade-how-to-play #arcade-howto-img1 {
+    grid-area: img1; }
+  #arcade-how-to-play #arcade-howto-p4 {
+    grid-area: p4; }
+  #arcade-how-to-play #arcade-howto-p5 {
+    grid-area: p5; }
+  #arcade-how-to-play #arcade-howto-p6 {
+    grid-area: p6; }
+  #arcade-how-to-play #arcade-howto-p7 {
+    grid-area: p7; }
+  #arcade-how-to-play #arcade-howto-p7 {
+    grid-area: img2; }
+  #arcade-how-to-play #arcade-howto-buttons1 {
+    position: absolute;
+    top: calc(100% - 45px);
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    grid-area: btn1; }
 
 .maximum-res {
   border: 1px solid black;
@@ -756,7 +802,7 @@ input[type="submit"] {
       font-size: 0.9rem;
       color: #777; }
       .ta-outer-boundaries .ta-timer-score-display .menu-options div {
-        cursor: url("../img/cursor.png"), auto !important;
+        cursor: default !important;
         margin: 0 10px; }
         .ta-outer-boundaries .ta-timer-score-display .menu-options div:hover {
           color: #ddd; }

@@ -133,18 +133,18 @@ if (localStorage.getItem('highscore')) {
 }
   let tempArrayHousing = Array.from(document.querySelector('.theme-selection-menu').children);
   // Jungle theme check
-  if (tempHighscoreCheck >= 5000) {
+  if (tempHighscoreCheck >= 3000) {
     tempArrayHousing[1].classList.remove('locked');
     tempArrayHousing[1].classList.add('unlocked');
   } else {
-    tempArrayHousing[1].textContent = 'Jungle (5000pts)';
+    tempArrayHousing[1].textContent = 'Jungle (3000pts)';
   }
   // Cosmos theme check
-  if (tempHighscoreCheck >= 10000) {
+  if (tempHighscoreCheck >= 15000) {
     tempArrayHousing[2].classList.remove('locked');
     tempArrayHousing[2].classList.add('unlocked'); 
   } else {
-    tempArrayHousing[2].textContent = 'Cosmos (10000pts)';
+    tempArrayHousing[2].textContent = 'Cosmos (15000pts)';
   }
 
 // Select new active theme

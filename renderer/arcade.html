@@ -77,9 +77,9 @@
         width: 80px;
         height: 134px;
         border-radius: 10px;
-        /* background-size: cover !important; */
-        /* background-position: center !important; */
-        background-position: -10px -10px !important;
+        /* background-size: 80% !important; */
+        /* background-position: center !important;
+        background-position: -10px -10px !important; */
       }
 
       .jackpot-special-border {
@@ -92,6 +92,7 @@
   <div class="background-helper"></div>
   <body>
     <audio id="bgm-selection" src="" autoplay loop></audio>
+    <div class="cursor"></div>
     <div class="all-contents-container">
       <h4 class="hud-message"></h4>
       <div class="border-animation-outline">
@@ -203,7 +204,102 @@
         </div>
       </div>
       <div id="personal-highscore-display">Highscore&nbsp;<span></span></div>
-      <section id="arcade-how-to-play" class="hidden">TEST</section>
+      <section id="arcade-how-to-play" class="hidden">
+        <h2>How To Play</h2>
+        <div id="arcade-howto-p1">
+          <p>
+            Players start with ten cards in their hand and 100 seconds on the
+            clock. Clicking a card will 'count' or 'uncount' the number shown in
+            the card and add it to the total in the bottom center of the screen.
+            Clicking a card will 'count' or 'uncount' the number shown in the
+            card and add it to the total in the bottom center of the screen.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem
+            neque laudantium maiores quo ex sunt facere praesentium enim,
+            tenetur commodi deleniti. Quis ipsum consequatur temporibus odit
+            beatae praesentium maiores magnam qui maxime enim? Harum, totam!
+            Sequi, repudiandae laboriosam perspiciatis dignissimos vero facilis
+            quod ab ratione eum, earum quam eius aliquam tempora, sed explicabo
+            dolor repellat quos ipsam temporibus. Aliquid, perferendis non
+            aspernatur officiis quis aliquam vero illum facere quaerat delectus
+          </p>
+          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
+        </div>
+        <div id="arcade-howto-p2">
+          <p>
+            Cards that show 2 values can be selected by pressing [Shift] for the
+            high value or [Ctrl] for the low value.
+            <em>Specific button controls can be altered in settings.</em>
+          </p>
+        </div>
+        <div id="arcade-howto-p3">
+          <p>
+            TIP : you can select the lower value for several cards with one
+            click. Click all the multi-value cards you want to count first and
+            <em>then</em> click [Ctrl] to count all the low values at once.
+          </p>
+        </div>
+        <div id="arcade-howto-img1">
+          <img
+            src="img/classic_sprites.png"
+            style="width: 400px; height: 300px"
+          />
+        </div>
+        <div id="arcade-howto-p4" class="hidden">
+          <p>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fuga, quas
+            maxime porro a voluptatibus sed illo obcaecati voluptates eius natus
+            ipsa, neque explicabo necessitatibus, deleniti doloremque excepturi
+            vero! Modi at recusandae iusto tenetur! Officiis suscipit possimus
+            vel quae quod reiciendis enim ad aliquam recusandae eaque! Nulla
+            reprehenderit consequuntur commodi ab.
+          </p>
+        </div>
+        <div id="arcade-howto-p5" class="hidden">
+          <p>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fuga, quas
+            maxime porro a voluptatibus sed illo obcaecati voluptates eius natus
+            ipsa, neque explicabo necessitatibus, deleniti doloremque excepturi
+            vero! Modi at recusandae iusto tenetur! Officiis suscipit possimus
+            vel quae quod reiciendis enim ad aliquam recusandae eaque! Nulla
+            reprehenderit consequuntur commodi ab.
+          </p>
+        </div>
+        <div id="arcade-howto-p6" class="hidden">
+          <p>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fuga, quas
+            maxime porro a voluptatibus sed illo obcaecati voluptates eius natus
+            ipsa, neque explicabo necessitatibus, deleniti doloremque excepturi
+            vero! Modi at recusandae iusto tenetur! Officiis suscipit possimus
+            vel quae quod reiciendis enim ad aliquam recusandae eaque! Nulla
+            reprehenderit consequuntur commodi ab. Lorem ipsum dolor sit, amet
+            consectetur adipisicing elit. Fuga, quas maxime porro a voluptatibus
+            sed illo obcaecati voluptates eius natus ipsa, neque explicabo
+            necessitatibus, deleniti doloremque excepturi vero! Modi at
+            recusandae iusto tenetur! Officiis suscipit possimus vel quae quod
+            reiciendis enim ad aliquam recusandae eaque! Nulla reprehenderit
+            consequuntur commodi ab.
+          </p>
+        </div>
+        <div id="arcade-howto-p7" class="hidden">
+          <p>
+            TIP : you can select the lower value for several cards with one
+            click. Click all the multi-value cards you want to count first and
+            <em>then</em> click [Ctrl] to count all the low values at once.
+          </p>
+        </div>
+        <div id="arcade-howto-img2" class="hidden">
+          <img
+            src="img/classic_sprites.png"
+            style="width: 400px; height: 300px"
+          />
+        </div>
+        <div id="arcade-howto-buttons1">
+          <button class="main-btn light-menu-btn">Next</button>
+          <button class="main-btn light-menu-btn">Close</button>
+        </div>
+      </section>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/1.30.1/date_fns.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
@@ -224,6 +320,7 @@
       firebase.initializeApp(firebaseConfig);
       const db = firebase.firestore();
     </script>
+    <script src="scripts/custom-cursor.js"></script>
     <script src="scripts/arcade-settings.js"></script>
     <script>
       require("./scripts/arcade");

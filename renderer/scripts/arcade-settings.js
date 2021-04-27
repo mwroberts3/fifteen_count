@@ -3,19 +3,37 @@ const arcadeHowTo = document.getElementById('arcade-how-to-play');
 let firsttimeCheck = {};
 if (!localStorage.getItem('firsttime-check')) {
   arcadeHowTo.classList.remove('hidden');
-  firsttimeCheck.arcade = true;
+  // firsttimeCheck.arcade = true;
+  document.getElementById('personal-highscore-display').style.visibility = 'hidden';
   localStorage.setItem('firsttime-check', JSON.stringify(firsttimeCheck));
   document.querySelector('.gui-container').style.opacity = 0;
-  // howToSlideShow();
+  howToSlideShow();
 } else {
   firsttimeCheck = JSON.parse(localStorage.getItem('firsttime-check'));
   if (!firsttimeCheck.arcade) {
     arcadeHowTo.classList.remove('hidden');
-    firsttimeCheck.arcade = true;
+    // firsttimeCheck.arcade = true;
+    document.getElementById('personal-highscore-display').style.visibility = 'hidden';
     localStorage.setItem('firsttime-check', JSON.stringify(firsttimeCheck));
     document.querySelector('.gui-container').style.opacity = 0;
-    // howToSlideShow();
+    howToSlideShow();
   }
+}
+
+function howToSlideShow() {
+  arcadeHowTo.addEventListener('click', (e) => {
+    if (e.target.tagName === "BUTTON") {
+      if (e.target.textContent === "Close") {
+        let firsttimeCheck = {};
+        // firsttimeCheck.arcade = true;
+        localStorage.setItem('firsttime-check', JSON.stringify(firsttimeCheck));
+        // come up with more elegant solution here
+        location.reload();
+      } else {
+        console.log('next')
+      }
+    }
+  })
 }
 
 // Check for custom control settings
@@ -154,5 +172,7 @@ let firstSubmitSFX = new Audio('./soundfx/first-submit.wav');
 let comboSubmitSFX = new Audio('./soundfx/combo-submit.wav');
 let fullClearSFX = new Audio('./soundfx/full-clear.wav');
 let newHighscoreSFX = new Audio('./soundfx/new-highscore.wav');
+
+
 
 

@@ -19,7 +19,7 @@ let redrawAmount = 18;
 let score = 0;
 let count = 0;
 let pointsAdded;
-let secondsLeft = 10;
+let secondsLeft = 180;
 let bonusUnleashed = false;
 let bombsOff = false;
 let bonusAdded = false;
