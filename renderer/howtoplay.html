@@ -6,94 +6,103 @@
     <title>Fifteen Count - How to Play</title>
     <link rel="stylesheet" href="style/style.css" />
   </head>
-  <body>
+  <body class="show-overflow">
     <div class="cursor"></div>
     <div class="container">
-      <h2>How to Play</h2>
       <div class="how-to-container">
         <div class="pad-1"></div>
-        <div class="how-to-section">
-          <p>
-            Fifteen Count is a fast paced puzzle card game, where the goal is to
-            get as many points as possible.
-          </p>
-          <p>
-            In Arcade mode play is broken down into two Rounds. The "Count
-            Round" and the "Combo Round"
-          </p>
-          <p>
-            The "Count Round" asks players to check(click on) any number of
-            cards, as long as their values add up to 15.
-          </p>
-          <p>
-            The "Combo Round" gives players the option of 'sacrificing' cards
-            for additional points. Though player's hand's card count will
-            permanantly <em>lose</em> the number of cards played in the combo
-            round from their hand's maximum number of cards. For example, if you
-            start out with ten cards and then play one in the Combo Round, the
-            maximum number of cards you can have in your hand--going
-            forward--will be nine. So, the Combo Round is great for adding to
-            point totals, if used strategically.
-          </p>
-          <p>
-            <strong
-              >Combos using at least half of the cards in your hand</strong
-            >
-            will add 7 seconds to the clock.
-          </p>
-        </div>
-        <div class="pad-1"></div>
-        <h2>Arcade</h2>
-        <div class="how-to-section">
-          <h3>Scoring Basics</h3>
-          <p>
-            Fifteen Count is a fast paced puzzle card game, where the goal is to
-            get as many points as possible.
-          </p>
-          <p>
-            In Arcade mode play is broken down into two Rounds. The "Count
-            Round" and the "Combo Round"
-          </p>
-          <p>
-            The "Count Round" asks players to check any number of cards, as long
-            as their values add up to 15.
-          </p>
-        </div>
-        <div class="pad-2"></div>
-        <div class="how-to-section">
-          <h3>Tips and Advance Techniques</h3>
-          <p>
-            if all the cards in your hand are even, you want be able to get to
-            fifteen and must swap a card
-          </p>
-          <p>
-            Fifteen Count is a fast paced puzzle card game, where the goal is to
-            get as many points as possible.
-          </p>
-          <p>
-            In Arcade mode play is broken down into two Rounds. The "Count
-            Round" and the "Combo Round"
-          </p>
-          <p>
-            The "Count Round" asks players to check any number of cards, as long
-            as their values add up to 15.
-          </p>
+        <nav class="how-to-play-mode-select">
+          <ul>
+            <li class="option-selected">Arcade</li>
+            <li>Time Attack</li>
+          </ul>
+        </nav>
+        <section id="arcade-how-to-instructions">
+          <div class="how-to-section">
+            <h2>How to Play - Arcade</h2>
+            <p>
+              Fifteen Count is a fast paced puzzle card game, where the goal is
+              to get as many points as possible.
+            </p>
+            <p>
+              In Arcade mode play is broken down into two Rounds. The "Count
+              Round" and the "Combo Round"
+            </p>
+            <p>
+              The "Count Round" asks players to check(click on) any number of
+              cards, as long as their values add up to 15.
+            </p>
+            <p>
+              The "Combo Round" gives players the option of 'sacrificing' cards
+              for additional points. Though player's hand's card count will
+              permanantly <em>lose</em> the number of cards played in the combo
+              round from their hand's maximum number of cards. For example, if
+              you start out with ten cards and then play one in the Combo Round,
+              the maximum number of cards you can have in your hand--going
+              forward--will be nine. So, the Combo Round is great for adding to
+              point totals, if used strategically.
+            </p>
+            <p>
+              <strong
+                >Combos using at least half of the cards in your hand</strong
+              >
+              will add 7 seconds to the clock.
+            </p>
+          </div>
+          <div class="pad-1"></div>
+          <h2>Arcade</h2>
+          <div class="how-to-section">
+            <h3>Scoring Basics</h3>
+            <p>
+              Fifteen Count is a fast paced puzzle card game, where the goal is
+              to get as many points as possible.
+            </p>
+            <p>
+              In Arcade mode play is broken down into two Rounds. The "Count
+              Round" and the "Combo Round"
+            </p>
+            <p>
+              The "Count Round" asks players to check any number of cards, as
+              long as their values add up to 15.
+            </p>
+          </div>
           <div class="pad-2"></div>
-          <h4>Adding Seconds</h4>
-          <p>
-            In order to keep increasing your highscore, you'll want to maximize
-            the amount of time that each round lasts. There are a couple ways to
-            add seconds to the clock.
-          </p>
-        </div>
-        <div class="pad-1"></div>
-        <h2>Time Attack</h2>
-        <div class="how-to-section">
-          <p>
-            The goal of time attack is to play as many cards as possible in 20
-            seven-second rounds.
-          </p>
-        </div>
+          <div class="how-to-section">
+            <h3>Tips and Advance Techniques</h3>
+            <p>
+              if all the cards in your hand are even, you want be able to get to
+              fifteen and must swap a card
+            </p>
+            <p>
+              Fifteen Count is a fast paced puzzle card game, where the goal is
+              to get as many points as possible.
+            </p>
+            <p>
+              In Arcade mode play is broken down into two Rounds. The "Count
+              Round" and the "Combo Round"
+            </p>
+            <p>
+              The "Count Round" asks players to check any number of cards, as
+              long as their values add up to 15.
+            </p>
+            <div class="pad-2"></div>
+            <h4>Adding Seconds</h4>
+            <p>
+              In order to keep increasing your highscore, you'll want to
+              maximize the amount of time that each round lasts. There are a
+              couple ways to add seconds to the clock.
+            </p>
+          </div>
+        </section>
+        <section id="ta-how-to-instructions" class="hidden">
+          <h2>Time Attack</h2>
+          <div class="how-to-section">
+            <p>
+              The goal of time attack is to play as many cards as possible in 20
+              seven-second rounds.
+            </p>
+          </div>
+        </section>
       </div>
       <div class="back-btn-container">
         <a href="title-screen.html">
@@ -108,5 +117,6 @@
       }, 10);
     </script>
     <script src="scripts/custom-cursor.js"></script>
+    <script src="scripts/how-to-play-select.js"></script>
   </body>
 </html>

@@ -281,6 +281,8 @@ function reset() {
   totalComboPoints = 0;
   comboPointsDisplay.textContent = '';
   comboPointsDisplay.classList.remove('combo-points-fadein');
+  valueOptionOne.innerText = "-";
+  valueOptionTwo.innerText = "-";
 
   setSwapPermission();
   setUncheckAllPermission();
@@ -421,6 +423,8 @@ function cardsSubmit() {
       secondsBonus--;
     }
 
+    valueOptionOne.innerText = "-";
+    valueOptionTwo.innerText = "-";
     firstSubmit = true;
 
     // First submit sound effect

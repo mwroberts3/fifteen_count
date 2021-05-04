@@ -3,7 +3,7 @@ const arcadeHowTo = document.getElementById('arcade-how-to-play');
 let firsttimeCheck = {};
 if (!localStorage.getItem('firsttime-check')) {
   arcadeHowTo.classList.remove('hidden');
-  // firsttimeCheck.arcade = true;
+  firsttimeCheck.arcade = true;
   document.getElementById('personal-highscore-display').style.visibility = 'hidden';
   localStorage.setItem('firsttime-check', JSON.stringify(firsttimeCheck));
   document.querySelector('.gui-container').style.opacity = 0;
@@ -12,7 +12,7 @@ if (!localStorage.getItem('firsttime-check')) {
   firsttimeCheck = JSON.parse(localStorage.getItem('firsttime-check'));
   if (!firsttimeCheck.arcade) {
     arcadeHowTo.classList.remove('hidden');
-    // firsttimeCheck.arcade = true;
+    firsttimeCheck.arcade = true;
     document.getElementById('personal-highscore-display').style.visibility = 'hidden';
     localStorage.setItem('firsttime-check', JSON.stringify(firsttimeCheck));
     document.querySelector('.gui-container').style.opacity = 0;
@@ -25,12 +25,21 @@ function howToSlideShow() {
     if (e.target.tagName === "BUTTON") {
       if (e.target.textContent === "Close") {
         let firsttimeCheck = {};
-        // firsttimeCheck.arcade = true;
+        firsttimeCheck.arcade = true;
         localStorage.setItem('firsttime-check', JSON.stringify(firsttimeCheck));
         // come up with more elegant solution here
         location.reload();
-      } else {
-        console.log('next')
+      } else if (e.target.textContent === "Next") {
+        e.target.textContent = "Back";
+        arcadeHowTo.classList.add('arcade-howto-page-two');
+
+        document.getElementById('arcade-howto-slide-one').classList.add('hidden');
+        document.getElementById('arcade-howto-slide-two').classList.remove('hidden');
+      } else if (e.target.textContent === "Back") {
+        e.target.textContent = "Next";
+
+        document.getElementById('arcade-howto-slide-two').classList.add('hidden');
+        document.getElementById('arcade-howto-slide-one').classList.remove('hidden');
       }
     }
   })
@@ -84,7 +93,7 @@ let themeSelection = [];
 const themeDisplay = document.querySelector('#theme-display');
 
 if (!localStorage.getItem('theme-selection')) {
-  themeSelection = { index: 0, themeName: "Classic", bgImgPlayersHand: ["classic-bg.png"], bgImgCombo: "classic-bg-combo-round.png", bgCol: "#b3edff", cardSprites: "style/classicsprites.css", bgm: "bgm/Theme-Classic.mp3", fifteenCountGradient: ['#999', '#999', '#999', '#999', '#999', '#999', '#999', '#888', '#777', '#666', '#555', '#444', '#333', '#222', '#111', '#000'] };
+  themeSelection = { index: 0, themeName: "Classic", bgImgPlayersHand: ["classic-bg.png"], bgImgCombo: "classic-bg-combo-round.png", bgCol: "#b3edff", cardSprites: "style/classicsprites.css", bgm: "bgm/Theme-Classic.mp3", fifteenCountGradient: ['#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#000'] };
   localStorage.setItem('theme-selection', JSON.stringify(themeSelection));
 } else {
   themeSelection = JSON.parse(localStorage.getItem('theme-selection'))

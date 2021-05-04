@@ -8,48 +8,22 @@ if (!localStorage.getItem('firsttime-check')) {
   timeAttackHowTo.classList.remove('hidden');
   firsttimeCheck.timeAttack = true;
   localStorage.setItem('firsttime-check', JSON.stringify(firsttimeCheck));
-  howToSlideShow();
+  closeHowTo();
 } else {
   firsttimeCheck = JSON.parse(localStorage.getItem('firsttime-check'));
   if (!firsttimeCheck.timeAttack) {
     timeAttackHowTo.classList.remove('hidden');
     firsttimeCheck.timeAttack = true;
     localStorage.setItem('firsttime-check', JSON.stringify(firsttimeCheck));
-    howToSlideShow();
+    closeHowTo();
   }
 }
 
-function howToSlideShow() {
-  let slideIndex = 0;
-  let slideCollection = [];
+function closeHowTo() {
   document.querySelector('.skip-how-to').addEventListener('click', () => {
     timeAttackHowTo.classList.add('hidden');
     timerDisplay.textContent = '180';
     secondsLeft = 179;
-  })
-
-  document.querySelector('.next-how-to').addEventListener('click', (e) => {
-    console.log(e.target.parentNode.parentNode.children);
-    slideIndex++;
-
-    slideCollection = Array.from(e.target.parentNode.parentNode.children);
-
-    console.log(slideCollection);
-
-    slideCollection.forEach((slide, index) => {
-      console.log(slide);
-      if (slide.tagName === 'DIV') {
-        if(slideIndex === index) {
-          slide.classList.remove('hidden');
-        } else {
-          slide.classList.add('hidden');
-        }
-        if (slideIndex === 2) {
-          document.querySelector('.next-how-to').classList.add('hidden');
-          document.querySelector('.skip-how-to').textContent = 'Close';
-        }
-      }
-    })
   })
 }
 

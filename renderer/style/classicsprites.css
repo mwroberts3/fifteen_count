@@ -121,6 +121,20 @@ body {
   animation-direction: alternate-reverse;
 }
 
+.hud-message {
+  animation-name: color-shift;
+  animation-duration: 100s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate-reverse;
+}
+
+#personal-highscore-display {
+  animation-name: color-shift-highscore;
+  animation-duration: 100s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate-reverse;
+}
+
 @keyframes background-shift {
   0% {
     background-color: #b3edff;
@@ -145,5 +159,25 @@ body {
   }
   100% {
     background-color: #ff7a8b;
+  }
+}
+
+@keyframes color-shift {
+  52% {
+    color: #fff;
+    -webkit-text-stroke: 1.5px #fff;
+  }
+  70% {
+    color: #fff;
+    -webkit-text-stroke: 1.5px #fff;
+  }
+}
+
+@keyframes color-shift-highscore {
+  52% {
+    color: #fff;
+  }
+  70% {
+    color: #fff;
   }
 }
