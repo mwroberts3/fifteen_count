@@ -4,7 +4,6 @@ const regCardPoints = document.querySelector('.reg-card-points'),
 comboCardPoints = document.querySelector('.combo-card-points'),
 fullClearPointsDisplay = document.querySelector('.full-clear-points'),
 jackpotPointsDisplay = document.querySelector('.jackpot-points'),
-speedPointsDisplay = document.querySelector('.speed-points'),
 timePointsDisplay = document.querySelector('.time-points');
 
 const totalPointsDisplay = document.querySelector('.total-points-review-display');
@@ -13,6 +12,9 @@ let scoresCounted = 0;
 
 exports.pointsReview = (pointsBreakdown, totalPoints) => {
     console.log(pointsBreakdown);
+
+    pointsBreakdown.timePoints += pointsBreakdown.speedPoints;
+
     pointsBreakdownView.classList.remove('hidden');
     displayPointPct(totalPoints, pointsBreakdown.cardPoints, regCardPoints);
 
@@ -22,12 +24,12 @@ exports.pointsReview = (pointsBreakdown, totalPoints) => {
 
     displayPointPct(totalPoints, pointsBreakdown.jackpotPoints, jackpotPointsDisplay);
 
-    displayPointPct(totalPoints, pointsBreakdown.speedPoints, speedPointsDisplay);
+    // displayPointPct(totalPoints, pointsBreakdown.speedPoints, speedPointsDisplay);
 
     displayPointPct(totalPoints, pointsBreakdown.timePoints, timePointsDisplay);
 
     totalPointsDisplay.innerHTML = `${totalPoints}`;
-    totalPointsDisplay.style.color = '#000';
+    totalPointsDisplay.style.visibility = 'hidden';
 }
 
 function displayPointPct(totalPoints, pointTypeTotal, pointTypeDisplay) {
@@ -42,7 +44,7 @@ function displayPointPct(totalPoints, pointTypeTotal, pointTypeDisplay) {
             pointTypeDisplay.innerHTML = `${pointTypeTotal}`;
             scoresCounted++;
 
-            if (scoresCounted === 6) {
+            if (scoresCounted === 5) {
                 fastForwardReview();
             }
         }
@@ -56,7 +58,7 @@ function displayPointPct(totalPoints, pointTypeTotal, pointTypeDisplay) {
         clearInterval(pointTypeTally);
         pointTypeDisplay.innerHTML = `${pointTypeTotal}`;
         pointTypeDisplay.nextElementSibling.value = `${pointTypeTotal}`;
-        totalPointsDisplay.style.color = '#fff';
+        totalPointsDisplay.style.visibility = 'visible';
         
         document.addEventListener('click', () =>{
                document.getElementById("new-highscore-form").style.zIndex = 6;

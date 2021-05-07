@@ -372,7 +372,9 @@ function cardsSubmit() {
         checkedCardSuits = [];
         console.log(checkedCards);        
         let jackCheckedCheck = Array.from(checkedCards);       
-        jackCheckedCheck = jackCheckedCheck.filter(card => card.classList.contains('jackpot-card'));
+        jackCheckedCheck = jackCheckedCheck.filter(card => card.classList.contains('jackpot-special-border'));
+
+        // class formerly 'jackpot-card'
 
         if (jackCheckedCheck.length === 0) {
           totalCardsPlayed = Math.round(totalCardsPlayed/2);
@@ -382,7 +384,7 @@ function cardsSubmit() {
               checkedCardSuits.push(card.children[0].getAttribute("suit"));
           });
           checkedCards.forEach((card) => {
-            if (card.classList.contains('jackpot-card')){
+            if (card.classList.contains('jackpot-special-border')){
               if (checkedCardSuits.every(sameColorRed) == true ||
               checkedCardSuits.every(sameColorBlack) == true) {
                 console.log(totalPoints, (totalCardsPlayed * 2), totalPoints + (totalCardsPlayed * 2));
@@ -456,8 +458,17 @@ function cardsSubmit() {
         bonusTimeDisplay.textContent = ``;
       }, 1000)
 
+      // subtract 5 seconds from full hand bonus until reaches 0
+      fullHandBonus -= 5;
+      if (fullHandBonus <= 0) {
+        fullHandBonus = 0;
+      }
 
-      fullHandBonus--;
+      // if Harmonia is acheived by playing 10 cards, the fullhandbonus is reset to 35
+      if (checkedCards.length === 10) {
+        fullHandBonus = 35;
+      }
+
       fullHandPointsBonus += 50;
 
       // For hud message
