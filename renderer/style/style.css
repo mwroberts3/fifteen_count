@@ -4,10 +4,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  cursor: default !important; }
-
-html {
-  position: relative; }
+  cursor: none !important; }
 
 body {
   position: relative;
@@ -77,7 +74,7 @@ h2 {
   margin-top: 5px;
   border-radius: 5px;
   font-family: "Didact Gothic", sans-serif;
-  cursor: default !important;
+  cursor: none !important;
   background-image: linear-gradient(#444, #666);
   color: white;
   font-size: 1.25rem; }
@@ -108,7 +105,7 @@ h2 {
   font-family: "Didact Gothic", sans-serif; }
 
 .submit-cards {
-  cursor: default !important;
+  cursor: none !important;
   width: 30%;
   padding: 10px;
   font-size: 1.25rem;
@@ -233,7 +230,7 @@ h2 {
     margin: 0 10px;
     border-radius: 10px;
     list-style: none;
-    cursor: default !important; }
+    cursor: none !important; }
   .how-to-nav ul .option-selected,
   .high-score-mode-select ul .option-selected,
   .how-to-play-mode-select ul .option-selected {
@@ -249,7 +246,7 @@ h2 {
       padding: 10px; }
       .options-container section p span {
         font-weight: bold;
-        cursor: default !important;
+        cursor: none !important;
         display: inline-block;
         width: 170px; }
         .options-container section p span:hover {
@@ -302,7 +299,7 @@ h2 {
     #theme .theme-selection-menu div {
       text-align: center;
       padding: 3px 5px;
-      cursor: default !important; }
+      cursor: none !important; }
     #theme .theme-selection-menu .selected-theme {
       background: #fff;
       border-radius: 5px; }
@@ -341,9 +338,10 @@ h2 {
     font-weight: normal; }
 
 .all-contents-container {
+  position: relative;
   top: 50%;
-  transform: translateY(-50%);
-  position: relative; }
+  left: 50%;
+  transform: translate(-50%, -50%); }
 
 .gui-container {
   border: 4px solid #fff;
@@ -359,23 +357,29 @@ h2 {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   margin: auto;
-  background-image: linear-gradient(#111, #333);
+  background: linear-gradient(#111, #333);
   color: white;
   max-width: 1200px; }
-  .scoreboard .total-points {
+  .scoreboard .mh-points-display {
+    text-align: center;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; }
+  .scoreboard .total-points {
+    width: 235px;
+    padding-right: 10px;
+    text-align: right;
     font-family: "Russo One", sans-serif;
     font-weight: normal;
     font-size: 1.75rem;
     color: #ffff00; }
   .scoreboard .combo-points {
-    position: absolute;
-    top: 16px;
-    left: 250px;
-    color: #fff;
-    z-index: 5; }
+    font-size: 22px;
+    font-family: "Russo One", sans-serif;
+    margin-left: 10px;
+    opacity: 0;
+    transition: all 0.5s ease; }
+  .scoreboard .combo-points-fadein {
+    opacity: 1; }
   .scoreboard .total-cards-played {
     display: flex;
     justify-content: center;
@@ -396,7 +400,7 @@ h2 {
   text-align: center;
   font-family: "Russo One", sans-serif;
   font-size: 24px;
-  -webkit-text-stroke: 1px #aaa; }
+  -webkit-text-stroke: 1px #888; }
 
 .menu-hud {
   width: 96%;
@@ -408,7 +412,7 @@ h2 {
 .menu-options {
   display: flex; }
   .menu-options div {
-    cursor: default !important;
+    cursor: none !important;
     margin-left: 10px; }
     .menu-options div:hover {
       color: #ddd; }
@@ -495,7 +499,7 @@ input[type="submit"] {
   .players-hand h4 {
     text-align: center; }
   .players-hand input[type="button"] {
-    cursor: default !important;
+    cursor: none !important;
     width: 30%;
     padding: 10px;
     font-size: 1.25rem;
@@ -508,7 +512,7 @@ input[type="submit"] {
     .players-hand input[type="button"] :focus {
       border: none; }
   .players-hand card-t {
-    cursor: default !important;
+    cursor: none !important;
     transition: all 0.2s ease;
     border-radius: 10px; }
   .players-hand .show-hand {
@@ -541,7 +545,7 @@ input[type="submit"] {
     box-shadow: 2px 2px #ddd;
     text-align: center;
     font-size: 2rem;
-    cursor: default !important;
+    cursor: none !important;
     background: #eee; }
   .players-hand .value-options-two {
     width: 80px;
@@ -555,7 +559,7 @@ input[type="submit"] {
     text-align: center;
     padding-top: 20px;
     background: #eee;
-    cursor: default !important; }
+    cursor: none !important; }
   .players-hand .fifteen-count {
     border-radius: 10px;
     color: #fff;
@@ -568,7 +572,7 @@ input[type="submit"] {
     justify-content: center;
     align-items: center;
     font-family: "Ink Free", sans-serif;
-    -webkit-text-stroke: 2px black; }
+    font-weight: bolder; }
   .players-hand .swap-container {
     border: 2px solid #ccc;
     border-radius: 10px;
@@ -576,7 +580,7 @@ input[type="submit"] {
     width: 160px;
     height: 80px;
     background: #eee;
-    cursor: default !important;
+    cursor: none !important;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -644,7 +648,8 @@ input[type="submit"] {
   width: 1192px;
   height: calc(100% - 123px);
   z-index: 4;
-  border-radius: 10px; }
+  border-radius: 10px;
+  font-size: 24px; }
   #points-breakdown-view div {
     display: flex;
     align-items: center;
@@ -811,7 +816,7 @@ input[type="submit"] {
       font-size: 0.9rem;
       color: #777; }
       .ta-outer-boundaries .ta-timer-score-display .menu-options div {
-        cursor: default !important;
+        cursor: none !important;
         margin: 0 10px; }
         .ta-outer-boundaries .ta-timer-score-display .menu-options div:hover {
           color: #ddd; }

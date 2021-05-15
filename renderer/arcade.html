@@ -7,20 +7,6 @@
     <link rel="stylesheet" href="style/style.css" />
     <link id="theme-spritesheet" rel="stylesheet" />
     <style>
-      .combo-points {
-        position: absolute;
-        top: 16px;
-        left: 250px;
-        color: #fff;
-        /* z-index: 5; */
-        opacity: 0;
-        transition: all 0.5s ease;
-      }
-
-      .combo-points-fadein {
-        opacity: 1;
-      }
-
       .value-options-one:active,
       .value-options-two:active,
       .swap-container:active,
@@ -89,8 +75,8 @@
       }
     </style>
   </head>
-  <div class="background-helper"></div>
   <body>
+    <div class="background-helper"></div>
     <audio id="bgm-selection" src="" autoplay loop></audio>
     <div class="cursor"></div>
     <div class="all-contents-container">
@@ -112,8 +98,10 @@
               </div>
             </div>
             <div class="main-hud">
-              <div class="total-points"></div>
-              <div class="combo-points"></div>
+              <div class="mh-points-display">
+                <p class="total-points"></p>
+                <div class="combo-points"></div>
+              </div>
               <div class="total-cards-played"></div>
               <div class="bonus-notice">BONUS</div>
             </div>
@@ -132,7 +120,7 @@
                 </div>
                 <div class="fifteen-count"></div>
                 <div class="swap-container">
-                  <div class="swap-card">SWAP</div>
+                  <div class="swap-card">Swap</div>
                   <div class="two-sec-warning">0s</div>
                 </div>
               </div>

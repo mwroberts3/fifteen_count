@@ -1,4 +1,6 @@
 Bugs:
+    -5/10/21 - sometimes when reloading arcade with Cosmos theme the player's hand is not centered and off screen. Have to reboot the game if this happens
+
     -5/2/21 - for some reason time attack doesn't count/controls don't work if it's first time playing and how to slide is viewed
 
     -5/2/21 - should be a sound effect when the 15 count is reached 

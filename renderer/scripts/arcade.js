@@ -9,6 +9,9 @@ const { hudMessage } = require('./hud-messages');
 // Fadein
 utils.gamescreenFadeinFunc();
 
+// Set Cosmos Theme BG Position
+utils.setCosmosBg();
+
 // DOM sections
 const playersHandArea = document.querySelector(".players-hand");
 const valueOptionOne = document.querySelector(".value-options-one");
@@ -240,9 +243,11 @@ function showHand() {
     }
     if (secondsLeft === -1) {
       clearInterval(incomingHudMessages);
-      hudMessageDisplay.textContent = `TIME IS UP!`;
+      hudMessageDisplay.textContent = `Game Over`;
     }
     if (secondsLeft <= -2) {
+      clearInterval(incomingHudMessages);
+      hudMessageDisplay.textContent = `Game Over`;
       clearInterval(gameTimer);
       timer.textContent = '0';
       pointsOnDisplay = totalPoints;
@@ -481,19 +486,15 @@ function cardsSubmit() {
 
       // Full hand border animation
       let i = 0;
-      let borderAniCol = [
-        `${themeSelection['bgCol']}`,
-        "yellow",
-        `${themeSelection['bgCol']}`
-      ]
+      let borderAniCol = themeSelection['fullClearBrdGrd'];
 
       const borderAnimation = setInterval(() => {
-        i++;
         document.querySelector(".gui-container").style.border = `4px solid ${borderAniCol[i]}`;
+        i++;
 
-        if (i === 3)  {
+        if (i > themeSelection['fullClearBrdGrd'].length)  {
           clearInterval(borderAnimation);
-          document.querySelector(".gui-container").style.border = `4px solid white`;
+          document.querySelector(".gui-container").style.border = `4px solid ${themeSelection['brdCol']}`;
         }
       }, 100);
     }
@@ -718,7 +719,7 @@ function doubleComboCheck(valueA, comboCardcount) {
     checkedCardSuits.every(sameColorRed) == true ||
     checkedCardSuits.every(sameColorBlack) == true
   ) {
-    comboCardcount *= 1.75;
+    comboCardcount *= 2;
   }
 
   totalComboPoints += Math.round(valueA * comboCardcount);
@@ -791,7 +792,7 @@ function swapButtonFunction() {
   selectCard();
   secondsLeft -= (10 - cardsInHand.length);
   fifteenCount = 0;
-  // fifteenCountDisplay.textContent = `${fifteenCount}`;
+  fifteenCountDisplay.textContent = ``;
   bonusTimeDisplay.style.color = "rgba(51, 131, 235, 0.9)";
 
   if (secondsLeft <= 5) {
@@ -986,10 +987,10 @@ for (let i = 0; i < secondsBonus; i++){
 
 function setFifteenCountColor() {
   fifteenCountDisplay.style.color = fifteenCountColRange[fifteenCount];
-  fifteenCountDisplay.setAttribute("style", `-webkit-text-stroke: 2px ${fifteenCountColRange[fifteenCount]}`);
+  fifteenCountDisplay.setAttribute("style", `-webkit-text-stroke: 3px ${fifteenCountColRange[fifteenCount]}`);
 
 if (fifteenCount > 15) {
-  fifteenCountDisplay.setAttribute("style", `-webkit-text-stroke: 2px ${fifteenCountColRange[15]}`);
+  fifteenCountDisplay.setAttribute("style", `-webkit-text-stroke: 3px ${fifteenCountColRange[15]}`);
 
 }
   

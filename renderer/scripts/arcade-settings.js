@@ -93,7 +93,15 @@ let themeSelection = [];
 const themeDisplay = document.querySelector('#theme-display');
 
 if (!localStorage.getItem('theme-selection')) {
-  themeSelection = { index: 0, themeName: "Classic", bgImgPlayersHand: ["classic-bg.png"], bgImgCombo: "classic-bg-combo-round.png", bgCol: "#b3edff", cardSprites: "style/classicsprites.css", bgm: "bgm/Theme-Classic.mp3", fifteenCountGradient: ['#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#000'] };
+  themeSelection = { index: 0, themeName: "Classic", bgImgPlayersHand: ["classic-bg.png"], bgImgCombo: "classic-bg-combo-round.png", bgCol: "#b3edff", brdCol: "#000", fullClearBrdGrd: [
+    "red",
+    "orange",
+    "yellow",
+    "green",
+    "blue",
+    "indigo",
+    "violet"
+  ], cardSprites: "style/classicsprites.css", bgm: "bgm/Theme-Classic.mp3", fifteenCountGradient: ['#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#000'] };
   localStorage.setItem('theme-selection', JSON.stringify(themeSelection));
 } else {
   themeSelection = JSON.parse(localStorage.getItem('theme-selection'))
@@ -170,6 +178,14 @@ if (!localStorage.getItem('sound-settings')) {
 // Set BGM
 if (userSelectedSoundSettings.BGM) {
   document.getElementById('bgm-selection').src = themeSelection['bgm'];
+}
+
+// Set HUD banner background and options color
+if (themeSelection["themeName"] === 'Universe') {
+  document.querySelector(".scoreboard").style.background = "transparent";
+  document.querySelector(".players-hand").style.borderTop = "4px solid #000";
+} else if (themeSelection["themeName"] === 'Jungle') {
+  document.querySelector(".scoreboard").style.background = "linear-gradient(#111, #175217)";
 }
 
 // Load gameplay sound fx

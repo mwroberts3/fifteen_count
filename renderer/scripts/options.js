@@ -107,9 +107,40 @@ let buttonName;
 
 // Select theme dropdown
 const arcadeThemes = [
-  { index: 0, themeName: "Classic", bgImgPlayersHand: ["classic-bg.png"], bgImgCombo: "classic-bg-combo-round.png", bgCol: "#b3edff", cardSprites: "style/classicsprites.css", bgm: "bgm/Theme-Classic.mp3", fifteenCountGradient: ['#999', '#999', '#999', '#999', '#999', '#999', '#999', '#888', '#777', '#666', '#555', '#444', '#333', '#222', '#111', '#000'] },
-    { index: 1, themeName: "Jungle", bgImgPlayersHand: ["jungle-bg-1.png","jungle-bg-2.png","jungle-bg-3.png","jungle-bg-4.png","jungle-bg-5.png","jungle-bg-6.png","jungle-bg-7.png","jungle-bg-8.png"], bgImgCombo: "jungle-bg-combo-round.png", bgCol: "#ccead5", cardSprites: "style/junglesprites.css", bgm: "bgm/Clouds-Jungle.mp3", fifteenCountGradient: ['#888', '#888', '#888', '#888', '#888', '#888', '#888', '#888', '#888', '#999', '#aaa', '#bbb', '#ccc', '#ddd', '#eee', '#fff'] },
-    { index: 2, themeName: "Universe", bgImgPlayersHand: ["universe-bg.png"], bgImgCombo: "universe-bg-combo-round.png", bgCol: "#000", cardSprites: "style/universesprites.css", bgm: "bgm/DescentIntoMadness-Universe.mp3", fifteenCountGradient: ['#888', '#888', '#888', '#888', '#888', '#888', '#888', '#888', '#888', '#999', '#aaa', '#bbb', '#ccc', '#ddd', '#eee', '#fff'] }
+  { index: 0, themeName: "Classic", bgImgPlayersHand: ["classic-bg.png"], bgImgCombo: "classic-bg-combo-round.png", bgCol: "#b3edff", brdCol: "#fff", fullClearBrdGrd: [
+    "red",
+    "orange",
+    "yellow",
+    "green",
+    "blue",
+    "indigo",
+    "violet"
+  ], cardSprites: "style/classicsprites.css", bgm: "bgm/Theme-Classic.mp3", fifteenCountGradient: ['#999', '#999', '#999', '#999', '#999', '#999', '#999', '#888', '#777', '#666', '#555', '#444', '#333', '#222', '#111', '#000'] },
+    { index: 1, themeName: "Jungle", bgImgPlayersHand: ["jungle-bg-1.png","jungle-bg-2.png","jungle-bg-3.png","jungle-bg-4.png","jungle-bg-5.png","jungle-bg-6.png","jungle-bg-7.png","jungle-bg-8.png"], bgImgCombo: "jungle-bg-combo-round.png", bgCol: "#ccead5", brdCol: "#fff", fullClearBrdGrd: [
+      "yellow",
+      "gold",
+      "limegreen",
+      "silver",
+      "aliceblue",
+      "plum",
+      "pink"
+    ], cardSprites: "style/junglesprites.css", bgm: "bgm/Clouds-Jungle.mp3", fifteenCountGradient: ['#ddd', '#ddd', '#ddd', '#ddd', '#ddd', '#ddd', '#ddd', '#ddd', '#ddd', '#ddd', '#ddd', '#ddd', '#ddd', '#ddd', '#ddd', '#fff'] },
+    { index: 2, themeName: "Universe", bgImgPlayersHand: ["universe-bg.png"], bgImgCombo: "universe-bg-combo-round.png", bgCol: "#000", brdCol: "#000", fullClearBrdGrd: [
+      "#111",
+      "#222",
+      "#333",
+      "#444",
+      "#555",
+      "#666",
+      "#777",
+      "#888",
+      "#999",
+      "#aaa",
+      "#bbb",
+      "#ccc",
+      "#ddd",
+      "#eee"
+    ], cardSprites: "style/universesprites.css", bgm: "bgm/DescentIntoMadness-Universe.mp3", fifteenCountGradient: ['#888', '#888', '#888', '#888', '#888', '#888', '#888', '#888', '#888', '#999', '#aaa', '#bbb', '#ccc', '#ddd', '#eee', '#fff'] }
 ]
 
 // Preselect theme in menu if player has already choosen theme

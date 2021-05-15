@@ -9,12 +9,6 @@
   cursor: $custom-pointer;
 }
 
-html {
-  position: relative;
-  // width: 100vw;
-  // height: 100vh;
-}
-
 body {
   position: relative;
   margin: 0 auto;
@@ -22,7 +16,7 @@ body {
   height: 100vh;
   font-size: 1.25rem;
   font-family: $body-font;
-  background: #b3edff;
+  background: $preloadandMainBg;
   user-select: none;
   -moz-user-select: none;
   -webkit-user-drag: none;
@@ -60,7 +54,6 @@ h2 {
   z-index: 3;
   width: 25px;
   height: 26px;
-  // background: #aaa;
   position: absolute;
   background: url("../img/cursor.png");
 }
@@ -459,9 +452,10 @@ h2 {
 }
 
 .all-contents-container {
-  top: 50%;
-  transform: translateY(-50%);
   position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .gui-container {
@@ -479,7 +473,7 @@ h2 {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   margin: auto;
-  background-image: $header-gradient;
+  background: $header-gradient;
   // background: $dark-bg-col;
   color: white;
   max-width: $maxwidth;
@@ -488,10 +482,16 @@ h2 {
   //   position: relative;
   // }
 
-  .total-points {
+  .mh-points-display {
+    text-align: center;
     display: flex;
     justify-content: center;
-    align-items: center;
+  }
+
+  .total-points {
+    width: 235px;
+    padding-right: 10px;
+    text-align: right;
     font-family: $gameplay-font;
     font-weight: normal;
     font-size: 1.75rem;
@@ -499,11 +499,15 @@ h2 {
   }
 
   .combo-points {
-    position: absolute;
-    top: 16px;
-    left: 250px;
-    color: #fff;
-    z-index: 5;
+    font-size: 22px;
+    font-family: $gameplay-font;
+    margin-left: 10px;
+    opacity: 0;
+    transition: all 0.5s ease;
+  }
+
+  .combo-points-fadein {
+    opacity: 1;
   }
 
   .total-cards-played {
@@ -531,7 +535,7 @@ h2 {
   // color: #aaa;
   font-family: $gameplay-font;
   font-size: 24px;
-  -webkit-text-stroke: 1px #aaa;
+  -webkit-text-stroke: 1px #888;
 }
 
 .menu-hud {
@@ -749,11 +753,10 @@ input[type="submit"] {
     justify-content: center;
     align-items: center;
     font-family: $gameplay-font-2;
-    -webkit-text-stroke: 2px black;
+    font-weight: bolder;
   }
 
   .swap-container {
-    // margin-left: 200px;
     border: 2px solid #ccc;
     border-radius: 10px;
     box-shadow: 2px 2px #ddd;
@@ -840,6 +843,7 @@ input[type="submit"] {
   height: calc(100% - 123px);
   z-index: 4;
   border-radius: 10px;
+  font-size: 24px;
 
   div {
     display: flex;
