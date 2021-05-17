@@ -67,8 +67,6 @@ let html = ``;
 
 let totalComboPoints = 0;
 
-let gamePaused = false;
-
 // Deck and first draw variables
 let cardCount = 54;
 let deck = [];
@@ -776,6 +774,28 @@ function swapButtonFunction() {
     if (card.classList.contains("checked")) {
       card.classList.toggle("checked");
     }
+
+    // SWAP CARD ANIMATION ->->
+    console.log(cardsInHand.length);
+
+    let swapSlideAnimationLength;
+
+    if (cardsInHand.length >= 8) {
+      swapSlideAnimationLength = 100;
+    } else if (cardsInHand.length < 8 && cardsInHand.length >= 1) {
+      swapSlideAnimationLength = 200;
+    }
+
+    currentHand.style.margin = `15.188px 8.938px 15.188px ${8.938 - swapSlideAnimationLength}px`;
+    
+    currentHand.style.transition = "transform ease 0.2s";
+    currentHand.style.transform = `translateX(${swapSlideAnimationLength}px)`;
+    
+    setTimeout(() => {
+      currentHand.style.transition = "none";
+      currentHand.style.margin = "15.188px 8.938px";
+      currentHand.style.transform = "translateX(0)"
+    }, 450);
   })
 
   // swapping with jackpot card in hand erases jackpot
@@ -811,7 +831,6 @@ function swapButtonFunction() {
   if (userSelectedSoundSettings.SFX) {
     swapCardSFX.play();
   }
-
 }
 
 // Redeal
@@ -833,13 +852,23 @@ function reDeal(cardsInHand, hand) {
         cardsPlayed[j].children[0].getAttribute("suit") == hand[i]["suit"] &&
         cardsPlayed[j].children[0].getAttribute("rank") == hand[i]["face"]
       ) {
-        hand.splice(i, 1);
+        // ensure that last card in hand is always swapped, incase there's an identical card earlier up the hand
+        if (hand[i]["suit"] === hand[hand.length - 1]["suit"] && hand[i]["face"] === hand[hand.length - 1]["face"]) {
+          hand.splice(hand.length - 1, 1);
+        } else {
+          hand.splice(i, 1);
+        }
         break;
       } else if (
         cardsPlayed[j].children[0].getAttribute("suit") == "joker" &&
         hand[i]["suit"] == null
       ) {
-        hand.splice(i, 1);
+        // if swapping card ensure that last joker in hand is swapped, in case there's another joker higher up the hand
+        if (hand[i]["suit"] == null && hand[hand.length-1]["suit"] == null) {
+          hand.splice(hand.length-1, 1);
+        } else {
+          hand.splice(i, 1);
+        }
         break;
       }
     }

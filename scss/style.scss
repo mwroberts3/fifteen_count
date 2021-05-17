@@ -678,10 +678,11 @@ input[type="submit"] {
   }
 
   .show-hand {
-    margin: auto;
+    margin: 15.188px 8.938px 15.188px 8.938px;
     width: 98.5%;
     display: flex;
     justify-content: space-evenly;
+    transition: transform ease 0.2s;
 
     .checked {
       transform: rotate(14deg);
@@ -690,9 +691,15 @@ input[type="submit"] {
     }
   }
 
+  // .swapped-transition {
+  //   transform: translateX(100px);
+  // }
+
   .combo-sacrifice {
     transform: rotate(90deg);
+    opacity: 0.5;
     z-index: -1;
+    pointer-events: none;
   }
 
   // Lower section of player'
