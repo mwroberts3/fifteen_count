@@ -522,10 +522,22 @@ input[type="submit"] {
     justify-content: space-evenly;
     transition: transform ease 0.2s; }
     .players-hand .show-hand .checked {
-      transform: rotate(14deg); }
+      transform: rotate(14deg);
+      transition: all ease 0.2s; }
+  .players-hand .lastCardSwapAnimation {
+    position: absolute;
+    top: 215px;
+    right: 0;
+    width: 100px;
+    height: 154px;
+    opacity: 1;
+    transition: all ease 0.2s; }
+  .players-hand .last-card-swap-animation {
+    opacity: 0;
+    transform: translateX(120px); }
   .players-hand .combo-sacrifice {
     transform: rotate(90deg);
-    opacity: 0.5;
+    opacity: 0.3;
     z-index: -1;
     pointer-events: none; }
   .players-hand .multi-values {

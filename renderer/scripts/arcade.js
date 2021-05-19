@@ -57,6 +57,8 @@ let comboSkip = false;
 let countdownStart = true;
 let comboCardcount = 0;
 
+let swapExtraBlock = false;
+
 let roundBonusTimer = 0;
 
 let secondsBonus = 12;
@@ -290,7 +292,9 @@ function reset() {
   setSwapPermission();
   setUncheckAllPermission();
   submitCards.value = `Play Cards [${actionBtn}]`;
-  swapCostDisplay.textContent = `${cardsInHand.length - 10}s`;
+
+  cardsInHand.length >= 10 ? swapCostDisplay.textContent = `0s` : swapCostDisplay.textContent = `${cardsInHand.length - 10}s`;
+  
 
   // Hud messaging reset
   clearInterval(incomingHudMessages);
@@ -774,43 +778,70 @@ function swapButtonFunction() {
     if (card.classList.contains("checked")) {
       card.classList.toggle("checked");
     }
-
-    // SWAP CARD ANIMATION ->->
-    console.log(cardsInHand.length);
-
-    let swapSlideAnimationLength;
-
-    if (cardsInHand.length >= 8) {
-      swapSlideAnimationLength = 100;
-    } else if (cardsInHand.length < 8 && cardsInHand.length >= 1) {
-      swapSlideAnimationLength = 200;
-    }
-
-    currentHand.style.margin = `15.188px 8.938px 15.188px ${8.938 - swapSlideAnimationLength}px`;
-    
-    currentHand.style.transition = "transform ease 0.2s";
-    currentHand.style.transform = `translateX(${swapSlideAnimationLength}px)`;
-    
-    setTimeout(() => {
-      currentHand.style.transition = "none";
-      currentHand.style.margin = "15.188px 8.938px";
-      currentHand.style.transform = "translateX(0)"
-    }, 450);
   })
+  // SWAP CARD ANIMATION ->->
+      let swapSlideAnimationLength;
+     
+      if (cardsInHand.length >= 8) {
+        swapSlideAnimationLength = 100;
+      } else if (cardsInHand.length < 8 && cardsInHand.length >= 1) {
+        swapSlideAnimationLength = 200;
+      }
+      
+      currentHand.style.margin = `15.188px 8.938px 15.188px ${8.938 - swapSlideAnimationLength}px`;
+      
+      currentHand.style.transition = "transform ease 0.2s";
+      currentHand.style.transform = `translateX(${swapSlideAnimationLength}px)`;
+
+      let lastCardClone = cardsInHand[cardsInHand.length-1].cloneNode(true);
+      lastCardClone.classList.add('lastCardSwapAnimation');
+      currentHand.after(lastCardClone);
+      setTimeout(() => {
+        lastCardClone.classList.add('last-card-swap-animation');
+      }, 15);
+      
+      setTimeout(() => {
+        currentHand.style.transition = "none";
+        currentHand.style.margin = "15.188px 8.938px";
+        currentHand.style.transform = "translateX(0)";
+      }, 450);
+      
+      setTimeout(() => {
+        playersHandArea.removeChild(lastCardClone);
+      }, 200)
 
   // swapping with jackpot card in hand erases jackpot
   if (jackpotLive) {
     totalCardsPlayed = Math.round(totalCardsPlayed/2);
     jackpotLive = false;
   }
+  
+  let validCardsInHand = 0;
 
-  cardsInHand[cardsInHand.length - 1].classList.toggle("checked");
+  for (let i = 0; i < cardsInHand.length; i++) {
+    if (!cardsInHand[i].classList.contains('.last-card-swap-animation')) {
+      validCardsInHand++;
+    }
+  }
+  console.log("valid cards in hand", validCardsInHand);
+
+  if (validCardsInHand > 10) validCardsInHand = 10;
+
+
+  for (let i = 1; i < cardsInHand.length; i++) {
+    if (!cardsInHand[cardsInHand.length - i].classList.contains('lastCardSwapAnimation')) {
+      cardsInHand[cardsInHand.length - i].classList.toggle("checked");
+      break;
+    }
+  }
   reDeal(cardsInHand, hand);
   showHand();
   jackpotSelect();
   reset();
   selectCard();
-  secondsLeft -= (10 - cardsInHand.length);
+  secondsLeft -= (10 - validCardsInHand);
+  swapCostDisplay.textContent = `-${10 - validCardsInHand}s`;
+  // secondsLeft -= (10 - cardsInHand.length);
   fifteenCount = 0;
   fifteenCountDisplay.textContent = ``;
   bonusTimeDisplay.style.color = "rgba(51, 131, 235, 0.9)";

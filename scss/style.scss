@@ -686,18 +686,30 @@ input[type="submit"] {
 
     .checked {
       transform: rotate(14deg);
-      // border: 3px solid #111;
-      // border-radius: 10px;
+      transition: all ease 0.2s;
     }
   }
 
-  // .swapped-transition {
-  //   transform: translateX(100px);
-  // }
+  .lastCardSwapAnimation {
+    position: absolute;
+    top: 215px;
+    right: 0;
+    width: 100px;
+    height: 154px;
+    // z-index: -1;
+    opacity: 1;
+    transition: all ease 0.2s;
+  }
+
+  .last-card-swap-animation {
+    opacity: 0;
+    // z-index: -5;
+    transform: translateX(120px);
+  }
 
   .combo-sacrifice {
     transform: rotate(90deg);
-    opacity: 0.5;
+    opacity: 0.3;
     z-index: -1;
     pointer-events: none;
   }
