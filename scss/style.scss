@@ -696,15 +696,8 @@ input[type="submit"] {
     right: 0;
     width: 100px;
     height: 154px;
-    // z-index: -1;
     opacity: 1;
     transition: all ease 0.2s;
-  }
-
-  .last-card-swap-animation {
-    opacity: 0;
-    // z-index: -5;
-    transform: translateX(120px);
   }
 
   .combo-sacrifice {

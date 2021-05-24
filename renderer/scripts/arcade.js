@@ -56,8 +56,9 @@ let comboSubmit = false;
 let comboSkip = false;
 let countdownStart = true;
 let comboCardcount = 0;
+let multiCardValueB = 0;
 
-let swapExtraBlock = false;
+let dblSwapCheck = false;
 
 let roundBonusTimer = 0;
 
@@ -231,7 +232,6 @@ function showHand() {
   function timerFunction() {
     let threeTimerFinish = new Date().getTime();
     if (threeTimerFinish - threeTimerStart >= 1000) {
-      // console.log(secondsLeft);
       timer.textContent = `${secondsLeft}`;
       secondsLeft--;
       elapsedTime++;
@@ -252,9 +252,7 @@ function showHand() {
       timer.textContent = '0';
       pointsOnDisplay = totalPoints;
       firstSubmit = true;
-      setSwapPermission();
-      // pauseButton.removeEventListener("click", pauseGame);
-      // document.removeEventListener("keyup", buttonPause); 
+      setSwapPermission(); 
       totalPointsDisplay.innerHTML = `${totalPoints}`;
       if (highscoreDefeated) {
         personalHighscoreDisplay.childNodes[1].textContent = pointsOnDisplay;
@@ -286,6 +284,7 @@ function reset() {
   totalComboPoints = 0;
   comboPointsDisplay.textContent = '';
   comboPointsDisplay.classList.remove('combo-points-fadein');
+  multiCardValueB = 0;
   valueOptionOne.innerText = "-";
   valueOptionTwo.innerText = "-";
 
@@ -293,7 +292,7 @@ function reset() {
   setUncheckAllPermission();
   submitCards.value = `Play Cards [${actionBtn}]`;
 
-  cardsInHand.length >= 10 ? swapCostDisplay.textContent = `0s` : swapCostDisplay.textContent = `${cardsInHand.length - 10}s`;
+  cardsInHand.length >= 10 ? swapCostDisplay.textContent = `-0s` : swapCostDisplay.textContent = `${cardsInHand.length - 10}s`;
   
 
   // Hud messaging reset
@@ -335,7 +334,6 @@ function comboCheck() {
   }
 
   setFifteenCountColor();
-  // fifteenCountDisplay.innerHTML = `${fifteenCount}`;
 }
 
 // Submitting cards
@@ -360,7 +358,6 @@ function cardsSubmit() {
     jackpotSelect();
     reset();
     selectCard();
-    // setPlayersHandBg();
     document.querySelector('.players-hand').style.removeProperty('background-image');
   }
   if (pointsValidity === true) {
@@ -376,17 +373,13 @@ function cardsSubmit() {
     // Check for jackpot bonus
     if (jackpotLive) {
       if (!firstSubmit) {
-        checkedCardSuits = [];
-        console.log(checkedCards);        
+        checkedCardSuits = [];      
         let jackCheckedCheck = Array.from(checkedCards);       
         jackCheckedCheck = jackCheckedCheck.filter(card => card.classList.contains('jackpot-special-border'));
-
-        // class formerly 'jackpot-card'
 
         if (jackCheckedCheck.length === 0) {
           totalCardsPlayed = Math.round(totalCardsPlayed/2);
         } else {
-          // totalCardsPlayed = Math.round(totalCardsPlayed * 1.5);
           checkedCards.forEach((card) => {
               checkedCardSuits.push(card.children[0].getAttribute("suit"));
           });
@@ -564,6 +557,8 @@ function selectCard() {
   let cardsInHand = document.querySelectorAll(".card-in-hand");
   globalCardsInHand = cardsInHand;
 
+  // swap card seconds bonus correction
+  globalCardsInHand = Array.from(cardsInHand).filter(card  => !card.classList.contains('lastCardSwapAnimation'));
 
   cardsInHand.forEach((card) => {
     let valueA = parseInt(
@@ -575,36 +570,40 @@ function selectCard() {
       10
     );
     card.addEventListener("click", () => {
+      
       if (countdownStart) {
         countdownStart = false;
       }
       if (card.classList.contains("checked") && !firstSubmit) {
-        card.classList.toggle("checked");
-
         if (userSelectedSoundSettings.SFX) {
-        checkCardSFX.play();
+          checkCardSFX.play();
+        }
+        
+        card.classList.toggle("checked");
+        multiCardValueB--;
+        
+        if (card.classList.contains('value-selected')) {
+          multiCardValueB++;
         }
 
         valueOptionOne.innerText = "-";
-        valueOptionTwo.innerText = "-";
+        multiCardValueB > 0 ? valueOptionTwo.innerText = `${multiCardValueB}` : valueOptionTwo.innerText = "-";
+
         if (valueB > 0 && card.classList.contains("A")) {
           fifteenCount -= valueA;
           card.classList.toggle("A");
           card.classList.remove("value-selected");
           setFifteenCountColor();
-          // fifteenCountDisplay.innerHTML = `${fifteenCount}`;
         } else if (valueB > 0 && card.classList.contains("B")) {
           fifteenCount -= valueB;
           card.classList.toggle("B");
           card.classList.remove("value-selected");
           setFifteenCountColor();
-          // fifteenCountDisplay.innerHTML = `${fifteenCount}`;
         } else if (valueB === 0) {
           fifteenCount -= valueA;
         }
         comboCheck();
         setFifteenCountColor();
-        // fifteenCountDisplay.innerHTML = `${fifteenCount}`;
       } 
       // after initial checked cards have been played
       else if (firstSubmit) {
@@ -619,17 +618,26 @@ function selectCard() {
         }
       } else {
         if (valueB > 0) {
-          valueOptionOne.innerText = valueA;
-          valueOptionTwo.innerText = valueB;
+          multiCardValueB++;
+
+         // check how many cards are checked to setting multivalue display settings
+          if (multiCardValueB > 1) {
+            valueOptionOne.innerText = "-";
+          } else {
+            valueOptionOne.innerText = valueA;
+          }
+          valueOptionTwo.innerText = multiCardValueB;
           valueOptionOne.addEventListener("click", () => {
             if (
               !card.classList.contains("A") &&
               !card.classList.contains("B") &&
               card.classList.contains("checked")
             ) {
+              valueOptionOne.textContent = '-';
+              valueOptionTwo.textContent = '-';
               fifteenCount += valueA;
+              multiCardValueB = 0;
               setFifteenCountColor();
-              // fifteenCountDisplay.innerHTML = `${fifteenCount}`;
               card.classList.toggle("A");
               card.classList.add("value-selected");
               comboCheck();
@@ -643,8 +651,8 @@ function selectCard() {
                 card.classList.contains("checked")
               ) {
                 fifteenCount += valueA;
+                multiCardValueB = 0;
                 setFifteenCountColor();
-                // fifteenCountDisplay.innerHTML = `${fifteenCount}`;
                 card.classList.toggle("A");
                 card.classList.add("value-selected");
                 comboCheck();
@@ -657,9 +665,11 @@ function selectCard() {
               !card.classList.contains("A") &&
               card.classList.contains("checked")
             ) {
+              valueOptionOne.textContent = '-';
+              valueOptionTwo.textContent = '-';
               fifteenCount += valueB;
+              multiCardValueB = 0;
               setFifteenCountColor();
-              // fifteenCountDisplay.innerHTML = `${fifteenCount}`;
               card.classList.toggle("B");
               card.classList.add("value-selected");
               comboCheck();
@@ -672,9 +682,11 @@ function selectCard() {
                 !card.classList.contains("A") &&
                 card.classList.contains("checked")
               ) {
+                valueOptionOne.textContent = '-';
+                valueOptionTwo.textContent = '-';
                 fifteenCount += valueB;
+                multiCardValueB = 0;
                 setFifteenCountColor();
-                // fifteenCountDisplay.innerHTML = `${fifteenCount}`;
                 card.classList.toggle("B");
                 card.classList.add("value-selected");
                 comboCheck();
@@ -683,13 +695,12 @@ function selectCard() {
           });
         } else if (valueB === 0) {
           valueOptionOne.innerText = "-";
-          valueOptionTwo.innerText = "-";
+
+          multiCardValueB > 0 ? valueOptionTwo.innerText = multiCardValueB : valueOptionTwo.innerText = "-";
           fifteenCount += valueA;
           setFifteenCountColor();
-          // fifteenCountDisplay.innerHTML = `${fifteenCount}`;
         }
         setFifteenCountColor();
-        // fifteenCountDisplay.innerHTML = `${fifteenCount}`;
         card.classList.toggle("checked");
 
         // checked card sound effect
@@ -766,11 +777,11 @@ function setSwapPermission() {
 
 function swapButtonPush(e) {
   if (e.code === swapBtn) {
-    swapButtonFunction();
+    swapButtonFunction(true);
   }
 }
 
-function swapButtonFunction() {
+function swapButtonFunction(swpBtnPress) {
   let cardsInHand = document.querySelectorAll(".card-in-hand");
 
   // uncheck already checked cards
@@ -778,14 +789,19 @@ function swapButtonFunction() {
     if (card.classList.contains("checked")) {
       card.classList.toggle("checked");
     }
+    multiCardValueB = 0;
   })
+
   // SWAP CARD ANIMATION ->->
       let swapSlideAnimationLength;
-     
-      if (cardsInHand.length >= 8) {
-        swapSlideAnimationLength = 100;
-      } else if (cardsInHand.length < 8 && cardsInHand.length >= 1) {
+      let validCardsInHand = 0;
+
+      dblSwapCheck = true;
+
+      if (cardsInHand.length <= 5) {
         swapSlideAnimationLength = 200;
+      } else {
+        swapSlideAnimationLength = 100;
       }
       
       currentHand.style.margin = `15.188px 8.938px 15.188px ${8.938 - swapSlideAnimationLength}px`;
@@ -795,35 +811,56 @@ function swapButtonFunction() {
 
       let lastCardClone = cardsInHand[cardsInHand.length-1].cloneNode(true);
       lastCardClone.classList.add('lastCardSwapAnimation');
+      if (cardsInHand.length <= 5) {
+        lastCardClone.style.right = "120px";
+      }
+
       currentHand.after(lastCardClone);
       setTimeout(() => {
-        lastCardClone.classList.add('last-card-swap-animation');
+        lastCardClone.style.opacity = "0";
+        
+        if (cardsInHand.length <= 5) {
+          lastCardClone.style.transform = "translateX(240px)";
+        }
+        lastCardClone.style.transform = "translateX(120px)";
       }, 15);
       
       setTimeout(() => {
         currentHand.style.transition = "none";
-        currentHand.style.margin = "15.188px 8.938px";
-        currentHand.style.transform = "translateX(0)";
+
+        // correction for stutter 'glitch' when hand is a certain amount of cards
+        if (cardsInHand.length === 8 || cardsInHand.length === 7 || cardsInHand.length === 3) {
+          currentHand.style.margin = `15.188px 8.938px 15.188px ${8.938 - 10}px`;
+          currentHand.style.transform = "translateX(10px)";
+        } else {
+          currentHand.style.margin = `15.188px 8.938px 15.188px 8.938px`;
+          currentHand.style.transform = "translateX(0)";
+        }
       }, 450);
       
+      const dblSwapCorrection = setInterval(() => {
+        if (!dblSwapCheck && cardsInHand.length <= 10) {a
+        swapCostDisplay.textContent = `-${11 - validCardsInHand}s`;
+        }
+        }, 200);
+
       setTimeout(() => {
         playersHandArea.removeChild(lastCardClone);
-      }, 200)
-
+        dblSwapCheck = false;
+        clearInterval(dblSwapCorrection)
+      }, 200);
+      
   // swapping with jackpot card in hand erases jackpot
   if (jackpotLive) {
     totalCardsPlayed = Math.round(totalCardsPlayed/2);
     jackpotLive = false;
   }
   
-  let validCardsInHand = 0;
-
   for (let i = 0; i < cardsInHand.length; i++) {
-    if (!cardsInHand[i].classList.contains('.last-card-swap-animation')) {
+    if (!cardsInHand[i].classList.contains('.lastCardSwapAnimation')) {
       validCardsInHand++;
     }
   }
-  console.log("valid cards in hand", validCardsInHand);
 
   if (validCardsInHand > 10) validCardsInHand = 10;
 
@@ -834,6 +871,11 @@ function swapButtonFunction() {
       break;
     }
   }
+  
+  if (cardsInHand.length === 1) {
+    cardsInHand[0].classList.add('checked');
+  }
+
   reDeal(cardsInHand, hand);
   showHand();
   jackpotSelect();
@@ -923,7 +965,6 @@ function reDeal(cardsInHand, hand) {
   let numberCheckedCards = 0;
   if (hand.length === 0 && sacrificedCards.length === 0 && cardsInHand.length > 1) {
     numberCheckedCards = 10;
-
     secondsBonus++;
   } else if (cardsInHand.length === 1 && firstSubmit){
     numberCheckedCards = 10;
@@ -1123,6 +1164,7 @@ function setUncheckAllPermission() {
 function uncheckAllCards(e) {
   let checkedCards = document.querySelectorAll(".checked");
   if(e.code === uncheckcardsBtn) {
+    multiCardValueB = 0;
     fifteenCount = 0;
     pointsValidity = false;
     checkedCards.forEach((card) => {
