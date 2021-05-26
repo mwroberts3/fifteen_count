@@ -1,3 +1,6 @@
+let secondsLeft = 99;
+document.querySelector(".timer").textContent = "100";
+
 // Check to see if first time playing
 const arcadeHowTo = document.getElementById('arcade-how-to-play');
 let firsttimeCheck = {};
@@ -28,7 +31,10 @@ function howToSlideShow() {
         firsttimeCheck.arcade = true;
         localStorage.setItem('firsttime-check', JSON.stringify(firsttimeCheck));
         // come up with more elegant solution here
-        location.reload();
+        document.querySelector('.gui-container').style.opacity = 1;
+        arcadeHowTo.classList.add('hidden');
+        secondsLeft = 99;
+        document.querySelector(".timer").textContent = "100";
       } else if (e.target.textContent === "Next") {
         e.target.textContent = "Back";
         arcadeHowTo.classList.add('arcade-howto-page-two');

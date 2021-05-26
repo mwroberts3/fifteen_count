@@ -79,7 +79,7 @@ let hand = [];
 // Timer variables
 const timer = document.querySelector(".timer");
 let totalSeconds = 100;
-let secondsLeft = 99;
+// let secondsLeft = 99;
 let threeTimerStart = 0;
 let elapsedTime = 0;
 const bonusTimeDisplay = document.querySelector(".bonus-time");

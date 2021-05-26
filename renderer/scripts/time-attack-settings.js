@@ -23,7 +23,7 @@ function closeHowTo() {
   document.querySelector('.skip-how-to').addEventListener('click', () => {
     timeAttackHowTo.classList.add('hidden');
     timerDisplay.textContent = '180';
-    secondsLeft = 179;
+    secondsLeft = 180;
   })
 }
 
