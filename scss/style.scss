@@ -511,6 +511,7 @@ h2 {
   }
 
   .total-cards-played {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -524,6 +525,15 @@ h2 {
       margin: 0 5%;
     }
   }
+}
+
+.jackpot-bonus-indicator {
+  // width: 50px;
+  // height: 50px;
+  position: absolute;
+  top: 12px;
+  left: 96px;
+  transition: all 0.5s ease;
 }
 
 .bonus-notice {

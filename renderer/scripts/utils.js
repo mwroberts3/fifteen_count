@@ -8,7 +8,6 @@ const gamescreenFadein = setInterval(() => {
 
   document.querySelector('body').style.opacity = fadeTime;
   fadeTime += 0.1;
-  console.log(i);
   if (fadeTime >= 1) clearInterval(gamescreenFadein);
 }, 39)
 }

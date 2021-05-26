@@ -380,23 +380,43 @@ function cardsSubmit() {
         if (jackCheckedCheck.length === 0) {
           totalCardsPlayed = Math.round(totalCardsPlayed/2);
         } else {
+          let jackpotSameColorCheck;
           checkedCards.forEach((card) => {
-              checkedCardSuits.push(card.children[0].getAttribute("suit"));
+            checkedCardSuits.push(card.children[0].getAttribute("suit"));
           });
+
           checkedCards.forEach((card) => {
             if (card.classList.contains('jackpot-special-border')){
-              if (checkedCardSuits.every(sameColorRed) == true ||
-              checkedCardSuits.every(sameColorBlack) == true) {
+              if (checkedCardSuits.every(sameColorRed) ||
+              checkedCardSuits.every(sameColorBlack)) {
                 console.log(totalPoints, (totalCardsPlayed * 2), totalPoints + (totalCardsPlayed * 2));
                 totalPoints +=(totalCardsPlayed * 2);
                 pointsBreakdown.jackpotPoints += totalCardsPlayed * 2;
+                jackpotSameColorCheck = true;
               } else {
                 console.log(totalPoints, totalCardsPlayed, totalPoints + totalCardsPlayed);
                 totalPoints += totalCardsPlayed;
                 pointsBreakdown.jackpotPoints += totalCardsPlayed;
+                jackpotSameColorCheck = false;
               }
             }
           });
+          let jackpotBonusIndicator = document.createElement('div');
+
+          if (jackpotSameColorCheck) {
+            jackpotBonusIndicator.textContent = `+${totalCardsPlayed * 2}`;
+          } else {
+            jackpotBonusIndicator.textContent = `+${totalCardsPlayed}`;
+          }
+
+          jackpotBonusIndicator.classList.add('jackpot-bonus-indicator');
+
+          totalCardsPlayedDisplay.appendChild(jackpotBonusIndicator);
+
+          setTimeout(() => {
+            jackpotBonusIndicator.style.transform = `translateY(-25px)`;
+            jackpotBonusIndicator.style.opacity = `0`;
+          }, 15)
         }
       }
       jackpotLive = false;

@@ -2,10 +2,6 @@
 const cursor = document.querySelector(".cursor");
 
 document.addEventListener("mousemove", (e) => {
-    console.log(window.innerHeight, window.innerWidth)
-    
-    // console.log(e.pageY, e.pageX)
-    // console.log(cursor)
 cursor.setAttribute(
     "style",
     "top: " +
