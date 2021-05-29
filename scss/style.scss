@@ -131,17 +131,26 @@ h2 {
 }
 
 .submit-cards {
-  cursor: $custom-pointer;
-  width: 30%;
+  width: 25%;
   padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 1.25rem;
-  font-weight: bold;
+  font-weight: normal !important;
   margin: auto;
+  background: $players-btn-bg-col;
   color: $dark-text-col;
   border: $players-btn-border;
   border-radius: $players-border-radius;
   box-shadow: $players-box-shadow;
   font-family: $body-font;
+}
+
+.submit-cards-smaller-text {
+  padding-top: 2px;
+  font-size: 1rem;
+  color: #888;
 }
 
 .fade-in {
@@ -532,8 +541,8 @@ h2 {
   // height: 50px;
   position: absolute;
   top: 12px;
-  left: 96px;
-  transition: all 0.5s ease;
+  left: 97px;
+  transition: all 1s ease;
 }
 
 .bonus-notice {
@@ -692,12 +701,14 @@ input[type="submit"] {
     width: 98.5%;
     display: flex;
     justify-content: space-evenly;
-    transition: transform ease 0.2s;
+  }
 
-    .checked {
-      transform: rotate(14deg);
-      transition: all ease 0.2s;
-    }
+  .card-in-hand {
+    transition: transform ease 0.2s;
+  }
+
+  .checked {
+    transform: rotate(14deg);
   }
 
   .lastCardSwapAnimation {
@@ -739,12 +750,11 @@ input[type="submit"] {
     border-radius: $players-border-radius;
     box-shadow: $players-box-shadow;
     border-collapse: collapse;
-    box-shadow: 2px 2px #ddd;
     text-align: center;
     font-size: 2rem;
     cursor: $custom-pointer;
     background: $players-btn-bg-col;
-    // display: none;
+    transition: all 0.2s ease;
   }
 
   .value-options-two {
@@ -760,7 +770,7 @@ input[type="submit"] {
     padding-top: 20px;
     background: $players-btn-bg-col;
     cursor: $custom-pointer;
-    // display: none;
+    transition: all 0.2s ease;
   }
 
   .fifteen-count {

@@ -105,17 +105,25 @@ h2 {
   font-family: "Didact Gothic", sans-serif; }
 
 .submit-cards {
-  cursor: none !important;
-  width: 30%;
+  width: 25%;
   padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 1.25rem;
-  font-weight: bold;
+  font-weight: normal !important;
   margin: auto;
+  background: #eee;
   color: #333;
   border: 2px solid #ccc;
   border-radius: 10px;
   box-shadow: 2px 2px #ddd;
   font-family: "Didact Gothic", sans-serif; }
+
+.submit-cards-smaller-text {
+  padding-top: 2px;
+  font-size: 1rem;
+  color: #888; }
 
 .fade-in {
   opacity: 1; }
@@ -396,8 +404,8 @@ h2 {
 .jackpot-bonus-indicator {
   position: absolute;
   top: 12px;
-  left: 96px;
-  transition: all 0.5s ease; }
+  left: 97px;
+  transition: all 1s ease; }
 
 .bonus-notice {
   position: absolute;
@@ -526,11 +534,11 @@ input[type="submit"] {
     margin: 15.188px 8.938px 15.188px 8.938px;
     width: 98.5%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-evenly; }
+  .players-hand .card-in-hand {
     transition: transform ease 0.2s; }
-    .players-hand .show-hand .checked {
-      transform: rotate(14deg);
-      transition: all ease 0.2s; }
+  .players-hand .checked {
+    transform: rotate(14deg); }
   .players-hand .lastCardSwapAnimation {
     position: absolute;
     top: 215px;
@@ -561,11 +569,11 @@ input[type="submit"] {
     border-radius: 10px;
     box-shadow: 2px 2px #ddd;
     border-collapse: collapse;
-    box-shadow: 2px 2px #ddd;
     text-align: center;
     font-size: 2rem;
     cursor: none !important;
-    background: #eee; }
+    background: #eee;
+    transition: all 0.2s ease; }
   .players-hand .value-options-two {
     width: 80px;
     height: 80px;
@@ -578,7 +586,8 @@ input[type="submit"] {
     text-align: center;
     padding-top: 20px;
     background: #eee;
-    cursor: none !important; }
+    cursor: none !important;
+    transition: all 0.2s ease; }
   .players-hand .fifteen-count {
     border-radius: 10px;
     color: #fff;

@@ -1,7 +1,11 @@
 Bugs:
-    -5/26/21 - if two multivalue cards are selected the higher value disappears as it should, but if one of the multivalue cards are deselected the higher value display should show the sole multivalue card's value A
+    -5/29/21 - unchecking cards in time attack should also have animation
 
-    -5/23/21 - watch for more places where multivalue should be reset to "-"...like after submitting sacrifices?
+    -5/29/21 reloading Classic arcade mode cause the background to flicker to baby blue
+
+    -5/29/21 - scoring a jackpot bonus should have a sound effect
+
+    -5/29/21 - selecting multivalue cards and single value cards at same time kind of messes things up
 
     -5/2/21 - for some reason time attack doesn't count/controls don't work if it's first time playing and how to slide is viewed
 

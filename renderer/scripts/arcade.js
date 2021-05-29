@@ -115,7 +115,6 @@ document.addEventListener("keyup", (e) => {
 
 // Bonus check
 submitCards.addEventListener("click", roundBonusCheck);
-// playersHandArea.addEventListener("dblclick", roundBonusCheck);
 
 // Build deck
 function buildDeck(deck) {
@@ -196,7 +195,7 @@ function drawCards(drawSize) {
   for (i = 0; i < drawSize; i++) {
     hand.splice(i, 0, deck.pop());
   }
-  submitCards.value = `Play Cards [${actionBtn}]`;
+  submitCards.innerHTML = `Submit &nbsp;<span class="submit-cards-smaller-text">[${actionBtn}]</span>`;
 }
 
 // display hand to player
@@ -290,7 +289,7 @@ function reset() {
 
   setSwapPermission();
   setUncheckAllPermission();
-  submitCards.value = `Play Cards [${actionBtn}]`;
+  submitCards.innerHTML = `Submit &nbsp;<span class="submit-cards-smaller-text">[${actionBtn}]</span>`;
 
   cardsInHand.length >= 10 ? swapCostDisplay.textContent = `-0s` : swapCostDisplay.textContent = `${cardsInHand.length - 10}s`;
   
@@ -365,7 +364,7 @@ function cardsSubmit() {
     pointsBreakdown.cardPoints += pointsInPlay;
     pointsInPlay = 0;
     fifteenCount = 0;
-    submitCards.value = `Draw Cards [${actionBtn}]`;
+    submitCards.innerHTML = `Draw Cards &nbsp;<span class="submit-cards-smaller-text">[${actionBtn}]</span>`;
     comboSkip = true;
     playersHandArea.style.backgroundImage = `url("./img/${themeSelection['bgImgCombo']}")`;
     // clearBgImgIntervals();
@@ -414,8 +413,9 @@ function cardsSubmit() {
           totalCardsPlayedDisplay.appendChild(jackpotBonusIndicator);
 
           setTimeout(() => {
-            jackpotBonusIndicator.style.transform = `translateY(-25px)`;
+            jackpotBonusIndicator.style.transform = `translateY(-30px)`;
             jackpotBonusIndicator.style.opacity = `0`;
+            jackpotBonusIndicator.style.color = `#fff`;
           }, 15)
         }
       }
@@ -438,7 +438,6 @@ function cardsSubmit() {
 
       bonusTimeDisplay.textContent = `+${secondsBonus}`
       setTimeout(() => {
-
         bonusTimeDisplay.textContent = ``;
       }, 1000)
 
@@ -474,7 +473,6 @@ function cardsSubmit() {
       bonusTimeDisplay.textContent = `+${(secondsBonus + 1) + fullHandBonus}`
 
       setTimeout(() => {
-
         bonusTimeDisplay.textContent = ``;
       }, 1000)
 
@@ -499,7 +497,7 @@ function cardsSubmit() {
       fullClearSFX.play();
       }
 
-      // Full hand border animation
+      // Fullhand check border animation
       let i = 0;
       let borderAniCol = themeSelection['fullClearBrdGrd'];
 
@@ -606,8 +604,20 @@ function selectCard() {
           multiCardValueB++;
         }
 
-        valueOptionOne.innerText = "-";
-        multiCardValueB > 0 ? valueOptionTwo.innerText = `${multiCardValueB}` : valueOptionTwo.innerText = "-";
+        // reset value options
+        let checkedCards = Array.from(document.querySelectorAll(".checked"));
+
+        if (checkedCards.length === 1) {
+          valueOptionOne.innerText = checkedCards[0].children[0].getAttribute('valuea');
+        } else {
+          valueOptionOne.innerText = "-";
+        }
+
+        if (multiCardValueB > 0) {
+          valueOptionTwo.innerText = `${multiCardValueB}`
+        } else {
+          valueOptionTwo.innerText = "-";
+        }
 
         if (valueB > 0 && card.classList.contains("A")) {
           fifteenCount -= valueA;
@@ -756,7 +766,7 @@ function doubleComboCheck(valueA, comboCardcount) {
   }
 
   totalComboPoints += Math.round(valueA * comboCardcount);
-  submitCards.value = `Combo Submit / Draw Cards [${actionBtn}]`;
+  submitCards.innerHTML = `Draw Cards &nbsp;<span class="submit-cards-smaller-text">[${actionBtn}]</span>`;
   comboPointsDisplay.textContent = `+${totalComboPoints}`;
   comboPointsDisplay.classList.add('combo-points-fadein');
 }
@@ -770,9 +780,7 @@ function newHighscoreCheck() {
       hudMessageDisplay.textContent = 'NEW HIGHSCORE!';
       if (highscoreToBeat !== 0) {
         // New highscore sound effect
-        if (userSelectedSoundSettings.SFX) {
-        newHighscoreSFX.play();
-        }
+        if (userSelectedSoundSettings.SFX) newHighscoreSFX.play();
       }
       highscoreDefeated = true;
       setTimeout(() => { 
@@ -797,11 +805,11 @@ function setSwapPermission() {
 
 function swapButtonPush(e) {
   if (e.code === swapBtn) {
-    swapButtonFunction(true);
+    swapButtonFunction();
   }
 }
 
-function swapButtonFunction(swpBtnPress) {
+function swapButtonFunction() {
   let cardsInHand = document.querySelectorAll(".card-in-hand");
 
   // uncheck already checked cards
@@ -1035,9 +1043,9 @@ function jackpotSelect() {
 
       let style = getComputedStyle(cardsInHand[jackpotRandIndex]);
 
-      console.log(style);
+      // console.log(style);
 
-      console.log(cardsInHand[jackpotRandIndex].classList[2]);
+      // console.log(cardsInHand[jackpotRandIndex].classList[2]);
 
       jackpotOverlay.style.background = `${style.background}`;
 
