@@ -537,12 +537,12 @@ h2 {
 }
 
 .jackpot-bonus-indicator {
-  // width: 50px;
-  // height: 50px;
+  font-family: $gameplay-font;
+  color: $gameplay-font-col;
   position: absolute;
-  top: 12px;
-  left: 97px;
-  transition: all 1s ease;
+  top: 60px;
+  right: 272px;
+  transition: all 2s ease;
 }
 
 .bonus-notice {
@@ -555,6 +555,49 @@ h2 {
   font-family: $gameplay-font;
   font-size: 24px;
   -webkit-text-stroke: 1px #888;
+}
+
+.jackpot-level {
+  -webkit-text-stroke: none;
+  font-family: $gameplay-font-2;
+  position: absolute;
+  font-size: 18px;
+  top: 15px;
+  right: 35px;
+  width: 30px;
+  height: 30px;
+  padding-bottom: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: solid #888 2px;
+  // border-radius: 50% 25% 50% 25% 50% 33% 50% 14%;
+  border-radius: 50%;
+  color: #888;
+  background: #222;
+  // animation-name: jackpotlevelflicker;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: linear;
+}
+
+@keyframes jackpotlevelflicker {
+  0% {
+    transform: rotate(-5deg);
+    border: solid #888 2px;
+    transform: scale(0.97);
+    color: #aaa;
+  }
+  50% {
+    // border: solid #aaa 2px;
+  }
+  100% {
+    transform: rotate(5deg);
+    border: solid #aaa 2px;
+    transform: scale(1);
+    color: #888;
+  }
 }
 
 .menu-hud {

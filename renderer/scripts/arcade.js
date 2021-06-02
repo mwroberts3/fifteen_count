@@ -29,6 +29,7 @@ const totalPointsDisplay = document.querySelector(".total-points");
 const comboPointsDisplay = document.querySelector(".combo-points");
 const fifteenCountDisplay = document.querySelector(".fifteen-count");
 const totalCardsPlayedDisplay = document.querySelector(".total-cards-played");
+const jackpotLevelDisplay = document.querySelector('.jackpot-level');
 const swapCostDisplay = document.querySelector(".two-sec-warning");
 let totalPoints = 0;
 const pointsBreakdown = {cardPoints: 0, comboPoints: 0, timePoints: 0, fullClearPoints: 0, jackpotPoints: 0, speedPoints: 0, fullClearTimes: 0};
@@ -79,7 +80,7 @@ let hand = [];
 // Timer variables
 const timer = document.querySelector(".timer");
 let totalSeconds = 100;
-// let secondsLeft = 99;
+let secondsLeft = 200;
 let threeTimerStart = 0;
 let elapsedTime = 0;
 const bonusTimeDisplay = document.querySelector(".bonus-time");
@@ -98,7 +99,11 @@ let fullHandPlayed = false;
 let jackpotLive = false;
 let jackpotInit = false;
 let jackpotRandTiming;
-let jackpotSecondsThreshold = 50;
+let jackpotSameColorCheck;
+let jackpotSecondsThreshold = 35;
+let jackpotMultiplierLvl = 0;
+let jackpotMultiplier = [1.25,1.5,2,3];
+
 addFreshPointsToTotal();
 setSecondsBonusIndicator();
 selectCard();
@@ -287,14 +292,16 @@ function reset() {
   valueOptionOne.innerText = "-";
   valueOptionTwo.innerText = "-";
 
+  jackpotLevelDisplay.innerText = `${jackpotMultiplierLvl + 1}`;
+  utils.jackpotLevelAni(jackpotLevelDisplay, jackpotMultiplierLvl);
+
   setSwapPermission();
   setUncheckAllPermission();
   submitCards.innerHTML = `Submit &nbsp;<span class="submit-cards-smaller-text">[${actionBtn}]</span>`;
 
   cardsInHand.length >= 10 ? swapCostDisplay.textContent = `-0s` : swapCostDisplay.textContent = `${cardsInHand.length - 10}s`;
   
-
-  // Hud messaging reset
+  // HUD messaging reset
   clearInterval(incomingHudMessages);
   incomingHudMessages = setInterval(() => {
     hudMessage(firstSubmit, jackpotLive, incomingHudMessages, fullHandPlayed);
@@ -359,6 +366,7 @@ function cardsSubmit() {
     selectCard();
     document.querySelector('.players-hand').style.removeProperty('background-image');
   }
+
   if (pointsValidity === true) {
     totalPoints += pointsInPlay;
     pointsBreakdown.cardPoints += pointsInPlay;
@@ -377,9 +385,13 @@ function cardsSubmit() {
         jackCheckedCheck = jackCheckedCheck.filter(card => card.classList.contains('jackpot-special-border'));
 
         if (jackCheckedCheck.length === 0) {
-          totalCardsPlayed = Math.round(totalCardsPlayed/2);
+          // totalCardsPlayed = Math.round(totalCardsPlayed/2);
+
+          totalCardsPlayed -= globalCardsInHand.length;
+          jackpotMultiplierLvl = 0;
+
+          if (totalCardsPlayed < 0) totalCardsPlayed = 0;
         } else {
-          let jackpotSameColorCheck;
           checkedCards.forEach((card) => {
             checkedCardSuits.push(card.children[0].getAttribute("suit"));
           });
@@ -388,35 +400,30 @@ function cardsSubmit() {
             if (card.classList.contains('jackpot-special-border')){
               if (checkedCardSuits.every(sameColorRed) ||
               checkedCardSuits.every(sameColorBlack)) {
-                console.log(totalPoints, (totalCardsPlayed * 2), totalPoints + (totalCardsPlayed * 2));
-                totalPoints +=(totalCardsPlayed * 2);
-                pointsBreakdown.jackpotPoints += totalCardsPlayed * 2;
+                console.log(jackpotMultiplier[jackpotMultiplierLvl],totalPoints, (totalCardsPlayed * jackpotMultiplier[jackpotMultiplierLvl]), totalPoints + (totalCardsPlayed * jackpotMultiplier[jackpotMultiplierLvl]));
+
+                totalPoints += Math.round((totalCardsPlayed * jackpotMultiplier[jackpotMultiplierLvl]));
+
+                pointsBreakdown.jackpotPoints += Math.round((totalCardsPlayed * jackpotMultiplier[jackpotMultiplierLvl]));
                 jackpotSameColorCheck = true;
+
+                utils.jackpotBonusPointsAni(totalCardsPlayed, jackpotSameColorCheck, totalCardsPlayedDisplay, jackpotMultiplierLvl, jackpotMultiplier);
+
+                jackpotMultiplierLvl++;
+                if (jackpotMultiplierLvl > 3) jackpotMultiplierLvl = 3;
               } else {
                 console.log(totalPoints, totalCardsPlayed, totalPoints + totalCardsPlayed);
+
                 totalPoints += totalCardsPlayed;
+
                 pointsBreakdown.jackpotPoints += totalCardsPlayed;
+
                 jackpotSameColorCheck = false;
+
+                utils.jackpotBonusPointsAni(totalCardsPlayed, jackpotSameColorCheck, totalCardsPlayedDisplay, jackpotMultiplierLvl, jackpotMultiplier);
               }
             }
           });
-          let jackpotBonusIndicator = document.createElement('div');
-
-          if (jackpotSameColorCheck) {
-            jackpotBonusIndicator.textContent = `+${totalCardsPlayed * 2}`;
-          } else {
-            jackpotBonusIndicator.textContent = `+${totalCardsPlayed}`;
-          }
-
-          jackpotBonusIndicator.classList.add('jackpot-bonus-indicator');
-
-          totalCardsPlayedDisplay.appendChild(jackpotBonusIndicator);
-
-          setTimeout(() => {
-            jackpotBonusIndicator.style.transform = `translateY(-30px)`;
-            jackpotBonusIndicator.style.opacity = `0`;
-            jackpotBonusIndicator.style.color = `#fff`;
-          }, 15)
         }
       }
       jackpotLive = false;
@@ -482,7 +489,7 @@ function cardsSubmit() {
         fullHandBonus = 0;
       }
 
-      // if Harmonia is acheived by playing 10 cards, the fullhandbonus is reset to 35
+      // if Harmonia is acheived by playing ALL 10 cards, the fullhandbonus is reset to 35
       if (checkedCards.length === 10) {
         fullHandBonus = 35;
       }
@@ -493,23 +500,10 @@ function cardsSubmit() {
       fullHandPlayed = true;
 
       // Full hand sound effect
-      if (userSelectedSoundSettings.SFX) {
-      fullClearSFX.play();
-      }
+      if (userSelectedSoundSettings.SFX) fullClearSFX.play();
 
       // Fullhand check border animation
-      let i = 0;
-      let borderAniCol = themeSelection['fullClearBrdGrd'];
-
-      const borderAnimation = setInterval(() => {
-        document.querySelector(".gui-container").style.border = `4px solid ${borderAniCol[i]}`;
-        i++;
-
-        if (i > themeSelection['fullClearBrdGrd'].length)  {
-          clearInterval(borderAnimation);
-          document.querySelector(".gui-container").style.border = `4px solid ${themeSelection['brdCol']}`;
-        }
-      }, 100);
+      utils.fullClearBorderAni(themeSelection);
     }
   }
   if (pointsValidity === true && comboSubmit === true) { 
@@ -551,10 +545,7 @@ function roundBonusCheck() {
   diff = Math.round(diff);
 
   if (diff <= 9 && firstSubmit === false && pointsValidity === true) {
-
-
     roundBonusPoints = pointsInPlay * roundBonuses[diff] - pointsInPlay;
-
 
     roundBonusPoints = Math.round(roundBonusPoints);
 
@@ -598,7 +589,11 @@ function selectCard() {
         }
         
         card.classList.toggle("checked");
-        multiCardValueB--;
+
+        // check for value b's to update display
+        if (card.querySelector("card-t").getAttribute("valueb") > 0) {
+          multiCardValueB--;
+        }
         
         if (card.classList.contains('value-selected')) {
           multiCardValueB++;
@@ -607,8 +602,10 @@ function selectCard() {
         // reset value options
         let checkedCards = Array.from(document.querySelectorAll(".checked"));
 
-        if (checkedCards.length === 1) {
-          valueOptionOne.innerText = checkedCards[0].children[0].getAttribute('valuea');
+        if (checkedCards.length === 1 && checkedCards[0].children[0].getAttribute('valueb') > 0) {
+          if (fifteenCount === 0) {
+            valueOptionOne.innerText = checkedCards[0].children[0].getAttribute('valuea');
+          }
         } else {
           valueOptionOne.innerText = "-";
         }
@@ -649,12 +646,13 @@ function selectCard() {
       } else {
         if (valueB > 0) {
           multiCardValueB++;
-
          // check how many cards are checked to setting multivalue display settings
           if (multiCardValueB > 1) {
             valueOptionOne.innerText = "-";
-          } else {
+          } else if (multiCardValueB === 1) {
             valueOptionOne.innerText = valueA;
+          } else {
+            valueOptionOne.innerText = "-";
           }
           valueOptionTwo.innerText = multiCardValueB;
           valueOptionOne.addEventListener("click", () => {
@@ -680,6 +678,8 @@ function selectCard() {
                 !card.classList.contains("B") &&
                 card.classList.contains("checked")
               ) {
+                valueOptionOne.textContent = '-';
+                valueOptionTwo.textContent = '-';
                 fifteenCount += valueA;
                 multiCardValueB = 0;
                 setFifteenCountColor();
@@ -724,8 +724,6 @@ function selectCard() {
             }
           });
         } else if (valueB === 0) {
-          valueOptionOne.innerText = "-";
-
           multiCardValueB > 0 ? valueOptionTwo.innerText = multiCardValueB : valueOptionTwo.innerText = "-";
           fifteenCount += valueA;
           setFifteenCountColor();
@@ -820,67 +818,16 @@ function swapButtonFunction() {
     multiCardValueB = 0;
   })
 
-  // SWAP CARD ANIMATION ->->
-      let swapSlideAnimationLength;
-      let validCardsInHand = 0;
-
-      dblSwapCheck = true;
-
-      if (cardsInHand.length <= 5) {
-        swapSlideAnimationLength = 200;
-      } else {
-        swapSlideAnimationLength = 100;
-      }
-      
-      currentHand.style.margin = `15.188px 8.938px 15.188px ${8.938 - swapSlideAnimationLength}px`;
-      
-      currentHand.style.transition = "transform ease 0.2s";
-      currentHand.style.transform = `translateX(${swapSlideAnimationLength}px)`;
-
-      let lastCardClone = cardsInHand[cardsInHand.length-1].cloneNode(true);
-      lastCardClone.classList.add('lastCardSwapAnimation');
-      if (cardsInHand.length <= 5) {
-        lastCardClone.style.right = "120px";
-      }
-
-      currentHand.after(lastCardClone);
-      setTimeout(() => {
-        lastCardClone.style.opacity = "0";
-        
-        if (cardsInHand.length <= 5) {
-          lastCardClone.style.transform = "translateX(240px)";
-        }
-        lastCardClone.style.transform = "translateX(120px)";
-      }, 15);
-      
-      setTimeout(() => {
-        currentHand.style.transition = "none";
-
-        // correction for stutter 'glitch' when hand is a certain amount of cards
-        if (cardsInHand.length === 8 || cardsInHand.length === 7 || cardsInHand.length === 3) {
-          currentHand.style.margin = `15.188px 8.938px 15.188px ${8.938 - 10}px`;
-          currentHand.style.transform = "translateX(10px)";
-        } else {
-          currentHand.style.margin = `15.188px 8.938px 15.188px 8.938px`;
-          currentHand.style.transform = "translateX(0)";
-        }
-      }, 450);
-      
-      const dblSwapCorrection = setInterval(() => {
-        if (!dblSwapCheck && cardsInHand.length <= 10) {a
-        swapCostDisplay.textContent = `-${11 - validCardsInHand}s`;
-        }
-        }, 200);
-
-      setTimeout(() => {
-        playersHandArea.removeChild(lastCardClone);
-        dblSwapCheck = false;
-        clearInterval(dblSwapCorrection)
-      }, 200);
+  // Swap Card Animation
+  let validCardsInHand = utils.swapCardAni(dblSwapCheck, cardsInHand, currentHand, playersHandArea);
       
   // swapping with jackpot card in hand erases jackpot
   if (jackpotLive) {
-    totalCardsPlayed = Math.round(totalCardsPlayed/2);
+    // totalCardsPlayed = Math.round(totalCardsPlayed/2);
+    totalCardsPlayed -= globalCardsInHand.length;
+    jackpotMultiplierLvl = 0;
+
+    if (totalCardsPlayed < 0) totalCardsPlayed = 0;
     jackpotLive = false;
   }
   
@@ -976,6 +923,7 @@ function reDeal(cardsInHand, hand) {
   }
 
   totalCardsPlayed += cardsPlayed.length;
+
   totalCardsPlayedDisplay.innerHTML = `
   <div style="
     width: 60px; 
@@ -1030,7 +978,7 @@ function jackpotSelect() {
   let cardsInHand = document.querySelectorAll('.card-in-hand');
 
   if (!jackpotInit) {
-    jackpotRandTiming = Math.floor(Math.random() * (jackpotSecondsThreshold - (jackpotSecondsThreshold - 49)) + (jackpotSecondsThreshold - 49));
+    jackpotRandTiming = Math.floor(Math.random() * (jackpotSecondsThreshold - (jackpotSecondsThreshold - 34)) + (jackpotSecondsThreshold - 34));
     jackpotInit = true;
   }
 
@@ -1053,8 +1001,6 @@ function jackpotSelect() {
 
       let backgroundShiftY = (jackpotOverlay.style.backgroundPositionY.substr(0, jackpotOverlay.style.backgroundPositionY.length - 2)) - 10;
 
-      // console.log(+jackpotOverlay.style.backgroundPositionY.substr(0, jackpotOverlay.style.backgroundPositionY.length - 2));
-
       jackpotOverlay.style.backgroundPosition = `${backgroundShiftX}px ${backgroundShiftY}px`;
 
       cardsInHand[jackpotRandIndex].appendChild(jackpotOverlay);
@@ -1062,7 +1008,7 @@ function jackpotSelect() {
       cardsInHand[jackpotRandIndex].classList.add('jackpot-special-border');
 
       jackpotInit = false;
-      jackpotSecondsThreshold += 50;
+      jackpotSecondsThreshold += 35;
       jackpotLive = true;
   }
 }

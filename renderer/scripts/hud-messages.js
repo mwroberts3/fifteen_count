@@ -12,7 +12,6 @@ const hudMessageList = {
         'Never a bad idea to clear the deck',
         'Nice move!',
         'Count!'
-
     ]
 }
 
