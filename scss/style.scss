@@ -449,14 +449,17 @@ h2 {
 }
 
 #personal-highscore-display {
-  font-size: 0.85rem;
+  font-family: $gameplay-font-2;
+  font-size: 1rem;
   margin-left: 8px;
   margin-bottom: 12px;
-  font-weight: bold;
+  // font-weight: bold;
+  -webkit-text-stroke: 1px #000;
   height: 59px;
 
   span {
     font-weight: normal;
+    -webkit-text-stroke: 1px #000;
   }
 }
 
@@ -536,19 +539,27 @@ h2 {
   }
 }
 
+#cards-icon {
+  position: absolute;
+  top: 50px;
+  right: 180px;
+  margin-left: 6px;
+  transition: all 1s ease;
+}
+
 .jackpot-bonus-indicator {
   font-family: $gameplay-font;
   color: $gameplay-font-col;
   position: absolute;
   top: 60px;
-  right: 272px;
+  left: 265px;
   transition: all 2s ease;
 }
 
 .bonus-notice {
   position: absolute;
   top: 16px;
-  right: 86px;
+  right: 80px;
   width: 80px !important;
   text-align: center;
   // color: #aaa;
@@ -563,7 +574,7 @@ h2 {
   position: absolute;
   font-size: 18px;
   top: 15px;
-  right: 35px;
+  right: 26px;
   width: 30px;
   height: 30px;
   padding-bottom: 3px;
@@ -641,6 +652,7 @@ h2 {
   font-size: 45px;
   font-family: $gameplay-font-2;
   -webkit-text-stroke: 1.5px #000;
+  // transition: all 0.5s ease;
 }
 
 .time-bonus-indicator {

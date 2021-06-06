@@ -337,13 +337,15 @@ h2 {
   margin-left: -200px; }
 
 #personal-highscore-display {
-  font-size: 0.85rem;
+  font-family: "Ink Free", sans-serif;
+  font-size: 1rem;
   margin-left: 8px;
   margin-bottom: 12px;
-  font-weight: bold;
+  -webkit-text-stroke: 1px #000;
   height: 59px; }
   #personal-highscore-display span {
-    font-weight: normal; }
+    font-weight: normal;
+    -webkit-text-stroke: 1px #000; }
 
 .all-contents-container {
   position: relative;
@@ -401,18 +403,25 @@ h2 {
       width: 40%;
       margin: 0 5%; }
 
+#cards-icon {
+  position: absolute;
+  top: 50px;
+  right: 180px;
+  margin-left: 6px;
+  transition: all 1s ease; }
+
 .jackpot-bonus-indicator {
   font-family: "Russo One", sans-serif;
   color: #ffff00;
   position: absolute;
   top: 60px;
-  right: 272px;
+  left: 265px;
   transition: all 2s ease; }
 
 .bonus-notice {
   position: absolute;
   top: 16px;
-  right: 86px;
+  right: 80px;
   width: 80px !important;
   text-align: center;
   font-family: "Russo One", sans-serif;
@@ -425,7 +434,7 @@ h2 {
   position: absolute;
   font-size: 18px;
   top: 15px;
-  right: 35px;
+  right: 26px;
   width: 30px;
   height: 30px;
   padding-bottom: 3px;

@@ -127,7 +127,8 @@ body {
   animation-direction: alternate-reverse;
 }
 
-#personal-highscore-display {
+#personal-highscore-display,
+#personal-highscore-display span {
   animation-name: color-shift-highscore;
   animation-duration: 100s;
   animation-iteration-count: infinite;
@@ -175,8 +176,10 @@ body {
 @keyframes color-shift-highscore {
   52% {
     color: #fff;
+    -webkit-text-stroke: 1.5px #fff;
   }
   70% {
     color: #fff;
+    -webkit-text-stroke: 1.5px #fff;
   }
 }

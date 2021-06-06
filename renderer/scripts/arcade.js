@@ -4,7 +4,7 @@ const utils = require('./utils');
 
 const { pointsReview } = require('./points-review');
 
-const { hudMessage } = require('./hud-messages');
+const hudMessage = require('./hud-messages');
 
 // Fadein
 utils.gamescreenFadeinFunc();
@@ -47,8 +47,9 @@ totalCardsPlayedDisplay.innerHTML = `
   ">
   ${totalCardsPlayed} 
 </div>
-<img src="img/cards-icon.png"/>
+<p style="width: 60px; height: 60px;">&nbsp;</p>
 `;
+{/* <img src="img/cards-icon.png"/> */}
 
 // Gameplay variables & switches
 let pointsValidity = false;
@@ -80,7 +81,7 @@ let hand = [];
 // Timer variables
 const timer = document.querySelector(".timer");
 let totalSeconds = 100;
-let secondsLeft = 200;
+// let secondsLeft = 200;
 let threeTimerStart = 0;
 let elapsedTime = 0;
 const bonusTimeDisplay = document.querySelector(".bonus-time");
@@ -103,13 +104,17 @@ let jackpotSameColorCheck;
 let jackpotSecondsThreshold = 35;
 let jackpotMultiplierLvl = 0;
 let jackpotMultiplier = [1.25,1.5,2,3];
+let pointsOnDisplay = 0;
+let highscoreDefeated = false;
 
 addFreshPointsToTotal();
 setSecondsBonusIndicator();
 selectCard();
-let incomingHudMessages = setInterval(() => {
-  hudMessage(firstSubmit, jackpotLive, incomingHudMessages, fullHandPlayed);
-},10)
+// let incomingHudMessages = setInterval(() => {
+//   hudMessage(firstSubmit, jackpotLive, incomingHudMessages, fullHandPlayed);
+// },10)
+hudMessage.count(hudMessageDisplay);
+
 
 // Button submit
 document.addEventListener("keyup", (e) => {
@@ -246,12 +251,12 @@ function showHand() {
       timer.style.color = 'rgb(152, 253, 0)';
     }
     if (secondsLeft === -1) {
-      clearInterval(incomingHudMessages);
-      hudMessageDisplay.textContent = `Game Over`;
+      // clearInterval(incomingHudMessages);
+      hudMessage.gameOver(hudMessageDisplay);
     }
     if (secondsLeft <= -2) {
-      clearInterval(incomingHudMessages);
-      hudMessageDisplay.textContent = `Game Over`;
+      // clearInterval(incomingHudMessages);
+      hudMessage.gameOver(hudMessageDisplay);
       clearInterval(gameTimer);
       timer.textContent = '0';
       pointsOnDisplay = totalPoints;
@@ -301,11 +306,7 @@ function reset() {
 
   cardsInHand.length >= 10 ? swapCostDisplay.textContent = `-0s` : swapCostDisplay.textContent = `${cardsInHand.length - 10}s`;
   
-  // HUD messaging reset
-  clearInterval(incomingHudMessages);
-  incomingHudMessages = setInterval(() => {
-    hudMessage(firstSubmit, jackpotLive, incomingHudMessages, fullHandPlayed);
-  },10)
+  hudMessage.count(hudMessageDisplay);
 }
 
 // Combo Check
@@ -460,7 +461,9 @@ function cardsSubmit() {
       firstSubmitSFX.play();
     }
     
-    hudMessageDisplay.textContent = 'Combo!';
+    setTimeout(() => {
+      hudMessage.combo(hudMessageDisplay);
+    }, 50);
     setSwapPermission();
     setUncheckAllPermission();
 
@@ -474,6 +477,8 @@ function cardsSubmit() {
 
       pointsBreakdown.fullClearPoints += fullHandPointsBonus;
       pointsBreakdown.timePoints += fullHandBonus
+
+      hudMessage.fullHandClear(hudMessageDisplay);
 
       // these will have game skip combo round after playing a full hand
       comboSubmit = true;
@@ -770,22 +775,15 @@ function doubleComboCheck(valueA, comboCardcount) {
 }
 
 // check for newHighscore
-let highscoreDefeated = false;
 function newHighscoreCheck() {
   if (!highscoreDefeated) {
     if (pointsOnDisplay > highscoreToBeat) {
-      clearInterval(incomingHudMessages);
-      hudMessageDisplay.textContent = 'NEW HIGHSCORE!';
+      hudMessage.newHighscore(hudMessageDisplay);
       if (highscoreToBeat !== 0) {
         // New highscore sound effect
         if (userSelectedSoundSettings.SFX) newHighscoreSFX.play();
       }
       highscoreDefeated = true;
-      setTimeout(() => { 
-        incomingHudMessages = setInterval(() => {
-          hudMessage(firstSubmit, jackpotLive, incomingHudMessages, fullHandPlayed);
-        },10);
-      }, 2000)
     } 
   }
 }
@@ -934,8 +932,9 @@ function reDeal(cardsInHand, hand) {
     ">
     ${totalCardsPlayed} 
   </div>
-  <img src="img/cards-icon.png"/>
+  <p style="width: 60px; height: 60px;">&nbsp;</p>
   `;
+  // <img src="img/cards-icon.png"/>
 
   // Check to see if all cards in hand were played, for possible replenish bonus
   let numberCheckedCards = 0;
@@ -1010,11 +1009,12 @@ function jackpotSelect() {
       jackpotInit = false;
       jackpotSecondsThreshold += 35;
       jackpotLive = true;
+
+      hudMessage.jackpotOnTable(hudMessageDisplay);
   }
 }
 
 // Live points updates
-let pointsOnDisplay = 0;
 function addFreshPointsToTotal() {
 
 setInterval(() => {
