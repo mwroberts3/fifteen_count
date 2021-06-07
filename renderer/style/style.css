@@ -4,7 +4,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  cursor: none !important; }
+  cursor: default !important; }
 
 body {
   position: relative;
@@ -74,7 +74,7 @@ h2 {
   margin-top: 5px;
   border-radius: 5px;
   font-family: "Didact Gothic", sans-serif;
-  cursor: none !important;
+  cursor: default !important;
   background-image: linear-gradient(#444, #666);
   color: white;
   font-size: 1.25rem; }
@@ -238,7 +238,7 @@ h2 {
     margin: 0 10px;
     border-radius: 10px;
     list-style: none;
-    cursor: none !important; }
+    cursor: default !important; }
   .how-to-nav ul .option-selected,
   .high-score-mode-select ul .option-selected,
   .how-to-play-mode-select ul .option-selected {
@@ -254,7 +254,7 @@ h2 {
       padding: 10px; }
       .options-container section p span {
         font-weight: bold;
-        cursor: none !important;
+        cursor: default !important;
         display: inline-block;
         width: 170px; }
         .options-container section p span:hover {
@@ -307,7 +307,7 @@ h2 {
     #theme .theme-selection-menu div {
       text-align: center;
       padding: 3px 5px;
-      cursor: none !important; }
+      cursor: default !important; }
     #theme .theme-selection-menu .selected-theme {
       background: #fff;
       border-radius: 5px; }
@@ -412,10 +412,10 @@ h2 {
 
 .jackpot-bonus-indicator {
   font-family: "Russo One", sans-serif;
-  color: #ffff00;
+  color: #fff;
   position: absolute;
   top: 60px;
-  left: 265px;
+  right: 192px;
   transition: all 2s ease; }
 
 .bonus-notice {
@@ -473,7 +473,7 @@ h2 {
 .menu-options {
   display: flex; }
   .menu-options div {
-    cursor: none !important;
+    cursor: default !important;
     margin-left: 10px; }
     .menu-options div:hover {
       color: #ddd; }
@@ -560,7 +560,7 @@ input[type="submit"] {
   .players-hand h4 {
     text-align: center; }
   .players-hand input[type="button"] {
-    cursor: none !important;
+    cursor: default !important;
     width: 30%;
     padding: 10px;
     font-size: 1.25rem;
@@ -573,7 +573,7 @@ input[type="submit"] {
     .players-hand input[type="button"] :focus {
       border: none; }
   .players-hand card-t {
-    cursor: none !important;
+    cursor: default !important;
     transition: all 0.2s ease;
     border-radius: 10px; }
   .players-hand .show-hand {
@@ -617,7 +617,7 @@ input[type="submit"] {
     border-collapse: collapse;
     text-align: center;
     font-size: 2rem;
-    cursor: none !important;
+    cursor: default !important;
     background: #eee;
     transition: all 0.2s ease; }
   .players-hand .value-options-two {
@@ -632,7 +632,7 @@ input[type="submit"] {
     text-align: center;
     padding-top: 20px;
     background: #eee;
-    cursor: none !important;
+    cursor: default !important;
     transition: all 0.2s ease; }
   .players-hand .fifteen-count {
     border-radius: 10px;
@@ -654,7 +654,7 @@ input[type="submit"] {
     width: 160px;
     height: 80px;
     background: #eee;
-    cursor: none !important;
+    cursor: default !important;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -890,7 +890,7 @@ input[type="submit"] {
       font-size: 0.9rem;
       color: #777; }
       .ta-outer-boundaries .ta-timer-score-display .menu-options div {
-        cursor: none !important;
+        cursor: default !important;
         margin: 0 10px; }
         .ta-outer-boundaries .ta-timer-score-display .menu-options div:hover {
           color: #ddd; }
@@ -906,7 +906,8 @@ input[type="submit"] {
       font-size: 2rem;
       font-weight: bold;
       font-style: italic;
-      color: #98fd00; }
+      font-family: "Ink Free", sans-serif;
+      color: #fff; }
     .ta-outer-boundaries .ta-timer-score-display .ta-score-display {
       width: 33%;
       display: flex;
@@ -947,7 +948,8 @@ input[type="submit"] {
       align-items: center;
       font-size: 50px;
       color: #fff;
-      z-index: -1; }
+      z-index: -1;
+      transition: transform ease 0.2s; }
     .ta-outer-boundaries .ta-cards-display .bomb-icon {
       position: absolute;
       width: 45px;
@@ -956,23 +958,15 @@ input[type="submit"] {
       right: 5px;
       background-image: url("../img/bomb-icon.gif"); }
     .ta-outer-boundaries .ta-cards-display .ta-checked {
-      animation-name: ta-checked-rotate;
-      animation-duration: 0.1s;
-      animation-timing-function: linear;
-      animation-iteration-count: 1;
-      animation-fill-mode: forwards; }
-
-@keyframes ta-checked-rotate {
-  0% {
-    transform: translateZ(1px) rotate(0); }
-  100% {
-    transform: translateZ(1px) rotate(14deg); } }
+      transform: rotate(14deg); }
   .ta-outer-boundaries .ta-alltime-score-display {
-    font-size: 0.85rem;
+    font-size: 1rem;
     font-weight: bold;
     height: 20px;
     color: #000;
-    display: inline; }
+    display: inline;
+    font-family: "Ink Free", sans-serif;
+    -webkit-text-stroke: 1px #000; }
   .ta-outer-boundaries .ta-highscore-itself {
     display: inline; }
   .ta-outer-boundaries .ta-highscore-offset {

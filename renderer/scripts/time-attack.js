@@ -27,6 +27,8 @@ let bonusPoints = 0;
 let cardBonusIndex;
 let gamePaused = false;
 
+let highscoreDefeated = false;
+
 const sameColorRed = (color) => color == "red"; 
 const sameColorBlack = (color) => color == "black"; 
 
@@ -124,6 +126,7 @@ let pointsOnDisplay = 0;
 const timeAttackScore = setInterval(() => {
         if (pointsOnDisplay < score) {
             pointsOnDisplay++;
+            newHighscoreCheckAndUpdate();
         }
         scoreDisplay.textContent = `${pointsOnDisplay}`;
         if (secondsLeft === 0) {
@@ -136,6 +139,7 @@ const timeAttackScore = setInterval(() => {
 buildDeckTimeAttack(deck);
 shuffleTimeAttack(deck);
 buildAndShowHand(redrawAmount);
+newHighscoreCheckAndUpdate();
 
 // Check Cards Phase
 cardsDisplay.addEventListener('click', e => {
@@ -457,4 +461,18 @@ function displaySecondsWhilePaused() {
     pausedTimerSet = setInterval(() => { 
         document.querySelector('.seconds-left').classList.toggle('hidden-vis');
     }, 500);
+}
+
+function newHighscoreCheckAndUpdate() {
+    console.log(highscoreToBeat);
+
+    if (pointsOnDisplay > highscoreToBeat && !highscoreDefeated) {
+        console.log('NEW HIGHSCORE!');
+        highscoreDefeated = true;
+
+        setInterval(() => {
+            taHighscoreDisplay.innerText = `Highscore ${pointsOnDisplay}`
+        }, 100);
+    }
+
 }
