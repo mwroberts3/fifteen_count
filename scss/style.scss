@@ -171,8 +171,13 @@ h2 {
   width: $maxwidth/3;
   margin: auto;
   background: $dark-bg-col;
-  border-radius: 10px;
+  border-radius: 50% 20% / 10% 40%;
   padding: 10px;
+  border: 4px solid #333;
+  animation-name: gamemode-animation;
+  animation-duration: 100s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
 
   h3 {
     color: #fff;
@@ -200,6 +205,16 @@ h2 {
         width: 100%;
       }
     }
+  }
+}
+
+@keyframes gamemode-animation {
+  0% {
+    border-radius: 50% 20% / 10% 40%;
+  }
+
+  100% {
+    border-radius: 10px 100px / 120px;
   }
 }
 
@@ -454,12 +469,12 @@ h2 {
   margin-left: 8px;
   margin-bottom: 12px;
   // font-weight: bold;
-  -webkit-text-stroke: 1px #000;
+  // -webkit-text-stroke: 1px #000;
   height: 59px;
 
   span {
     font-weight: normal;
-    -webkit-text-stroke: 1px #000;
+    // -webkit-text-stroke: 1px #000;
   }
 }
 
@@ -569,7 +584,7 @@ h2 {
 }
 
 .jackpot-level {
-  -webkit-text-stroke: none;
+  // -webkit-text-stroke: none;
   font-family: $gameplay-font-2;
   position: absolute;
   font-size: 18px;
@@ -595,18 +610,13 @@ h2 {
 
 @keyframes jackpotlevelflicker {
   0% {
-    transform: rotate(-5deg);
+    transform: rotate(-7deg);
     border: solid #888 2px;
-    transform: scale(0.97);
     color: #aaa;
   }
-  50% {
-    // border: solid #aaa 2px;
-  }
   100% {
-    transform: rotate(5deg);
+    transform: rotate(7deg);
     border: solid #aaa 2px;
-    transform: scale(1);
     color: #888;
   }
 }
@@ -651,7 +661,7 @@ h2 {
   // margin-bottom: 15px;
   font-size: 45px;
   font-family: $gameplay-font-2;
-  -webkit-text-stroke: 1.5px #000;
+  // -webkit-text-stroke: 1.5px #000;
   // transition: all 0.5s ease;
 }
 
@@ -936,6 +946,7 @@ input[type="submit"] {
     display: flex;
     align-items: center;
     width: 75%;
+    margin-left: 60px;
 
     div {
       width: 33%;
@@ -952,13 +963,17 @@ input[type="submit"] {
   }
 
   progress[value]::-webkit-progress-bar {
-    background-color: #000;
+    background-color: transparent;
   }
 
   progress[value]::-webkit-progress-value {
     background-color: $gameplay-font-col;
     border-radius: 3px;
   }
+}
+
+#points-breakdown-total-points {
+  // font-family: $gameplay-font-2;
 }
 
 // NEW HIGHSCORE
@@ -1137,6 +1152,15 @@ input[type="submit"] {
   justify-content: center;
 }
 
+.ta-total-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url("../img/time-attack-outer-bg.png");
+}
+
 .ta-outer-boundaries {
   position: relative;
   width: 904px;
@@ -1276,7 +1300,7 @@ input[type="submit"] {
     color: #000;
     display: inline;
     font-family: $gameplay-font-2;
-    -webkit-text-stroke: 1px #000;
+    // -webkit-text-stroke: 1px #000;
   }
 
   .ta-highscore-itself {

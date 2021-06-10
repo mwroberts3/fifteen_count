@@ -1,10 +1,4 @@
 Bugs:
-    -5/30/21 - not showing jackpot points animation if also full hand bonus that same turn. Jackpot points are still being added though
-
-    -5/29/21 - unchecking cards in time attack should also have animation
-
-    -5/29/21 reloading Classic arcade mode cause the background to flicker to baby blue
-
     -5/29/21 - scoring a jackpot bonus should have a sound effect
 
     -5/2/21 - for some reason time attack doesn't count/controls don't work if it's first time playing and how to slide is viewed

@@ -110,9 +110,6 @@ let highscoreDefeated = false;
 addFreshPointsToTotal();
 setSecondsBonusIndicator();
 selectCard();
-// let incomingHudMessages = setInterval(() => {
-//   hudMessage(firstSubmit, jackpotLive, incomingHudMessages, fullHandPlayed);
-// },10)
 hudMessage.count(hudMessageDisplay);
 
 
@@ -241,7 +238,11 @@ function showHand() {
   function timerFunction() {
     let threeTimerFinish = new Date().getTime();
     if (threeTimerFinish - threeTimerStart >= 1000) {
-      timer.textContent = `${secondsLeft}`;
+      if (secondsLeft > 0) {
+        timer.textContent = `${secondsLeft}`;
+      } else {
+        timer.textContent = '0';
+      }
       secondsLeft--;
       elapsedTime++;
     }
@@ -250,11 +251,11 @@ function showHand() {
     } else {
       timer.style.color = 'rgb(152, 253, 0)';
     }
-    if (secondsLeft === -1) {
-      // clearInterval(incomingHudMessages);
-      hudMessage.gameOver(hudMessageDisplay);
-    }
-    if (secondsLeft <= -2) {
+    // if (secondsLeft === -1) {
+    //   // clearInterval(incomingHudMessages);
+    //   hudMessage.gameOver(hudMessageDisplay);
+    // }
+    if (secondsLeft <= 0) {
       // clearInterval(incomingHudMessages);
       hudMessage.gameOver(hudMessageDisplay);
       clearInterval(gameTimer);
@@ -865,6 +866,10 @@ function swapButtonFunction() {
     timer.style.color = 'red'
   }
 
+  if (secondsLeft <= 0) {
+    timer.innerText = '0'
+  }
+
   if (cardsInHand.length < 10) {
     timer.textContent = `${secondsLeft + 1}`;
     bonusTimeDisplay.textContent = `${(cardsInHand.length - 10)}`;
@@ -1062,12 +1067,11 @@ for (let i = 0; i < secondsBonus; i++){
 
 function setFifteenCountColor() {
   fifteenCountDisplay.style.color = fifteenCountColRange[fifteenCount];
-  fifteenCountDisplay.setAttribute("style", `-webkit-text-stroke: 3px ${fifteenCountColRange[fifteenCount]}`);
+  // fifteenCountDisplay.setAttribute("style", `-webkit-text-stroke: 3px ${fifteenCountColRange[fifteenCount]}`);
 
-if (fifteenCount > 15) {
-  fifteenCountDisplay.setAttribute("style", `-webkit-text-stroke: 3px ${fifteenCountColRange[15]}`);
-
-}
+// if (fifteenCount > 15) {
+//   fifteenCountDisplay.setAttribute("style", `-webkit-text-stroke: 3px ${fifteenCountColRange[15]}`);
+// }
   
   if (fifteenCount > 0) {
     fifteenCountDisplay.textContent = `${fifteenCount}`;

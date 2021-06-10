@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Russo+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Short+Stack&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap");
 * {
   margin: 0;
@@ -138,8 +139,13 @@ h2 {
   width: 400px;
   margin: auto;
   background: #222;
-  border-radius: 10px;
-  padding: 10px; }
+  border-radius: 50% 20% / 10% 40%;
+  padding: 10px;
+  border: 4px solid #333;
+  animation-name: gamemode-animation;
+  animation-duration: 100s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate; }
   .gamemode-select-container h3 {
     color: #fff;
     text-align: center; }
@@ -159,13 +165,19 @@ h2 {
         text-align: center;
         width: 100%; }
 
+@keyframes gamemode-animation {
+  0% {
+    border-radius: 50% 20% / 10% 40%; }
+  100% {
+    border-radius: 10px 100px / 120px; } }
+
 .title-screen-footer {
   margin-top: 10px;
   height: 53px;
   text-align: center;
   color: #999;
   font-size: 12px;
-  font-family: "Ink Free", sans-serif; }
+  font-family: "Short Stack", cursive; }
 
 .title-banner-container {
   position: relative; }
@@ -337,15 +349,13 @@ h2 {
   margin-left: -200px; }
 
 #personal-highscore-display {
-  font-family: "Ink Free", sans-serif;
+  font-family: "Short Stack", cursive;
   font-size: 1rem;
   margin-left: 8px;
   margin-bottom: 12px;
-  -webkit-text-stroke: 1px #000;
   height: 59px; }
   #personal-highscore-display span {
-    font-weight: normal;
-    -webkit-text-stroke: 1px #000; }
+    font-weight: normal; }
 
 .all-contents-container {
   position: relative;
@@ -429,8 +439,7 @@ h2 {
   -webkit-text-stroke: 1px #888; }
 
 .jackpot-level {
-  -webkit-text-stroke: none;
-  font-family: "Ink Free", sans-serif;
+  font-family: "Short Stack", cursive;
   position: absolute;
   font-size: 18px;
   top: 15px;
@@ -452,15 +461,12 @@ h2 {
 
 @keyframes jackpotlevelflicker {
   0% {
-    transform: rotate(-5deg);
+    transform: rotate(-7deg);
     border: solid #888 2px;
-    transform: scale(0.97);
     color: #aaa; }
-  50% { }
   100% {
-    transform: rotate(5deg);
+    transform: rotate(7deg);
     border: solid #aaa 2px;
-    transform: scale(1);
     color: #888; } }
 
 .menu-hud {
@@ -492,8 +498,7 @@ h2 {
 .hud-message {
   text-align: center;
   font-size: 45px;
-  font-family: "Ink Free", sans-serif;
-  -webkit-text-stroke: 1.5px #000; }
+  font-family: "Short Stack", cursive; }
 
 .time-bonus-indicator {
   position: absolute;
@@ -645,7 +650,7 @@ input[type="submit"] {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-family: "Ink Free", sans-serif;
+    font-family: "Short Stack", cursive;
     font-weight: bolder; }
   .players-hand .swap-container {
     border: 2px solid #ccc;
@@ -727,7 +732,8 @@ input[type="submit"] {
   #points-breakdown-view div {
     display: flex;
     align-items: center;
-    width: 75%; }
+    width: 75%;
+    margin-left: 60px; }
     #points-breakdown-view div div {
       width: 33%;
       margin-left: 20px; }
@@ -737,7 +743,7 @@ input[type="submit"] {
     width: 250px;
     height: 20px; }
   #points-breakdown-view progress[value]::-webkit-progress-bar {
-    background-color: #000; }
+    background-color: transparent; }
   #points-breakdown-view progress[value]::-webkit-progress-value {
     background-color: #ffff00;
     border-radius: 3px; }
@@ -799,7 +805,7 @@ input[type="submit"] {
     align-items: center; }
 
 .game-paused-header {
-  font-family: "Ink Free", sans-serif;
+  font-family: "Short Stack", cursive;
   font-size: 2.5rem;
   font-weight: bold; }
 
@@ -862,6 +868,14 @@ input[type="submit"] {
   display: flex;
   justify-content: center; }
 
+.ta-total-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url("../img/time-attack-outer-bg.png"); }
+
 .ta-outer-boundaries {
   position: relative;
   width: 904px;
@@ -906,7 +920,7 @@ input[type="submit"] {
       font-size: 2rem;
       font-weight: bold;
       font-style: italic;
-      font-family: "Ink Free", sans-serif;
+      font-family: "Short Stack", cursive;
       color: #fff; }
     .ta-outer-boundaries .ta-timer-score-display .ta-score-display {
       width: 33%;
@@ -965,8 +979,7 @@ input[type="submit"] {
     height: 20px;
     color: #000;
     display: inline;
-    font-family: "Ink Free", sans-serif;
-    -webkit-text-stroke: 1px #000; }
+    font-family: "Short Stack", cursive; }
   .ta-outer-boundaries .ta-highscore-itself {
     display: inline; }
   .ta-outer-boundaries .ta-highscore-offset {
@@ -1010,7 +1023,7 @@ input[type="submit"] {
   background-image: url("../img/ta-pause-background.png");
   z-index: 2;
   border-radius: 10px;
-  font-family: "Ink Free", sans-serif;
+  font-family: "Short Stack", cursive;
   font-weight: bold;
   color: #fff;
   display: flex;

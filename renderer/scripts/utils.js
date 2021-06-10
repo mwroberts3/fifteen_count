@@ -5,11 +5,35 @@ opacity = 0;
 let fadeTime = 0;
 
 const gamescreenFadein = setInterval(() => {
-
   document.querySelector('body').style.opacity = fadeTime;
   fadeTime += 0.1;
   if (fadeTime >= 1) clearInterval(gamescreenFadein);
 }, 39)
+}
+
+exports.timeAttackFadeIn = () => {
+  document.querySelector('body').style.
+opacity = 0;
+let fadeTime = 0;
+
+setTimeout(() => {
+    const gamescreenFadein = setInterval(() => {
+      document.querySelector('body').style.opacity = fadeTime;
+      fadeTime += 0.1;
+      if (fadeTime >= 1) {
+          clearInterval(gamescreenFadein);
+      }
+    }, 39)
+},250);
+}
+
+exports.timeAttackBackgroundAdjust = () =>
+{
+  document.querySelector('.ta-total-container').style.left = `-${window.innerWidth - 1200}px`;
+
+let taBackgroundSizeCorrection = window.innerWidth - 1200;
+
+document.querySelector('.ta-total-container').style.width = `calc(100vw + ${taBackgroundSizeCorrection}px)`;
 }
 
 // set bg position of Cosmos theme background after other content is loaded to keep it centered

@@ -9,97 +9,99 @@
   <body>
     <audio id="bgm-selection" src="" autoplay loop></audio>
     <div class="cursor"></div>
-    <div class="ta-outer-boundaries">
-      <div class="ta-timer-score-display">
-        <div>
-          <div class="menu-options">Time Attack</div>
-        </div>
-        <div class="ta-inner-timer-score-container">
-          <div class="ta-score-display">0</div>
-          <div class="ta-timer-display">180</div>
-          <div class="ta-count-display">0</div>
-        </div>
-        <div>
-          <div class="menu-options">
-            <div id="pause-game-btn">Pause</div>
-            <a href="time-attack.html" draggable="false">
-              <div>Restart</div>
-            </a>
-            <a href="title-screen.html" draggable="false">
-              <div>Menu</div>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="ta-cards-display"></div>
-      <div class="ta-alltime-score-display">
-        Highscore
-        <div class="ta-highscore-itself"></div>
-      </div>
-
-      <div class="ta-pause-screen hidden">
-        <div class="ta-pause-box-inner-container">
-          <div class="game-paused-header">Paused</div>
-          <div class="seconds-left"></div>
+    <div class="ta-total-container">
+      <div class="ta-outer-boundaries">
+        <div class="ta-timer-score-display">
           <div>
-            Click inside rectangle or press&nbsp;<span
-              id="resume-game-key"
-            ></span>
-            to resume
+            <div class="menu-options">Time Attack</div>
           </div>
-        </div>
-      </div>
-
-      <div class="ta-game-over hidden">
-        <div class="ta-game-over-inner-container">
-          <h1>Game Over</h1>
-          <div></div>
+          <div class="ta-inner-timer-score-container">
+            <div class="ta-score-display">0</div>
+            <div class="ta-timer-display">180</div>
+            <div class="ta-count-display">0</div>
+          </div>
           <div>
-            <a href="time-attack.html">
-              <button class="main-btn light-menu-btn">Restart</button>
-            </a>
-            <a href="title-screen.html">
-              <button class="main-btn">Quit</button>
-            </a>
+            <div class="menu-options">
+              <div id="pause-game-btn">Pause</div>
+              <a href="time-attack.html" draggable="false">
+                <div>Restart</div>
+              </a>
+              <a href="title-screen.html" draggable="false">
+                <div>Menu</div>
+              </a>
+            </div>
           </div>
         </div>
+        <div class="ta-cards-display"></div>
+        <div class="ta-alltime-score-display">
+          &nbsp;
+          <div class="ta-highscore-itself"></div>
+        </div>
+
+        <div class="ta-pause-screen hidden">
+          <div class="ta-pause-box-inner-container">
+            <div class="game-paused-header">Paused</div>
+            <div class="seconds-left"></div>
+            <div>
+              Click inside rectangle or press&nbsp;<span
+                id="resume-game-key"
+              ></span>
+              to resume
+            </div>
+          </div>
+        </div>
+
+        <div class="ta-game-over hidden">
+          <div class="ta-game-over-inner-container">
+            <h1>Game Over</h1>
+            <div></div>
+            <div>
+              <a href="time-attack.html">
+                <button class="main-btn light-menu-btn">Restart</button>
+              </a>
+              <a href="title-screen.html">
+                <button class="main-btn">Quit</button>
+              </a>
+            </div>
+          </div>
+        </div>
+        <section id="time-attack-how-to-play" class="hidden">
+          <div class="time-attack-howtoplay-slide-one">
+            <h2>How to Play - Time Attack</h2>
+            <div id="ta-howto-p1">
+              <p>It looks like this is your first time playing.</p>
+              <p>
+                The goal of Time Attack is to play as many cards as possible
+                within the 180 second timer
+              </p>
+              <p>
+                Unlike Arcade mode there is no way to add more seconds to the
+                clock. So all you have is 180 seconds. Make them count!
+              </p>
+            </div>
+            <div id="ta-howto-p2">
+              <p>It looks like this is your first time playing.</p>
+              <p>
+                The goal of Time Attack is to play as many cards as possible
+                within the 180 second timer
+              </p>
+              <p>
+                Unlike Arcade mode there is no way to add more seconds to the
+                clock. So all you have is 180 seconds. Make them count!
+              </p>
+            </div>
+            <div id="ta-howto-img1">
+              <img
+                src="img/classic_sprites.png"
+                style="width: 400px; height: 300px"
+              />
+            </div>
+            <div class="btn-container">
+              <button class="skip-how-to main-btn">Close</button>
+            </div>
+          </div>
+        </section>
       </div>
-      <section id="time-attack-how-to-play" class="hidden">
-        <div class="time-attack-howtoplay-slide-one">
-          <h2>How to Play - Time Attack</h2>
-          <div id="ta-howto-p1">
-            <p>It looks like this is your first time playing.</p>
-            <p>
-              The goal of Time Attack is to play as many cards as possible
-              within the 180 second timer
-            </p>
-            <p>
-              Unlike Arcade mode there is no way to add more seconds to the
-              clock. So all you have is 180 seconds. Make them count!
-            </p>
-          </div>
-          <div id="ta-howto-p2">
-            <p>It looks like this is your first time playing.</p>
-            <p>
-              The goal of Time Attack is to play as many cards as possible
-              within the 180 second timer
-            </p>
-            <p>
-              Unlike Arcade mode there is no way to add more seconds to the
-              clock. So all you have is 180 seconds. Make them count!
-            </p>
-          </div>
-          <div id="ta-howto-img1">
-            <img
-              src="img/classic_sprites.png"
-              style="width: 400px; height: 300px"
-            />
-          </div>
-          <div class="btn-container">
-            <button class="skip-how-to main-btn">Close</button>
-          </div>
-        </div>
-      </section>
     </div>
     <script>
       // fade-in
@@ -109,6 +111,8 @@
     </script>
     <script src="scripts/custom-cursor.js"></script>
     <script src="./scripts/time-attack-settings.js"></script>
-    <script src="./scripts/time-attack.js"></script>
+    <script>
+      require("./scripts/time-attack");
+    </script>
   </body>
 </html>

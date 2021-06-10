@@ -1,5 +1,10 @@
 const moment = require('moment');
 
+const utils = require('./utils');
+
+utils.timeAttackFadeIn();
+utils.timeAttackBackgroundAdjust();
+
 // DOM sections
 const timerAndScoreDisplay = document.querySelector(".ta-timer-score-display"),
 timerDisplay = document.querySelector('.ta-timer-display'),

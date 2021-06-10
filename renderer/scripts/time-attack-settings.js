@@ -1,6 +1,3 @@
-// set outer background
-document.querySelector('body').style.backgroundImage = "url('./img/time-attack-outer-bg.png')";
-
 // check to see if first time playing
 const timeAttackHowTo = document.getElementById('time-attack-how-to-play');
 let firsttimeCheck = {};
