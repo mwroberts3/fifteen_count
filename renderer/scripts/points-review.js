@@ -13,14 +13,14 @@ let scoresCounted = 0;
 exports.pointsReview = (pointsBreakdown, totalPoints) => {
     console.log(pointsBreakdown);
 
-    pointsBreakdown.timePoints += pointsBreakdown.speedPoints;
+    // pointsBreakdown.timePoints += pointsBreakdown.speedPoints;
 
     pointsBreakdownView.classList.remove('hidden');
     displayPointPct(totalPoints, pointsBreakdown.cardPoints, regCardPoints);
 
     displayPointPct(totalPoints, pointsBreakdown.comboPoints, comboCardPoints);
     
-    displayPointPct(totalPoints, pointsBreakdown.fullClearPoints, fullClearPointsDisplay);
+    // displayPointPct(totalPoints, pointsBreakdown.fullClearPoints, fullClearPointsDisplay);
 
     displayPointPct(totalPoints, pointsBreakdown.jackpotPoints, jackpotPointsDisplay);
 

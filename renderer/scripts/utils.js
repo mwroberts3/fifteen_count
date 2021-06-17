@@ -182,3 +182,4 @@ exports.jackpotLevelAni = (jackpotLevelDisplay, jackpotMultiplierLvl) => {
     jackpotLevelDisplay.style.color = "#fff";
   }
 }
+

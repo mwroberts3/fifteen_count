@@ -61,6 +61,7 @@ let comboCardcount = 0;
 let multiCardValueB = 0;
 
 let dblSwapCheck = false;
+let swappedCardTimeBonusNulify = false;
 
 let roundBonusTimer = 0;
 
@@ -85,6 +86,8 @@ let totalSeconds = 100;
 let threeTimerStart = 0;
 let elapsedTime = 0;
 const bonusTimeDisplay = document.querySelector(".bonus-time");
+
+let timeBonusLevelforAnimation = 0;
 
 // Setting up deck & displaying for play
 buildDeck(deck);
@@ -337,7 +340,8 @@ function comboCheck() {
       checkedCardSuits.every(sameColorRed) == true ||
       checkedCardSuits.every(sameColorBlack) == true
     ) {
-      pointsInPlay *= 2;
+      pointsInPlay *= 1.5;
+      console.log('points in play', pointsInPlay);
     }
   }
 
@@ -461,6 +465,9 @@ function cardsSubmit() {
     if (userSelectedSoundSettings.SFX) {
       firstSubmitSFX.play();
     }
+
+    // reset potential time bonus if card was swapped before submit
+    swappedCardTimeBonusNulify = false;
     
     setTimeout(() => {
       hudMessage.combo(hudMessageDisplay);
@@ -476,7 +483,7 @@ function cardsSubmit() {
 
       pointsBreakdown['fullClearTimes']++;
 
-      pointsBreakdown.fullClearPoints += fullHandPointsBonus;
+      // pointsBreakdown.fullClearPoints += fullHandPointsBonus;
       pointsBreakdown.timePoints += fullHandBonus
 
       hudMessage.fullHandClear(hudMessageDisplay);
@@ -534,32 +541,41 @@ function roundBonusCheck() {
   let roundBonusTimerCheck = new Date();
   let roundBonusPoints = 0;
   let roundBonuses = [
-    0.1,
-    1.09,
-    1.08,
-    1.07,
-    1.06,
+    1.1,
+    1.1,
+    1.1,
+    1.1,
     1.05,
-    1.04,
-    1.03,
-    1.02,
-    1.01,
+    1.05,
+    1.05,
   ];
-  let checkedCards = document.querySelectorAll(".checked").length;
   let diff =
     (roundBonusTimerCheck.getTime() - roundBonusTimer.getTime()) / 1000;
   diff = Math.round(diff);
 
-  if (diff <= 9 && firstSubmit === false && pointsValidity === true) {
+  if (diff <= 6 && firstSubmit === false && pointsValidity === true && swappedCardTimeBonusNulify === false) {
     roundBonusPoints = pointsInPlay * roundBonuses[diff] - pointsInPlay;
 
+    if (diff >= 3) {
+      // show level 1 animation
+      timeBonusLevelforAnimation = 1;
+    } else {
+      // show level 2 animation
+      timeBonusLevelforAnimation = 2;
+    }
+    
     roundBonusPoints = Math.round(roundBonusPoints);
-
+    
     totalPoints += roundBonusPoints;
-
-    pointsBreakdown.speedPoints += roundBonusPoints;
+    
+    pointsBreakdown.timePoints += roundBonusPoints;
+    
+    console.log('time bonus level', diff, 'points', roundBonusPoints, 'multiplier', roundBonuses[diff]);
+  } else if (diff > 8 && firstSubmit === false && pointsValidity === true) {
+    console.log('too slow for time bonus');
+    timeBonusLevelforAnimation = 0;
   }
-
+  
   cardsSubmit();
 }
 
@@ -807,6 +823,9 @@ function swapButtonPush(e) {
 }
 
 function swapButtonFunction() {
+  // nulify potential time bonus on next submit after card is swapped
+  swappedCardTimeBonusNulify = true;
+
   let cardsInHand = document.querySelectorAll(".card-in-hand");
 
   // uncheck already checked cards
@@ -1021,17 +1040,60 @@ function jackpotSelect() {
 
 // Live points updates
 function addFreshPointsToTotal() {
-
-setInterval(() => {
+  let stringedPoints = pointsOnDisplay.toString();
+  
+  totalPointsDisplay.innerHTML = '';
+  
+  for(let i=0; i < stringedPoints.length; i++) {
+    totalPointsDisplay.innerHTML += `<span>${stringedPoints[i]}</span>`;
+  }
+  
+  setInterval(() => {
+    
     if (pointsOnDisplay < totalPoints) {
-      pointsOnDisplay++;
-      totalPointsDisplay.innerHTML = `${pointsOnDisplay}`;
-    } 
-    if (pointsOnDisplay > highscoreToBeat) {
-      personalHighscoreDisplay.childNodes[1].textContent = pointsOnDisplay;
-    }
+        
+        pointsOnDisplay++;
+        
+        let stringedPoints = pointsOnDisplay.toString();
+
+        totalPointsDisplay.innerHTML = '';
+        
+        for(let i=0; i < stringedPoints.length; i++) {
+          totalPointsDisplay.innerHTML += `<span>${stringedPoints[i]}</span>`;
+        }
+
+        if (timeBonusLevelforAnimation > 0) {
+          let bonusColorFlash = '';
+          if (timeBonusLevelforAnimation === 1) {
+            bonusColorFlash = '#ffe865';
+          } else {
+            bonusColorFlash = '#ffd700';          
+          }
+
+          totalPointsDisplay.childNodes[0].style.color = `${bonusColorFlash}`;
+
+          let iCount = 1;
+          const timeBonusAniInterval = setInterval(() => {
+            if (iCount < totalPointsDisplay.childNodes.length) {
+              totalPointsDisplay.childNodes[iCount].style.color = `${bonusColorFlash}`;
+              setTimeout(() => {
+                totalPointsDisplay.childNodes[iCount - 2].style.color = '#ffff00';
+              }, 40)
+              iCount++;
+            } else {
+              totalPointsDisplay.childNodes[totalPointsDisplay.childNodes.length-1].style.color = '#ffff00';
+              clearInterval(timeBonusAniInterval);
+              timeBonusLevelforAnimation = 0;
+            }
+          }, 80)
+        }  
+        // totalPointsDisplay.innerHTML = `${pointsOnDisplay}`;
+      } 
+      if (pointsOnDisplay > highscoreToBeat) {
+        personalHighscoreDisplay.childNodes[1].textContent = pointsOnDisplay;
+      }
       newHighscoreCheck();
-  }, 20);
+    }, 20);
 };
 
 function setSecondsBonusIndicator(){
@@ -1066,17 +1128,49 @@ for (let i = 0; i < secondsBonus; i++){
 }
 
 function setFifteenCountColor() {
-  fifteenCountDisplay.style.color = fifteenCountColRange[fifteenCount];
-  // fifteenCountDisplay.setAttribute("style", `-webkit-text-stroke: 3px ${fifteenCountColRange[fifteenCount]}`);
+  fifteenCountColRange = [
+    "#ddd",
+    "#ddd",
+    "#ddd",
+    "#ddd",
+    "#ddd",
+    "#ddd",
+    "#ddd",
+    "#ddd",
+    "#ddd",
+    "#ddd",
+    "#ddd",
+    "#ddd",
+    "#ddd",
+    "#ddd",
+    "#ddd"
+  ]
 
-// if (fifteenCount > 15) {
-//   fifteenCountDisplay.setAttribute("style", `-webkit-text-stroke: 3px ${fifteenCountColRange[15]}`);
-// }
-  
-  if (fifteenCount > 0) {
+  fifteenCountDisplay.style.color = fifteenCountColRange[fifteenCount];
+
+  const fifteenCountAniReset = () => {
+    setTimeout(() => {
+      fifteenCountDisplay.style.animationName = "";
+    }, 500);
+  };
+
+  if (fifteenCount === 15) {
+    fifteenCountDisplay.style.color = '#fff';
     fifteenCountDisplay.textContent = `${fifteenCount}`;
+
+    fifteenCountDisplay.style.animationName = "fifteen-count-animation";
+
+  } else if (fifteenCount > 15) {
+    fifteenCountDisplay.style.color = fifteenCountColRange[14];
+    fifteenCountDisplay.textContent = `${fifteenCount}`;
+    fifteenCountAniReset();
+  } else if (fifteenCount < 15 && fifteenCount > 0) {
+    fifteenCountDisplay.style.color = fifteenCountColRange[14];
+    fifteenCountDisplay.textContent = `${fifteenCount}`;
+    fifteenCountAniReset();
   } else {
     fifteenCountDisplay.textContent = ``;
+    fifteenCountAniReset();
   }
 }
 
