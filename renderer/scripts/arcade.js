@@ -104,7 +104,7 @@ let jackpotLive = false;
 let jackpotInit = false;
 let jackpotRandTiming;
 let jackpotSameColorCheck;
-let jackpotSecondsThreshold = 35;
+let jackpotSecondsThreshold = 25;
 let jackpotMultiplierLvl = 0;
 let jackpotMultiplier = [1.25,1.5,2,3];
 let pointsOnDisplay = 0;
@@ -246,20 +246,13 @@ function showHand() {
       } else {
         timer.textContent = '0';
       }
-      secondsLeft--;
-      elapsedTime++;
     }
-    if (secondsLeft <= 4) {
+    if (secondsLeft <= 5) {
       timer.style.color = 'red';
     } else {
       timer.style.color = 'rgb(152, 253, 0)';
     }
-    // if (secondsLeft === -1) {
-    //   // clearInterval(incomingHudMessages);
-    //   hudMessage.gameOver(hudMessageDisplay);
-    // }
     if (secondsLeft <= 0) {
-      // clearInterval(incomingHudMessages);
       hudMessage.gameOver(hudMessageDisplay);
       clearInterval(gameTimer);
       timer.textContent = '0';
@@ -270,10 +263,14 @@ function showHand() {
       if (highscoreDefeated) {
         personalHighscoreDisplay.childNodes[1].textContent = pointsOnDisplay;
       }
-      let scoreReviewCheck = pointsReview(pointsBreakdown, totalPoints);
+      
+      pointsReview(pointsBreakdown, totalPoints, hudMessageDisplay);
 
       highScoresFunc.scoreReview(hudMessage, currentHand, totalPoints, totalCardsPlayed, totalSeconds);
     }
+
+    secondsLeft--;
+    elapsedTime++;
   }
 
 function reset() {
@@ -292,8 +289,11 @@ function reset() {
   comboSubmit = false;
   comboSkip = false;
   comboCardcount = 0;
+
+  totalComboPoints = Math.round(totalComboPoints)
   totalPoints += totalComboPoints;
   pointsBreakdown.comboPoints += totalComboPoints;
+
   totalComboPoints = 0;
   comboPointsDisplay.textContent = '';
   comboPointsDisplay.classList.remove('combo-points-fadein');
@@ -340,7 +340,7 @@ function comboCheck() {
       checkedCardSuits.every(sameColorRed) == true ||
       checkedCardSuits.every(sameColorBlack) == true
     ) {
-      pointsInPlay *= 1.5;
+      pointsInPlay *= 1.25;
       console.log('points in play', pointsInPlay);
     }
   }
@@ -374,8 +374,10 @@ function cardsSubmit() {
   }
 
   if (pointsValidity === true) {
+    pointsInPlay = Math.round(pointsInPlay);
     totalPoints += pointsInPlay;
     pointsBreakdown.cardPoints += pointsInPlay;
+
     pointsInPlay = 0;
     fifteenCount = 0;
     submitCards.innerHTML = `Draw Cards &nbsp;<span class="submit-cards-smaller-text">[${actionBtn}]</span>`;
@@ -394,7 +396,11 @@ function cardsSubmit() {
           // totalCardsPlayed = Math.round(totalCardsPlayed/2);
 
           totalCardsPlayed -= globalCardsInHand.length;
-          jackpotMultiplierLvl = 0;
+          jackpotMultiplierLvl -= 1;
+
+          if (jackpotMultiplierLvl < 0) {
+            jackpotMultiplierLvl = 0;
+          } 
 
           if (totalCardsPlayed < 0) totalCardsPlayed = 0;
         } else {
@@ -446,8 +452,7 @@ function cardsSubmit() {
       totalSeconds += secondsBonus;
 
       totalPoints += secondsBonus;  
-
-      pointsBreakdown.timePoints += secondsBonus;
+      pointsBreakdown.timePoints += Math.round(secondsBonus);
 
       bonusTimeDisplay.textContent = `+${secondsBonus}`
       setTimeout(() => {
@@ -478,13 +483,14 @@ function cardsSubmit() {
     if (checkedCards.length === globalCardsInHand.length) {
       secondsLeft += fullHandBonus;
       totalSeconds += fullHandBonus;
+
       totalPoints += fullHandBonus;
-      totalPoints += fullHandPointsBonus;
+      pointsBreakdown.timePoints += fullHandBonus
+      // totalPoints += fullHandPointsBonus;
 
       pointsBreakdown['fullClearTimes']++;
 
       // pointsBreakdown.fullClearPoints += fullHandPointsBonus;
-      pointsBreakdown.timePoints += fullHandBonus
 
       hudMessage.fullHandClear(hudMessageDisplay);
 
@@ -516,7 +522,7 @@ function cardsSubmit() {
       if (userSelectedSoundSettings.SFX) fullClearSFX.play();
 
       // Fullhand check border animation
-      utils.fullClearBorderAni(themeSelection);
+      utils.fullClearBorderAni(themeSelection, totalCardsPlayed, jackpotSameColorCheck,jackpotMultiplierLvl, jackpotMultiplier);
     }
   }
   if (pointsValidity === true && comboSubmit === true) { 
@@ -843,7 +849,11 @@ function swapButtonFunction() {
   if (jackpotLive) {
     // totalCardsPlayed = Math.round(totalCardsPlayed/2);
     totalCardsPlayed -= globalCardsInHand.length;
-    jackpotMultiplierLvl = 0;
+    jackpotMultiplierLvl -= 1;
+
+    if (jackpotMultiplierLvl < 0) {
+      jackpotMultiplierLvl = 0;
+    }
 
     if (totalCardsPlayed < 0) totalCardsPlayed = 0;
     jackpotLive = false;
@@ -1001,7 +1011,7 @@ function jackpotSelect() {
   let cardsInHand = document.querySelectorAll('.card-in-hand');
 
   if (!jackpotInit) {
-    jackpotRandTiming = Math.floor(Math.random() * (jackpotSecondsThreshold - (jackpotSecondsThreshold - 34)) + (jackpotSecondsThreshold - 34));
+    jackpotRandTiming = Math.floor(Math.random() * (jackpotSecondsThreshold - (jackpotSecondsThreshold - 24)) + (jackpotSecondsThreshold - 24));
     jackpotInit = true;
   }
 
@@ -1031,7 +1041,7 @@ function jackpotSelect() {
       cardsInHand[jackpotRandIndex].classList.add('jackpot-special-border');
 
       jackpotInit = false;
-      jackpotSecondsThreshold += 35;
+      jackpotSecondsThreshold += 25;
       jackpotLive = true;
 
       hudMessage.jackpotOnTable(hudMessageDisplay);

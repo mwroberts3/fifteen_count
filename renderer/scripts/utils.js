@@ -84,7 +84,7 @@ exports.jackpotBonusPointsAni = (totalCardsPlayed, jackpotSameColorCheck, totalC
   }, 1000);
 };
 
-exports.fullClearBorderAni = (themeSelection) => {
+exports.fullClearBorderAni = (themeSelection,totalCardsPlayed, jackpotSameColorCheck,jackpotMultiplierLvl, jackpotMultiplier) => {
   let i = 0;
   let borderAniCol = themeSelection['fullClearBrdGrd'];
 
@@ -103,7 +103,7 @@ exports.fullClearBorderAni = (themeSelection) => {
   console.log(jackpotCheckedCardCheck);
 
   if (jackpotCheckedCardCheck.length === 1) {
-    jackpotBonusPointsAni(totalCardsPlayed, jackpotSameColorCheck, totalCardsPlayedDisplay);
+    jackpotBonusPointsAni(totalCardsPlayed, jackpotSameColorCheck,jackpotMultiplierLvl, jackpotMultiplier);
   }
 }
 
@@ -182,4 +182,35 @@ exports.jackpotLevelAni = (jackpotLevelDisplay, jackpotMultiplierLvl) => {
     jackpotLevelDisplay.style.color = "#fff";
   }
 }
+
+// Internal Functions
+function jackpotBonusPointsAni(totalCardsPlayed, jackpotSameColorCheck,jackpotMultiplierLvl, jackpotMultiplier) {
+  let jackpotBonusIndicator = document.createElement('div');
+
+  if (jackpotSameColorCheck) {
+    jackpotBonusIndicator.textContent = `+${Math.round((totalCardsPlayed * jackpotMultiplier[jackpotMultiplierLvl]))}`;
+  } else {
+    jackpotBonusIndicator.textContent = `+${totalCardsPlayed}`;
+  }
+
+  jackpotBonusIndicator.classList.add('jackpot-bonus-indicator');
+
+  document.querySelector(".scoreboard").appendChild(jackpotBonusIndicator);
+
+  setTimeout(() => {
+    jackpotBonusIndicator.style.transform = `translateY(-30px)`;
+    jackpotBonusIndicator.style.opacity = `0`;
+    jackpotBonusIndicator.style.color = `#fff`;
+  }, 15);
+
+  // card icon rotation animation
+  document.querySelector('#cards-icon').style.transition = "all 1s ease";
+  document.querySelector('#cards-icon').style.transform = "rotate(360deg)";
+
+  setTimeout(() => {
+    document.querySelector('#cards-icon').style.transition = "none";
+
+    document.querySelector('#cards-icon').style.transform = "rotate(0)";
+  }, 1000);
+};
 

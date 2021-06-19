@@ -10,10 +10,16 @@ const totalPointsDisplay = document.querySelector('.total-points-review-display'
 
 let scoresCounted = 0;
 
-exports.pointsReview = (pointsBreakdown, totalPoints) => {
+exports.pointsReview = (pointsBreakdown, totalPoints, hudMessageDisplay) => {
     console.log(pointsBreakdown);
 
+    // totalPoints = Math.round(totalPoints);
+
     // pointsBreakdown.timePoints += pointsBreakdown.speedPoints;
+
+    setTimeout(() => {
+        hudMessageDisplay.textContent = 'Score Review';
+    }, 1000);
 
     pointsBreakdownView.classList.remove('hidden');
     displayPointPct(totalPoints, pointsBreakdown.cardPoints, regCardPoints);

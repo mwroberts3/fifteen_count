@@ -141,7 +141,6 @@ h2 {
   background: #222;
   border-radius: 50% 20% / 10% 40%;
   padding: 10px;
-  border: 4px solid #333;
   animation-name: gamemode-animation;
   animation-duration: 100s;
   animation-iteration-count: infinite;
@@ -434,7 +433,7 @@ h2 {
   position: absolute;
   font-size: 18px;
   top: 15px;
-  right: 26px;
+  right: 22px;
   width: 30px;
   height: 30px;
   padding-bottom: 3px;
@@ -634,8 +633,8 @@ input[type="submit"] {
     position: relative;
     border-radius: 30%;
     border: 2px solid #ccc;
-    background: rgba(0, 0, 0, 0.4);
-    color: #000;
+    background: rgba(0, 0, 0, 0.5);
+    color: #ddd;
     width: 100px;
     height: 80px;
     font-size: 40px;
@@ -651,15 +650,15 @@ input[type="submit"] {
 
 @keyframes fifteen-count-animation {
   0% {
-    border-radius: 30%; }
+    background: rgba(0, 0, 0, 0.5); }
   25% {
-    border-radius: 30% 20% / 40% 10%; }
+    background: rgba(0, 0, 0, 0.55); }
   50% {
-    border-radius: 20% 20% / 40% 30%; }
+    background: rgba(0, 0, 0, 0.6); }
   75% {
-    border-radius: 30% 20% / 40% 10%; }
+    background: rgba(0, 0, 0, 0.55); }
   100% {
-    border-radius: 30%; } }
+    background: rgba(0, 0, 0, 0.5); } }
   .players-hand #fif-count-notifyer {
     position: absolute;
     top: 400px;
