@@ -162,10 +162,10 @@ body {
     background-color: #892da0;
   }
   79% {
-    background-color: #ce2a40;
+    background-color: #3f00ff;
   }
   100% {
-    background-color: #ff7a8b;
+    background-color: #dda0dd;
   }
 }
 
@@ -189,10 +189,10 @@ body {
     border-color: #a02d7e;
   }
   79% {
-    border-color: #ce662a;
+    border-color: #bf00ff;
   }
   100% {
-    border-color: #ffac7a;
+    border-color: #dda0bf;
   }
 }
 

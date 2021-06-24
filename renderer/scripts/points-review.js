@@ -8,31 +8,33 @@ timePointsDisplay = document.querySelector('.time-points');
 
 const totalPointsDisplay = document.querySelector('.total-points-review-display');
 
+const scoreReviewHeader = document.getElementById('score-review-header');
+
 let scoresCounted = 0;
 
 exports.pointsReview = (pointsBreakdown, totalPoints, hudMessageDisplay) => {
-    console.log(pointsBreakdown);
-
-    // totalPoints = Math.round(totalPoints);
-
-    // pointsBreakdown.timePoints += pointsBreakdown.speedPoints;
+    hudMessageDisplay.style.opacity = "0";
+    pointsBreakdownView.classList.remove('hidden');
 
     setTimeout(() => {
-        hudMessageDisplay.textContent = 'Score Review';
-    }, 1000);
+        scoreReviewHeader.style.opacity = '1';
+    }, 20);
 
-    pointsBreakdownView.classList.remove('hidden');
-    displayPointPct(totalPoints, pointsBreakdown.cardPoints, regCardPoints);
+    if (pointsBreakdown.cardPoints > 0) {
+        displayPointPct(totalPoints, pointsBreakdown.cardPoints, regCardPoints);
+    }
 
+    if (pointsBreakdown.comboPoints > 0) {
     displayPointPct(totalPoints, pointsBreakdown.comboPoints, comboCardPoints);
+    }
     
-    // displayPointPct(totalPoints, pointsBreakdown.fullClearPoints, fullClearPointsDisplay);
-
+    if (pointsBreakdown.jackpotPoints > 0) {
     displayPointPct(totalPoints, pointsBreakdown.jackpotPoints, jackpotPointsDisplay);
+    }
 
-    // displayPointPct(totalPoints, pointsBreakdown.speedPoints, speedPointsDisplay);
-
+    if (pointsBreakdown.timePoints > 0) {
     displayPointPct(totalPoints, pointsBreakdown.timePoints, timePointsDisplay);
+    }
 
     totalPointsDisplay.innerHTML = `${totalPoints}`;
     totalPointsDisplay.style.visibility = 'hidden';
@@ -41,7 +43,11 @@ exports.pointsReview = (pointsBreakdown, totalPoints, hudMessageDisplay) => {
 function displayPointPct(totalPoints, pointTypeTotal, pointTypeDisplay) {
     let i = 0;
     const pointTypeTally = setInterval(() => {
-        i++;
+        if (pointTypeTotal < 200) {
+            i += 4;
+        } else {
+            i += Math.round(pointTypeTotal / 50);
+        }
         pointTypeDisplay.innerHTML = `${i}`;
         pointTypeDisplay.nextElementSibling.value = `${i}`;
         pointTypeDisplay.nextElementSibling.max = `${totalPoints}`;
@@ -50,7 +56,7 @@ function displayPointPct(totalPoints, pointTypeTotal, pointTypeDisplay) {
             pointTypeDisplay.innerHTML = `${pointTypeTotal}`;
             scoresCounted++;
 
-            if (scoresCounted === 5) {
+            if (scoresCounted >= 3) {
                 fastForwardReview();
             }
         }

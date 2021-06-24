@@ -1,11 +1,11 @@
 Bugs:
+    -6/20/21 - if swapping cards and time gets down to ~6 then time will still show up as red on timer, should only turn red when 5 or less
+
     -6/19/21 - sometimes jackpot is supposed to show up after swap but doesn't, reduces jackpot level by 1 (maybe make this a gameplay element)
     
     -6/19/21 - border animation for full clear on classic mode doesn't work, probably because of the shifting border color animation
 
     -6/18/21 - shouldn't have decimals as part of score, like getting with edited checked cards scoring
-
-    -6/18/21 - should probably have score review happen in a set amount of time. If score is high, it takes forever...maybe should happen within 5 seconds
 
     -5/29/21 - scoring a jackpot bonus should have a sound effect
 

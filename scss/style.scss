@@ -646,7 +646,8 @@ h2 {
   font-size: 45px;
   font-family: $gameplay-font-2;
   // -webkit-text-stroke: 1.5px #000;
-  // transition: all 0.5s ease;
+  transition: all 1s linear;
+  // z-index: 10;
 }
 
 .time-bonus-indicator {
@@ -953,7 +954,7 @@ input[type="submit"] {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  // align-items: center;
   top: 60px;
   left: 4px;
   background-image: $pause-gameover-box-bg;
@@ -961,27 +962,43 @@ input[type="submit"] {
   color: #fff;
   width: 1192px;
   height: calc(100% - 123px);
-  z-index: 4;
+  // z-index: 4;
   border-radius: 10px;
   font-size: 24px;
 
-  div {
+  .point-type {
     display: flex;
     align-items: center;
-    width: 75%;
-    margin-left: 60px;
+    // justify-content: center;
+    width: 600px;
+    margin-left: 300px;
 
-    div {
-      width: 33%;
-      margin-left: 20px;
+    &-title {
+      width: 200px;
     }
+
+    #points-breakdown-total-points {
+      width: 200px;
+    }
+  }
+
+  #score-review-header {
+    position: absolute;
+    top: 0;
+    right: 260px;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: 45px;
+    font-family: $gameplay-font-2;
+    opacity: 0;
+    transition: all 3s linear;
   }
 
   progress[value] {
     -webkit-appearance: none;
     appearance: none;
 
-    width: 250px;
+    width: 200px;
     height: 20px;
   }
 

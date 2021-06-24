@@ -488,7 +488,8 @@ h2 {
 .hud-message {
   text-align: center;
   font-size: 45px;
-  font-family: "Short Stack", cursive; }
+  font-family: "Short Stack", cursive;
+  transition: all 1s linear; }
 
 .time-bonus-indicator {
   position: absolute;
@@ -734,7 +735,6 @@ input[type="submit"] {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   top: 60px;
   left: 4px;
   background-image: url("../img/ta-pause-background.png");
@@ -742,21 +742,31 @@ input[type="submit"] {
   color: #fff;
   width: 1192px;
   height: calc(100% - 123px);
-  z-index: 4;
   border-radius: 10px;
   font-size: 24px; }
-  #points-breakdown-view div {
+  #points-breakdown-view .point-type {
     display: flex;
     align-items: center;
-    width: 75%;
-    margin-left: 60px; }
-    #points-breakdown-view div div {
-      width: 33%;
-      margin-left: 20px; }
+    width: 600px;
+    margin-left: 300px; }
+    #points-breakdown-view .point-type-title {
+      width: 200px; }
+    #points-breakdown-view .point-type #points-breakdown-total-points {
+      width: 200px; }
+  #points-breakdown-view #score-review-header {
+    position: absolute;
+    top: 0;
+    right: 260px;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: 45px;
+    font-family: "Short Stack", cursive;
+    opacity: 0;
+    transition: all 3s linear; }
   #points-breakdown-view progress[value] {
     -webkit-appearance: none;
     appearance: none;
-    width: 250px;
+    width: 200px;
     height: 20px; }
   #points-breakdown-view progress[value]::-webkit-progress-bar {
     background-color: transparent; }

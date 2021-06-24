@@ -266,7 +266,7 @@ function showHand() {
       
       pointsReview(pointsBreakdown, totalPoints, hudMessageDisplay);
 
-      highScoresFunc.scoreReview(hudMessage, currentHand, totalPoints, totalCardsPlayed, totalSeconds);
+      // highScoresFunc.scoreReview(hudMessage, currentHand, totalPoints, totalCardsPlayed, totalSeconds);
     }
 
     secondsLeft--;

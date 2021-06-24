@@ -107,7 +107,7 @@ if (!localStorage.getItem('theme-selection')) {
     "blue",
     "indigo",
     "violet"
-  ], cardSprites: "style/classicsprites.css", bgm: "bgm/Theme-Classic.mp3", fifteenCountGradient: ['#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#000'] };
+  ], cardSprites: "style/classicsprites.css", bgm: "bgm/indigo-theme.mp3", fifteenCountGradient: ['#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#000'] };
   localStorage.setItem('theme-selection', JSON.stringify(themeSelection));
 } else {
   themeSelection = JSON.parse(localStorage.getItem('theme-selection'))
