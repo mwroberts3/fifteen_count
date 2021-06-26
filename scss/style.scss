@@ -954,7 +954,7 @@ input[type="submit"] {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  // align-items: center;
+  align-items: center;
   top: 60px;
   left: 4px;
   background-image: $pause-gameover-box-bg;
@@ -962,7 +962,6 @@ input[type="submit"] {
   color: #fff;
   width: 1192px;
   height: calc(100% - 123px);
-  // z-index: 4;
   border-radius: 10px;
   font-size: 24px;
 
@@ -971,10 +970,15 @@ input[type="submit"] {
     align-items: center;
     // justify-content: center;
     width: 600px;
-    margin-left: 300px;
+    // margin-left: 300px;
 
     &-title {
       width: 200px;
+      text-align: left;
+    }
+
+    div:nth-child(2) {
+      width: 100px;
     }
 
     #points-breakdown-total-points {
@@ -985,7 +989,7 @@ input[type="submit"] {
   #score-review-header {
     position: absolute;
     top: 0;
-    right: 260px;
+    right: 150px;
     transform: translateX(-50%);
     color: #fff;
     font-size: 45px;
@@ -998,12 +1002,14 @@ input[type="submit"] {
     -webkit-appearance: none;
     appearance: none;
 
-    width: 200px;
+    width: 300px;
     height: 20px;
   }
 
   progress[value]::-webkit-progress-bar {
-    background-color: transparent;
+    // background-color: transparent;
+    background-color: #333;
+    border-radius: 3px;
   }
 
   progress[value]::-webkit-progress-value {

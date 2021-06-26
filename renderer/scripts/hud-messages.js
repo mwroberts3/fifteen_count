@@ -4,7 +4,9 @@ let specialMessage = false;
 exports.count = (hudMessageDisplay) => {
 
     if (!specialMessage) {
-        hudMessageDisplay.innerText = 'Count!';
+        setTimeout(() => {
+            hudMessageDisplay.innerText = 'Count!';
+        }, 40);
         hudMessageCache = 'Count!';
     } else {
         setTimeout(() => {
@@ -15,21 +17,40 @@ exports.count = (hudMessageDisplay) => {
 }
 
 exports.combo = (hudMessageDisplay) => {
-    hudMessageDisplay.innerText = 'Combo!';
-    hudMessageCache = 'Combo!';
+    // !specialMessage ? hudMessageDisplay.innerText = 'Combo!' : hudMessageDisplay.innerText = '';
+    if (!specialMessage) {
+        setTimeout(() => {
+            hudMessageDisplay.innerText = 'Combo!';
+        }, 35);
+        hudMessageCache = 'Combo!';
+    }
+
 }
 
-exports.newHighscore = (hudMessageDisplay) => {
-    hudMessageDisplay.innerHTML = `&nbsp;`;
-    hudMessageDisplay.style.transform = "translateY(100px)";
-    
-    setTimeout(() => {    
-        hudMessageDisplay.innerText = 'NEW HIGHSCORE!';
-        hudMessageDisplay.style.transition = "all 0.5s ease";    
-        hudMessageDisplay.style.transform = "translateY(0)";
-    }, 100);
+exports.newHighscore = (hudMessageDisplay) => {  
+    if (specialMessage) {
+        setTimeout(() => {
+            hudMessageDisplay.innerHTML = `&nbsp;`;
+            hudMessageDisplay.style.transform = "translateY(100px)";
+        }, 1000);
 
-    specialMessage = true;
+        setTimeout(() => {    
+            hudMessageDisplay.innerText = 'NEW HIGHSCORE!';
+            hudMessageDisplay.style.transition = "all 0.5s ease";    
+            hudMessageDisplay.style.transform = "translateY(0)";
+        }, 1035);
+    } else {
+        hudMessageDisplay.innerHTML = `&nbsp;`;
+        hudMessageDisplay.style.transform = "translateY(100px)";
+        
+        setTimeout(() => {    
+            hudMessageDisplay.innerText = 'NEW HIGHSCORE!';
+            hudMessageDisplay.style.transition = "all 0.5s ease";    
+            hudMessageDisplay.style.transform = "translateY(0)";
+        }, 35);
+    
+        specialMessage = true;
+    }
 
     setTimeout(() => {
         hudMessageDisplay.innerText = hudMessageCache
@@ -39,7 +60,9 @@ exports.newHighscore = (hudMessageDisplay) => {
 }
 
 exports.jackpotOnTable = (hudMessageDisplay) => {
-    hudMessageDisplay.innerText = 'Jackpot on the table';
+    setTimeout(() => {
+        hudMessageDisplay.innerText = 'Jackpot on the Board!';
+    }, 50);
 
     specialMessage = true;
 
@@ -51,7 +74,9 @@ exports.jackpotOnTable = (hudMessageDisplay) => {
 }
 
 exports.fullHandClear = (hudMessageDisplay) => {
-    hudMessageDisplay.innerText = 'Harmonia';
+    setTimeout(() => {
+        hudMessageDisplay.innerText = 'Full Clear!';
+    }, 60);
 
     specialMessage = true;
 

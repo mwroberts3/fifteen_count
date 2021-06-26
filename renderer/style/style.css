@@ -735,6 +735,7 @@ input[type="submit"] {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   top: 60px;
   left: 4px;
   background-image: url("../img/ta-pause-background.png");
@@ -747,16 +748,18 @@ input[type="submit"] {
   #points-breakdown-view .point-type {
     display: flex;
     align-items: center;
-    width: 600px;
-    margin-left: 300px; }
+    width: 600px; }
     #points-breakdown-view .point-type-title {
-      width: 200px; }
+      width: 200px;
+      text-align: left; }
+    #points-breakdown-view .point-type div:nth-child(2) {
+      width: 100px; }
     #points-breakdown-view .point-type #points-breakdown-total-points {
       width: 200px; }
   #points-breakdown-view #score-review-header {
     position: absolute;
     top: 0;
-    right: 260px;
+    right: 150px;
     transform: translateX(-50%);
     color: #fff;
     font-size: 45px;
@@ -766,10 +769,11 @@ input[type="submit"] {
   #points-breakdown-view progress[value] {
     -webkit-appearance: none;
     appearance: none;
-    width: 200px;
+    width: 300px;
     height: 20px; }
   #points-breakdown-view progress[value]::-webkit-progress-bar {
-    background-color: transparent; }
+    background-color: #333;
+    border-radius: 3px; }
   #points-breakdown-view progress[value]::-webkit-progress-value {
     background-color: #ffff00;
     border-radius: 3px; }

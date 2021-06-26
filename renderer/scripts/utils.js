@@ -87,6 +87,12 @@ exports.jackpotBonusPointsAni = (totalCardsPlayed, jackpotSameColorCheck, totalC
 exports.fullClearBorderAni = (themeSelection,totalCardsPlayed, jackpotSameColorCheck,jackpotMultiplierLvl, jackpotMultiplier) => {
   let i = 0;
   let borderAniCol = themeSelection['fullClearBrdGrd'];
+  let guiElementController = document.querySelector('.gui-container');
+
+  // check for Classic theme's shifting border color
+  if (themeSelection['themeName'] == "Classic") { 
+    guiElementController.style.animationName = 'none';  
+  }
 
   const borderAnimation = setInterval(() => {
     document.querySelector(".gui-container").style.border = `4px solid ${borderAniCol[i]}`;
@@ -95,6 +101,11 @@ exports.fullClearBorderAni = (themeSelection,totalCardsPlayed, jackpotSameColorC
     if (i > themeSelection['fullClearBrdGrd'].length)  {
       clearInterval(borderAnimation);
       document.querySelector(".gui-container").style.border = `4px solid ${themeSelection['brdCol']}`;
+
+      // check for Classic theme's shifting border color
+      if (themeSelection['themeName'] == "Classic") { 
+        guiElementController.style.animationName = 'border-shift';  
+      }
     }
   }, 100);
 

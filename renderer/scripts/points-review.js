@@ -60,7 +60,7 @@ function displayPointPct(totalPoints, pointTypeTotal, pointTypeDisplay) {
                 fastForwardReview();
             }
         }
-    }, 10)
+    }, 30)
 
     document.addEventListener('click', fastForwardReview);
 

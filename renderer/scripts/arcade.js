@@ -266,7 +266,7 @@ function showHand() {
       
       pointsReview(pointsBreakdown, totalPoints, hudMessageDisplay);
 
-      // highScoresFunc.scoreReview(hudMessage, currentHand, totalPoints, totalCardsPlayed, totalSeconds);
+      highScoresFunc.scoreReview(hudMessage, currentHand, totalPoints, totalCardsPlayed, totalSeconds);
     }
 
     secondsLeft--;
@@ -290,9 +290,11 @@ function reset() {
   comboSkip = false;
   comboCardcount = 0;
 
-  totalComboPoints = Math.round(totalComboPoints)
+  totalComboPoints = Math.round(totalComboPoints);
   totalPoints += totalComboPoints;
   pointsBreakdown.comboPoints += totalComboPoints;
+
+  // hudMessage.count(hudMessageDisplay);
 
   totalComboPoints = 0;
   comboPointsDisplay.textContent = '';
@@ -301,7 +303,7 @@ function reset() {
   valueOptionOne.innerText = "-";
   valueOptionTwo.innerText = "-";
 
-  jackpotLevelDisplay.innerText = `${jackpotMultiplierLvl + 1}`;
+  // jackpotLevelDisplay.innerText = `${jackpotMultiplierLvl + 1}`;
   utils.jackpotLevelAni(jackpotLevelDisplay, jackpotMultiplierLvl);
 
   setSwapPermission();
@@ -396,12 +398,14 @@ function cardsSubmit() {
           // totalCardsPlayed = Math.round(totalCardsPlayed/2);
 
           totalCardsPlayed -= globalCardsInHand.length;
-          jackpotMultiplierLvl -= 1;
 
+          jackpotMultiplierLvl -= 1;
+          
           if (jackpotMultiplierLvl < 0) {
             jackpotMultiplierLvl = 0;
           } 
-
+          jackpotLevelDisplay.innerText = `${jackpotMultiplierLvl + 1}`;
+          
           if (totalCardsPlayed < 0) totalCardsPlayed = 0;
         } else {
           checkedCards.forEach((card) => {
@@ -422,6 +426,8 @@ function cardsSubmit() {
                 utils.jackpotBonusPointsAni(totalCardsPlayed, jackpotSameColorCheck, totalCardsPlayedDisplay, jackpotMultiplierLvl, jackpotMultiplier);
 
                 jackpotMultiplierLvl++;
+                jackpotLevelDisplay.innerText = `${jackpotMultiplierLvl + 1}`;
+
                 if (jackpotMultiplierLvl > 3) jackpotMultiplierLvl = 3;
               } else {
                 console.log(totalPoints, totalCardsPlayed, totalPoints + totalCardsPlayed);
@@ -473,14 +479,13 @@ function cardsSubmit() {
 
     // reset potential time bonus if card was swapped before submit
     swappedCardTimeBonusNulify = false;
-    
-    setTimeout(() => {
-      hudMessage.combo(hudMessageDisplay);
-    }, 50);
+    hudMessage.combo(hudMessageDisplay);
+   
     setSwapPermission();
     setUncheckAllPermission();
 
-    if (checkedCards.length === globalCardsInHand.length) {
+    // if (checkedCards.length === globalCardsInHand.length) {
+    if (checkedCards.length >= 3) {
       secondsLeft += fullHandBonus;
       totalSeconds += fullHandBonus;
 
@@ -854,6 +859,8 @@ function swapButtonFunction() {
     if (jackpotMultiplierLvl < 0) {
       jackpotMultiplierLvl = 0;
     }
+
+    jackpotLevelDisplay.innerText = `${jackpotMultiplierLvl + 1}`;
 
     if (totalCardsPlayed < 0) totalCardsPlayed = 0;
     jackpotLive = false;

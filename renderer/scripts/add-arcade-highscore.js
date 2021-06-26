@@ -22,31 +22,31 @@ exports.scoreReview = (hudMessage, currentHand, totalPoints, totalCardsPlayed, t
       localStorage.setItem('highscore', JSON.stringify(highscoreStats));
     }
 
-    db.collection("highscores")
-      .where("hidden", "==", false)
-      .orderBy("score", "desc")
-      .limit(50)
-      .get()
-      .then((snapshot) => {
-        let scoreRank = 0;
-        highscoresArr = snapshot.docs.map((doc) => doc.data().score);
+    // db.collection("highscores")
+    //   .where("hidden", "==", false)
+    //   .orderBy("score", "desc")
+    //   .limit(50)
+    //   .get()
+    //   .then((snapshot) => {
+    //     let scoreRank = 0;
+    //     highscoresArr = snapshot.docs.map((doc) => doc.data().score);
   
-        highscoresArr.forEach((score) => {
-          if (totalPoints > score) {
-            scoreRank++;
-          }
-        });
+    //     highscoresArr.forEach((score) => {
+    //       if (totalPoints > score) {
+    //         scoreRank++;
+    //       }
+    //     });
   
-        scoreRank = highscoresArr.length - scoreRank;
+    //     scoreRank = highscoresArr.length - scoreRank;
   
-        if (highscoresArr.length < 50) {
-          addNametoScore(scoreRank, totalPoints, totalCardsPlayed, totalSeconds);
-        } else if (totalPoints > highscoresArr[highscoresArr.length - 1]) {
-          addNametoScore(scoreRank, totalPoints, totalCardsPlayed, totalSeconds);
-        } else {
-          newHighscore("DIDN'T QUALIFY", totalPoints, totalCardsPlayed, totalSeconds);
-        }
-      });
+    //     if (highscoresArr.length < 50) {
+    //       addNametoScore(scoreRank, totalPoints, totalCardsPlayed, totalSeconds);
+    //     } else if (totalPoints > highscoresArr[highscoresArr.length - 1]) {
+    //       addNametoScore(scoreRank, totalPoints, totalCardsPlayed, totalSeconds);
+    //     } else {
+    //       newHighscore("DIDN'T QUALIFY", totalPoints, totalCardsPlayed, totalSeconds);
+    //     }
+    //   });
   }
   
   function addNametoScore(scoreRank, totalPoints, totalCardsPlayed, totalSeconds) {
