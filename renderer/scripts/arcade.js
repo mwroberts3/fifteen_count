@@ -372,7 +372,13 @@ function cardsSubmit() {
     jackpotSelect();
     reset();
     selectCard();
-    document.querySelector('.players-hand').style.removeProperty('background-image');
+
+    // reset players hand background
+    if (themeSelection['themeName'] !== 'Classic') {
+      document.querySelector('.players-hand').style.removeProperty('background-image');
+    } else {
+      utils.classicThemeTransition(document.querySelector('.players-hand').style, false);
+    }
   }
 
   if (pointsValidity === true) {
@@ -384,7 +390,12 @@ function cardsSubmit() {
     fifteenCount = 0;
     submitCards.innerHTML = `Draw Cards &nbsp;<span class="submit-cards-smaller-text">[${actionBtn}]</span>`;
     comboSkip = true;
-    playersHandArea.style.backgroundImage = `url("./img/${themeSelection['bgImgCombo']}")`;
+
+    if (themeSelection['themeName'] !== 'Classic') {
+      playersHandArea.style.backgroundImage = `url("./img/${themeSelection['bgImgCombo']}")`;
+    } else {
+      utils.classicThemeTransition(document.querySelector('.players-hand').style, true);
+    }
     // clearBgImgIntervals();
 
     // Check for jackpot bonus
@@ -484,8 +495,7 @@ function cardsSubmit() {
     setSwapPermission();
     setUncheckAllPermission();
 
-    // if (checkedCards.length === globalCardsInHand.length) {
-    if (checkedCards.length >= 3) {
+    if (checkedCards.length === globalCardsInHand.length) {
       secondsLeft += fullHandBonus;
       totalSeconds += fullHandBonus;
 
@@ -536,7 +546,13 @@ function cardsSubmit() {
     comboSubmitSFX.play();
     }
 
-    document.querySelector('.players-hand').style.removeProperty('background-image');
+    // reset players hand background
+    if (themeSelection['themeName'] !== 'Classic') {
+      document.querySelector('.players-hand').style.removeProperty('background-image');
+    } else {
+      utils.classicThemeTransition(document.querySelector('.players-hand').style, false);
+    }
+
     reDeal(globalCardsInHand, hand);
     showHand();
     jackpotSelect();
@@ -766,9 +782,12 @@ function selectCard() {
 
         // checked card sound effect
         if (userSelectedSoundSettings.SFX) {
-        checkCardSFX.play();
+          if (card.classList.contains('jackpot-special-border')) {
+            jackpotCheckSFX.play();
+          } else {
+            checkCardSFX.play();
+          }
         }
-
         comboCheck();
       }
     });

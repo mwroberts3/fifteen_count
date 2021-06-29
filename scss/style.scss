@@ -917,6 +917,7 @@ input[type="submit"] {
   --players-bg-opacity: 1;
   --players-bg-img-2: url("../img/jungle-bg-3.png");
   --players-bg-opacity-2: 0;
+  --players-bg-filter: blur(5px);
 }
 
 .players-hand::before {
@@ -932,6 +933,7 @@ input[type="submit"] {
   left: 4px;
   opacity: var(--players-bg-opacity);
   z-index: -2;
+  filter: var(--players-bg-filter);
 }
 
 .players-hand::after {
@@ -1020,6 +1022,26 @@ input[type="submit"] {
 
 #points-breakdown-total-points {
   // font-family: $gameplay-font-2;
+}
+
+// THEME UNLOCKED POPUP
+#theme-unlocked-popup {
+  position: absolute;
+  top: 50%;
+  margin-top: -150px;
+  left: 25%;
+  right: 25%;
+  background: $dark-bg-col;
+  border: $menu-border;
+  border-radius: 10px;
+  color: white;
+  width: 50%;
+  height: 300px;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 // NEW HIGHSCORE

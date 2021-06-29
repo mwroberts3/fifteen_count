@@ -1,4 +1,8 @@
 Bugs:
+    -6/27/21 - need to balance the SFX level and BGM levels
+
+    -6/27/21 - possible to add transition when switch gui color to combo background
+
     -6/20/21 - if swapping cards and time gets down to ~6 then time will still show up as red on timer, should only turn red when 5 or less
 
     -6/19/21 - sometimes jackpot is supposed to show up after swap but doesn't, reduces jackpot level by 1 (maybe make this a gameplay element)

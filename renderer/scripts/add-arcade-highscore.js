@@ -7,9 +7,14 @@ exports.scoreReview = (hudMessage, currentHand, totalPoints, totalCardsPlayed, t
 
     hudMessage.innerText = "TIME IS UP!";
     currentHand.style.display = "none";
-     
+
+    let previousHighscore = 0;
+    
     if (localStorage.getItem('highscore')) {
       highscoreStats = JSON.parse(localStorage.getItem('highscore'));
+
+      previousHighscore = highscoreStats[0]['totalPoints'];
+
       if (totalPoints > highscoreStats[0]['totalPoints']) {
         highscoreStats[0]['totalPoints'] = totalPoints;
         highscoreStats[0]['totalCardsPlayed'] = totalCardsPlayed;
@@ -21,6 +26,20 @@ exports.scoreReview = (hudMessage, currentHand, totalPoints, totalCardsPlayed, t
       highscoreStats.push({totalPoints, totalCardsPlayed, totalSeconds, date: moment().format('MMM Do YYYY'), timeAttack: 0, taDate: ''})
       localStorage.setItem('highscore', JSON.stringify(highscoreStats));
     }
+
+    // Check if player scored enough points to unlock a new theme
+    if (previousHighscore < 500 && totalPoints >= 500) {
+      console.log('unlocked new theme - Jungle');
+    } 
+
+    if (previousHighscore < 1000 && totalPoints >= 1000) {
+      console.log('unlocked new theme - Cosmos');
+    } 
+
+    function newThemeUnlockedPopup() {
+      
+    }
+
 
     // db.collection("highscores")
     //   .where("hidden", "==", false)

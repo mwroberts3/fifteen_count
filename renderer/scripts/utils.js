@@ -225,3 +225,23 @@ function jackpotBonusPointsAni(totalCardsPlayed, jackpotSameColorCheck,jackpotMu
   }, 1000);
 };
 
+exports.classicThemeTransition = (playersHandBg, comboRoundCheck) => {
+  
+  if (comboRoundCheck) {
+    let inversePct = 0;
+    let blurPct = 5;
+  
+    const classicThemeInverse = setInterval(() => {
+      playersHandBg.setProperty('--players-bg-filter', `blur(${blurPct}px) invert(${inversePct}%)`);
+      inversePct += 3;
+      blurPct++;
+
+      if (inversePct >= 500) clearInterval(classicThemeInverse);
+    }, 1);
+
+  } else {
+    // clearInterval(classicThemeInverse);
+
+    playersHandBg.setProperty('--players-bg-filter', 'blur(5px) invert(0%)');
+  }
+}

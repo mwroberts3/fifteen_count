@@ -2,8 +2,6 @@
   border-radius: 15px;
   min-width: 100px;
   min-height: 154px;
-  /* cursor: pointer; */
-  /* border-style: double; */
 }
 
 .red-two {
@@ -140,6 +138,7 @@ body {
   animation-duration: 100s;
   animation-iteration-count: infinite;
   animation-direction: alternate;
+  border-color: transparent;
 }
 
 @keyframes background-shift {

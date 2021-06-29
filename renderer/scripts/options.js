@@ -108,13 +108,15 @@ let buttonName;
 // Select theme dropdown
 const arcadeThemes = [
   { index: 0, themeName: "Classic", bgImgPlayersHand: ["classic-bg.png"], bgImgCombo: "classic-bg-combo-round.png", bgCol: "#b3edff", brdCol: "#fff", fullClearBrdGrd: [
-    "red",
-    "orange",
-    "yellow",
-    "green",
-    "blue",
-    "indigo",
-    "violet"
+    "#232f33",
+    "#35474c",
+    "#475e66",
+    "#59767f",
+    "#6b8e99",
+    "#7da5b2",
+    "#8fbdcc",
+    "#a1d5e5",
+    "#b3edff"
   ], cardSprites: "style/classicsprites.css", bgm: "bgm/indigo-theme.mp3", fifteenCountGradient: ['#999', '#999', '#999', '#999', '#999', '#999', '#999', '#888', '#777', '#666', '#555', '#444', '#333', '#222', '#111', '#000'] },
     { index: 1, themeName: "Jungle", bgImgPlayersHand: ["jungle-bg-1.png","jungle-bg-2.png","jungle-bg-3.png","jungle-bg-4.png","jungle-bg-5.png","jungle-bg-6.png","jungle-bg-7.png","jungle-bg-8.png"], bgImgCombo: "jungle-bg-combo-round.png", bgCol: "#ccead5", brdCol: "#fff", fullClearBrdGrd: [
       "yellow",

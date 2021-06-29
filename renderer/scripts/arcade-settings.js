@@ -100,13 +100,15 @@ const themeDisplay = document.querySelector('#theme-display');
 
 if (!localStorage.getItem('theme-selection')) {
   themeSelection = { index: 0, themeName: "Classic", bgImgPlayersHand: ["classic-bg.png"], bgImgCombo: "classic-bg-combo-round.png", bgCol: "#b3edff", brdCol: "#000", fullClearBrdGrd: [
-    "red",
-    "orange",
-    "yellow",
-    "green",
-    "blue",
-    "indigo",
-    "violet"
+    "#232f33",
+    "#35474c",
+    "#475e66",
+    "#59767f",
+    "#6b8e99",
+    "#7da5b2",
+    "#8fbdcc",
+    "#a1d5e5",
+    "#b3edff"
   ], cardSprites: "style/classicsprites.css", bgm: "bgm/indigo-theme.mp3", fifteenCountGradient: ['#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#333', '#000'] };
   localStorage.setItem('theme-selection', JSON.stringify(themeSelection));
 } else {
@@ -139,8 +141,9 @@ function setPlayersHandBg() {
   document.querySelector('.players-hand').style.removeProperty('background-image');
   let playersHandBgAbr = document.querySelector('.players-hand').style;
   if (themeSelection['bgImgPlayersHand'].length === 1) {
-    playersHandBgAbr.setProperty('--players-bg-img', `url("../img/${themeSelection['bgImgPlayersHand'][0]}")`)
+    playersHandBgAbr.setProperty('--players-bg-img', `url("../img/${themeSelection['bgImgPlayersHand'][0]}")`);
   } else {
+    playersHandBgAbr.setProperty('--players-bg-filter', 'blur(0)');
     let iOpa = 1;
     let jOpa = 0;
     let opaChange = 0.008;
@@ -203,6 +206,7 @@ let firstSubmitSFX = new Audio('./soundfx/first-submit.wav');
 let comboSubmitSFX = new Audio('./soundfx/combo-submit.wav');
 let fullClearSFX = new Audio('./soundfx/full-clear.wav');
 let newHighscoreSFX = new Audio('./soundfx/new-highscore.wav');
+let jackpotCheckSFX = new Audio('./soundfx/jackpot-check.wav');
 
 
 

@@ -700,7 +700,8 @@ input[type="submit"] {
   --players-bg-img: url("../img/jungle-bg-1.png");
   --players-bg-opacity: 1;
   --players-bg-img-2: url("../img/jungle-bg-3.png");
-  --players-bg-opacity-2: 0; }
+  --players-bg-opacity-2: 0;
+  --players-bg-filter: blur(5px); }
 
 .players-hand::before {
   content: "";
@@ -714,7 +715,8 @@ input[type="submit"] {
   bottom: 60px;
   left: 4px;
   opacity: var(--players-bg-opacity);
-  z-index: -2; }
+  z-index: -2;
+  filter: var(--players-bg-filter); }
 
 .players-hand::after {
   content: "";
@@ -777,6 +779,24 @@ input[type="submit"] {
   #points-breakdown-view progress[value]::-webkit-progress-value {
     background-color: #ffff00;
     border-radius: 3px; }
+
+#theme-unlocked-popup {
+  position: absolute;
+  top: 50%;
+  margin-top: -150px;
+  left: 25%;
+  right: 25%;
+  background: #222;
+  border: 2px solid #eee;
+  border-radius: 10px;
+  color: white;
+  width: 50%;
+  height: 300px;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
 
 #new-highscore-form {
   position: absolute;
