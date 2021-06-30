@@ -226,6 +226,8 @@ function jackpotBonusPointsAni(totalCardsPlayed, jackpotSameColorCheck,jackpotMu
 };
 
 exports.classicThemeTransition = (playersHandBg, comboRoundCheck) => {
+
+  console.log(comboRoundCheck);
   
   if (comboRoundCheck) {
     let inversePct = 0;
@@ -236,11 +238,13 @@ exports.classicThemeTransition = (playersHandBg, comboRoundCheck) => {
       inversePct += 3;
       blurPct++;
 
-      if (inversePct >= 500) clearInterval(classicThemeInverse);
+      if (inversePct >= 100) clearInterval(classicThemeInverse);
     }, 1);
 
   } else {
     // clearInterval(classicThemeInverse);
+
+    // console.log('test');
 
     playersHandBg.setProperty('--players-bg-filter', 'blur(5px) invert(0%)');
   }

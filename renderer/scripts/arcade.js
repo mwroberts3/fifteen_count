@@ -284,6 +284,13 @@ function reset() {
     }
   }
 
+  // reset players hand background
+  if (themeSelection['themeName'] !== 'Classic') {
+    document.querySelector('.players-hand').style.removeProperty('background-image');
+  } else {
+    utils.classicThemeTransition(document.querySelector('.players-hand').style, false);
+  }
+
   pointsValidity = false;
   firstSubmit = false;
   comboSubmit = false;
@@ -372,13 +379,13 @@ function cardsSubmit() {
     jackpotSelect();
     reset();
     selectCard();
-
-    // reset players hand background
-    if (themeSelection['themeName'] !== 'Classic') {
-      document.querySelector('.players-hand').style.removeProperty('background-image');
-    } else {
-      utils.classicThemeTransition(document.querySelector('.players-hand').style, false);
-    }
+    
+    // // reset players hand background
+    // if (themeSelection['themeName'] !== 'Classic') {
+      //   document.querySelector('.players-hand').style.removeProperty('background-image');
+    // } else {
+    //   utils.classicThemeTransition(document.querySelector('.players-hand').style, false);
+    // }
   }
 
   if (pointsValidity === true) {
@@ -390,13 +397,18 @@ function cardsSubmit() {
     fifteenCount = 0;
     submitCards.innerHTML = `Draw Cards &nbsp;<span class="submit-cards-smaller-text">[${actionBtn}]</span>`;
     comboSkip = true;
-
-    if (themeSelection['themeName'] !== 'Classic') {
-      playersHandArea.style.backgroundImage = `url("./img/${themeSelection['bgImgCombo']}")`;
-    } else {
-      utils.classicThemeTransition(document.querySelector('.players-hand').style, true);
-    }
     // clearBgImgIntervals();
+
+    console.log(document.querySelectorAll(".combo-sacrifice").length);
+
+    // set players hand bg
+    if (document.querySelectorAll(".combo-sacrifice").length < 1) {
+      if (themeSelection['themeName'] !== 'Classic') {
+        playersHandArea.style.backgroundImage = `url("./img/${themeSelection['bgImgCombo']}")`;
+      } else {
+        utils.classicThemeTransition(document.querySelector('.players-hand').style, true);
+      }
+    }
 
     // Check for jackpot bonus
     if (jackpotLive) {
@@ -545,20 +557,20 @@ function cardsSubmit() {
     if (userSelectedSoundSettings.SFX) {
     comboSubmitSFX.play();
     }
-
-    // reset players hand background
-    if (themeSelection['themeName'] !== 'Classic') {
-      document.querySelector('.players-hand').style.removeProperty('background-image');
-    } else {
-      utils.classicThemeTransition(document.querySelector('.players-hand').style, false);
-    }
-
+    
+    // // reset players hand background
+    // if (themeSelection['themeName'] !== 'Classic') {
+    //   document.querySelector('.players-hand').style.removeProperty('background-image');
+    // } else {
+    //   utils.classicThemeTransition(document.querySelector('.players-hand').style, false);
+    // }
     reDeal(globalCardsInHand, hand);
     showHand();
     jackpotSelect();
     reset();
     selectCard();
   }
+
   setSecondsBonusIndicator();
   setFifteenCountColor();
   // fifteenCountDisplay.innerHTML = `${fifteenCount}`;
