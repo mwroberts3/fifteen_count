@@ -15,6 +15,7 @@ let scoresCounted = 0;
 exports.pointsReview = (pointsBreakdown, totalPoints, hudMessageDisplay) => {
     hudMessageDisplay.style.opacity = "0";
     pointsBreakdownView.classList.remove('hidden');
+    document.querySelector('.players-hand').style.setProperty('--players-bg-filter', 'blur(0)');
 
     setTimeout(() => {
         scoreReviewHeader.style.opacity = '1';
@@ -72,8 +73,14 @@ function displayPointPct(totalPoints, pointTypeTotal, pointTypeDisplay) {
         pointTypeDisplay.nextElementSibling.value = `${pointTypeTotal}`;
         totalPointsDisplay.style.visibility = 'visible';
         
-        document.addEventListener('click', () =>{
-               document.getElementById("new-highscore-form").style.zIndex = 6;
-           })
+        setTimeout(() => {
+            document.getElementById("theme-unlocked-popup").style.zIndex = 6;
+        }, 500);
+        
+        document.addEventListener('click', () =>{       
+            document.getElementById("theme-unlocked-popup").style.zIndex = -10;
+
+            document.getElementById("theme-unlocked-popup").classList.add('hidden');
+           });
     }
 }

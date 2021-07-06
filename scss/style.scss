@@ -244,6 +244,33 @@ h2 {
 // HOW TO PLAY
 .how-to-container {
   font-size: 1.25rem;
+
+  h4 {
+    font-size: 24px;
+    text-align: center;
+  }
+
+  p {
+    margin-bottom: 15px;
+  }
+
+  p:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.how-to-tip-container {
+  display: inline-block;
+  background: #eee;
+  border: 2px dashed #aaa;
+  border-radius: 5px;
+  color: #333;
+  padding: 10px;
+  margin: 15px 0 15px 213.78px;
+
+  li {
+    margin-left: 32px;
+  }
 }
 
 // HIGHSCORES
@@ -846,23 +873,15 @@ input[type="submit"] {
 
   @keyframes fifteen-count-animation {
     0% {
-      background: rgba(0, 0, 0, 0.5);
-    }
-
-    25% {
-      background: rgba(0, 0, 0, 0.55);
+      filter: sepia(50%);
     }
 
     50% {
-      background: rgba(0, 0, 0, 0.6);
-    }
-
-    75% {
-      background: rgba(0, 0, 0, 0.55);
+      filter: sepia(100%);
     }
 
     100% {
-      background: rgba(0, 0, 0, 0.5);
+      filter: sepia(0%);
     }
   }
 
@@ -917,7 +936,7 @@ input[type="submit"] {
   --players-bg-opacity: 1;
   --players-bg-img-2: url("../img/jungle-bg-3.png");
   --players-bg-opacity-2: 0;
-  --players-bg-filter: blur(5px);
+  --players-bg-filter: blur(15px);
 }
 
 .players-hand::before {
@@ -970,9 +989,8 @@ input[type="submit"] {
   .point-type {
     display: flex;
     align-items: center;
-    // justify-content: center;
     width: 600px;
-    // margin-left: 300px;
+    margin-bottom: 5px;
 
     &-title {
       width: 200px;
@@ -1028,20 +1046,21 @@ input[type="submit"] {
 #theme-unlocked-popup {
   position: absolute;
   top: 50%;
-  margin-top: -150px;
-  left: 25%;
-  right: 25%;
+  margin-top: -100px;
+  left: 30%;
+  right: 30%;
   background: $dark-bg-col;
-  border: $menu-border;
+  border: inherit;
   border-radius: 10px;
   color: white;
-  width: 50%;
-  height: 300px;
+  width: 40%;
+  height: 200px;
   padding: 5px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  z-index: -10;
 }
 
 // NEW HIGHSCORE

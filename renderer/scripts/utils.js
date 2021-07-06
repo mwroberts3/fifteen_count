@@ -242,10 +242,6 @@ exports.classicThemeTransition = (playersHandBg, comboRoundCheck) => {
     }, 1);
 
   } else {
-    // clearInterval(classicThemeInverse);
-
-    // console.log('test');
-
-    playersHandBg.setProperty('--players-bg-filter', 'blur(5px) invert(0%)');
+    playersHandBg.setProperty('--players-bg-filter', 'blur(15px) invert(0%)');
   }
 }

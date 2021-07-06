@@ -378,14 +378,7 @@ function cardsSubmit() {
     showHand();
     jackpotSelect();
     reset();
-    selectCard();
-    
-    // // reset players hand background
-    // if (themeSelection['themeName'] !== 'Classic') {
-      //   document.querySelector('.players-hand').style.removeProperty('background-image');
-    // } else {
-    //   utils.classicThemeTransition(document.querySelector('.players-hand').style, false);
-    // }
+    selectCard();    
   }
 
   if (pointsValidity === true) {
@@ -402,7 +395,7 @@ function cardsSubmit() {
     console.log(document.querySelectorAll(".combo-sacrifice").length);
 
     // set players hand bg
-    if (document.querySelectorAll(".combo-sacrifice").length < 1) {
+    if (document.querySelectorAll(".combo-sacrifice").length < 1 && checkedCards.length < globalCardsInHand.length) {
       if (themeSelection['themeName'] !== 'Classic') {
         playersHandArea.style.backgroundImage = `url("./img/${themeSelection['bgImgCombo']}")`;
       } else {

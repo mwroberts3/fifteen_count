@@ -5,7 +5,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  cursor: default !important; }
+  cursor: none !important; }
 
 body {
   position: relative;
@@ -75,7 +75,7 @@ h2 {
   margin-top: 5px;
   border-radius: 5px;
   font-family: "Didact Gothic", sans-serif;
-  cursor: default !important;
+  cursor: none !important;
   background-image: linear-gradient(#444, #666);
   color: white;
   font-size: 1.25rem; }
@@ -192,6 +192,24 @@ h2 {
 
 .how-to-container {
   font-size: 1.25rem; }
+  .how-to-container h4 {
+    font-size: 24px;
+    text-align: center; }
+  .how-to-container p {
+    margin-bottom: 15px; }
+  .how-to-container p:last-of-type {
+    margin-bottom: 0; }
+
+.how-to-tip-container {
+  display: inline-block;
+  background: #eee;
+  border: 2px dashed #aaa;
+  border-radius: 5px;
+  color: #333;
+  padding: 10px;
+  margin: 15px 0 15px 213.78px; }
+  .how-to-tip-container li {
+    margin-left: 32px; }
 
 .high-score-container {
   background: #ddd;
@@ -240,7 +258,7 @@ h2 {
     margin: 0 10px;
     border-radius: 10px;
     list-style: none;
-    cursor: default !important; }
+    cursor: none !important; }
   .how-to-nav ul .option-selected,
   .high-score-mode-select ul .option-selected,
   .how-to-play-mode-select ul .option-selected {
@@ -256,7 +274,7 @@ h2 {
       padding: 10px; }
       .options-container section p span {
         font-weight: bold;
-        cursor: default !important;
+        cursor: none !important;
         display: inline-block;
         width: 170px; }
         .options-container section p span:hover {
@@ -309,7 +327,7 @@ h2 {
     #theme .theme-selection-menu div {
       text-align: center;
       padding: 3px 5px;
-      cursor: default !important; }
+      cursor: none !important; }
     #theme .theme-selection-menu .selected-theme {
       background: #fff;
       border-radius: 5px; }
@@ -469,7 +487,7 @@ h2 {
 .menu-options {
   display: flex; }
   .menu-options div {
-    cursor: default !important;
+    cursor: none !important;
     margin-left: 10px; }
     .menu-options div:hover {
       color: #ddd; }
@@ -556,7 +574,7 @@ input[type="submit"] {
   .players-hand h4 {
     text-align: center; }
   .players-hand input[type="button"] {
-    cursor: default !important;
+    cursor: none !important;
     width: 30%;
     padding: 10px;
     font-size: 1.25rem;
@@ -569,7 +587,7 @@ input[type="submit"] {
     .players-hand input[type="button"] :focus {
       border: none; }
   .players-hand card-t {
-    cursor: default !important;
+    cursor: none !important;
     transition: all 0.2s ease;
     border-radius: 10px; }
   .players-hand .show-hand {
@@ -613,7 +631,7 @@ input[type="submit"] {
     border-collapse: collapse;
     text-align: center;
     font-size: 2rem;
-    cursor: default !important;
+    cursor: none !important;
     background: #eee;
     transition: all 0.2s ease; }
   .players-hand .value-options-two {
@@ -628,7 +646,7 @@ input[type="submit"] {
     text-align: center;
     padding-top: 20px;
     background: #eee;
-    cursor: default !important;
+    cursor: none !important;
     transition: all 0.2s ease; }
   .players-hand .fifteen-count {
     position: relative;
@@ -651,15 +669,11 @@ input[type="submit"] {
 
 @keyframes fifteen-count-animation {
   0% {
-    background: rgba(0, 0, 0, 0.5); }
-  25% {
-    background: rgba(0, 0, 0, 0.55); }
+    filter: sepia(50%); }
   50% {
-    background: rgba(0, 0, 0, 0.6); }
-  75% {
-    background: rgba(0, 0, 0, 0.55); }
+    filter: sepia(100%); }
   100% {
-    background: rgba(0, 0, 0, 0.5); } }
+    filter: sepia(0%); } }
   .players-hand #fif-count-notifyer {
     position: absolute;
     top: 400px;
@@ -676,7 +690,7 @@ input[type="submit"] {
     width: 160px;
     height: 80px;
     background: #eee;
-    cursor: default !important;
+    cursor: none !important;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -701,7 +715,7 @@ input[type="submit"] {
   --players-bg-opacity: 1;
   --players-bg-img-2: url("../img/jungle-bg-3.png");
   --players-bg-opacity-2: 0;
-  --players-bg-filter: blur(5px); }
+  --players-bg-filter: blur(15px); }
 
 .players-hand::before {
   content: "";
@@ -750,7 +764,8 @@ input[type="submit"] {
   #points-breakdown-view .point-type {
     display: flex;
     align-items: center;
-    width: 600px; }
+    width: 600px;
+    margin-bottom: 5px; }
     #points-breakdown-view .point-type-title {
       width: 200px;
       text-align: left; }
@@ -783,20 +798,21 @@ input[type="submit"] {
 #theme-unlocked-popup {
   position: absolute;
   top: 50%;
-  margin-top: -150px;
-  left: 25%;
-  right: 25%;
+  margin-top: -100px;
+  left: 30%;
+  right: 30%;
   background: #222;
-  border: 2px solid #eee;
+  border: inherit;
   border-radius: 10px;
   color: white;
-  width: 50%;
-  height: 300px;
+  width: 40%;
+  height: 200px;
   padding: 5px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; }
+  align-items: center;
+  z-index: -10; }
 
 #new-highscore-form {
   position: absolute;
@@ -954,7 +970,7 @@ input[type="submit"] {
       font-size: 0.9rem;
       color: #777; }
       .ta-outer-boundaries .ta-timer-score-display .menu-options div {
-        cursor: default !important;
+        cursor: none !important;
         margin: 0 10px; }
         .ta-outer-boundaries .ta-timer-score-display .menu-options div:hover {
           color: #ddd; }
