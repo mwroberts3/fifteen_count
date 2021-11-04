@@ -92,18 +92,20 @@ exports.scoreReview = (hudMessage, currentHand, totalPoints, totalCardsPlayed, t
   }
   
   function newHighscore(name, totalPoints, totalCardsPlayed, totalSeconds) {
-    const now = new Date();
-    db.collection("highscores")
-      .add({
-        date: firebase.firestore.Timestamp.fromDate(now),
-        name: name,
-        score: totalPoints,
-        cards_played: totalCardsPlayed,
-        seconds_played: totalSeconds,
-        hidden: false,
-      })
-      .then(() => {
-        location.reload();
-      })
-      .catch((err) => console.log(err));
+    // will need to connect to Steamworks API now, not firebase
+
+    // const now = new Date();
+    // db.collection("highscores")
+    //   .add({
+    //     date: firebase.firestore.Timestamp.fromDate(now),
+    //     name: name,
+    //     score: totalPoints,
+    //     cards_played: totalCardsPlayed,
+    //     seconds_played: totalSeconds,
+    //     hidden: false,
+    //   })
+    //   .then(() => {
+    //     location.reload();
+    //   })
+    //   .catch((err) => console.log(err));
   }

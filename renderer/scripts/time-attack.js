@@ -6,8 +6,7 @@ utils.timeAttackFadeIn();
 utils.timeAttackBackgroundAdjust();
 
 // DOM sections
-const timerAndScoreDisplay = document.querySelector(".ta-timer-score-display"),
-timerDisplay = document.querySelector('.ta-timer-display'),
+const timerDisplay = document.querySelector('.ta-timer-display'),
 countDisplay = document.querySelector('.ta-count-display'),
 scoreDisplay = document.querySelector('.ta-score-display');
 
@@ -16,7 +15,6 @@ const taHighscoreDisplay = document.querySelector(".ta-alltime-score-display");
 
 let deck = [];
 let activeHand = [];
-let cardsToBeDelete = [];
 let testHand = [];
 
 let redrawAmount = 18;
@@ -112,7 +110,6 @@ const timeAttackTimer = setInterval(() => {
         document.querySelector('.ta-game-over-inner-container').children[1].textContent = `${score}`;
         
         if (score > highscoreToBeat) {
-            console.log('is this working?')
             highscoreStats[0]['timeAttack'] = score;
             highscoreStats[0]['taDate'] = moment().format('MMM Do YYYY');
             localStorage.setItem('highscore', JSON.stringify(highscoreStats));
@@ -146,6 +143,8 @@ shuffleTimeAttack(deck);
 buildAndShowHand(redrawAmount);
 newHighscoreCheckAndUpdate();
 
+// Check position of bonus card to potentially trigger final position animation
+
 // Check Cards Phase
 cardsDisplay.addEventListener('click', e => {
     cardIndex = [...e.target.parentNode.children].indexOf(e.target);
@@ -153,15 +152,12 @@ cardsDisplay.addEventListener('click', e => {
     if (e.target.classList.contains('ta-card')) {
         activeHand[cardIndex].checkCard(cardIndex, shownHand);
         countDisplay.textContent = `${count}`;    
-        console.log(cardIndex);
     }  
 
     if (e.target.classList.contains('bonus-card-overlay') || e.target.classList.contains('bomb-icon')){
         cardIndex = [...e.target.parentNode.parentNode.children].indexOf(e.target.parentNode);
         activeHand[cardIndex].checkCard(cardIndex, shownHand);
         countDisplay.textContent = `${count}`; 
-        console.log(e.target.parentNode);
-        console.log(cardIndex);
     }
 })
 
@@ -196,8 +192,6 @@ function buildDeckTimeAttack() {
               tempCardId++;
           }
       }
-
-      console.log(deck);
 }
 
 // Shuffle Deck
@@ -298,21 +292,19 @@ function shuffleTimeAttack() {
 }
 
 function redealReset() {
-      bonusAdded = false;
+    bonusAdded = false;
+    count = 0;
+    countDisplay.textContent = `${count}`;
+    cardsDisplay.innerHTML = '';
+    buildAndShowHand(cardsToReplace);
 
-        //   scoreDisplay.textContent = `${score}`;
-          count = 0;
-          countDisplay.textContent = `${count}`;
-          cardsDisplay.innerHTML = '';
-          buildAndShowHand(cardsToReplace);
-
-        //   Add bonus class to bonus card
-          let tempBonusIndex = getBonusCardIndex();    
-          shownHand = cardsDisplay.childNodes;
-          
-          if (tempBonusIndex) {
-              shownHand[tempBonusIndex].classList.add('ta-bonus-card');
-          }
+    //   Add bonus class to bonus card
+    let tempBonusIndex = getBonusCardIndex();    
+    shownHand = cardsDisplay.childNodes;
+    
+    if (tempBonusIndex) {
+        shownHand[tempBonusIndex].classList.add('ta-bonus-card');
+    }
   }
 
   function checkAndScoreBonusCard() {
@@ -322,14 +314,12 @@ function redealReset() {
     // Score checked cards
     addPointsToScore();
       
-    // Score bonus card  
+    // Score bonus card if in final position
     if (tempBonusIndex === 17 && shownHand[tempBonusIndex].classList.contains('ta-checked')) {
         bonusUnleashed = false;
 
         if (!bonusAdded) {
             bonusPoints = sameSuitCheck(score, true);
-            
-            console.log('bonus points:', bonusPoints);
             score += bonusPoints;
             bonusAdded = true;
             if (userSelectedSoundSettings.SFX) {
@@ -346,6 +336,10 @@ function redealReset() {
     activeHand.forEach((card, index) => {
         if (card.bonus) {
             tempBonusIndex = index;
+
+            if (index === 17) {
+                console.log("BONUS CARD BONUS ACTIVATED - SHOW ANIMATION")
+            }
         }
     }) 
 
@@ -354,11 +348,8 @@ function redealReset() {
 
   function addPointsToScore() {
     cardsToReplace = document.querySelectorAll(".ta-checked").length;
-    console.log('cards to replace: ', cardsToReplace);
 
     pointsAdded = sameSuitCheck(cardsToReplace, false);
-
-    console.log('points added: ', pointsAdded);
 
     score += pointsAdded;
 
@@ -381,7 +372,6 @@ function redealReset() {
   function sameSuitCheck(pointsInPlay, forBonusCard) {
     let checkedCardSuits = [];
     
-    console.log(pointsInPlay);
     activeHand.forEach(card => {
         if (card.checked) {
             checkedCardSuits.push(card.suit);
@@ -469,15 +459,11 @@ function displaySecondsWhilePaused() {
 }
 
 function newHighscoreCheckAndUpdate() {
-    console.log(highscoreToBeat);
-
     if (pointsOnDisplay > highscoreToBeat && !highscoreDefeated) {
-        console.log('NEW HIGHSCORE!');
         highscoreDefeated = true;
 
         setInterval(() => {
-            taHighscoreDisplay.innerText = `Highscore ${pointsOnDisplay}`
+            taHighscoreDisplay.innerText = `${pointsOnDisplay}`
         }, 100);
     }
-
 }

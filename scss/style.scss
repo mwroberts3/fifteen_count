@@ -6,7 +6,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  cursor: $custom-pointer;
+  // cursor: $custom-pointer;
+  cursor: default;
 }
 
 body {
@@ -1381,21 +1382,13 @@ input[type="submit"] {
   }
 
   .ta-alltime-score-display {
-    font-size: 1rem;
+    padding-left: 8px;
+    font-size: 20px;
     font-weight: bold;
     height: 20px;
-    color: #000;
+    color: #eee;
     display: inline;
     font-family: $gameplay-font-2;
-    // -webkit-text-stroke: 1px #000;
-  }
-
-  .ta-highscore-itself {
-    display: inline;
-  }
-
-  .ta-highscore-offset {
-    height: 20px;
   }
 }
 

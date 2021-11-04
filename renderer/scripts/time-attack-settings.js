@@ -81,5 +81,4 @@ if(localStorage.getItem('highscore')) {
     highscoreToBeat = 0;
 }
 
-document.querySelector('.ta-highscore-itself').style.fontWeight = 'normal';
-document.querySelector('.ta-highscore-itself').textContent = highscoreToBeat;
+document.querySelector('.ta-alltime-score-display').textContent = highscoreToBeat;

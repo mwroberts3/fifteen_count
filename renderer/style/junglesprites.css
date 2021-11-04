@@ -1,73 +1,73 @@
 .card-sprite {
-  border: 2px solid gold;
-  border-radius: 25px;
+  /* border: 2px solid gold; */
+  border-radius: 15px;
   min-width: 100px;
   min-height: 154px;
 }
 
 .red-two {
   background: url("../img/jungle_sprites.png") 0 0;
-  border: 2px solid limegreen;
+  /* border: 2px solid limegreen; */
 }
 
 .red-three {
   background: url("../img/jungle_sprites.png") -144.5px 0;
-  border: 2px solid limegreen;
+  /* border: 2px solid limegreen; */
 }
 
 .red-four {
   background: url("../img/jungle_sprites.png") -289px 0;
-  border: 2px solid limegreen;
+  /* border: 2px solid limegreen; */
 }
 
 .red-five {
   background: url("../img/jungle_sprites.png") -433.5px 0;
-  border: 2px solid limegreen;
+  /* border: 2px solid limegreen; */
 }
 
 .red-six {
   background: url("../img/jungle_sprites.png") -578px 0;
-  border: 2px solid limegreen;
+  /* border: 2px solid limegreen; */
 }
 
 .red-seven {
   background: url("../img/jungle_sprites.png") -722.5px 0;
-  border: 2px solid limegreen;
+  /* border: 2px solid limegreen; */
 }
 
 .red-eight {
   background: url("../img/jungle_sprites.png") -867px 0;
-  border: 2px solid limegreen;
+  /* border: 2px solid limegreen; */
 }
 
 .red-nine {
   background: url("../img/jungle_sprites.png") -1011.5px 0;
-  border: 2px solid limegreen;
+  /* border: 2px solid limegreen; */
 }
 
 .red-ten {
   background: url("../img/jungle_sprites.png") -1156px 0;
-  border: 2px solid limegreen;
+  /* border: 2px solid limegreen; */
 }
 
 .red-ten-one {
   background: url("../img/jungle_sprites.png") -1300.5px 0;
-  border: 2px solid limegreen;
+  /* border: 2px solid limegreen; */
 }
 
 .red-eleven-one {
   background: url("../img/jungle_sprites.png") -1589px 0;
-  border: 2px solid limegreen;
+  /* border: 2px solid limegreen; */
 }
 
 .red-twelve-one {
   background: url("../img/jungle_sprites.png") -1733.5px 0;
-  border: 2px solid limegreen;
+  /* border: 2px solid limegreen; */
 }
 
 .red-fifteen-one {
   background: url("../img/jungle_sprites.png") -1444.5px 0;
-  border: 2px solid limegreen;
+  /* border: 2px solid limegreen; */
 }
 
 .black-two {
@@ -124,7 +124,7 @@
 
 .joker {
   background: url("../img/jungle_sprites.png") 0 -465px;
-  border: 2px solid indianred;
+  /* border: 2px solid indianred; */
 }
 
 .hud-message {

@@ -1,4 +1,6 @@
 Bugs:
+-7/6/21 - classic mode bg switch seems to run a little slow the first few times switching to combo stage...need to see how it goes in the production version
+
     -6/27/21 - need to balance the SFX level and BGM levels
 
     -6/27/21 - possible to add transition when switch gui color to combo background
@@ -6,35 +8,35 @@ Bugs:
     -6/20/21 - if swapping cards and time gets down to ~6 then time will still show up as red on timer, should only turn red when 5 or less
 
     -6/19/21 - sometimes jackpot is supposed to show up after swap but doesn't, reduces jackpot level by 1 (maybe make this a gameplay element)
-    
+
     -6/19/21 - border animation for full clear on classic mode doesn't work, probably because of the shifting border color animation
 
     -6/18/21 - shouldn't have decimals as part of score, like getting with edited checked cards scoring
 
     -5/29/21 - scoring a jackpot bonus should have a sound effect
 
-    -5/2/21 - should be a sound effect when the 15 count is reached 
+    -5/2/21 - should be a sound effect when the 15 count is reached
 
     -4/26/21 - when closing the "How To Play" Arcade section that happens the first time you enter the mode, should be a smoother transition, just using location.reload() now, which causes a janky flicker
-    
+
     -4/22/21 - the click boxes to change subsection in settings in off
-  
+
     -shouldn't be able to submit score if there isn't a name
 
     -if it's on steam, maybe should just use steam account name for highscore
-       
-    -text gets cut off in action button visual display if text is too long, for example if action button is controlLeft 
-    
+
+    -text gets cut off in action button visual display if text is too long, for example if action button is controlLeft
+
     -should probably have any custom fonts downloaded and available locally
-    
+
     -action button locks when on the select combo screen if press alt key once and then try to push shift to submit combo
-    
-    -sometimes when time is up the countdown will still tic down to -1 or 
+
+    -sometimes when time is up the countdown will still tic down to -1 or
     -2, should just have text in container be blank when timer reaches 0
 
     -container size is a little janky, make sure that is consistent
 
-    -pause button not working properly, sometimes it still counts down when paused 
+    -pause button not working properly, sometimes it still counts down when paused
 
     -the selected theme should be saved, and not reset to classic when going back into window in settings menu
 
@@ -56,4 +58,4 @@ Bugs:
 
     -if play through arcade mode and score isn't in top 50? then it just automatically restarts
 
-    -can still get a gameover screen if game is paused but seconds timer keeps going
+    -can still get a gameover screen if game is paused but seconds timer keeps going?

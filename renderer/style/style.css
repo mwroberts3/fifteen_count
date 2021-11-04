@@ -5,7 +5,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  cursor: none !important; }
+  cursor: default; }
 
 body {
   position: relative;
@@ -1040,16 +1040,13 @@ input[type="submit"] {
     .ta-outer-boundaries .ta-cards-display .ta-checked {
       transform: rotate(14deg); }
   .ta-outer-boundaries .ta-alltime-score-display {
-    font-size: 1rem;
+    padding-left: 8px;
+    font-size: 20px;
     font-weight: bold;
     height: 20px;
-    color: #000;
+    color: #eee;
     display: inline;
     font-family: "Short Stack", cursive; }
-  .ta-outer-boundaries .ta-highscore-itself {
-    display: inline; }
-  .ta-outer-boundaries .ta-highscore-offset {
-    height: 20px; }
 
 .bonus-card-overlay {
   position: absolute;

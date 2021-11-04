@@ -1,6 +1,6 @@
 .card-sprite {
-  border: 2px solid #fff;
-  border-radius: 35%;
+  /* border: 2px solid #fff; */
+  border-radius: 15px;
   min-width: 100px;
   min-height: 154px;
 }
