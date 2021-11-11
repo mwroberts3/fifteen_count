@@ -1,5 +1,5 @@
 Bugs:
--7/6/21 - classic mode bg switch seems to run a little slow the first few times switching to combo stage...need to see how it goes in the production version
+-7/6/21 - classic mode background switch seems to run a little slow the first few times switching to combo stage...need to see how it goes in the production version
 
     -6/27/21 - need to balance the SFX level and BGM levels
 
@@ -59,3 +59,5 @@ Bugs:
     -if play through arcade mode and score isn't in top 50? then it just automatically restarts
 
     -can still get a gameover screen if game is paused but seconds timer keeps going?
+
+    -custom cursor stays stuck in place when clicking and dragging styled scrollbar

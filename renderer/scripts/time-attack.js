@@ -28,6 +28,7 @@ let bombsOff = false;
 let bonusAdded = false;
 let bonusPoints = 0;
 let cardBonusIndex;
+let firstSpin = false;
 let gamePaused = false;
 
 let highscoreDefeated = false;
@@ -305,6 +306,10 @@ function redealReset() {
     if (tempBonusIndex) {
         shownHand[tempBonusIndex].classList.add('ta-bonus-card');
     }
+
+    if (tempBonusIndex === 0) {
+        firstSpin = false;
+    }
   }
 
   function checkAndScoreBonusCard() {
@@ -337,8 +342,9 @@ function redealReset() {
         if (card.bonus) {
             tempBonusIndex = index;
 
-            if (index === 17) {
-                console.log("BONUS CARD BONUS ACTIVATED - SHOW ANIMATION")
+            if (index === 17 && !firstSpin) {
+                firstSpin = true;
+                utils.timeAttackBonusFinalPositionAni();
             }
         }
     }) 

@@ -1,16 +1,21 @@
 const moment = require('moment');
 
 const scoreDisplay = document.querySelector(".score-display");
-const errorMsg = document.querySelector(".error-msg");
-const personalHighscoreContainer = document.querySelector('.high-score-container').childNodes[1];
-let highscoreStats = [];
+const personalHighscoreContainer = document.querySelector('.high-score-container').childNodes[3];
+
+let arcadeScoresDisplayed = true;
+let taScoresDisplayed = false;
+
+let highScoresArr = [];
+
+if (localStorage.getItem('highscore')) {
+  highScoresArr = JSON.parse(localStorage.getItem('highscore'));
+}
 
 // Game mode select
 const highscoreSelect = document.querySelector('.high-score-mode-select');
 
 highscoreSelect.addEventListener('click', e => {
-  console.log(e.target);
-
   if (e.target.tagName === 'LI') {
     if (e.target.nextElementSibling) {
       e.target.nextElementSibling.classList.remove('option-selected');
@@ -20,12 +25,19 @@ highscoreSelect.addEventListener('click', e => {
     e.target.classList.add('option-selected');
   }
 
-  console.log(highscoreSelect.childNodes);
-  console.log(highscoreSelect.childNodes[1].children);
   if (highscoreSelect.childNodes[1].children[1].classList.contains('option-selected')) {
-    displayTimeAttackScores();
+    // don't retrieve scores again on click if they're already displayed
+    if (!taScoresDisplayed) {
+      displayTimeAttackScores();
+      taScoresDisplayed = true;
+      arcadeScoresDisplayed = false;
+    }
   } else {
-    displayArcadeScores();
+    if (!arcadeScoresDisplayed) {
+      displayArcadeScores();
+      arcadeScoresDisplayed = true;
+      taScoresDisplayed = false;
+    }
   }
 }) 
 
@@ -33,33 +45,38 @@ highscoreSelect.addEventListener('click', e => {
 displayArcadeScores();
 
 function displayTimeAttackScores() {
-  if (localStorage.getItem('highscore')) {
-    highscoreStats = JSON.parse(localStorage.getItem('highscore'));
-    personalHighscoreContainer.children[1].textContent = `${highscoreStats[0]['timeAttack']}`;
-    personalHighscoreContainer.children[2].textContent = `Date: ${highscoreStats[0]['taDate']}`;
-    personalHighscoreContainer.children[3].textContent = ` `;
-    personalHighscoreContainer.children[4].textContent = ` `;
+  document.querySelector('h3').textContent = 'Time Attack Scores'
 
+  if (localStorage.getItem('highscore') && highScoresArr[0].timeAttack > 0) {
+    personalHighscoreContainer.children[1].textContent = `${highScoresArr[0]['timeAttack']}`;
+    personalHighscoreContainer.children[2].innerHTML = `<strong>Date:</strong>&nbsp;${highScoresArr[0]['taDate']}`;
+    personalHighscoreContainer.children[3].innerHTML = ` `;
+    personalHighscoreContainer.children[4].innerHTML = ` `;
     scoreDisplay.innerHTML = ``;
-
-    document.querySelector('h3').textContent = 'Top 100 Time Attack Scores'
+  } else {
+    personalHighscoreContainer.children[1].textContent = `0`;
+    personalHighscoreContainer.children[2].innerHTML = `<strong>Date:</strong>&nbsp;na`;
+    personalHighscoreContainer.children[3].innerHTML = ` `;
+    personalHighscoreContainer.children[4].innerHTML = ` `;
+    scoreDisplay.innerHTML = ``;
   }
 }
 
 function displayArcadeScores() {
-  document.querySelector('h3').textContent = 'Top 100 Arcade Scores';
+  document.querySelector('h3').textContent = 'Arcade Scores';
   
   // Check for existing personal highscore
   if (localStorage.getItem('highscore')) {
-    highscoreStats = JSON.parse(localStorage.getItem('highscore'));
-    console.log(highscoreStats);
-    personalHighscoreContainer.childNodes[3].textContent = `${highscoreStats[0]['totalPoints']}`;
-    personalHighscoreContainer.childNodes[5].textContent = `Cards Played: ${highscoreStats[0]['totalCardsPlayed']}`;
-    personalHighscoreContainer.childNodes[7].textContent = `Time: ${highscoreStats[0]['totalSeconds']}`;
-    personalHighscoreContainer.childNodes[9].textContent = `Date: ${highscoreStats[0]['date']}`;
+    personalHighscoreContainer.childNodes[3].textContent = `${highScoresArr[0]['totalPoints']}`;
+    personalHighscoreContainer.childNodes[5].innerHTML = `<strong>Cards Played:</strong>&nbsp;${highScoresArr[0]['totalCardsPlayed']}`;
+    personalHighscoreContainer.childNodes[7].innerHTML = `<strong>Time:</strong>&nbsp;${highScoresArr[0]['totalSeconds']}`;
+    personalHighscoreContainer.childNodes[9].innerHTML = `<strong>Date:</strong>&nbsp;${highScoresArr[0]['date']}`;
+  } else {
+    personalHighscoreContainer.childNodes[3].textContent = `0`;
+    personalHighscoreContainer.childNodes[5].innerHTML = `<strong>Cards Played:</strong>&nbsp;0`;
+    personalHighscoreContainer.childNodes[7].innerHTML = `<strong>Time:</strong>&nbsp;0`;
+    personalHighscoreContainer.childNodes[9].innerHTML = `<strong>Date:</strong>&nbsp;na`;
   }
-  
-  console.log(personalHighscoreContainer.childNodes);
   
   db.collection("highscores")
     .where("hidden", "==", false)

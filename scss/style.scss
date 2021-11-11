@@ -6,8 +6,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  // cursor: $custom-pointer;
-  cursor: default;
+  cursor: $custom-pointer;
 }
 
 body {
@@ -45,6 +44,32 @@ h2 {
   text-align: center;
 }
 
+// SUB-STYLING
+.sub-topic-header {
+  font-size: 52px;
+  font-family: "Ink Free";
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 // UTILITIES
 .show-overflow {
   overflow: visible;
@@ -66,6 +91,11 @@ h2 {
   border-radius: 10px;
   border: $menu-border;
   padding: 10px;
+
+  &.how-to-play-screen {
+    height: calc(100vh - 44px);
+    overflow-y: auto;
+  }
 }
 
 .title-screen-container {
@@ -158,7 +188,7 @@ h2 {
   opacity: 1;
 }
 
-// INDEX
+// TITLE SCREEN / MENU
 .index-header {
   width: 100%;
 
@@ -279,12 +309,17 @@ h2 {
   background: $light-bg-col;
   border-radius: 10px;
 
+  h3 {
+    margin-bottom: 10px;
+  }
+
   .personal-highscore-container {
     width: 70%;
+    height: 38px;
     margin: 0 auto 7px;
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     background: #efefef;
     padding: 0 10px;
     border-radius: 10px;
@@ -316,7 +351,7 @@ h2 {
 
   table {
     margin: 0 auto;
-    padding: 5px;
+    // padding: 5px;
 
     th,
     td {
@@ -478,16 +513,13 @@ h2 {
 
 #personal-highscore-display {
   font-family: $gameplay-font-2;
-  font-size: 1rem;
+  font-size: 20px;
+  font-weight: bold;
   margin-left: 8px;
-  margin-bottom: 12px;
-  // font-weight: bold;
-  // -webkit-text-stroke: 1px #000;
   height: 59px;
 
   span {
     font-weight: normal;
-    // -webkit-text-stroke: 1px #000;
   }
 }
 
@@ -517,10 +549,6 @@ h2 {
   // background: $dark-bg-col;
   color: white;
   max-width: $maxwidth;
-
-  // div:first-of-type {
-  //   position: relative;
-  // }
 
   .mh-points-display {
     text-align: center;
@@ -1301,7 +1329,7 @@ input[type="submit"] {
       width: 33%;
       display: flex;
       justify-content: center;
-      padding-top: 4px;
+      padding-top: 5px;
       font-size: 2rem;
       font-weight: bold;
       font-style: italic;
@@ -1360,11 +1388,20 @@ input[type="submit"] {
     }
 
     .ta-bonus-card {
-      // background-image: url("./img/ta-bonus-card.png");
+      animation-name: null;
+      animation-duration: 2s;
+    }
+
+    @keyframes bonusCardSwirl {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
     }
 
     .ta-bomb-card {
-      // border: 10px blueviolet solid;
     }
 
     .bomb-icon {
@@ -1382,7 +1419,7 @@ input[type="submit"] {
   }
 
   .ta-alltime-score-display {
-    padding-left: 8px;
+    margin-left: 8px;
     font-size: 20px;
     font-weight: bold;
     height: 20px;
@@ -1398,7 +1435,6 @@ input[type="submit"] {
   width: 80px;
   height: 134px;
   border-radius: 15px;
-  // background: #fff;
   z-index: -2;
 }
 

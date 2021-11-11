@@ -226,9 +226,7 @@ function jackpotBonusPointsAni(totalCardsPlayed, jackpotSameColorCheck,jackpotMu
 };
 
 exports.classicThemeTransition = (playersHandBg, comboRoundCheck) => {
-
-  console.log(comboRoundCheck);
-  
+ 
   if (comboRoundCheck) {
     let inversePct = 0;
     let blurPct = 5;
@@ -245,3 +243,10 @@ exports.classicThemeTransition = (playersHandBg, comboRoundCheck) => {
     playersHandBg.setProperty('--players-bg-filter', 'blur(15px) invert(0%)');
   }
 }
+
+exports.timeAttackBonusFinalPositionAni = () =>
+{
+  const bonusCard = document.querySelector(".ta-bonus-card");
+
+  bonusCard.style.animationName = "bonusCardSwirl";
+} 
