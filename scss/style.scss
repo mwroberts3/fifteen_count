@@ -47,7 +47,7 @@ h2 {
 // SUB-STYLING
 .sub-topic-header {
   font-size: 52px;
-  font-family: "Ink Free";
+  font-family: $title-font;
 }
 
 /* width */
@@ -84,16 +84,17 @@ h2 {
   background: url("../img/cursor.png");
 }
 
+// Settings, Highscores and How To Container
 .container {
   position: relative;
   margin: 20px auto 0;
-  background: $light-bg-col;
+  background: $non-gameplay-bg;
   border-radius: 10px;
   border: $menu-border;
   padding: 10px;
+  height: calc(100vh - 40px);
 
   &.how-to-play-screen {
-    height: calc(100vh - 44px);
     overflow-y: auto;
   }
 }
@@ -203,8 +204,7 @@ h2 {
   margin: auto;
   background: $dark-bg-col;
   border-radius: 50% 20% / 10% 40%;
-  padding: 10px;
-  // border: 4px solid #aaa;
+  padding: 10px 10px 10px 10px;
   animation-name: gamemode-animation;
   animation-duration: 100s;
   animation-iteration-count: infinite;
@@ -255,6 +255,7 @@ h2 {
   text-align: center;
   color: #999;
   font-size: 12px;
+  font-family: $title-font;
   font-family: $gameplay-font-2;
 }
 
@@ -264,11 +265,12 @@ h2 {
 
 .title-subtitle {
   position: absolute;
-  bottom: 40px;
+  bottom: 35px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 18px;
   color: #999;
+  font-family: $gameplay-font-2;
   font-style: italic;
 }
 
@@ -306,7 +308,6 @@ h2 {
 
 // HIGHSCORES
 .high-score-container {
-  background: $light-bg-col;
   border-radius: 10px;
 
   h3 {
@@ -373,12 +374,11 @@ h2 {
     display: flex;
 
     li {
-      padding: 5px 10px;
+      font-size: 20px;
+      padding: 5px 15px;
       margin: 0 10px;
-      // border: 2px solid #999;
-      border-radius: 10px;
+      border-radius: 15px;
       list-style: none;
-      cursor: $custom-pointer;
     }
 
     .option-selected {

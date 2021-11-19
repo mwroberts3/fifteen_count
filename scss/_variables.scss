@@ -12,11 +12,18 @@ $custom-pointer: none !important;
 // Arcade Mode and Time Attack preload BG
 $preloadandMainBg: #b3edff;
 
+// Non-gameplay container background
+$non-gameplay-bg: linear-gradient(
+  331deg,
+  rgba(230, 230, 230, 1) 35%,
+  rgba(238, 238, 238, 1) 100%
+);
+
 // Fonts
 $title-font: "Didact Gothic", sans-serif;
 $body-font: "Didact Gothic", sans-serif;
 $gameplay-font: "Russo One", sans-serif;
-// $gameplay-font-2: "Ink Free", sans-serif;
+$title-font: "Ink Free", sans-serif;
 $gameplay-font-2: "Short Stack", cursive;
 $gameplay-font-col: #ffff00;
 $timer-font-col: rgb(152, 253, 0);

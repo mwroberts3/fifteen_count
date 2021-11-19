@@ -38,7 +38,7 @@ h2 {
 
 .sub-topic-header {
   font-size: 52px;
-  font-family: "Ink Free"; }
+  font-family: "Ink Free", sans-serif; }
 
 /* width */
 ::-webkit-scrollbar {
@@ -70,12 +70,12 @@ h2 {
 .container {
   position: relative;
   margin: 20px auto 0;
-  background: #ddd;
+  background: linear-gradient(331deg, #e6e6e6 35%, #eeeeee 100%);
   border-radius: 10px;
   border: 2px solid #eee;
-  padding: 10px; }
+  padding: 10px;
+  height: calc(100vh - 40px); }
   .container.how-to-play-screen {
-    height: calc(100vh - 44px);
     overflow-y: auto; }
 
 .title-screen-container {
@@ -126,7 +126,7 @@ h2 {
   right: 5px; }
 
 .title-font {
-  font-family: "Didact Gothic", sans-serif; }
+  font-family: "Ink Free", sans-serif; }
 
 .submit-cards {
   width: 25%;
@@ -163,7 +163,7 @@ h2 {
   margin: auto;
   background: #222;
   border-radius: 50% 20% / 10% 40%;
-  padding: 10px;
+  padding: 10px 10px 10px 10px;
   animation-name: gamemode-animation;
   animation-duration: 100s;
   animation-iteration-count: infinite;
@@ -199,6 +199,7 @@ h2 {
   text-align: center;
   color: #999;
   font-size: 12px;
+  font-family: "Ink Free", sans-serif;
   font-family: "Short Stack", cursive; }
 
 .title-banner-container {
@@ -206,11 +207,12 @@ h2 {
 
 .title-subtitle {
   position: absolute;
-  bottom: 40px;
+  bottom: 35px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 18px;
   color: #999;
+  font-family: "Short Stack", cursive;
   font-style: italic; }
 
 .how-to-container {
@@ -235,7 +237,6 @@ h2 {
     margin-left: 32px; }
 
 .high-score-container {
-  background: #ddd;
   border-radius: 10px; }
   .high-score-container h3 {
     margin-bottom: 10px; }
@@ -279,11 +280,11 @@ h2 {
   .how-to-nav ul li,
   .high-score-mode-select ul li,
   .how-to-play-mode-select ul li {
-    padding: 5px 10px;
+    font-size: 20px;
+    padding: 5px 15px;
     margin: 0 10px;
-    border-radius: 10px;
-    list-style: none;
-    cursor: none !important; }
+    border-radius: 15px;
+    list-style: none; }
   .how-to-nav ul .option-selected,
   .high-score-mode-select ul .option-selected,
   .how-to-play-mode-select ul .option-selected {
