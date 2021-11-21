@@ -12,7 +12,7 @@ if (localStorage.getItem('highscore')) {
   personalHighscores = JSON.parse(localStorage.getItem('highscore'));
 }
 
-fetchArcadeLeaderboardScores();
+fetchAndDisplayArcadeLeaderboardScores();
 
 // Game mode select
 // depending on game mode selected, need to call fetchArcadeLeaderboardScores or fetchTimeAttackLeaderboardScores
@@ -84,12 +84,60 @@ function displayArcadeScores() {
   }
 }
 
-async function fetchArcadeLeaderboardScores() {
-  let arcadeHighscores = await fetch(`https://partner.steam-api.com/ISteamLeaderboards/GetLeaderboardsForGame/v2/?key=${steamInfo.key}&appid=${steamInfo.appID}`);
-  
-  arcadeHighscores = await arcadeHighscores.json();
+async function fetchAndDisplayArcadeLeaderboardScores() {
+  let arcadeHighscores = await fetch(`https://partner.steam-api.com/ISteamLeaderboards/GetLeaderboardEntries/v1/?key=${steamInfo.key}&appid=${steamInfo.appID}&rangestart=1&rangeend=100&leaderboardid=7434161&datarequest=RequestGlobal`);
 
-  arcadeHighscores = arcadeHighscores.response.leaderboards[0];
+  arcadeHighscores = await arcadeHighscores.json();
+  arcadeHighscores = arcadeHighscores.leaderboardEntryInformation.leaderboardEntries;
 
   console.log(arcadeHighscores);
+
+  let arcadeHighscoresDisplayTable = document.querySelector('.score-display');
+
+  for (let i=0; i < arcadeHighscores.length; i++) {
+    let newHighscoreData = document.createElement('tr');
+
+    newHighscoreData.innerHTML = `
+    <td>${arcadeHighscores[i].rank}</td>
+    <td>${arcadeHighscores[i].score}</td>
+    <td>${arcadeHighscores[i].steamID}</td>
+    <td>${hexToAsciiCardsPlayed(arcadeHighscores[i].detailData)}</td>
+    <td>${hexToAsciiSeconds(arcadeHighscores[i].detailData)}</td>
+    <td>Date</td>
+    `
+    
+    arcadeHighscoresDisplayTable.appendChild(newHighscoreData);
+  }
+
+function hexToAsciiCardsPlayed(str1){
+	let hex  = str1.toString();
+	let str = '';
+  let strParts = [];
+
+	for (let n = 0; n < hex.length; n += 2) {
+    if (String.fromCharCode(parseInt(hex.substr(n, 2), 16)) > -1) {
+      console.log(String.fromCharCode(parseInt(hex.substr(n, 2), 16)))
+      str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
+    }
+	}
+
+  strParts = str.split(/(\s+)/);
+	return strParts[0];
+ }
+
+function hexToAsciiSeconds(str1){
+	let hex  = str1.toString();
+	let str = '';
+  let strParts = [];
+
+	for (let n = 0; n < hex.length; n += 2) {
+    if (String.fromCharCode(parseInt(hex.substr(n, 2), 16)) > -1) {
+      console.log(String.fromCharCode(parseInt(hex.substr(n, 2), 16)))
+      str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
+    }
+	}
+
+  strParts = str.split(/(\s+)/);
+	return strParts[2];
+ }
 }
