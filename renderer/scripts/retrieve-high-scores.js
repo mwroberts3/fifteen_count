@@ -1,4 +1,4 @@
-let steamInfo = require('../steamworksFiles/steamworksInfo.json')
+const steamworksInfo = require('../steamworksFiles/steamworksInfo.json')
 
 const scoreDisplay = document.querySelector(".score-display");
 const personalHighscoreContainer = document.querySelector('.high-score-container').childNodes[3];
@@ -8,16 +8,15 @@ let taScoresDisplayed = false;
 
 let personalHighscores = [];
 
+let globalArcadeScores = [];
+
 if (localStorage.getItem('highscore')) {
   personalHighscores = JSON.parse(localStorage.getItem('highscore'));
 }
 
-fetchAndDisplayArcadeLeaderboardScores();
+fetchArcadeLeaderboardScores();
 
 // Game mode select
-// depending on game mode selected, need to call fetchArcadeLeaderboardScores or fetchTimeAttackLeaderboardScores
-
-
 const highscoreSelect = document.querySelector('.high-score-mode-select');
 
 highscoreSelect.addEventListener('click', e => {
@@ -33,13 +32,15 @@ highscoreSelect.addEventListener('click', e => {
   if (highscoreSelect.childNodes[1].children[1].classList.contains('option-selected')) {
     // don't retrieve scores again on click if they're already displayed
     if (!taScoresDisplayed) {
-      displayTimeAttackScores();
+      displayPersonalTimeAttackScore();
+      displayGlobalTimeAttackScores();
       taScoresDisplayed = true;
       arcadeScoresDisplayed = false;
     }
   } else {
     if (!arcadeScoresDisplayed) {
-      displayArcadeScores();
+      displayPersonalArcadeScore();
+      displayGlobalArcadeScores();
       arcadeScoresDisplayed = true;
       taScoresDisplayed = false;
     }
@@ -47,9 +48,15 @@ highscoreSelect.addEventListener('click', e => {
 }) 
 
 // display arcade score by default
-displayArcadeScores();
+displayPersonalArcadeScore();
+scoreDisplay.innerHTML = `
+  <p>loading...</p>
+`;
+setTimeout(() => {
+  displayGlobalArcadeScores();
+},1000)
 
-function displayTimeAttackScores() {
+function displayPersonalTimeAttackScore() {
   document.querySelector('h3').textContent = 'Time Attack'
 
   if (localStorage.getItem('highscore') && personalHighscores[0].timeAttack > 0) {
@@ -67,7 +74,7 @@ function displayTimeAttackScores() {
   }
 }
 
-function displayArcadeScores() {
+function displayPersonalArcadeScore() {
   document.querySelector('h3').textContent = 'Arcade';
   
   // Check for existing personal highscore
@@ -84,30 +91,43 @@ function displayArcadeScores() {
   }
 }
 
-async function fetchAndDisplayArcadeLeaderboardScores() {
-  let arcadeHighscores = await fetch(`https://partner.steam-api.com/ISteamLeaderboards/GetLeaderboardEntries/v1/?key=${steamInfo.key}&appid=${steamInfo.appID}&rangestart=1&rangeend=100&leaderboardid=7434161&datarequest=RequestGlobal`);
+function displayGlobalArcadeScores() {
+  for (let i=0; i < globalArcadeScores.length; i++) {
+    scoreDisplay.innerHTML = `
+    <tr>
+      <th style="width: 115px">Rank</th>
+      <th style="width: 115px">Points</th>
+      <th style="width: 250px">Name</th>
+      <th style="width: 200px">Card Count</th>
+      <th style="width: 115px">Seconds</th>
+      <th style="width: 250px">Date</th>
+    </tr>
+    `;
 
-  arcadeHighscores = await arcadeHighscores.json();
-  arcadeHighscores = arcadeHighscores.leaderboardEntryInformation.leaderboardEntries;
-
-  console.log(arcadeHighscores);
-
-  let arcadeHighscoresDisplayTable = document.querySelector('.score-display');
-
-  for (let i=0; i < arcadeHighscores.length; i++) {
     let newHighscoreData = document.createElement('tr');
 
     newHighscoreData.innerHTML = `
-    <td>${arcadeHighscores[i].rank}</td>
-    <td>${arcadeHighscores[i].score}</td>
-    <td>${arcadeHighscores[i].steamID}</td>
-    <td>${hexToAsciiCardsPlayed(arcadeHighscores[i].detailData)}</td>
-    <td>${hexToAsciiSeconds(arcadeHighscores[i].detailData)}</td>
-    <td>Date</td>
+    <td>${globalArcadeScores[i].rank}</td>
+    <td>${globalArcadeScores[i].score}</td>
+    <td>${globalArcadeScores[i].steamID}</td>
+    <td>${hexToAsciiCardsPlayed(globalArcadeScores[i].detailData)}</td>
+    <td>${hexToAsciiSeconds(globalArcadeScores[i].detailData)}</td>
+    <td>${hexToAsciiDate(globalArcadeScores[i].detailData)}</td>
     `
-    
-    arcadeHighscoresDisplayTable.appendChild(newHighscoreData);
+    scoreDisplay.appendChild(newHighscoreData);
   }
+}
+
+function displayGlobalTimeAttackScores() {
+
+}
+
+async function fetchArcadeLeaderboardScores() {
+  globalArcadeScores = await fetch(`https://partner.steam-api.com/ISteamLeaderboards/GetLeaderboardEntries/v1/?key=${steamworksInfo.key}&appid=${steamworksInfo.appID}&rangestart=1&rangeend=100&leaderboardid=7434161&datarequest=RequestGlobal`);
+
+  globalArcadeScores = await globalArcadeScores.json();
+  globalArcadeScores = globalArcadeScores.leaderboardEntryInformation.leaderboardEntries;
+}
 
 function hexToAsciiCardsPlayed(str1){
 	let hex  = str1.toString();
@@ -116,7 +136,6 @@ function hexToAsciiCardsPlayed(str1){
 
 	for (let n = 0; n < hex.length; n += 2) {
     if (String.fromCharCode(parseInt(hex.substr(n, 2), 16)) > -1) {
-      console.log(String.fromCharCode(parseInt(hex.substr(n, 2), 16)))
       str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
     }
 	}
@@ -132,7 +151,6 @@ function hexToAsciiSeconds(str1){
 
 	for (let n = 0; n < hex.length; n += 2) {
     if (String.fromCharCode(parseInt(hex.substr(n, 2), 16)) > -1) {
-      console.log(String.fromCharCode(parseInt(hex.substr(n, 2), 16)))
       str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
     }
 	}
@@ -140,4 +158,17 @@ function hexToAsciiSeconds(str1){
   strParts = str.split(/(\s+)/);
 	return strParts[2];
  }
-}
+
+ function hexToAsciiDate(str1){
+  let hex  = str1.toString();
+	let str = '';
+  let strParts = [];
+
+  for (let n = 0; n < hex.length; n += 2) {
+  str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
+  }
+
+  strParts = str.split(/(\s+)/);
+
+	return `${strParts[4]} ${strParts[6]} ${strParts[8]}`;
+ }

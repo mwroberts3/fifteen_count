@@ -1,4 +1,4 @@
-const highScoresFunc = require('./add-arcade-highscore');
+const highScoresFunc = require('../steamworksFiles/add-arcade-highscore');
 
 const utils = require('./utils');
 
