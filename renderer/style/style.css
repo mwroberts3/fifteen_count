@@ -36,6 +36,14 @@ a {
 h2 {
   text-align: center; }
 
+img {
+  user-drag: none;
+  -webkit-user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none; }
+
 .sub-topic-header {
   font-size: 52px;
   font-family: "Ink Free", sans-serif; }

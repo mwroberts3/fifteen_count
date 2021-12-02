@@ -9,12 +9,15 @@ let taScoresDisplayed = false;
 let personalHighscores = [];
 
 let globalArcadeScores = [];
+let globalTimeAttackScores = [];
 
 if (localStorage.getItem('highscore')) {
   personalHighscores = JSON.parse(localStorage.getItem('highscore'));
 }
 
 fetchArcadeLeaderboardScores();
+fetchTimeAttackLeaderboardScores();
+
 
 // Game mode select
 const highscoreSelect = document.querySelector('.high-score-mode-select');
@@ -92,18 +95,17 @@ function displayPersonalArcadeScore() {
 }
 
 function displayGlobalArcadeScores() {
+  scoreDisplay.innerHTML = `
+  <tr>
+    <th style="width: 115px">Rank</th>
+    <th style="width: 115px">Points</th>
+    <th style="width: 250px">Name</th>
+    <th style="width: 200px">Card Count</th>
+    <th style="width: 115px">Seconds</th>
+    <th style="width: 250px">Date</th>
+  </tr>
+  `;
   for (let i=0; i < globalArcadeScores.length; i++) {
-    scoreDisplay.innerHTML = `
-    <tr>
-      <th style="width: 115px">Rank</th>
-      <th style="width: 115px">Points</th>
-      <th style="width: 250px">Name</th>
-      <th style="width: 200px">Card Count</th>
-      <th style="width: 115px">Seconds</th>
-      <th style="width: 250px">Date</th>
-    </tr>
-    `;
-
     let newHighscoreData = document.createElement('tr');
 
     newHighscoreData.innerHTML = `
@@ -119,7 +121,26 @@ function displayGlobalArcadeScores() {
 }
 
 function displayGlobalTimeAttackScores() {
+  scoreDisplay.innerHTML = `
+  <tr>
+    <th style="width: 115px">Rank</th>
+    <th style="width: 115px">Points</th>
+    <th style="width: 250px">Name</th>
+    <th style="width: 250px">Date</th>
+  </tr>
+  `;
 
+  for (let i=0; i < globalTimeAttackScores.length; i++) {
+    let newHighscoreData = document.createElement('tr');
+
+    newHighscoreData.innerHTML = `
+    <td>${globalTimeAttackScores[i].rank}</td>
+    <td>${globalTimeAttackScores[i].score}</td>
+    <td>${globalTimeAttackScores[i].steamID}</td>
+    <td>${hexToAsciiTADate(globalTimeAttackScores[i].detailData)}</td>
+    `
+    scoreDisplay.appendChild(newHighscoreData);
+  }
 }
 
 async function fetchArcadeLeaderboardScores() {
@@ -172,3 +193,21 @@ function hexToAsciiSeconds(str1){
 
 	return `${strParts[4]} ${strParts[6]} ${strParts[8]}`;
  }
+
+ async function fetchTimeAttackLeaderboardScores() {
+  globalTimeAttackScores = await fetch(`https://partner.steam-api.com/ISteamLeaderboards/GetLeaderboardEntries/v1/?key=${steamworksInfo.key}&appid=${steamworksInfo.appID}&rangestart=1&rangeend=100&leaderboardid=7487751&datarequest=RequestGlobal`);
+
+  globalTimeAttackScores = await globalTimeAttackScores.json();
+  globalTimeAttackScores = globalTimeAttackScores.leaderboardEntryInformation.leaderboardEntries;
+}
+
+function hexToAsciiTADate(str1) {
+  let hex  = str1.toString();
+	let str = '';
+
+  for (let n = 0; n < hex.length; n += 2) {
+    str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
+  }
+
+  return str;
+}

@@ -1,3 +1,5 @@
+const highScoresFunc = require('../steamworksFiles/add-time-attack-highscore');
+
 const moment = require('moment');
 
 const utils = require('./utils');
@@ -104,6 +106,7 @@ class Card {
 
 // Set 180 seconds timer
 const timeAttackTimer = setInterval(() => {
+    // GAME OVER
     if (secondsLeft === 0 && !gamePaused) {
         clearInterval(timeAttackTimer);
         
@@ -114,6 +117,8 @@ const timeAttackTimer = setInterval(() => {
             highscoreStats[0]['timeAttack'] = score;
             highscoreStats[0]['taDate'] = moment().format('MMM Do YYYY');
             localStorage.setItem('highscore', JSON.stringify(highscoreStats));
+
+            highScoresFunc.uploadTAHighscoreToSteam(score);
         }
     }
     secondsLeft--;

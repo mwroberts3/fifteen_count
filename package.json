@@ -1,7 +1,7 @@
 {
   "name": "indigoloop",
   "version": "1.0.0",
-  "description": "Game of quick counting and combos",
+  "description": "Game of quick count and combos",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -10,12 +10,12 @@
     "sass": "node-sass -w scss/ -o renderer/style/ --recursive",
     "build": "electron-builder --help"
   },
-  "repository": "https://github.com/stackacademytv/master-electron",
-  "homepage": "https://github.com/stackacademytv/master-electron",
+  "repository": "",
+  "homepage": "",
   "keywords": [
-    "Electron",
-    "Master Electron",
-    "demo"
+    "Indigo Loop",
+    "Fast Pace Puzzle",
+    "Counting"
   ],
   "author": "mwroberts3",
   "license": "CC0-1.0",
@@ -25,8 +25,21 @@
     "node-sass": "^5.0.0",
     "nodemon": "^2.0.0"
   },
+  "proxy": "http://localhost:5481",
   "dependencies": {
+    "ejs": "^3.1.6",
     "electron-window-state": "^5.0.3",
-    "moment": "^2.29.1"
+    "express": "^4.17.1",
+    "express-session": "^1.13.0",
+    "moment": "^2.29.1",
+    "passport": "^0.3.2",
+    "passport-steam": "^1.0.17"
+  },
+  "build": {
+    "appId": "com.indigoloop.www",
+    "copyright": "Copyright Indigo Loop",
+    "win": {
+      "target": "zip"
+    }
   }
 }

@@ -55,10 +55,12 @@ if (themeSelection['themeName'] === "Universe") {
 
 // Select Animations & Transistions
 exports.jackpotBonusPointsAni = (totalCardsPlayed, jackpotSameColorCheck, totalCardsPlayedDisplay,jackpotMultiplierLvl, jackpotMultiplier) => {
+  console.log("jackpotMultiplierLvl", jackpotMultiplierLvl);
+  
   let jackpotBonusIndicator = document.createElement('div');
 
   if (jackpotSameColorCheck) {
-    jackpotBonusIndicator.textContent = `+${Math.round((totalCardsPlayed * jackpotMultiplier[jackpotMultiplierLvl]))}`;
+    jackpotBonusIndicator.textContent = `+${Math.round((totalCardsPlayed * jackpotMultiplier))}`;
   } else {
     jackpotBonusIndicator.textContent = `+${totalCardsPlayed}`;
   }
@@ -199,7 +201,7 @@ function jackpotBonusPointsAni(totalCardsPlayed, jackpotSameColorCheck,jackpotMu
   let jackpotBonusIndicator = document.createElement('div');
 
   if (jackpotSameColorCheck) {
-    jackpotBonusIndicator.textContent = `+${Math.round((totalCardsPlayed * jackpotMultiplier[jackpotMultiplierLvl]))}`;
+    jackpotBonusIndicator.textContent = `+${Math.round((totalCardsPlayed * jackpotMultiplierLvl))}`;
   } else {
     jackpotBonusIndicator.textContent = `+${totalCardsPlayed}`;
   }

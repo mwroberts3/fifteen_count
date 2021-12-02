@@ -61,3 +61,5 @@ Bugs:
     -can still get a gameover screen if game is paused but seconds timer keeps going?
 
     -custom cursor stays stuck in place when clicking and dragging styled scrollbar
+
+    -11/28/21 - customer cursor blocking mouse and preventing clicks when testing on work laptop
