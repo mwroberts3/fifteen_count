@@ -1,6 +1,5 @@
 // need to check if user has previous login data from steam in local storage, otherwise fetch user data from local server
 
-
 // Allow player to exit game from menu
 const { ipcRenderer } = require('electron');
 

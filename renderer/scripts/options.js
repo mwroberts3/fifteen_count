@@ -9,9 +9,7 @@ const optionsDisplay = document.querySelectorAll("section");
 
 // Option submenu select
 optionsSelect.addEventListener("click", (e) => {
-  console.log(e.target.tagName);
   if (e.target.tagName === 'LI'){
-
     buttonSelectPopup.classList.add('hidden');
     e.target.classList.add("option-selected");
     
@@ -26,6 +24,10 @@ optionsSelect.addEventListener("click", (e) => {
             section.classList.add("hidden");
         } else {
             section.classList.remove("hidden");
+            
+            if(section.id === 'steam') {
+              steamLoginCheck();
+            }
         }
     })
   }
@@ -265,3 +267,26 @@ document.getElementById('fullscreen-select').addEventListener('click', () => {
   localStorage.removeItem('user-display-settings')
 })
 
+function steamLoginCheck() {
+  const steamButtonPrompt = document.querySelector('#steam-login-prompt');
+
+  const steamUserNameDisplay = document.querySelector('#options-steam-user-display');
+
+  let steamCredentials = JSON.parse(localStorage.getItem('steam-credentials'));
+
+  if (steamCredentials.userName === "" && steamCredentials.steamId === "") {
+    steamButtonPrompt.innerHTML = `
+    <p>Login to Steam to activate leaderboards and acheivements</p>
+    <a
+            href="http://localhost:3000/auth/steam/"
+            target="_blank"
+            draggable="false"
+          >
+            <div id="steam-login-btn" onclick="steamAuthLogin()"></div>
+          </a>
+    `;
+  } else {
+    steamUserNameDisplay.textContent = steamCredentials.userName;
+  }
+
+}

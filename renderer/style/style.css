@@ -94,6 +94,57 @@ img {
   justify-content: center;
   align-items: center; }
 
+#sdg-title-screen {
+  position: relative;
+  opacity: 1;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: #b3edff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 3s ease; }
+
+.sdg-logo {
+  width: 500px;
+  height: 500px;
+  background-image: url("../img/sdg-logo.png");
+  background-size: cover;
+  opacity: 1;
+  color: #000;
+  transition: all 2.5s ease; }
+
+#steam-login-popup {
+  border: 2px solid #eee;
+  border-radius: 10px;
+  width: 500px;
+  height: 250px;
+  background: linear-gradient(331deg, #e6e6e6 35%, #eeeeee 100%);
+  color: #333;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; }
+
+#steam-login-btn {
+  width: 114px;
+  height: 43px;
+  background: url("../img/steam-login-btn.png"); }
+
+#steam-popup-btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 10px; }
+  #steam-popup-btn-container :first-child {
+    padding-top: 5px;
+    margin-right: 10px; }
+  #steam-popup-btn-container button {
+    width: 110px;
+    height: 42px; }
+
 .pad-l {
   padding: 10px; }
 
@@ -118,6 +169,13 @@ img {
 
 .center {
   text-align: center; }
+
+.xy-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%; }
 
 .hidden {
   display: none !important; }
@@ -347,9 +405,6 @@ img {
 
 .container input:checked ~ .checkmark {
   background-image: url("../img/checked.png"); }
-
-#display h2 {
-  margin-bottom: 10px; }
 
 #theme {
   position: relative;

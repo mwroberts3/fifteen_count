@@ -1,16 +1,36 @@
 const { ipcRenderer } = require('electron');
 
+// Check for Steam credentials
+if (localStorage.getItem('steam-credentials')) {
+  setTimeout(() => {
+    goToTitleScreen();
+  }, 3000);
+}
+
 // Check for display settings
 ipcRenderer.on('display-settings-check', () => {
     ipcRenderer.send('display-settings', JSON.parse(localStorage.getItem('user-display-settings')))
   })
-
-const sdgLogo = document.querySelector('.sdg-logo');
-
-setTimeout(() => {
+  
+  const sdgLogo = document.querySelector('.sdg-logo');
+  const steamLoginPopup = document.querySelector('#steam-login-popup');  
+  
+  setTimeout(() => {
     sdgLogo.classList.add('fade-out');
-}, 500)
+  }, 500);
+  
+  setTimeout(() => {
+    sdgLogo.style.display = 'none';
+    steamLoginPopup.style.display = 'flex';
+    steamLoginPopup.style.opacity = 0;
+  }, 3000);
+  
+  setTimeout(() => {
+    document.querySelector('script').src = "./scripts/custom-cursor.js";
+    steamLoginPopup.style.opacity = 1;
+    localStorage.setItem('steam-credentials', JSON.stringify({userName: '', steamId: ''}));
+  }, 3050);
 
-setTimeout(() => {
-window.location.replace("title-screen.html");
-}, 3000);
+function goToTitleScreen() {
+  window.location.replace("title-screen.html");
+}

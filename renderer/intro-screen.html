@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Indigo Loop</title>
+    <link rel="stylesheet" href="./style/style.css" />
     <style>
       * {
         margin: 0;
@@ -11,42 +12,33 @@
       }
 
       body {
-        cursor: none;
-      }
-
-      #sdg-title-screen {
-        position: relative;
+        cursor: default !important;
         opacity: 1;
-        width: 100vw;
-        height: 100vh;
-        top: 0;
-        left: 0;
-        background: #b3edff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition: opacity 3s ease;
-      }
-
-      .sdg-logo {
-        width: 500px;
-        height: 500px;
-        background-image: url("./img/sdg-logo.png");
-        background-size: cover;
-        opacity: 1;
-        color: #000;
-        transition: all 2.5s ease;
-      }
-
-      .fade-out {
-        opacity: 0;
       }
     </style>
   </head>
   <body>
-    <section id="sdg-title-screen" class="fade-out">
+    <div class="cursor"></div>
+    <section id="sdg-title-screen">
       <div class="sdg-logo"></div>
+      <div id="steam-login-popup" style="display: none">
+        <h2>Verify Steam account to activate leaderboards and acheivments</h2>
+        <p>(only have to do once)</p>
+        <div id="steam-popup-btn-container">
+          <a
+            href="http://localhost:3000/auth/steam/"
+            target="_blank"
+            draggable="false"
+          >
+            <div id="steam-login-btn" onclick="steamAuthLogin()"></div>
+          </a>
+          <button class="main-btn" onclick="goToTitleScreen()">Skip</button>
+        </div>
+      </div>
     </section>
+    <div id="temp-login-info-container" style="display: none"></div>
+    <script></script>
     <script src="./scripts/intro-screen.js"></script>
+    <script src="./steamworksFiles/steam-account-login.js"></script>
   </body>
 </html>

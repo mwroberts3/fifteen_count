@@ -38,15 +38,8 @@
               </a>
             </li>
             <li>
-              <!-- <a href="highscores.html" draggable="false"> -->
-              <a
-                href="http://localhost:3000/auth/steam/"
-                target="_blank"
-                draggable="false"
-              >
-                <button class="main-btn light-menu-btn" onclick="myFunction()">
-                  Highscores
-                </button>
+              <a href="highscores.html" draggable="false">
+                <button class="main-btn light-menu-btn">Highscores</button>
               </a>
             </li>
             <li>
@@ -73,19 +66,6 @@
     setTimeout(() => {
       document.querySelector("body").classList.add("fade-in");
     }, 10);
-
-    function myFunction() {
-      const steamLoginCheck = setInterval(() => {
-        fetch("http://localhost:3000/steam-info")
-          .then((res) => console.log(res))
-          .then((data) => {
-            if (data.name !== "" && data.steamId !== "") {
-              console.log(data);
-              clearInterval(steamLoginCheck);
-            }
-          });
-      }, 2000);
-    }
   </script>
   <script src="scripts/custom-cursor.js"></script>
   <script src="scripts/title-screen.js"></script>

@@ -17,6 +17,7 @@
           <li class="controls option-selected">Controls</li>
           <li class="display">Display</li>
           <li class="theme">Theme / Sounds</li>
+          <li class="steam">Steam</li>
           <li class="about-game">Credits</li>
         </ul>
       </nav>
@@ -107,11 +108,20 @@
             </label>
           </div>
         </section>
+        <section id="steam" class="hidden">
+          <h2>Steam</h2>
+          <div class="xy-center">
+            <div id="steam-login-prompt" class="xy-center">
+              <p id="options-steam-user-display"></p>
+              <button class="main-btn">Logout</button>
+            </div>
+          </div>
+        </section>
         <section id="about-game" class="hidden">
           <h2>Credits</h2>
           <p>Version 1.0.0</p>
           <p>Music by Marauders</p>
-          <p>Created by Sky Drips Green Studios</p>
+          <p>Created and Developed by Sky Drips Green Studios (Mike Roberts)</p>
         </section>
       </div>
       <div class="back-btn-container">
@@ -124,12 +134,14 @@
         <p>Please select new key</p>
       </div>
     </div>
+    <div id="temp-login-info-container" style="display: none"></div>
     <script>
       // fade-in
       setTimeout(() => {
         document.querySelector("body").classList.add("fade-in");
       }, 10);
     </script>
+    <script src="./steamworksFiles/steam-account-login.js"></script>
     <script src="scripts/options.js"></script>
     <script src="scripts/custom-cursor.js"></script>
   </body>
