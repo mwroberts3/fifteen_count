@@ -267,26 +267,39 @@ document.getElementById('fullscreen-select').addEventListener('click', () => {
   localStorage.removeItem('user-display-settings')
 })
 
+let steamCredentials = JSON.parse(localStorage.getItem('steam-credentials'));
+
 function steamLoginCheck() {
   const steamButtonPrompt = document.querySelector('#steam-login-prompt');
 
-  const steamUserNameDisplay = document.querySelector('#options-steam-user-display');
+  setInterval(steamCredentialsDisplay, 1000);
 
-  let steamCredentials = JSON.parse(localStorage.getItem('steam-credentials'));
+  steamCredentialsDisplay();
 
-  if (steamCredentials.userName === "" && steamCredentials.steamId === "") {
-    steamButtonPrompt.innerHTML = `
-    <p>Login to Steam to activate leaderboards and acheivements</p>
-    <a
-            href="http://localhost:3000/auth/steam/"
-            target="_blank"
-            draggable="false"
-          >
-            <div id="steam-login-btn" onclick="steamAuthLogin()"></div>
-          </a>
-    `;
-  } else {
-    steamUserNameDisplay.textContent = steamCredentials.userName;
+  function steamCredentialsDisplay() {
+    steamCredentials = JSON.parse(localStorage.getItem('steam-credentials'));
+    console.log(steamCredentials);
+
+    if (steamCredentials.userName === "" && steamCredentials.steamId === "") {
+      steamButtonPrompt.innerHTML = `
+      <p>Login to Steam to activate leaderboards and acheivements</p>
+      <a
+              href="http://localhost:3000/auth/steam/"
+              target="_blank"
+              draggable="false"
+            >
+              <div id="steam-login-btn" onclick="steamAuthLogin()"></div>
+            </a>
+      `;
+    } else {
+      steamButtonPrompt.innerHTML = `
+        <p>${steamCredentials.userName}</p>
+        <button class="main-btn" onclick="steamLogout()">Logout</button>
+      `;
+    }
   }
+}
 
+function steamLogout() {
+  localStorage.setItem('steam-credentials', JSON.stringify({userName: '', steamId: ''}))
 }

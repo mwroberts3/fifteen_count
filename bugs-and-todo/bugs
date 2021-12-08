@@ -63,3 +63,11 @@ Bugs:
     -custom cursor stays stuck in place when clicking and dragging styled scrollbar
 
     -11/28/21 - customer cursor blocking mouse and preventing clicks when testing on work laptop
+
+-12/7 - find out how to auto-adjust server port if requested port is being used. Also, might want to end server once steam creds are imported
+
+-12/7 - clock NEEDS to stop when paused, otherwise players could abuse the random jackpot timer
+
+-12/7 - when jackpot level goes up after a play, the higher level shouldn't be applied on that same turn
+
+-12/7 - jackpot border should disappear in the combo stage, if it hasn't been played in the previous count stage
