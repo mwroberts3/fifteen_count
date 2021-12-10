@@ -413,10 +413,10 @@ function cardsSubmit() {
         if (jackCheckedCheck.length === 0) {
           // totalCardsPlayed = Math.round(totalCardsPlayed/2);
 
-          totalCardsPlayed -= globalCardsInHand.length;
+          totalCardsPlayed = Math.round(totalCardsPlayed * 0.5);
 
-          jackpotMultiplierLvl = Math.round(jackpotMultiplierLvl * 0.5);
-          
+          jackpotMultiplierLvl -= globalCardsInHand.length;
+         
           if (jackpotMultiplierLvl <= 0) {
             jackpotMultiplierLvl = 1;
           } 
@@ -430,6 +430,21 @@ function cardsSubmit() {
           
           checkedCards.forEach((card) => {
             if (card.classList.contains('jackpot-special-border')){
+
+              console.log('total points', totalPoints);
+
+              if (jackpotMultiplierLvl > 1) {
+                totalPoints += Math.round(totalCardsPlayed * jackpotMultiplier);
+                pointsBreakdown.jackpotPoints += Math.round(totalCardsPlayed * jackpotMultiplier);
+              } else {
+                totalPoints += totalCardsPlayed;
+                pointsBreakdown.jackpotPoints += totalCardsPlayed;
+              };
+
+              console.log('jackpot Multiplayer Level', jackpotMultiplierLvl, 'jackpot Multiplier', jackpotMultiplier, 'jackpot points', Math.round(totalCardsPlayed * jackpotMultiplier));
+
+              utils.jackpotBonusPointsAni(totalCardsPlayed, jackpotSameColorCheck, totalCardsPlayedDisplay, jackpotMultiplierLvl, jackpotMultiplier);
+
               if (checkedCardSuits.every(sameColorRed) ||
               checkedCardSuits.every(sameColorBlack)) {
                 jackpotMultiplierLvl += 2;
@@ -438,36 +453,18 @@ function cardsSubmit() {
                 jackpotMultiplierLvl++;
                 jackpotSameColorCheck = false;
               }
-              console.log(totalPoints, (totalCardsPlayed * jackpotMultiplierLvl), totalPoints + (totalCardsPlayed * jackpotMultiplierLvl));
+              console.log('total points', totalPoints)
 
               if (jackpotMultiplierLvl <= 1) {
                 jackpotMultiplierLvl = 1;
               }
 
-                jackpotMultiplier = 1 + jackpotMultiplierLvl/100;
-
-                console.log("jackpotMultiplier", jackpotMultiplier)
-
-              if (jackpotMultiplierLvl > 1) {
-                totalPoints += Math.round(totalCardsPlayed * jackpotMultiplier);
-                pointsBreakdown.jackpotPoints += Math.round(totalCardsPlayed * jackpotMultiplier);
-
-                console.log('jackpot Multiplayer Level', jackpotMultiplierLvl, 'jackpot Multiplier', jackpotMultiplier, 'jackpot points', Math.round(totalCardsPlayed * jackpotMultiplier));
-              } else {
-                totalPoints += totalCardsPlayed;
-                pointsBreakdown.jackpotPoints += totalCardsPlayed;
-
-                console.log('jackpot Multiplayer Level', jackpotMultiplierLvl, 'jackpot Multiplier', jackpotMultiplier, 'jackpot points', Math.round(totalCardsPlayed * jackpotMultiplier));
-              }      
-
-              utils.jackpotBonusPointsAni(totalCardsPlayed, jackpotSameColorCheck, totalCardsPlayedDisplay, jackpotMultiplierLvl, jackpotMultiplier);
+                jackpotMultiplier = 1 + jackpotMultiplierLvl/100;    
 
               if (jackpotMultiplierLvl <= 0) {
                 jackpotMultiplierLvl = 1;
               } 
               jackpotLevelDisplay.innerText = `${jackpotMultiplierLvl}`;
-
-              console.log(totalPoints, totalCardsPlayed, totalPoints + totalCardsPlayed);
             }
           });
         }
@@ -888,9 +885,9 @@ function swapButtonFunction() {
       
   // swapping with jackpot card in hand erases jackpot
   if (jackpotLive) {
-    // totalCardsPlayed = Math.round(totalCardsPlayed/2);
-    totalCardsPlayed -= globalCardsInHand.length;
-    jackpotMultiplierLvl = Math.round(jackpotMultiplierLvl * 0.5);
+    totalCardsPlayed = Math.round(totalCardsPlayed * 0.5);
+
+    jackpotMultiplierLvl -= globalCardsInHand.length;
 
     if (jackpotMultiplierLvl < 0) {
       jackpotMultiplierLvl = 0;

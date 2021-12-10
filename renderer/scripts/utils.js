@@ -59,11 +59,11 @@ exports.jackpotBonusPointsAni = (totalCardsPlayed, jackpotSameColorCheck, totalC
   
   let jackpotBonusIndicator = document.createElement('div');
 
-  if (jackpotSameColorCheck) {
-    jackpotBonusIndicator.textContent = `+${Math.round((totalCardsPlayed * jackpotMultiplier))}`;
-  } else {
-    jackpotBonusIndicator.textContent = `+${totalCardsPlayed}`;
-  }
+  jackpotBonusIndicator.textContent = `+${Math.round((totalCardsPlayed * jackpotMultiplier))}`;
+  // if (jackpotSameColorCheck) {
+  // } else {
+  //   jackpotBonusIndicator.textContent = `+${totalCardsPlayed}`;
+  // }
 
   jackpotBonusIndicator.classList.add('jackpot-bonus-indicator');
 
@@ -235,8 +235,8 @@ exports.classicThemeTransition = (playersHandBg, comboRoundCheck) => {
   
     const classicThemeInverse = setInterval(() => {
       playersHandBg.setProperty('--players-bg-filter', `blur(${blurPct}px) invert(${inversePct}%)`);
-      inversePct += 3;
-      blurPct++;
+      inversePct += 10;
+      blurPct += 5;
 
       if (inversePct >= 100) clearInterval(classicThemeInverse);
     }, 1);

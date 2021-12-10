@@ -83,7 +83,7 @@ function displayPersonalArcadeScore() {
   // Check for existing personal highscore
   if (localStorage.getItem('highscore')) {
     personalHighscoreContainer.childNodes[3].textContent = `${personalHighscores[0]['totalPoints']}`;
-    personalHighscoreContainer.childNodes[5].innerHTML = `<strong>Cards Played:</strong>&nbsp;${personalHighscores[0]['totalCardsPlayed']}`;
+    personalHighscoreContainer.childNodes[5].innerHTML = `<strong>Cards:</strong>&nbsp;${personalHighscores[0]['totalCardsPlayed']}`;
     personalHighscoreContainer.childNodes[7].innerHTML = `<strong>Time:</strong>&nbsp;${personalHighscores[0]['totalSeconds']}`;
     personalHighscoreContainer.childNodes[9].innerHTML = `<strong>Date:</strong>&nbsp;${personalHighscores[0]['date']}`;
   } else {
@@ -100,8 +100,8 @@ function displayGlobalArcadeScores() {
     <th style="width: 115px">Rank</th>
     <th style="width: 115px">Points</th>
     <th style="width: 250px">Name</th>
-    <th style="width: 200px">Card Count</th>
-    <th style="width: 115px">Seconds</th>
+    <th style="width: 200px">Cards</th>
+    <th style="width: 115px">Time</th>
     <th style="width: 250px">Date</th>
   </tr>
   `;

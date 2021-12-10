@@ -186,7 +186,6 @@ if (localStorage.getItem('highscore')) {
 const themeSelectionMenu = document.querySelector('.theme-selection-menu');
 
 themeSelectionMenu.addEventListener('click', (e) => {
-  console.log(e.target.tagName);
   if (e.target.tagName === 'DIV' && e.target.classList.contains('unlocked')) {
     e.target.classList.add('selected-theme');
     localStorage.setItem('theme-selection', JSON.stringify(arcadeThemes[e.target.dataset.index]));
@@ -200,12 +199,11 @@ themeSelectionMenu.addEventListener('click', (e) => {
 })
 
 function deselectNonselectedThemes(e) {
-  themeSelectionMenu.childNodes.forEach((child) => {
-    console.log(child)
-    if (child.nodeType !== 3){ 
-      if (child !== e.target) {
-        if (child !== e.target.parentElement) {
-          child.classList.remove('selected-theme');
+  themeSelectionMenu.childNodes.forEach((theme) => {
+    if (theme.nodeType !== 3){ 
+      if (theme !== e.target) {
+        if (theme !== e.target.parentElement && theme.classList) {
+          theme.classList.remove('selected-theme');
         }
       }
     }
@@ -278,7 +276,6 @@ function steamLoginCheck() {
 
   function steamCredentialsDisplay() {
     steamCredentials = JSON.parse(localStorage.getItem('steam-credentials'));
-    console.log(steamCredentials);
 
     if (steamCredentials.userName === "" && steamCredentials.steamId === "") {
       steamButtonPrompt.innerHTML = `
