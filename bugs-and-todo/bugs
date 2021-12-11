@@ -1,7 +1,7 @@
 Bugs:
 -7/6/21 - classic mode background switch seems to run a little slow the first few times switching to combo stage...need to see how it goes in the production version
 
--6/20/21 - if swapping cards and time gets down to ~6 then time will still show up as red on timer, should only turn red when 5 or less
+-6/20/21 - if swapping cards and time gets down to ~6 then time will still show up as red on timer, should only turn red when 5 or less (can't duplicate this, so maybe already fixed)
 
 -6/19/21 - sometimes jackpot is supposed to show up after swap but doesn't, reduces jackpot level by 1 (maybe make this a gameplay element)
 
@@ -9,18 +9,8 @@ Bugs:
 
 -5/2/21 - should be a sound effect when the 15 count is reached
 
--sometimes when time is up the countdown will still tic down to -1 or -2, should just have text in container be blank when timer reaches 0
-
 -pause button not working properly, timer resets if un-paused before time is up, but time can run out and game over triggered if paused too long. Also can manipulate the jackpot timer
-
--if you play more than 1000 cards, gets too close to the cards icon
 
 -custom cursor stays stuck in place when clicking and dragging styled scrollbar
 
 -11/28/21 - custom cursor blocking mouse and preventing clicks when testing on work laptop
-
--12/7 - find out how to auto-adjust server port if requested port is being used. Also, might want to end server once steam creds are imported
-
--12/7 - jackpot border should disappear in the combo stage, if it hasn't been played in the previous count stage
-
--12/8 - should probably have a 3 second count in on Arcade and maybe a 'ready? go!' on TA. I think it'd be a cool thing where players have a moment to strategize their first move and it might stop that transition to combo phase lag

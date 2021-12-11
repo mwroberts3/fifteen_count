@@ -498,17 +498,18 @@ img {
   .scoreboard .combo-points-fadein {
     opacity: 1; }
   .scoreboard .total-cards-played {
+    width: 549px;
     position: relative;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     font-family: "Russo One", sans-serif;
     font-weight: normal;
     font-size: 1.75rem;
     color: #ffff00; }
-    .scoreboard .total-cards-played div {
-      width: 40%;
-      margin: 0 5%; }
+    .scoreboard .total-cards-played p {
+      width: 60px;
+      height: 60px; }
 
 #cards-icon {
   position: absolute;
@@ -584,8 +585,7 @@ img {
 .main-hud {
   position: relative;
   width: 85%;
-  display: flex;
-  justify-content: space-between; }
+  display: flex; }
   .main-hud div {
     display: flex;
     align-items: center;

@@ -38,16 +38,8 @@ let pointsInPlay = 0;
 let totalCardsPlayed = 0;
 totalPointsDisplay.innerHTML = `${totalPoints}`;
 totalCardsPlayedDisplay.innerHTML = `
-<div style="
-  width: 60px; 
-  height: 60px;
-  display: flex;
-  justify-content: center;
-  align-items: center;  
-  ">
   ${totalCardsPlayed} 
-</div>
-<p style="width: 60px; height: 60px;">&nbsp;</p>
+<p></p>
 `;
 {/* <img src="img/cards-icon.png"/> */}
 
@@ -302,8 +294,6 @@ function reset() {
   totalPoints += totalComboPoints;
   pointsBreakdown.comboPoints += totalComboPoints;
 
-  // hudMessage.count(hudMessageDisplay);
-
   totalComboPoints = 0;
   comboPointsDisplay.textContent = '';
   comboPointsDisplay.classList.remove('combo-points-fadein');
@@ -411,8 +401,6 @@ function cardsSubmit() {
         jackCheckedCheck = jackCheckedCheck.filter(card => card.classList.contains('jackpot-special-border'));
 
         if (jackCheckedCheck.length === 0) {
-          // totalCardsPlayed = Math.round(totalCardsPlayed/2);
-
           totalCardsPlayed = Math.round(totalCardsPlayed * 0.5);
 
           jackpotMultiplierLvl -= globalCardsInHand.length;
@@ -504,6 +492,11 @@ function cardsSubmit() {
 
     // reset potential time bonus if card was swapped before submit
     swappedCardTimeBonusNulify = false;
+
+    if (document.querySelector('.jackpot-special-border')) {
+      document.querySelector('.jackpot-special-border').classList.remove('jackpot-special-border');
+    }
+
     hudMessage.combo(hudMessageDisplay);
    
     setSwapPermission();
@@ -560,12 +553,6 @@ function cardsSubmit() {
     comboSubmitSFX.play();
     }
     
-    // // reset players hand background
-    // if (themeSelection['themeName'] !== 'Classic') {
-    //   document.querySelector('.players-hand').style.removeProperty('background-image');
-    // } else {
-    //   utils.classicThemeTransition(document.querySelector('.players-hand').style, false);
-    // }
     reDeal(globalCardsInHand, hand);
     showHand();
     jackpotSelect();
@@ -851,7 +838,7 @@ function newHighscoreCheck() {
 
 // Swap card function(s) & event listeners
 function setSwapPermission() {
-  if (firstSubmit || secondsLeft <= 0) {
+  if (firstSubmit || secondsLeft <= 1) {
     swapButton.removeEventListener("click", swapButtonFunction);
     document.removeEventListener("keyup", swapButtonPush);
   } else if (!firstSubmit){
@@ -910,7 +897,6 @@ function swapButtonFunction() {
 
   if (validCardsInHand > 10) validCardsInHand = 10;
 
-
   for (let i = 1; i < cardsInHand.length; i++) {
     if (!cardsInHand[cardsInHand.length - i].classList.contains('lastCardSwapAnimation')) {
       cardsInHand[cardsInHand.length - i].classList.toggle("checked");
@@ -927,9 +913,15 @@ function swapButtonFunction() {
   jackpotSelect();
   reset();
   selectCard();
-  secondsLeft -= (10 - validCardsInHand);
-  swapCostDisplay.textContent = `-${10 - validCardsInHand}s`;
-  // secondsLeft -= (10 - cardsInHand.length);
+
+  if (validCardsInHand < 10) {
+    secondsLeft -= (10 - validCardsInHand);
+    swapCostDisplay.textContent = `-${10 - validCardsInHand}s`;
+  } else {
+    secondsLeft--;
+    swapCostDisplay.textContent = `-1s`;
+  }
+
   fifteenCount = 0;
   fifteenCountDisplay.textContent = ``;
   bonusTimeDisplay.style.color = "rgba(51, 131, 235, 0.9)";
@@ -943,19 +935,33 @@ function swapButtonFunction() {
   }
 
   if (cardsInHand.length < 10) {
-    timer.textContent = `${secondsLeft + 1}`;
+    
     bonusTimeDisplay.textContent = `${(cardsInHand.length - 10)}`;
+        setTimeout(() => {
+          bonusTimeDisplay.textContent = ``;
+          bonusTimeDisplay.style.color = "rgba(245, 217, 61, 0.9)";
+        }, 1000)
+  } else {
+    timer.textContent = `${secondsLeft + 1}`;
+    bonusTimeDisplay.textContent = `-1`;
         setTimeout(() => {
           bonusTimeDisplay.textContent = ``;
           bonusTimeDisplay.style.color = "rgba(245, 217, 61, 0.9)";
         }, 1000)
   }
 
+  // prevent timer from showing negative int
+  if (secondsLeft <= 0) {
+    timer.textContent = `0`;
+  } else {
+    timer.textContent = `${secondsLeft + 1}`;
+  }
+      
   if (userSelectedSoundSettings.SFX) {
     swapCardSFX.play();
   }
 }
-
+    
 // Redeal
 function reDeal(cardsInHand, hand) {
   let checkedCards = document.querySelectorAll(".checked");
@@ -998,19 +1004,23 @@ function reDeal(cardsInHand, hand) {
   }
 
   totalCardsPlayed += cardsPlayed.length;
-
+  
   totalCardsPlayedDisplay.innerHTML = `
-  <div style="
-    width: 60px; 
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;  
-    ">
-    ${totalCardsPlayed} 
-  </div>
-  <p style="width: 60px; height: 60px;">&nbsp;</p>
+  ${totalCardsPlayed} 
+  <p></p>
   `;
+
+  // totalCardsPlayedDisplay.innerHTML = `
+  // <div style="
+  //   width: 60px; 
+  //   height: 60px;
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;  
+  //   ">
+  //   ${totalCardsPlayed} 
+  // </div>
+  // `;
   // <img src="img/cards-icon.png"/>
 
   // Check to see if all cards in hand were played, for possible replenish bonus
@@ -1066,10 +1076,6 @@ function jackpotSelect() {
       jackpotOverlay.classList.add('jackpot-overlay');
 
       let style = getComputedStyle(cardsInHand[jackpotRandIndex]);
-
-      // console.log(style);
-
-      // console.log(cardsInHand[jackpotRandIndex].classList[2]);
 
       jackpotOverlay.style.background = `${style.background}`;
 
