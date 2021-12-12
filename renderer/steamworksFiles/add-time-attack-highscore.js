@@ -2,12 +2,16 @@ const steamworksInfo = require('../steamworksFiles/steamworksInfo.json')
 
 const moment = require('moment');
 
+let steamCreds = JSON.parse(localStorage.getItem('steam-credentials'));
+
 exports.uploadTAHighscoreToSteam = (score) => {
+    console.log(steamCreds.steamId)
+
     let details = {
         'key': steamworksInfo.key,
         'appid': steamworksInfo.appID,
         'leaderboardid': 7487751,
-        'steamid': BigInt('76561199078987345'),
+        'steamid': BigInt(`${steamCreds.steamId}`),
         'score': score,
         'scoremethod': 'KeepBest',
         'details': `${moment().format('MMM Do YYYY')}`

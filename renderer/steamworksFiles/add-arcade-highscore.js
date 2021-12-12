@@ -4,6 +4,8 @@ const moment = require('moment');
 
 const newThemePopUp = document.getElementById('theme-unlocked-popup');
 
+let steamCreds = JSON.parse(localStorage.getItem('steam-credentials'));
+
 // Highscore check & ranking functions
 exports.scoreReview = (hudMessage, currentHand, totalPoints, totalCardsPlayed, totalSeconds) => {
     let highscoreStats = [];
@@ -55,7 +57,7 @@ exports.scoreReview = (hudMessage, currentHand, totalPoints, totalCardsPlayed, t
         'key': steamworksInfo.key,
         'appid': steamworksInfo.appID,
         'leaderboardid': 7434161,
-        'steamid': BigInt('76561199078987345'),
+        'steamid': BigInt(`${steamCreds.steamId}`),
         'score': totalPoints,
         'scoremethod': 'KeepBest',
         'details': `cardsPlayed-${totalCardsPlayed} seconds-${totalSeconds} ${moment().format('MMM Do YYYY')}`

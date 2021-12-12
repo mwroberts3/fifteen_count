@@ -14,3 +14,5 @@ Bugs:
 -custom cursor stays stuck in place when clicking and dragging styled scrollbar
 
 -11/28/21 - custom cursor blocking mouse and preventing clicks when testing on work laptop
+
+-12/12 - it seems like sometimes users steam creds will be randomly deleted from local storage

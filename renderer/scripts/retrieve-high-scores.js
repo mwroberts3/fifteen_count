@@ -9,7 +9,9 @@ let taScoresDisplayed = false;
 let personalHighscores = [];
 
 let globalArcadeScores = [];
+let globalArcadeScoresNames = [];
 let globalTimeAttackScores = [];
+let globalTimeAttackScoresNames = [];
 
 if (localStorage.getItem('highscore')) {
   personalHighscores = JSON.parse(localStorage.getItem('highscore'));
@@ -17,7 +19,6 @@ if (localStorage.getItem('highscore')) {
 
 fetchArcadeLeaderboardScores();
 fetchTimeAttackLeaderboardScores();
-
 
 // Game mode select
 const highscoreSelect = document.querySelector('.high-score-mode-select');
@@ -111,7 +112,7 @@ function displayGlobalArcadeScores() {
     newHighscoreData.innerHTML = `
     <td>${globalArcadeScores[i].rank}</td>
     <td>${globalArcadeScores[i].score}</td>
-    <td>${globalArcadeScores[i].steamID}</td>
+    <td>${globalArcadeScoresNames[i]}</td>
     <td>${hexToAsciiCardsPlayed(globalArcadeScores[i].detailData)}</td>
     <td>${hexToAsciiSeconds(globalArcadeScores[i].detailData)}</td>
     <td>${hexToAsciiDate(globalArcadeScores[i].detailData)}</td>
@@ -136,7 +137,7 @@ function displayGlobalTimeAttackScores() {
     newHighscoreData.innerHTML = `
     <td>${globalTimeAttackScores[i].rank}</td>
     <td>${globalTimeAttackScores[i].score}</td>
-    <td>${globalTimeAttackScores[i].steamID}</td>
+    <td>${globalTimeAttackScoresNames[i]}</td>
     <td>${hexToAsciiTADate(globalTimeAttackScores[i].detailData)}</td>
     `
     scoreDisplay.appendChild(newHighscoreData);
@@ -199,6 +200,8 @@ function hexToAsciiSeconds(str1){
 
   globalTimeAttackScores = await globalTimeAttackScores.json();
   globalTimeAttackScores = globalTimeAttackScores.leaderboardEntryInformation.leaderboardEntries;
+
+  convertSteamIdsToNames();
 }
 
 function hexToAsciiTADate(str1) {
@@ -210,4 +213,24 @@ function hexToAsciiTADate(str1) {
   }
 
   return str;
+}
+
+async function convertSteamIdsToNames() {
+  for (let i=0; i<globalArcadeScores.length; i++) {
+    console.log(globalArcadeScores[i].steamID);
+    fetch(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${steamworksInfo.key}&steamids=${globalArcadeScores[i].steamID}`)
+      .then((res) => res.json())
+      .then((data) => {
+        globalArcadeScoresNames.push(data.response.players[0].personaname);
+      });
+  }
+
+  for (let i=0; i<globalTimeAttackScores.length; i++) {
+    console.log(globalTimeAttackScores[i].steamID);
+    fetch(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${steamworksInfo.key}&steamids=${globalTimeAttackScores[i].steamID}`)
+      .then((res) => res.json())
+      .then((data) => {
+        globalTimeAttackScoresNames.push(data.response.players[0].personaname);
+      });
+  }
 }
