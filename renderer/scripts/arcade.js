@@ -73,6 +73,7 @@ let hand = [];
 
 // Timer variables
 const timer = document.querySelector(".timer");
+let threeSecCountdown = 3;
 let totalSeconds = 100;
 // let secondsLeft = 200;
 let threeTimerStart = 0;
@@ -81,11 +82,18 @@ const bonusTimeDisplay = document.querySelector(".bonus-time");
 
 let timeBonusLevelforAnimation = 0;
 
+let gamePaused = false;
+
+// prevent early lag bey priming background transistion
+utils.classicThemeBgPrimer(document.querySelector('.players-hand').style, true);
+
 // Setting up deck & displaying for play
 buildDeck(deck);
 deck = shuffle(deck, cardCount);
 drawCards(drawSize);
 showHand();
+timer.textContent = `${threeSecCountdown}`;
+let countdownTimer = setInterval(countdownFunction, 1000);
 let gameTimer = setInterval(timerFunction, 1000);
 
 // Hud message flags
@@ -105,9 +113,12 @@ let highscoreDefeated = false;
 
 addFreshPointsToTotal();
 setSecondsBonusIndicator();
-selectCard();
-hudMessage.count(hudMessageDisplay);
+hudMessage.countdown(hudMessageDisplay);
 
+setTimeout(() => {
+  selectCard();
+  hudMessage.count(hudMessageDisplay);
+}, 3000);
 
 // Button submit
 document.addEventListener("keyup", (e) => {
@@ -230,8 +241,22 @@ function showHand() {
   });
 }
 
+function countdownFunction() {
+  threeSecCountdown--;
+
+  timer.textContent = `${threeSecCountdown}`;
+
+  if (threeSecCountdown === 0) {
+    timer.textContent = `GO`;
+  } else if (threeSecCountdown < 0) {
+    clearInterval(countdownTimer);
+  }
+}
+
 // Set 100 second game timer and set-up bonus time display
-  function timerFunction() {
+function timerFunction() {
+  if (threeSecCountdown <= -1) {
+
     let threeTimerFinish = new Date().getTime();
     if (threeTimerFinish - threeTimerStart >= 1000) {
       if (secondsLeft > 0) {
@@ -258,13 +283,16 @@ function showHand() {
       }
       
       pointsReview(pointsBreakdown, totalPoints, hudMessageDisplay);
-
+  
       highScoresFunc.scoreReview(hudMessage, currentHand, totalPoints, totalCardsPlayed, totalSeconds);
     }
-
-    secondsLeft--;
-    elapsedTime++;
+  
+    if (!gamePaused) {
+      secondsLeft--;
+      elapsedTime++;
+    }
   }
+}
 
 function reset() {
   let cardsInHand = document.querySelectorAll(".card-in-hand");
@@ -382,8 +410,6 @@ function cardsSubmit() {
     comboSkip = true;
     // clearBgImgIntervals();
 
-    console.log(document.querySelectorAll(".combo-sacrifice").length);
-
     // set players hand bg
     if (document.querySelectorAll(".combo-sacrifice").length < 1 && checkedCards.length < globalCardsInHand.length) {
       if (themeSelection['themeName'] !== 'Classic') {
@@ -403,7 +429,8 @@ function cardsSubmit() {
         if (jackCheckedCheck.length === 0) {
           totalCardsPlayed = Math.round(totalCardsPlayed * 0.5);
 
-          jackpotMultiplierLvl -= globalCardsInHand.length;
+          // jackpotMultiplierLvl -= globalCardsInHand.length;
+          jackpotMultiplierLvl -= 2;
          
           if (jackpotMultiplierLvl <= 0) {
             jackpotMultiplierLvl = 1;
@@ -874,7 +901,8 @@ function swapButtonFunction() {
   if (jackpotLive) {
     totalCardsPlayed = Math.round(totalCardsPlayed * 0.5);
 
-    jackpotMultiplierLvl -= globalCardsInHand.length;
+    // jackpotMultiplierLvl -= globalCardsInHand.length;
+    jackpotMultiplierLvl -= 2;
 
     if (jackpotMultiplierLvl < 0) {
       jackpotMultiplierLvl = 0;

@@ -199,9 +199,10 @@ function hexToAsciiSeconds(str1){
   globalTimeAttackScores = await fetch(`https://partner.steam-api.com/ISteamLeaderboards/GetLeaderboardEntries/v1/?key=${steamworksInfo.key}&appid=${steamworksInfo.appID}&rangestart=1&rangeend=100&leaderboardid=7487751&datarequest=RequestGlobal`);
 
   globalTimeAttackScores = await globalTimeAttackScores.json();
+
   globalTimeAttackScores = globalTimeAttackScores.leaderboardEntryInformation.leaderboardEntries;
 
-  convertSteamIdsToNames();
+  convertSteamIdsToNames(globalArcadeScores, globalTimeAttackScores);
 }
 
 function hexToAsciiTADate(str1) {
@@ -215,12 +216,13 @@ function hexToAsciiTADate(str1) {
   return str;
 }
 
-async function convertSteamIdsToNames() {
+async function convertSteamIdsToNames(globalArcadeScores, globalTimeAttackScores) {
   for (let i=0; i<globalArcadeScores.length; i++) {
     console.log(globalArcadeScores[i].steamID);
     fetch(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${steamworksInfo.key}&steamids=${globalArcadeScores[i].steamID}`)
       .then((res) => res.json())
       .then((data) => {
+        console.log(data.response.players[0].personaname);
         globalArcadeScoresNames.push(data.response.players[0].personaname);
       });
   }

@@ -1,6 +1,29 @@
 let hudMessageCache = '';
 let specialMessage = false;
 
+exports.countdown = (hudMessageDisplay) => {
+    hudMessageDisplay.innerHTML = '&nbsp;';
+    hudMessageDisplay.innerHTML = 'ready?';
+    let i = 0;
+    // const countdownInterval = setInterval(() => {
+    //     console.log(i);
+    //     if (i < 5) {
+    //         hudMessageDisplay.innerText += ".";
+    //         i++;
+    //     } else {
+    //         clearInterval(countdownInterval);
+    //     }
+    // }, 500);
+
+    setTimeout(() => {
+        document.querySelectorAll('.card-sprite');
+
+        for(let x=0; x < document.querySelectorAll('.card-sprite').length; x++) {
+            document.querySelectorAll('.card-sprite')[x].style.filter = 'none';
+        }
+    }, 3000); 
+};
+
 exports.count = (hudMessageDisplay) => {
 
     if (!specialMessage) {

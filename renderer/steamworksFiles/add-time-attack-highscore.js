@@ -5,8 +5,6 @@ const moment = require('moment');
 let steamCreds = JSON.parse(localStorage.getItem('steam-credentials'));
 
 exports.uploadTAHighscoreToSteam = (score) => {
-    console.log(steamCreds.steamId)
-
     let details = {
         'key': steamworksInfo.key,
         'appid': steamworksInfo.appID,

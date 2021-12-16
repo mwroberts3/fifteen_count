@@ -228,7 +228,7 @@ function jackpotBonusPointsAni(totalCardsPlayed, jackpotSameColorCheck,jackpotMu
 };
 
 exports.classicThemeTransition = (playersHandBg, comboRoundCheck) => {
- 
+
   if (comboRoundCheck) {
     let inversePct = 0;
     let blurPct = 5;
@@ -239,11 +239,24 @@ exports.classicThemeTransition = (playersHandBg, comboRoundCheck) => {
       blurPct += 5;
 
       if (inversePct >= 100) clearInterval(classicThemeInverse);
-    }, 1);
+    }, 10);
 
   } else {
     playersHandBg.setProperty('--players-bg-filter', 'blur(15px) invert(0%)');
   }
+}
+
+exports.classicThemeBgPrimer = (playersHandBg, comboRoundCheck) => {
+  classicThemeTransition(playersHandBg, true);
+setTimeout(() => {
+  classicThemeTransition(playersHandBg, false);
+}, 300);
+setTimeout(() => {
+  classicThemeTransition(playersHandBg, true);
+}, 600);
+setTimeout(() => {
+  classicThemeTransition(playersHandBg, false);
+}, 900);
 }
 
 exports.timeAttackBonusFinalPositionAni = () =>
@@ -252,3 +265,22 @@ exports.timeAttackBonusFinalPositionAni = () =>
 
   bonusCard.style.animationName = "bonusCardSwirl";
 } 
+
+function classicThemeTransition(playersHandBg, comboRoundCheck) {
+
+  if (comboRoundCheck) {
+    let inversePct = 0;
+    let blurPct = 5;
+  
+    const classicThemeInverse = setInterval(() => {
+      playersHandBg.setProperty('--players-bg-filter', `blur(${blurPct}px) invert(${inversePct}%)`);
+      inversePct += 10;
+      blurPct += 5;
+
+      if (inversePct >= 100) clearInterval(classicThemeInverse);
+    }, 10);
+
+  } else {
+    playersHandBg.setProperty('--players-bg-filter', 'blur(15px) invert(0%)');
+  }
+}

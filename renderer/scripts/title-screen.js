@@ -3,6 +3,8 @@
 // Allow player to exit game from menu
 const { ipcRenderer } = require('electron');
 
+// const utils = require('./utils');
+
 const exitGame = document.querySelector('.exit-game');
 
 exitGame.addEventListener('click', () => {
@@ -37,4 +39,3 @@ if (userSelectedSoundSettings.SFX) {
         }
     })
 }
-

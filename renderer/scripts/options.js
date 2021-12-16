@@ -298,5 +298,5 @@ function steamLoginCheck() {
 }
 
 function steamLogout() {
-  localStorage.setItem('steam-credentials', JSON.stringify({userName: '', steamId: ''}))
+  // localStorage.setItem('steam-credentials', JSON.stringify({userName: '', steamId: ''}))
 }

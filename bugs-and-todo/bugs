@@ -1,15 +1,7 @@
 Bugs:
 -7/6/21 - classic mode background switch seems to run a little slow the first few times switching to combo stage...need to see how it goes in the production version
 
--6/20/21 - if swapping cards and time gets down to ~6 then time will still show up as red on timer, should only turn red when 5 or less (can't duplicate this, so maybe already fixed)
-
 -6/19/21 - sometimes jackpot is supposed to show up after swap but doesn't, reduces jackpot level by 1 (maybe make this a gameplay element)
-
--5/29/21 - scoring a jackpot bonus should have a sound effect
-
--5/2/21 - should be a sound effect when the 15 count is reached
-
--pause button not working properly, timer resets if un-paused before time is up, but time can run out and game over triggered if paused too long. Also can manipulate the jackpot timer
 
 -custom cursor stays stuck in place when clicking and dragging styled scrollbar
 
