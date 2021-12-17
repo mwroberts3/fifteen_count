@@ -227,6 +227,33 @@ function jackpotBonusPointsAni(totalCardsPlayed, jackpotSameColorCheck,jackpotMu
   }, 1000);
 };
 
+exports.arcadeModeCountDownAni = () => {
+  let themeCheck = JSON.parse(localStorage.getItem('theme-selection'));
+
+  console.log(themeCheck);
+
+  if (themeCheck.themeName === 'Universe') {
+    document.getElementById('theme-spritesheet').href = 'style/universespritesGrayscale.css';
+
+    setTimeout(() => {
+      document.getElementById('theme-spritesheet').href = themeSelection['cardSprites'];
+    }, 3000);
+  } else {
+    let starterCards = document.querySelectorAll('.card-sprite');
+  
+    starterCards.forEach((card) => {
+      card.style.filter = 'grayscale(1)';
+    })
+  
+    setTimeout(() => {
+      starterCards.forEach((card) => {
+        card.style.filter = 'none'
+      })
+  }, 3000); 
+  }
+
+};
+
 exports.classicThemeTransition = (playersHandBg, comboRoundCheck) => {
 
   if (comboRoundCheck) {

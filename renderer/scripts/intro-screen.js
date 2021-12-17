@@ -28,7 +28,7 @@ ipcRenderer.on('display-settings-check', () => {
   setTimeout(() => {
     document.querySelector('script').src = "./scripts/custom-cursor.js";
     steamLoginPopup.style.opacity = 1;
-    localStorage.setItem('steam-credentials', JSON.stringify({userName: '', steamId: ''}));
+    // localStorage.setItem('steam-credentials', JSON.stringify({userName: '', steamId: ''}));
   }, 3050);
 
 function goToTitleScreen() {

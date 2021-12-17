@@ -59,7 +59,6 @@ let roundBonusTimer = 0;
 
 let secondsBonus = 12;
 let fullHandBonus = 35;
-let fullHandPointsBonus = 50;
 
 let html = ``;
 
@@ -96,9 +95,6 @@ timer.textContent = `${threeSecCountdown}`;
 let countdownTimer = setInterval(countdownFunction, 1000);
 let gameTimer = setInterval(timerFunction, 1000);
 
-// Hud message flags
-let fullHandPlayed = false;
-
 // Init gameplay loop
 let jackpotLive = false;
 let jackpotInit = false;
@@ -113,6 +109,7 @@ let highscoreDefeated = false;
 
 addFreshPointsToTotal();
 setSecondsBonusIndicator();
+utils.arcadeModeCountDownAni();
 hudMessage.countdown(hudMessageDisplay);
 
 setTimeout(() => {
@@ -377,8 +374,6 @@ function comboCheck() {
 
 // Submitting cards
 function cardsSubmit() {
-  // hud message flag
-  fullHandPlayed = false;
   // make sure multi-value cards have a value selected
   let checkedCards = document.querySelectorAll(".checked");
   checkedCards.forEach((card) => {
@@ -535,11 +530,8 @@ function cardsSubmit() {
 
       totalPoints += fullHandBonus;
       pointsBreakdown.timePoints += fullHandBonus
-      // totalPoints += fullHandPointsBonus;
 
       pointsBreakdown['fullClearTimes']++;
-
-      // pointsBreakdown.fullClearPoints += fullHandPointsBonus;
 
       hudMessage.fullHandClear(hudMessageDisplay);
 
@@ -561,11 +553,6 @@ function cardsSubmit() {
       if (checkedCards.length === 10) {
         fullHandBonus = 35;
       }
-
-      fullHandPointsBonus += 50;
-
-      // For hud message
-      fullHandPlayed = true;
 
       // Full hand sound effect
       if (userSelectedSoundSettings.SFX) fullClearSFX.play();
@@ -589,7 +576,6 @@ function cardsSubmit() {
 
   setSecondsBonusIndicator();
   setFifteenCountColor();
-  // fifteenCountDisplay.innerHTML = `${fifteenCount}`;
 }
 
 function roundBonusCheck() {
