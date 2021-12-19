@@ -3,9 +3,12 @@
 // Allow player to exit game from menu
 const { ipcRenderer } = require('electron');
 
-// const utils = require('./utils');
+const utils = require('./utils');
 
 const exitGame = document.querySelector('.exit-game');
+
+// Fadein
+utils.gamescreenFadeinFunc();
 
 exitGame.addEventListener('click', () => {
     ipcRenderer.send('user-exit', 'user quit game');

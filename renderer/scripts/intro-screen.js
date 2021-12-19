@@ -1,5 +1,8 @@
 const { ipcRenderer } = require('electron');
 
+// set bootup for arcade mode buffering reasons
+localStorage.setItem('first-boot', true);
+
 // Check for Steam credentials
 if (localStorage.getItem('steam-credentials')) {
   setTimeout(() => {
@@ -28,7 +31,6 @@ ipcRenderer.on('display-settings-check', () => {
   setTimeout(() => {
     document.querySelector('script').src = "./scripts/custom-cursor.js";
     steamLoginPopup.style.opacity = 1;
-    // localStorage.setItem('steam-credentials', JSON.stringify({userName: '', steamId: ''}));
   }, 3050);
 
 function goToTitleScreen() {

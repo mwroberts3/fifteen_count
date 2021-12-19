@@ -72,7 +72,15 @@ let hand = [];
 
 // Timer variables
 const timer = document.querySelector(".timer");
-let threeSecCountdown = 3;
+
+let threeSecCountdown;
+if (JSON.parse(localStorage.getItem('first-boot'))){
+  threeSecCountdown = 4;
+} else {
+  threeSecCountdown = 3;
+}
+
+
 let totalSeconds = 100;
 // let secondsLeft = 200;
 let threeTimerStart = 0;
@@ -84,14 +92,20 @@ let timeBonusLevelforAnimation = 0;
 let gamePaused = false;
 
 // prevent early lag bey priming background transistion
-utils.classicThemeBgPrimer(document.querySelector('.players-hand').style, true);
+if (JSON.parse(localStorage.getItem('first-boot'))) {
+  utils.classicThemeBgPrimer(document.querySelector('.players-hand').style, true);
+}
 
 // Setting up deck & displaying for play
 buildDeck(deck);
 deck = shuffle(deck, cardCount);
 drawCards(drawSize);
 showHand();
-timer.textContent = `${threeSecCountdown}`;
+if (threeSecCountdown < 4) {
+  timer.textContent = `${threeSecCountdown}`;
+} else {
+  timer.textContent = " ";
+}
 let countdownTimer = setInterval(countdownFunction, 1000);
 let gameTimer = setInterval(timerFunction, 1000);
 
@@ -115,7 +129,8 @@ hudMessage.countdown(hudMessageDisplay);
 setTimeout(() => {
   selectCard();
   hudMessage.count(hudMessageDisplay);
-}, 3000);
+  localStorage.setItem('first-boot', false);
+}, threeSecCountdown * 1000);
 
 // Button submit
 document.addEventListener("keyup", (e) => {
@@ -241,7 +256,9 @@ function showHand() {
 function countdownFunction() {
   threeSecCountdown--;
 
-  timer.textContent = `${threeSecCountdown}`;
+  if(threeSecCountdown < 4) {
+    timer.textContent = `${threeSecCountdown}`;
+  }
 
   if (threeSecCountdown === 0) {
     timer.textContent = `GO`;
@@ -409,6 +426,7 @@ function cardsSubmit() {
     if (document.querySelectorAll(".combo-sacrifice").length < 1 && checkedCards.length < globalCardsInHand.length) {
       if (themeSelection['themeName'] !== 'Classic') {
         playersHandArea.style.backgroundImage = `url("./img/${themeSelection['bgImgCombo']}")`;
+        utils.jungleAndCosmosComboTrans(document.querySelector('.players-hand').style);
       } else {
         utils.classicThemeTransition(document.querySelector('.players-hand').style, true);
       }

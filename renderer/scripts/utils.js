@@ -7,7 +7,9 @@ let fadeTime = 0;
 const gamescreenFadein = setInterval(() => {
   document.querySelector('body').style.opacity = fadeTime;
   fadeTime += 0.1;
-  if (fadeTime >= 1) clearInterval(gamescreenFadein);
+  if (fadeTime >= 1) {
+    clearInterval(gamescreenFadein);
+  };
 }, 39)
 }
 
@@ -228,16 +230,25 @@ function jackpotBonusPointsAni(totalCardsPlayed, jackpotSameColorCheck,jackpotMu
 };
 
 exports.arcadeModeCountDownAni = () => {
-  let themeCheck = JSON.parse(localStorage.getItem('theme-selection'));
+  let transTimer;
 
-  console.log(themeCheck);
+  console.log(JSON.parse(localStorage.getItem('first-boot')));
+
+  if (JSON.parse(localStorage.getItem('first-boot'))) {
+    transTimer = 4000;
+  } else {
+    transTimer = 3000;
+  }
+
+
+  let themeCheck = JSON.parse(localStorage.getItem('theme-selection'));
 
   if (themeCheck.themeName === 'Universe') {
     document.getElementById('theme-spritesheet').href = 'style/universespritesGrayscale.css';
 
     setTimeout(() => {
       document.getElementById('theme-spritesheet').href = themeSelection['cardSprites'];
-    }, 3000);
+    }, transTimer);
   } else {
     let starterCards = document.querySelectorAll('.card-sprite');
   
@@ -249,9 +260,8 @@ exports.arcadeModeCountDownAni = () => {
       starterCards.forEach((card) => {
         card.style.filter = 'none'
       })
-  }, 3000); 
+  }, transTimer); 
   }
-
 };
 
 exports.classicThemeTransition = (playersHandBg, comboRoundCheck) => {
@@ -310,4 +320,8 @@ function classicThemeTransition(playersHandBg, comboRoundCheck) {
   } else {
     playersHandBg.setProperty('--players-bg-filter', 'blur(15px) invert(0%)');
   }
+}
+
+exports.jungleAndCosmosComboTrans = (playersHandBg) => {
+
 }
