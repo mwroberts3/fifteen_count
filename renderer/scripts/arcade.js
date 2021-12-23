@@ -73,13 +73,15 @@ let hand = [];
 // Timer variables
 const timer = document.querySelector(".timer");
 
-let threeSecCountdown;
-if (JSON.parse(localStorage.getItem('first-boot'))){
-  threeSecCountdown = 4;
+if (themeSelection.themeName === 'Classic') {
+  if (JSON.parse(localStorage.getItem('first-boot'))){
+    threeSecCountdown = 4;
+  } else {
+    threeSecCountdown = 3;
+  }
 } else {
   threeSecCountdown = 3;
 }
-
 
 let totalSeconds = 100;
 // let secondsLeft = 200;
@@ -92,8 +94,10 @@ let timeBonusLevelforAnimation = 0;
 let gamePaused = false;
 
 // prevent early lag bey priming background transistion
-if (JSON.parse(localStorage.getItem('first-boot'))) {
-  utils.classicThemeBgPrimer(document.querySelector('.players-hand').style, true);
+if (themeSelection.themeName === 'Classic') {
+  if (JSON.parse(localStorage.getItem('first-boot'))) {
+    utils.classicThemeBgPrimer(document.querySelector('.players-hand').style, true);
+  }
 }
 
 // Setting up deck & displaying for play
@@ -123,13 +127,24 @@ let highscoreDefeated = false;
 
 addFreshPointsToTotal();
 setSecondsBonusIndicator();
+
 utils.arcadeModeCountDownAni();
 hudMessage.countdown(hudMessageDisplay);
+
+// const firstTimeHowToClosedInt = setInterval(() => {
+//   if (document.getElementById('arcade-how-to-play').classList.contains('hidden')) {
+//     hudMessage.countdown(hudMessageDisplay);
+//     clearInterval(firstTimeHowToClosedInt);
+//   }
+// }, 10);
 
 setTimeout(() => {
   selectCard();
   hudMessage.count(hudMessageDisplay);
-  localStorage.setItem('first-boot', false);
+
+  if (themeSelection.themeName === 'Classic' && document.getElementById('arcade-how-to-play').classList.contains('hidden')) {
+    localStorage.setItem('first-boot', false);
+  }
 }, threeSecCountdown * 1000);
 
 // Button submit
@@ -262,7 +277,7 @@ function countdownFunction() {
 
   if (threeSecCountdown === 0) {
     timer.textContent = `GO`;
-  } else if (threeSecCountdown < 0) {
+  } else if (threeSecCountdown < 0 && document.getElementById('arcade-how-to-play').classList.contains('hidden')) {
     clearInterval(countdownTimer);
   }
 }
@@ -301,7 +316,7 @@ function timerFunction() {
       highScoresFunc.scoreReview(hudMessage, currentHand, totalPoints, totalCardsPlayed, totalSeconds);
     }
   
-    if (!gamePaused) {
+    if (!gamePaused && document.getElementById('arcade-how-to-play').classList.contains('hidden')) {
       secondsLeft--;
       elapsedTime++;
     }

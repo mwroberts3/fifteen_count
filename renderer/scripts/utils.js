@@ -3,6 +3,13 @@ exports.gamescreenFadeinFunc = () => {
 document.querySelector('body').style.
 opacity = 0;
 let fadeTime = 0;
+let bootTime;
+
+if (JSON.parse(localStorage.getItem('first-boot'))) {
+  bootTime = 300;
+} else {
+  bootTime = 39;
+}
 
 const gamescreenFadein = setInterval(() => {
   document.querySelector('body').style.opacity = fadeTime;
@@ -10,7 +17,7 @@ const gamescreenFadein = setInterval(() => {
   if (fadeTime >= 1) {
     clearInterval(gamescreenFadein);
   };
-}, 39)
+}, bootTime)
 }
 
 exports.timeAttackFadeIn = () => {
@@ -239,7 +246,6 @@ exports.arcadeModeCountDownAni = () => {
   } else {
     transTimer = 3000;
   }
-
 
   let themeCheck = JSON.parse(localStorage.getItem('theme-selection'));
 
