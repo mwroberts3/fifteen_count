@@ -6,7 +6,7 @@ let fadeTime = 0;
 let bootTime;
 
 if (JSON.parse(localStorage.getItem('first-boot'))) {
-  bootTime = 300;
+  bootTime = 39;
 } else {
   bootTime = 39;
 }
@@ -271,21 +271,38 @@ exports.arcadeModeCountDownAni = () => {
 };
 
 exports.classicThemeTransition = (playersHandBg, comboRoundCheck) => {
+  let start, previousTimeStamp;
+  let inversePct = 0;
+  let blurPct = 5;
 
   if (comboRoundCheck) {
-    let inversePct = 0;
-    let blurPct = 5;
-  
-    const classicThemeInverse = setInterval(() => {
-      playersHandBg.setProperty('--players-bg-filter', `blur(${blurPct}px) invert(${inversePct}%)`);
-      inversePct += 10;
-      blurPct += 5;
-
-      if (inversePct >= 100) clearInterval(classicThemeInverse);
-    }, 10);
-
+    window.requestAnimationFrame(step);
   } else {
     playersHandBg.setProperty('--players-bg-filter', 'blur(15px) invert(0%)');
+  }
+
+  function step(timestamp) {
+    if (start === undefined) {
+      start = timestamp;
+    }
+
+    const elapsed = timestamp - start;
+
+    if (previousTimeStamp !== timestamp) {
+      playersHandBg.setProperty('--players-bg-filter', `blur(${blurPct}px) invert(${inversePct}%)`);
+
+      if (inversePct <= 100) {
+        inversePct += 16;
+        blurPct += 5;
+      }
+    }
+
+    if (elapsed < 125) {
+      previousTimeStamp = timestamp;
+      window.requestAnimationFrame(step);
+    } else {
+      playersHandBg.setProperty('--players-bg-filter', `blur(50px) invert(100%)`);
+    }
   }
 }
 
@@ -293,13 +310,7 @@ exports.classicThemeBgPrimer = (playersHandBg, comboRoundCheck) => {
   classicThemeTransition(playersHandBg, true);
 setTimeout(() => {
   classicThemeTransition(playersHandBg, false);
-}, 300);
-setTimeout(() => {
-  classicThemeTransition(playersHandBg, true);
-}, 600);
-setTimeout(() => {
-  classicThemeTransition(playersHandBg, false);
-}, 900);
+}, 200);
 }
 
 exports.timeAttackBonusFinalPositionAni = () =>
