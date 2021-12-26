@@ -24,8 +24,8 @@ let redrawAmount = 18;
 let score = 0;
 let count = 0;
 let pointsAdded;
-// let secondsLeft = 180;
-let secondsLeft = 50;
+let secondsLeft = 180;
+let threeSecCountdown = 2;
 let bonusUnleashed = false;
 let bombsOff = false;
 let bonusAdded = false;
@@ -36,8 +36,8 @@ let gamePaused = false;
 
 let highscoreDefeated = false;
 
-const sameColorRed = (color) => color == "red"; 
-const sameColorBlack = (color) => color == "black"; 
+const sameColorRed = (color) => color == "#3c535b"; 
+const sameColorBlack = (color) => color == "#08aa72"; 
 
 let cardIndex;
 let shownHand = [];
@@ -107,6 +107,19 @@ class Card {
 
 // Set 180 seconds timer
 const timeAttackTimer = setInterval(() => {
+    if (threeSecCountdown > -1) {
+        timerDisplay.textContent = `${threeSecCountdown}`;
+        
+        if (threeSecCountdown === 0) {
+            document.querySelectorAll('.ta-card').forEach((card) => {
+                card.style.filter = 'grayscale(0)';
+            });
+
+            timerDisplay.textContent = 'GO!'
+        }
+        
+        threeSecCountdown--;
+    } else {
     // GAME OVER
     if (secondsLeft === 0 && !gamePaused) {
         clearInterval(timeAttackTimer);
@@ -122,26 +135,32 @@ const timeAttackTimer = setInterval(() => {
             highScoresFunc.uploadTAHighscoreToSteam(score);
         }
     }
-    secondsLeft--;
+        
+    if (document.getElementById('time-attack-how-to-play').classList.contains('hidden')) {
+        secondsLeft--;
+    }
 
     if (secondsLeft <= 5) {
         timerDisplay.style.color = 'red'
-      }
-
-    timerDisplay.textContent = `${secondsLeft}`
+    }
+    
+    if (secondsLeft > -1) {
+        timerDisplay.textContent = `${secondsLeft}`
+    }
+}
 }, 1000)
 
 let pointsOnDisplay = 0;
-const timeAttackScore = setInterval(() => {
-        if (pointsOnDisplay < score) {
-            pointsOnDisplay++;
-            newHighscoreCheckAndUpdate();
-        }
+setInterval(() => {
+    if (pointsOnDisplay < score) {
+        pointsOnDisplay++;
+        newHighscoreCheckAndUpdate();
+    }
+    scoreDisplay.textContent = `${pointsOnDisplay}`;
+    if (secondsLeft === 0) {
+        pointsOnDisplay = score;
         scoreDisplay.textContent = `${pointsOnDisplay}`;
-        if (secondsLeft === 0) {
-            pointsOnDisplay = score;
-            scoreDisplay.textContent = `${pointsOnDisplay}`;
-        }
+    }
 },100)
 
 // Init gameplay
@@ -150,23 +169,28 @@ shuffleTimeAttack(deck);
 buildAndShowHand(redrawAmount);
 newHighscoreCheckAndUpdate();
 
-// Check position of bonus card to potentially trigger final position animation
+// grayscale cards for countdown
+document.querySelectorAll('.ta-card').forEach((card) => {
+    card.style.filter = 'grayscale(1)';
+})
 
 // Check Cards Phase
-cardsDisplay.addEventListener('click', e => {
-    cardIndex = [...e.target.parentNode.children].indexOf(e.target);
+setTimeout(() => {
+    cardsDisplay.addEventListener('click', e => {
+        cardIndex = [...e.target.parentNode.children].indexOf(e.target);
+        
+        if (e.target.classList.contains('ta-card')) {
+            activeHand[cardIndex].checkCard(cardIndex, shownHand);
+            countDisplay.textContent = `${count}`;    
+        }  
     
-    if (e.target.classList.contains('ta-card')) {
-        activeHand[cardIndex].checkCard(cardIndex, shownHand);
-        countDisplay.textContent = `${count}`;    
-    }  
-
-    if (e.target.classList.contains('bonus-card-overlay') || e.target.classList.contains('bomb-icon')){
-        cardIndex = [...e.target.parentNode.parentNode.children].indexOf(e.target.parentNode);
-        activeHand[cardIndex].checkCard(cardIndex, shownHand);
-        countDisplay.textContent = `${count}`; 
-    }
-})
+        if (e.target.classList.contains('bonus-card-overlay') || e.target.classList.contains('bomb-icon')){
+            cardIndex = [...e.target.parentNode.parentNode.children].indexOf(e.target.parentNode);
+            activeHand[cardIndex].checkCard(cardIndex, shownHand);
+            countDisplay.textContent = `${count}`; 
+        }
+    })
+}, 3000);
 
 function buildDeckTimeAttack() {
     let tempCardId = 0;
@@ -194,7 +218,7 @@ function buildDeckTimeAttack() {
 
       for (let i = 0; i < 22; i++) {
           for (let k = 0; k < faces.length; k++) {
-              i < 11 ? tempSuit = 'red' : tempSuit = 'black';
+              i < 11 ? tempSuit = '#3c535b' : tempSuit = '#08aa72';
               deck.push(new Card(faces[k], tempSuit, value[k], tempCardId))
               tempCardId++;
           }

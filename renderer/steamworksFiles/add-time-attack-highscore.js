@@ -8,7 +8,7 @@ exports.uploadTAHighscoreToSteam = (score) => {
     let details = {
         'key': steamworksInfo.key,
         'appid': steamworksInfo.appID,
-        'leaderboardid': 7487751,
+        'leaderboardid': steamworksInfo.timeAttackLeaderboardID,
         'steamid': BigInt(`${steamCreds.steamId}`),
         'score': score,
         'scoremethod': 'KeepBest',

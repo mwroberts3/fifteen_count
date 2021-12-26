@@ -18,9 +18,7 @@ if (!localStorage.getItem('firsttime-check')) {
 
 function closeHowTo() {
   document.querySelector('.skip-how-to').addEventListener('click', () => {
-    timeAttackHowTo.classList.add('hidden');
-    timerDisplay.textContent = '180';
-    secondsLeft = 180;
+    window.location.reload();
   })
 }
 

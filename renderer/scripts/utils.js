@@ -3,13 +3,6 @@ exports.gamescreenFadeinFunc = () => {
 document.querySelector('body').style.
 opacity = 0;
 let fadeTime = 0;
-let bootTime;
-
-if (JSON.parse(localStorage.getItem('first-boot'))) {
-  bootTime = 39;
-} else {
-  bootTime = 39;
-}
 
 const gamescreenFadein = setInterval(() => {
   document.querySelector('body').style.opacity = fadeTime;
@@ -17,7 +10,7 @@ const gamescreenFadein = setInterval(() => {
   if (fadeTime >= 1) {
     clearInterval(gamescreenFadein);
   };
-}, bootTime)
+}, 39)
 }
 
 exports.timeAttackFadeIn = () => {
@@ -52,13 +45,32 @@ exports.setCosmosBg = () => {
 if (themeSelection['themeName'] === "Universe") {
   let bgHelper = document.querySelector('.background-helper');
 
+  let bgOpacity = 0;
+  let increaseFlag = true;
+
   setTimeout(() => {
     bgHelper.style.position = "absolute";
     bgHelper.style.top = "-75%";
     bgHelper.style.left = "-50%";
     bgHelper.style.width = "200%";
     bgHelper.style.height = "250%";
-  },250)
+    bgHelper.style.opacity = '0';
+  },400)
+
+  setInterval(() => {
+    bgHelper.style.opacity = `${bgOpacity}`;
+    if (increaseFlag) {
+      bgOpacity += 0.01;
+    } else {
+      bgOpacity -= 0.01;
+    }
+
+    if (bgOpacity > 1) {
+      increaseFlag = false;
+    } else if (bgOpacity < 0.7) {
+      increaseFlag = true;
+    }
+  }, 400)
 }
 }
 
@@ -239,10 +251,12 @@ function jackpotBonusPointsAni(totalCardsPlayed, jackpotSameColorCheck,jackpotMu
 exports.arcadeModeCountDownAni = () => {
   let transTimer;
 
-  console.log(JSON.parse(localStorage.getItem('first-boot')));
-
-  if (JSON.parse(localStorage.getItem('first-boot'))) {
-    transTimer = 4000;
+  if (themeSelection.themeName === 'Classic') {
+    if (JSON.parse(localStorage.getItem('first-boot'))) {
+      transTimer = 4000;
+    } else {
+      transTimer = 3000;
+    }
   } else {
     transTimer = 3000;
   }

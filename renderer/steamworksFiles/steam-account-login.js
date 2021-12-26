@@ -12,7 +12,7 @@ const steamAuthLogin = () => {
     }
 
     const steamLoginCheck = setInterval(() => {
-        fetch("http://localhost:3000/steam-info")
+        fetch("http://localhost:5481/steam-info")
           .then((res) => res.text(res))
           .then((data) => {
             if (data.length > 50) {

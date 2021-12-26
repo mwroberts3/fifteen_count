@@ -131,14 +131,12 @@ setSecondsBonusIndicator();
 utils.arcadeModeCountDownAni();
 hudMessage.countdown(hudMessageDisplay);
 
-// const firstTimeHowToClosedInt = setInterval(() => {
-//   if (document.getElementById('arcade-how-to-play').classList.contains('hidden')) {
-//     hudMessage.countdown(hudMessageDisplay);
-//     clearInterval(firstTimeHowToClosedInt);
-//   }
-// }, 10);
-
 setTimeout(() => {
+  // set BGM
+  if (userSelectedSoundSettings.BGM) {
+    document.getElementById('bgm-selection').src = themeSelection['bgm'];
+  }
+
   selectCard();
   hudMessage.count(hudMessageDisplay);
 
@@ -276,7 +274,7 @@ function countdownFunction() {
   }
 
   if (threeSecCountdown === 0) {
-    timer.textContent = `GO`;
+    timer.textContent = `GO!`;
   } else if (threeSecCountdown < 0 && document.getElementById('arcade-how-to-play').classList.contains('hidden')) {
     clearInterval(countdownTimer);
   }

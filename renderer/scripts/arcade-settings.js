@@ -181,11 +181,6 @@ if (!localStorage.getItem('sound-settings')) {
   userSelectedSoundSettings = JSON.parse(localStorage.getItem('sound-settings'));
 }
 
-// Set BGM
-if (userSelectedSoundSettings.BGM) {
-  document.getElementById('bgm-selection').src = themeSelection['bgm'];
-}
-
 // Set HUD banner background and options color
 if (themeSelection["themeName"] === 'Universe') {
   document.querySelector(".scoreboard").style.background = "transparent";

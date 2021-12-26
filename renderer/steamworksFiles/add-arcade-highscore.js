@@ -56,7 +56,7 @@ exports.scoreReview = (hudMessage, currentHand, totalPoints, totalCardsPlayed, t
       let details = {
         'key': steamworksInfo.key,
         'appid': steamworksInfo.appID,
-        'leaderboardid': 7434161,
+        'leaderboardid': steamworksInfo.arcadeLeaderboardID,
         'steamid': BigInt(`${steamCreds.steamId}`),
         'score': totalPoints,
         'scoremethod': 'KeepBest',
