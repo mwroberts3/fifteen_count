@@ -467,10 +467,17 @@ img {
 
 .options-container {
   margin: auto;
+  padding-top: 20px;
   height: 445px;
+  display: flex;
+  justify-content: center;
 
   section {
     padding: 10px 10px 0;
+
+    p:first-of-type {
+      padding: 0 10px 10px 10px;
+    }
 
     p {
       padding: 10px;
@@ -493,8 +500,18 @@ img {
 .display-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+
+  p:first-of-type {
+    padding-bottom: 0 !important;
+  }
+}
+
+.display-options-inner-container {
+  width: 130px;
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  align-self: center;
 }
 
 .checkbox-container {
@@ -535,7 +552,7 @@ img {
   height: 100%;
 
   .theme-selection-menu {
-    width: 35%;
+    width: 220px;
     margin: auto;
 
     div {
@@ -557,7 +574,7 @@ img {
   .music-options-selection {
     display: flex;
     justify-content: space-evenly;
-    width: 35%;
+    width: 220px;
     margin: auto;
   }
 }

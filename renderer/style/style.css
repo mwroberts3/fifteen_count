@@ -360,9 +360,14 @@ img {
 
 .options-container {
   margin: auto;
-  height: 445px; }
+  padding-top: 20px;
+  height: 445px;
+  display: flex;
+  justify-content: center; }
   .options-container section {
     padding: 10px 10px 0; }
+    .options-container section p:first-of-type {
+      padding: 0 10px 10px 10px; }
     .options-container section p {
       padding: 10px; }
       .options-container section p span {
@@ -375,9 +380,16 @@ img {
 
 .display-container {
   display: flex;
+  flex-direction: column; }
+  .display-container p:first-of-type {
+    padding-bottom: 0 !important; }
+
+.display-options-inner-container {
+  width: 130px;
+  display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center; }
+  justify-self: center;
+  align-self: center; }
 
 .checkbox-container {
   display: block;
@@ -412,7 +424,7 @@ img {
   width: 100%;
   height: 100%; }
   #theme .theme-selection-menu {
-    width: 35%;
+    width: 220px;
     margin: auto; }
     #theme .theme-selection-menu div {
       text-align: center;
@@ -426,7 +438,7 @@ img {
   #theme .music-options-selection {
     display: flex;
     justify-content: space-evenly;
-    width: 35%;
+    width: 220px;
     margin: auto; }
 
 .button-select {

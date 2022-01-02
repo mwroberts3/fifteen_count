@@ -283,7 +283,7 @@ function steamLoginCheck() {
       steamButtonPrompt.innerHTML = `
       <p>Login to Steam to activate leaderboards and acheivements</p>
       <a
-              href="http://localhost:3000/auth/steam/"
+              href="http://localhost:5481/auth/steam/"
               target="_blank"
               draggable="false"
             >
