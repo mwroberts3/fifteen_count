@@ -130,6 +130,13 @@ body {
   background: #000;
 }
 
+.swap-container,
+.submit-cards,
+.value-options-one,
+.value-options-two {
+  filter: invert(100%) !important;
+}
+
 .background-helper {
   /* position: absolute;
   top: -75%;
@@ -157,4 +164,9 @@ body {
   100% {
     transform: rotate(0);
   }
+}
+
+#points-breakdown-view {
+  top: 55px;
+  height: calc(100% - 118px);
 }

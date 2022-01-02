@@ -42,6 +42,9 @@ const sameColorBlack = (color) => color == "#08aa72";
 let cardIndex;
 let shownHand = [];
 
+let bombCardIndex1;
+let bombIcon;
+
 class Card {
     constructor(face, suit, value, id) {
         this.face = face;
@@ -105,7 +108,7 @@ class Card {
     }
 }
 
-// Set 180 seconds timer
+// Set 180 seconds timer and countdown timer
 const timeAttackTimer = setInterval(() => {
     if (threeSecCountdown > -1) {
         timerDisplay.textContent = `${threeSecCountdown}`;
@@ -114,6 +117,10 @@ const timeAttackTimer = setInterval(() => {
             document.querySelectorAll('.ta-card').forEach((card) => {
                 card.style.filter = 'grayscale(0)';
             });
+
+            document.querySelector('.ta-card').style.background = `url("./img/ta-bonus-card.png")`;
+
+            shownHand[bombCardIndex1].appendChild(bombIcon);
 
             timerDisplay.textContent = 'GO!'
         }
@@ -270,7 +277,10 @@ function shuffleTimeAttack() {
         }
         
         if (card.bonus) {
-            cardInHand.style.background = `url("./img/ta-bonus-card.gif")`;
+            if (threeSecCountdown < 1) {
+                cardInHand.style.background = `url("./img/ta-bonus-card.png")`;
+            }
+
             cardBonusIndex = index;
             let bonusCardOverlay = document.createElement('div');
             bonusCardOverlay.classList.add('bonus-card-overlay');
@@ -285,13 +295,18 @@ function shuffleTimeAttack() {
     // Choose random bomb card
     shownHand = cardsDisplay.childNodes;
     
-    let bombCardIndex1 = cardBonusIndex;
-    let bombIcon = document.createElement('div');
+    bombCardIndex1 = cardBonusIndex;
+    bombIcon = document.createElement('div');
     bombIcon.classList.add('bomb-icon');
+
     while (bombCardIndex1 === cardBonusIndex) {
         bombCardIndex1 = Math.floor(Math.random() * 18);    
         shownHand[bombCardIndex1].classList.add('ta-bomb-card');
-        shownHand[bombCardIndex1].appendChild(bombIcon);
+
+        if (threeSecCountdown < 0) {
+            shownHand[bombCardIndex1].appendChild(bombIcon);
+        }
+
         shownHand[cardBonusIndex].classList.remove('ta-bomb-card');
     }
     

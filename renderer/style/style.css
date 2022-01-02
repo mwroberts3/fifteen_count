@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Russo+One&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Short+Stack&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Chau+Philomene+One&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap");
 * {
   margin: 0;
@@ -763,6 +764,11 @@ input[type="submit"] {
     filter: sepia(100%); }
   100% {
     filter: sepia(0%); } }
+  .players-hand .swap-container,
+  .players-hand .submit-cards,
+  .players-hand .value-options-one,
+  .players-hand .value-options-two {
+    font-family: "Short Stack", cursive; }
   .players-hand #fif-count-notifyer {
     position: absolute;
     top: 400px;
@@ -813,9 +819,9 @@ input[type="submit"] {
   position: absolute;
   border-bottom-right-radius: 8px;
   border-bottom-left-radius: 8px;
-  top: 178px;
+  top: 176px;
   right: 4px;
-  bottom: 60px;
+  bottom: 63px;
   left: 4px;
   opacity: var(--players-bg-opacity);
   z-index: -2;
@@ -828,9 +834,9 @@ input[type="submit"] {
   position: absolute;
   border-bottom-right-radius: 8px;
   border-bottom-left-radius: 8px;
-  top: 178px;
+  top: 176px;
   right: 4px;
-  bottom: 60px;
+  bottom: 63px;
   left: 4px;
   opacity: var(--players-bg-opacity-2);
   z-index: -2; }
@@ -1107,6 +1113,8 @@ input[type="submit"] {
     border-bottom-right-radius: 10px;
     z-index: -2; }
     .ta-outer-boundaries .ta-cards-display .ta-card {
+      font-family: "Chau Philomene One", sans-serif;
+      font-size: 40px;
       position: relative;
       width: 100px;
       height: 154px;
@@ -1115,13 +1123,12 @@ input[type="submit"] {
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 50px;
       color: #fff;
       z-index: -1;
       transition: transform ease 0.2s; }
     .ta-outer-boundaries .ta-cards-display .ta-bonus-card {
       animation-name: null;
-      animation-duration: 2s; }
+      animation-duration: 0.5s; }
 
 @keyframes bonusCardSwirl {
   0% {
@@ -1130,11 +1137,11 @@ input[type="submit"] {
     transform: rotate(360deg); } }
     .ta-outer-boundaries .ta-cards-display .bomb-icon {
       position: absolute;
-      width: 45px;
-      height: 45px;
+      width: 25px;
+      height: 25px;
       top: 2px;
       right: 5px;
-      background-image: url("../img/bomb-icon.gif"); }
+      background-image: url("../img/bomb-icon.png"); }
     .ta-outer-boundaries .ta-cards-display .ta-checked {
       transform: rotate(14deg); }
   .ta-outer-boundaries .ta-alltime-score-display {

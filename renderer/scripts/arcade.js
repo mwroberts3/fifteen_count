@@ -362,7 +362,7 @@ function reset() {
   setUncheckAllPermission();
   submitCards.innerHTML = `Submit &nbsp;<span class="submit-cards-smaller-text">[${actionBtn}]</span>`;
 
-  cardsInHand.length >= 10 ? swapCostDisplay.textContent = `-0s` : swapCostDisplay.textContent = `${cardsInHand.length - 10}s`;
+  cardsInHand.length >= 10 ? swapCostDisplay.textContent = `-1s` : swapCostDisplay.textContent = `${cardsInHand.length - 10}s`;
   
   hudMessage.count(hudMessageDisplay);
 }
@@ -431,15 +431,14 @@ function cardsSubmit() {
 
     pointsInPlay = 0;
     fifteenCount = 0;
-    submitCards.innerHTML = `Draw Cards &nbsp;<span class="submit-cards-smaller-text">[${actionBtn}]</span>`;
+    submitCards.innerHTML = `Draw &nbsp;<span class="submit-cards-smaller-text">[${actionBtn}]</span>`;
     comboSkip = true;
     // clearBgImgIntervals();
 
     // set players hand bg
     if (document.querySelectorAll(".combo-sacrifice").length < 1 && checkedCards.length < globalCardsInHand.length) {
       if (themeSelection['themeName'] !== 'Classic') {
-        playersHandArea.style.backgroundImage = `url("./img/${themeSelection['bgImgCombo']}")`;
-        utils.jungleAndCosmosComboTrans(document.querySelector('.players-hand').style);
+        utils.jungleAndCosmosComboTrans(playersHandArea);
       } else {
         utils.classicThemeTransition(document.querySelector('.players-hand').style, true);
       }
@@ -861,7 +860,7 @@ function doubleComboCheck(valueA, comboCardcount) {
   }
 
   totalComboPoints += Math.round(valueA * comboCardcount);
-  submitCards.innerHTML = `Draw Cards &nbsp;<span class="submit-cards-smaller-text">[${actionBtn}]</span>`;
+  submitCards.innerHTML = `Draw &nbsp;<span class="submit-cards-smaller-text">[${actionBtn}]</span>`;
   comboPointsDisplay.textContent = `+${totalComboPoints}`;
   comboPointsDisplay.classList.add('combo-points-fadein');
 }

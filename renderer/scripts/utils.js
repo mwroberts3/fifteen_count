@@ -55,7 +55,7 @@ if (themeSelection['themeName'] === "Universe") {
     bgHelper.style.width = "200%";
     bgHelper.style.height = "250%";
     bgHelper.style.opacity = '0';
-  },400)
+  },500)
 
   setInterval(() => {
     bgHelper.style.opacity = `${bgOpacity}`;
@@ -353,6 +353,6 @@ function classicThemeTransition(playersHandBg, comboRoundCheck) {
   }
 }
 
-exports.jungleAndCosmosComboTrans = (playersHandBg) => {
-
+exports.jungleAndCosmosComboTrans = (playersHandArea) => {
+  playersHandArea.style.backgroundImage = `url("./img/${themeSelection['bgImgCombo']}")`;
 }
