@@ -5,15 +5,29 @@ if (!localStorage.getItem('firsttime-check')) {
   timeAttackHowTo.classList.remove('hidden');
   firsttimeCheck.timeAttack = true;
   localStorage.setItem('firsttime-check', JSON.stringify(firsttimeCheck));
-  closeHowTo();
+  nextHowTo();
 } else {
   firsttimeCheck = JSON.parse(localStorage.getItem('firsttime-check'));
   if (!firsttimeCheck.timeAttack) {
     timeAttackHowTo.classList.remove('hidden');
     firsttimeCheck.timeAttack = true;
     localStorage.setItem('firsttime-check', JSON.stringify(firsttimeCheck));
-    closeHowTo();
+    nextHowTo();
   }
+}
+
+function nextHowTo() {
+  document.querySelector('.next-how-to').addEventListener('click', (e) => {
+    e.target.parentNode.parentNode.classList.add('hidden');
+
+    document.querySelector('.time-attack-howtoplay-slide-two').classList.remove('hidden');
+
+    document.getElementById('ta-uncheck-btn').textContent = controls.uncheckcardsBtn;
+
+    document.getElementById('ta-pause-btn').textContent = controls.pauseBtn;
+
+    closeHowTo();
+  })
 }
 
 function closeHowTo() {

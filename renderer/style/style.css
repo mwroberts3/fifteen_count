@@ -232,9 +232,10 @@ img {
   border-radius: 50% 20% / 10% 40%;
   padding: 10px 10px 10px 10px;
   animation-name: gamemode-animation;
-  animation-duration: 100s;
+  animation-duration: 30s;
   animation-iteration-count: infinite;
-  animation-direction: alternate; }
+  animation-direction: alternate;
+  animation-timing-function: linear; }
   .gamemode-select-container h3 {
     color: #fff;
     text-align: center; }
@@ -256,9 +257,11 @@ img {
 
 @keyframes gamemode-animation {
   0% {
-    border-radius: 50% 20% / 10% 40%; }
+    border-radius: 50% 20% / 10% 40%;
+    background: #222; }
   100% {
-    border-radius: 10px 100px / 120px; } }
+    border-radius: 10px 100px / 120px;
+    background: #080033; } }
 
 .title-screen-footer {
   margin-top: 10px;
@@ -291,6 +294,14 @@ img {
     margin-bottom: 15px; }
   .how-to-container p:last-of-type {
     margin-bottom: 0; }
+  .how-to-container .how-to-img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px; }
+    .how-to-container .how-to-img-container img {
+      width: 400px;
+      border-radius: 15px; }
 
 .how-to-tip-container {
   display: inline-block;
@@ -998,7 +1009,14 @@ input[type="submit"] {
   background: #ddd;
   border-radius: 10px; }
   #arcade-how-to-play h2 {
-    grid-area: head; }
+    grid-area: head;
+    text-align: center;
+    font-family: "Ink Free", sans-serif;
+    font-size: 36px; }
+  #arcade-how-to-play img {
+    border-radius: 15px; }
+  #arcade-how-to-play p {
+    width: calc(100% - 10px); }
   #arcade-how-to-play #arcade-howto-slide-one {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1240,7 +1258,13 @@ input[type="submit"] {
     grid-template-areas: "head head" "p1 img1" "p1 p2" "p1 p2"; }
   #time-attack-how-to-play h2 {
     grid-area: head;
-    text-align: center; }
+    text-align: center;
+    font-family: "Ink Free", sans-serif;
+    font-size: 36px; }
+  #time-attack-how-to-play img {
+    border-radius: 15px; }
+  #time-attack-how-to-play p {
+    width: calc(100% - 10px); }
   #time-attack-how-to-play #ta-howto-p1 {
     grid-area: p1; }
   #time-attack-how-to-play #ta-howto-p2 {

@@ -32,17 +32,26 @@ function howToSlideShow() {
         firsttimeCheck.arcade = true;
         localStorage.setItem('firsttime-check', JSON.stringify(firsttimeCheck));
         document.location.reload();
-      } else if (e.target.textContent === "Next") {
-        e.target.textContent = "Back";
+      } else if (e.target.textContent === "Next" && document.getElementById('arcade-howto-slide-two').classList.contains('hidden')) {
         arcadeHowTo.classList.add('arcade-howto-page-two');
 
         document.getElementById('arcade-howto-slide-one').classList.add('hidden');
         document.getElementById('arcade-howto-slide-two').classList.remove('hidden');
-      } else if (e.target.textContent === "Back") {
-        e.target.textContent = "Next";
+      } else if (e.target.textContent === "Next" && document.getElementById('arcade-howto-slide-one').classList.contains('hidden')) {
+        e.target.textContent = "Close";
 
         document.getElementById('arcade-howto-slide-two').classList.add('hidden');
-        document.getElementById('arcade-howto-slide-one').classList.remove('hidden');
+        document.getElementById('arcade-howto-slide-three').classList.remove('hidden');
+
+        document.getElementById('arcade-action-btn').textContent = controls.actionBtn;
+
+        document.getElementById('arcade-lowval-btn').textContent = controls.lowValBtn;
+
+        document.getElementById('arcade-uncheck-btn').textContent = controls.uncheckcardsBtn;
+
+        document.getElementById('arcade-swap-btn').textContent = controls.swapBtn;
+
+        document.getElementById('arcade-pause-btn').textContent = controls.pauseBtn;
       }
     }
   })

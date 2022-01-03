@@ -283,9 +283,10 @@ img {
   border-radius: 50% 20% / 10% 40%;
   padding: 10px 10px 10px 10px;
   animation-name: gamemode-animation;
-  animation-duration: 100s;
+  animation-duration: 30s;
   animation-iteration-count: infinite;
   animation-direction: alternate;
+  animation-timing-function: linear;
 
   h3 {
     color: #fff;
@@ -319,10 +320,12 @@ img {
 @keyframes gamemode-animation {
   0% {
     border-radius: 50% 20% / 10% 40%;
+    background: #222;
   }
 
   100% {
     border-radius: 10px 100px / 120px;
+    background: #080033;
   }
 }
 
@@ -366,6 +369,18 @@ img {
 
   p:last-of-type {
     margin-bottom: 0;
+  }
+
+  .how-to-img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+
+    img {
+      width: 400px;
+      border-radius: 15px;
+    }
   }
 }
 
@@ -1283,6 +1298,17 @@ input[type="submit"] {
 
   h2 {
     grid-area: head;
+    text-align: center;
+    font-family: $title-font;
+    font-size: 36px;
+  }
+
+  img {
+    border-radius: 15px;
+  }
+
+  p {
+    width: calc(100% - 10px);
   }
 
   #arcade-howto-slide-one {
@@ -1614,6 +1640,16 @@ input[type="submit"] {
   h2 {
     grid-area: head;
     text-align: center;
+    font-family: $title-font;
+    font-size: 36px;
+  }
+
+  img {
+    border-radius: 15px;
+  }
+
+  p {
+    width: calc(100% - 10px);
   }
 
   #ta-howto-p1 {
