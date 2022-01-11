@@ -1,10 +1,9 @@
 const howToPlayModeSelect = document.querySelector('.how-to-play-mode-select');
+const arcadeHowtoVidOne = document.getElementById('arcade-howto-vid-1');
 
 howToPlayModeSelect.addEventListener('click', (e) => {
     if (!e.target.classList.contains('option-selected')) {
         e.target.classList.add('option-selected');
-
-        console.log(e.target.previousElementSibling, e.target.nextElementSibling);
 
         if (e.target.textContent === "Arcade") {
             document.getElementById('arcade-how-to-instructions').classList.remove('hidden');
@@ -20,4 +19,19 @@ howToPlayModeSelect.addEventListener('click', (e) => {
             e.target.nextElementSibling.classList.remove('option-selected');
         }
     };
+})
+
+arcadeHowtoVidOne.addEventListener('click', (e) => {
+    if (e.target.classList.contains('static-vid')) {
+        e.target.src = "img/arcade-how-to-gif1.gif";
+        e.target.classList.remove('static-vid');
+    } else {
+        e.target.src = "img/arcade-howto-vid-1-static.png";
+        e.target.classList.add('static-vid');
+    }
+
+    setTimeout(() => {
+        e.target.src = "img/arcade-howto-vid-1-static.png";
+        e.target.classList.add('static-vid');
+    }, 8000);
 })
