@@ -1,0 +1,167 @@
+.card-sprite {
+  /* border: 2px solid #fff; */
+  border-radius: 15px;
+  min-width: 100px;
+  min-height: 154px;
+}
+
+.red-two {
+  background: url("../img/universe_sprites_gs.png") 0 0;
+}
+
+.red-three {
+  background: url("../img/universe_sprites_gs.png") -144.5px 0;
+}
+
+.red-four {
+  background: url("../img/universe_sprites_gs.png") -289px 0;
+}
+
+.red-five {
+  background: url("../img/universe_sprites_gs.png") -433.5px 0;
+}
+
+.red-six {
+  background: url("../img/universe_sprites_gs.png") -578px 0;
+}
+
+.red-seven {
+  background: url("../img/universe_sprites_gs.png") -722.5px 0;
+}
+
+.red-eight {
+  background: url("../img/universe_sprites_gs.png") -867px 0;
+}
+
+.red-nine {
+  background: url("../img/universe_sprites_gs.png") -1011.5px 0;
+}
+
+.red-ten {
+  background: url("../img/universe_sprites_gs.png") -1156px 0;
+}
+
+.red-ten-one {
+  background: url("../img/universe_sprites_gs.png") -1300.5px 0;
+}
+
+.red-eleven-one {
+  background: url("../img/universe_sprites_gs.png") -1589px 0;
+}
+
+.red-twelve-one {
+  background: url("../img/universe_sprites_gs.png") -1733.5px 0;
+}
+
+.red-fifteen-one {
+  background: url("../img/universe_sprites_gs.png") -1444.5px 0;
+}
+
+.black-two {
+  background: url("../img/universe_sprites_gs.png") 0 -231px;
+}
+
+.black-three {
+  background: url("../img/universe_sprites_gs.png") -144.5px -231px;
+}
+
+.black-four {
+  background: url("../img/universe_sprites_gs.png") -289px -231px;
+}
+
+.black-five {
+  background: url("../img/universe_sprites_gs.png") -433.5px -231px;
+}
+
+.black-six {
+  background: url("../img/universe_sprites_gs.png") -578px -231px;
+}
+
+.black-seven {
+  background: url("../img/universe_sprites_gs.png") -722.5px -231px;
+}
+
+.black-eight {
+  background: url("../img/universe_sprites_gs.png") -867px -231px;
+}
+
+.black-nine {
+  background: url("../img/universe_sprites_gs.png") -1011.5px -231px;
+}
+
+.black-ten {
+  background: url("../img/universe_sprites_gs.png") -1156px -231px;
+}
+
+.black-ten-one {
+  background: url("../img/universe_sprites_gs.png") -1300.5px -231px;
+}
+
+.black-eleven-one {
+  background: url("../img/universe_sprites_gs.png") -1589px -231px;
+}
+
+.black-twelve-one {
+  background: url("../img/universe_sprites_gs.png") -1733.5px -231px;
+}
+
+.black-fifteen-one {
+  background: url("../img/universe_sprites_gs.png") -1445px -231px;
+}
+
+.joker {
+  background: url("../img/universe_sprites_gs.png") 0 -465px;
+}
+
+.hud-message {
+  color: #fff;
+  -webkit-text-stroke: 1.5px #fff;
+}
+
+.fifteen-count {
+  color: #fff;
+}
+
+.gui-container {
+  border: 4px solid #000;
+}
+
+body {
+  background: #000;
+}
+
+.swap-container,
+.submit-cards,
+.value-options-one,
+.value-options-two {
+  filter: invert(100%) !important;
+}
+
+.background-helper {
+  /* position: absolute;
+  top: -75%;
+  left: -50%;
+  width: 200%;
+  height: 250%; */
+  background: url("../img/universe-outer-bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  transform: rotate(0);
+  animation-name: background-rotation;
+  animation-duration: 300s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes background-rotation {
+  0% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
+}
