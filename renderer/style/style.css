@@ -776,17 +776,19 @@ input[type="submit"] {
     align-items: center;
     font-family: "Short Stack", cursive;
     font-weight: bolder;
-    transition: all 0.5s ease;
+    transition: all 0.5s linear;
     animation-duration: 0.5s;
-    animation-iteration-count: 1; }
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards; }
 
 @keyframes fifteen-count-animation {
   0% {
-    filter: sepia(50%); }
-  50% {
-    filter: sepia(100%); }
+    border: 2px solid #ccc; }
+  25% { }
+  75% { }
   100% {
-    filter: sepia(0%); } }
+    border: 40px solid #ccc;
+    color: #333; } }
   .players-hand .swap-container,
   .players-hand .submit-cards,
   .players-hand .value-options-one,

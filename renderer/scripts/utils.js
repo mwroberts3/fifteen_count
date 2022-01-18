@@ -273,7 +273,7 @@ exports.arcadeModeCountDownAni = () => {
     let starterCards = document.querySelectorAll('.card-sprite');
   
     starterCards.forEach((card) => {
-      card.style.filter = 'grayscale(1)';
+      card.style.filter = 'grayscale(1) invert(100%)';
     })
   
     setTimeout(() => {
