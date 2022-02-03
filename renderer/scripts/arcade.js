@@ -1251,10 +1251,8 @@ function setFifteenCountColor() {
 
   fifteenCountDisplay.style.color = fifteenCountColRange[fifteenCount];
 
-  const fifteenCountAniReset = () => {
-    setTimeout(() => {
-      fifteenCountDisplay.style.animationName = "";
-    }, 500);
+  function fifteenCountAniReset() {
+    fifteenCountDisplay.style.animationName = "";
   };
 
   if (fifteenCount === 15) {

@@ -354,5 +354,17 @@ function classicThemeTransition(playersHandBg, comboRoundCheck) {
 }
 
 exports.jungleAndCosmosComboTrans = (playersHandArea) => {
+  console.log(themeSelection["themeName"]);
+
+  if (themeSelection["themeName"] === "Jungle") {
+    console.log('youre in the jungle baby');
+
+    // document.querySelector('.players-hand').style.filter = "blur(100px)";
+
+  } else if (themeSelection["themeName"] === "Universe") {
+    console.log('ladies and gentleman we are floating in space');
+  }
+
+
   playersHandArea.style.backgroundImage = `url("./img/${themeSelection['bgImgCombo']}")`;
 }
