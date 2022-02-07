@@ -258,10 +258,16 @@ img {
 @keyframes gamemode-animation {
   0% {
     border-radius: 50% 20% / 10% 40%;
-    background: #222; }
+    background: #070024; }
+  25% {
+    background: #6e3fac; }
+  50% {
+    background: #834646; }
+  75% {
+    background: #2886ac; }
   100% {
     border-radius: 10px 100px / 120px;
-    background: #080033; } }
+    background: #c9c3ff; } }
 
 .title-screen-footer {
   margin-top: 10px;
@@ -783,13 +789,11 @@ input[type="submit"] {
 
 @keyframes fifteen-count-animation {
   0% {
-    border: 2px solid #ccc; }
-  25% { }
-  75% { }
+    border: 2px solid #eee; }
   90% {
-    border: 40px solid #ccc; }
+    border: 40px solid #eee; }
   100% {
-    border: 40px solid #ccc;
+    border: 40px solid #eee;
     color: #333; } }
   .players-hand .swap-container,
   .players-hand .submit-cards,

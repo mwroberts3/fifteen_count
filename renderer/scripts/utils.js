@@ -354,17 +354,50 @@ function classicThemeTransition(playersHandBg, comboRoundCheck) {
 }
 
 exports.jungleAndCosmosComboTrans = (playersHandArea) => {
-  console.log(themeSelection["themeName"]);
+  let start, previousTimeStamp;
+  let comboNumber = 90;
 
   if (themeSelection["themeName"] === "Jungle") {
-    console.log('youre in the jungle baby');
 
-    // document.querySelector('.players-hand').style.filter = "blur(100px)";
+    let start, previousTimeStamp;
 
+    function step(timestamp) {
+      if (start === undefined) {
+        start = timestamp;
+      }
+      const elapsed = timestamp - start;
+
+      if (previousTimeStamp !== timestamp) {
+        playersHandArea.style.backgroundImage = `url("./img/jungle-combo-trans/jungle-combo-${comboNumber}.png")`;
+
+        comboNumber -= 10;
+      }
+
+      if (elapsed < 120) {
+        previousTimeStamp = timestamp;
+        window.requestAnimationFrame(step);
+      }
+    }
+
+    window.requestAnimationFrame(step);
+
+
+    // playersHandArea.style.backgroundImage = `url("./img/jungle-combo-trans/jungle-combo-90.png")`;
+
+    // const jungleComboTransInterval = setInterval(() => {
+    //   playersHandArea.style.backgroundImage = `url("./img/jungle-combo-trans/jungle-combo-${comboNumber}.png")`;
+
+    //   comboNumber -= 10;
+
+    //   if (comboNumber === 20) {
+    //     clearInterval(jungleComboTransInterval);
+    //   }
+
+    // }, 100);
   } else if (themeSelection["themeName"] === "Universe") {
     console.log('ladies and gentleman we are floating in space');
   }
 
 
-  playersHandArea.style.backgroundImage = `url("./img/${themeSelection['bgImgCombo']}")`;
+  // playersHandArea.style.backgroundImage = `url("./img/${themeSelection['bgImgCombo']}")`;
 }

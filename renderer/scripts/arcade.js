@@ -549,6 +549,7 @@ function cardsSubmit() {
       document.querySelector('.jackpot-special-border').classList.remove('jackpot-special-border');
     }
 
+    // fifteenCountAniReset();
     hudMessage.combo(hudMessageDisplay);
    
     setSwapPermission();
