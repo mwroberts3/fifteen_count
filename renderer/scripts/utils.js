@@ -356,10 +356,11 @@ function classicThemeTransition(playersHandBg, comboRoundCheck) {
 exports.jungleAndCosmosComboTrans = (playersHandArea) => {
   let start, previousTimeStamp;
   let comboNumber = 90;
-
+  
   if (themeSelection["themeName"] === "Jungle") {
-
+    window.requestAnimationFrame(step);
     let start, previousTimeStamp;
+    let firstLoop = true;
 
     function step(timestamp) {
       if (start === undefined) {
@@ -368,19 +369,23 @@ exports.jungleAndCosmosComboTrans = (playersHandArea) => {
       const elapsed = timestamp - start;
 
       if (previousTimeStamp !== timestamp) {
-        playersHandArea.style.backgroundImage = `url("./img/jungle-combo-trans/jungle-combo-${comboNumber}.png")`;
-
-        comboNumber -= 10;
+          playersHandArea.style.backgroundImage = `url("./img/jungle-combo-trans/jungle-combo-${comboNumber}.png")`;
+          comboNumber -= 10;
       }
 
-      if (elapsed < 120) {
+      // console.log(elapsed);
+      // console.log(previousTimeStamp - timestamp);
+      
+      if (elapsed < 600 && !firstLoop && comboNumber > 0) {
+        console.log(-previousTimeStamp + timestamp);
         previousTimeStamp = timestamp;
         window.requestAnimationFrame(step);
-      }
+      } else if (firstLoop) {
+        previousTimeStamp = timestamp;
+        firstLoop = false;
+        window.requestAnimationFrame(step);
+      } 
     }
-
-    window.requestAnimationFrame(step);
-
 
     // playersHandArea.style.backgroundImage = `url("./img/jungle-combo-trans/jungle-combo-90.png")`;
 

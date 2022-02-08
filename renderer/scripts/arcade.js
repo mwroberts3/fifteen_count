@@ -98,6 +98,15 @@ if (themeSelection.themeName === 'Classic') {
   if (JSON.parse(localStorage.getItem('first-boot'))) {
     utils.classicThemeBgPrimer(document.querySelector('.players-hand').style, true);
   }
+} else if (themeSelection.themeName === 'Jungle') {
+  utils.jungleAndCosmosComboTrans(document.querySelector('.players-hand'));
+  setTimeout(() => {
+    document.querySelector('.players-hand').style.removeProperty('background-image');
+  }, 150)
+  utils.jungleAndCosmosComboTrans(document.querySelector('.players-hand'));
+  setTimeout(() => {
+    document.querySelector('.players-hand').style.removeProperty('background-image');
+  }, 150)
 }
 
 // Setting up deck & displaying for play
