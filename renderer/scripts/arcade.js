@@ -102,11 +102,11 @@ if (themeSelection.themeName === 'Classic') {
   utils.jungleAndCosmosComboTrans(document.querySelector('.players-hand'));
   setTimeout(() => {
     document.querySelector('.players-hand').style.removeProperty('background-image');
-  }, 150)
+  }, 100)
   utils.jungleAndCosmosComboTrans(document.querySelector('.players-hand'));
   setTimeout(() => {
     document.querySelector('.players-hand').style.removeProperty('background-image');
-  }, 150)
+  }, 200)
 }
 
 // Setting up deck & displaying for play

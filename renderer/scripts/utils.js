@@ -376,7 +376,7 @@ exports.jungleAndCosmosComboTrans = (playersHandArea) => {
       // console.log(elapsed);
       // console.log(previousTimeStamp - timestamp);
       
-      if (elapsed < 600 && !firstLoop && comboNumber > 0) {
+      if (elapsed < 600 && !firstLoop && comboNumber > -1) {
         console.log(-previousTimeStamp + timestamp);
         previousTimeStamp = timestamp;
         window.requestAnimationFrame(step);
@@ -400,9 +400,9 @@ exports.jungleAndCosmosComboTrans = (playersHandArea) => {
 
     // }, 100);
   } else if (themeSelection["themeName"] === "Universe") {
-    console.log('ladies and gentleman we are floating in space');
+    // console.log('ladies and gentleman we are floating in space');
+    playersHandArea.style.backgroundImage = `url("./img/${themeSelection['bgImgCombo']}")`;
   }
 
 
-  // playersHandArea.style.backgroundImage = `url("./img/${themeSelection['bgImgCombo']}")`;
 }

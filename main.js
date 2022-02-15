@@ -2,7 +2,7 @@
 const { app, BrowserWindow, screen, ipcMain, webContents, shell } = require('electron')
 const windowStateKeeper = require('electron-window-state')
 require('./passport-steam/examples/signon/app')
-
+const path = require('path')
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
@@ -63,7 +63,8 @@ function createWindowedwindow() {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-    }
+    },
+    icon: path.join(__dirname, 'indigo-loop-icon.png')
   })
   
   // Removes app menu (no need for it)
@@ -93,7 +94,8 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-    }
+    },
+    icon: path.join(__dirname, 'indigo-loop-icon.png')
   })
 
   // Removes app menu (no need for it)
