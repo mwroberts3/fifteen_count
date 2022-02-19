@@ -22,17 +22,19 @@
     <section id="sdg-title-screen">
       <div class="sdg-logo"></div>
       <div id="steam-login-popup" style="display: none">
-        <h2>Verify Steam account to activate leaderboards and acheivments</h2>
+        <h2>Verify Steam account to activate leaderboards</h2>
         <p>(only have to do once)</p>
         <div id="steam-popup-btn-container">
           <a
-            href="http://localhost:3000/auth/steam/"
+            href="http://localhost:5481/auth/steam/"
             target="_blank"
             draggable="false"
           >
             <div id="steam-login-btn" onclick="steamAuthLogin()"></div>
           </a>
-          <button class="main-btn" onclick="goToTitleScreen()">Skip</button>
+          <button class="main-btn" onclick="skippedIntroSteamLogin()">
+            Skip
+          </button>
         </div>
       </div>
     </section>

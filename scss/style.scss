@@ -132,10 +132,9 @@ img {
 }
 
 .sdg-logo {
-  width: 500px;
-  height: 500px;
+  width: 940px;
+  height: 424px;
   background-image: url("../img/sdg-logo.png");
-  background-size: cover;
   opacity: 1;
   color: #000;
   transition: all 2.5s ease;
@@ -323,21 +322,13 @@ img {
     background: #070024;
   }
 
-  25% {
-    background: rgb(110, 63, 172);
-  }
-
   50% {
-    background: #834646;
-  }
-
-  75% {
-    background: #2886ac;
+    background: #19007c;
   }
 
   100% {
     border-radius: 10px 100px / 120px;
-    background: #c9c3ff;
+    background: #03001b;
   }
 }
 

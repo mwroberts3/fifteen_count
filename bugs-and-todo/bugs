@@ -4,5 +4,3 @@ Bugs:
 -11/28/21 - custom cursor blocking mouse and preventing clicks when testing on work laptop
 
 -12/28/21 - got a '-1' after 'GO!' in Arcade Mode on Jungle Theme once
-
--1/18/21 - fifteen count animation doesn't work if the LAST card checked to reach 15 is a compound card

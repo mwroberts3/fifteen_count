@@ -4,11 +4,13 @@ const { ipcRenderer } = require('electron');
 localStorage.setItem('first-boot', true);
 
 // Check for Steam credentials
-if (localStorage.getItem('steam-credentials')) {
-  setTimeout(() => {
-    goToTitleScreen();
-  }, 3000);
-}
+setInterval(() => {
+  if (localStorage.getItem('steam-credentials')) {
+    setTimeout(() => {
+      goToTitleScreen();
+    }, 2500);
+  }
+}, 100);
 
 // Check for display settings
 ipcRenderer.on('display-settings-check', () => {
@@ -32,6 +34,11 @@ ipcRenderer.on('display-settings-check', () => {
     document.querySelector('script').src = "./scripts/custom-cursor.js";
     steamLoginPopup.style.opacity = 1;
   }, 3050);
+
+function skippedIntroSteamLogin() {
+  localStorage.setItem('steam-credentials', JSON.stringify({userName: '', steamId: ''}));
+  goToTitleScreen();
+}
 
 function goToTitleScreen() {
   window.location.replace("title-screen.html");
