@@ -79,7 +79,7 @@ exports.jackpotOnTable = (hudMessageDisplay) => {
 
 exports.fullHandClear = (hudMessageDisplay) => {
     setTimeout(() => {
-        hudMessageDisplay.innerText = 'Full Clear!';
+        hudMessageDisplay.innerText = 'Indigo Loop!';
     }, 60);
 
     specialMessage = true;
