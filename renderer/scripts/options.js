@@ -281,7 +281,7 @@ function steamLoginCheck() {
 
     if (steamCredentials.userName === "" && steamCredentials.steamId === "") {
       steamButtonPrompt.innerHTML = `
-      <p>Login to Steam to activate leaderboards and acheivements</p>
+      <p>Login to Steam to activate leaderboards</p>
       <a
               href="http://localhost:5481/auth/steam/"
               target="_blank"
