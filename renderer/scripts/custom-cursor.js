@@ -5,7 +5,7 @@ document.addEventListener("mousemove", (e) => {
 cursor.setAttribute(
     "style",
     "top: " +
-    (e.pageY + 1) +
+    (e.pageY + 5) +
     "px; left: " +
     (e.pageX - ((window.innerWidth - 1200) / 2)) +
     "px; display: block"
