@@ -389,7 +389,7 @@ function comboCheck() {
       fifteenCount === 15 &&
       checkedCards.length === 1
     ) {
-      pointsInPlay = 15;
+      pointsInPlay = 10;
       pointsValidity = true;
     } else {
       checkedCardSuits.push(card.children[0].getAttribute("suit"));
@@ -397,7 +397,7 @@ function comboCheck() {
     }
   });
   if (comboCardcount > 1 && fifteenCount === 15) {
-    pointsInPlay = comboCardcount * 15;
+    pointsInPlay = comboCardcount * 10;
     pointsValidity = true;
     if (
       checkedCardSuits.every(sameColorRed) == true ||
@@ -508,7 +508,7 @@ function cardsSubmit() {
                 jackpotMultiplierLvl = 1;
               }
 
-                jackpotMultiplier = 1 + jackpotMultiplierLvl/100;    
+                jackpotMultiplier = 1 + (jackpotMultiplierLvl*10) / 100;    
 
               if (jackpotMultiplierLvl <= 0) {
                 jackpotMultiplierLvl = 1;
@@ -622,20 +622,20 @@ function roundBonusCheck() {
   let roundBonusTimerCheck = new Date();
   let roundBonusPoints = 0;
   let roundBonuses = [
-    1.1,
-    1.1,
-    1.1,
-    1.1,
-    1.05,
-    1.05,
-    1.05,
+    1.39,
+    1.39,
+    1.39,
+    1.39,
+    1.24,
+    1.24,
+    1.24,
   ];
   let diff =
     (roundBonusTimerCheck.getTime() - roundBonusTimer.getTime()) / 1000;
   diff = Math.round(diff);
 
   if (diff <= 6 && firstSubmit === false && pointsValidity === true && swappedCardTimeBonusNulify === false) {
-    roundBonusPoints = pointsInPlay * roundBonuses[diff] - pointsInPlay;
+    roundBonusPoints = (pointsInPlay * roundBonuses[diff]) - pointsInPlay;
 
     if (diff >= 3) {
       // show level 1 animation
@@ -653,7 +653,7 @@ function roundBonusCheck() {
     
     console.log('time bonus level', diff, 'points', roundBonusPoints, 'multiplier', roundBonuses[diff]);
   } else if (diff > 8 && firstSubmit === false && pointsValidity === true) {
-    console.log('too slow for time bonus');
+    console.log('too slow for speed bonus');
     timeBonusLevelforAnimation = 0;
   }
   
