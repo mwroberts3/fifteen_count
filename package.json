@@ -14,8 +14,8 @@
   "homepage": "",
   "keywords": [
     "Indigo Loop",
-    "Fast Pace Puzzle",
-    "Counting"
+    "Casual",
+    "Puzzle"
   ],
   "author": "mwroberts3",
   "license": "CC0-1.0",
@@ -40,6 +40,7 @@
     "copyright": "Copyright Indigo Loop",
     "win": {
       "target": "zip"
-    }
+    },
+    "icon": "indigo-loop-icon.png"
   }
 }

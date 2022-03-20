@@ -1,7 +1,19 @@
-@import url("https://fonts.googleapis.com/css2?family=Russo+One&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Short+Stack&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Chau+Philomene+One&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap");
+@font-face {
+  font-family: "Didact Gothic";
+  src: url("./fonts/DidactGothic-Regular.ttf"); }
+
+@font-face {
+  font-family: "Russo One";
+  src: url("./fonts/RussoOne-Regular.ttf"); }
+
+@font-face {
+  font-family: "Short Stack";
+  src: url("./fonts/ShortStack-Regular.ttf"); }
+
+@font-face {
+  font-family: "Chau Philomene One";
+  src: url("./fonts/ChauPhilomeneOne-Regular.ttf"); }
+
 * {
   margin: 0;
   padding: 0;
