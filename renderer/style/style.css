@@ -313,8 +313,7 @@ img {
     align-items: center;
     margin-bottom: 15px; }
     .how-to-container .how-to-img-container img {
-      width: 400px;
-      border-radius: 15px; }
+      border-radius: 10px; }
 
 .how-to-tip-container {
   display: inline-block;

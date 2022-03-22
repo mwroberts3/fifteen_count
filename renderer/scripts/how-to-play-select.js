@@ -23,15 +23,15 @@ howToPlayModeSelect.addEventListener('click', (e) => {
 
 arcadeHowtoVidOne.addEventListener('click', (e) => {
     if (e.target.classList.contains('static-vid')) {
-        e.target.src = "img/arcade-how-to-gif1.gif";
+        e.target.src = "img/how-to-images/arcade-how-to-gif1.gif";
         e.target.classList.remove('static-vid');
     } else {
-        e.target.src = "img/arcade-howto-vid-1-static.png";
+        e.target.src = "img/how-to-images/arcade-howto-vid-1-static.png";
         e.target.classList.add('static-vid');
     }
 
     setTimeout(() => {
-        e.target.src = "img/arcade-howto-vid-1-static.png";
+        e.target.src = "img/how-to-images/arcade-howto-vid-1-static.png";
         e.target.classList.add('static-vid');
     }, 8000);
 })
