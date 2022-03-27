@@ -1266,6 +1266,8 @@ function setFifteenCountColor() {
   };
 
   if (fifteenCount === 15) {
+    fifteenCountSFX.play();
+
     fifteenCountDisplay.style.color = '#fff';
     fifteenCountDisplay.textContent = `${fifteenCount}`;
 

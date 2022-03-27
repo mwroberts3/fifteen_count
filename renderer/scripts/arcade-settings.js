@@ -208,6 +208,7 @@ let comboSubmitSFX = new Audio('./soundfx/combo-submit.wav');
 let fullClearSFX = new Audio('./soundfx/full-clear.wav');
 let newHighscoreSFX = new Audio('./soundfx/new-highscore.wav');
 let jackpotCheckSFX = new Audio('./soundfx/jackpot-check.wav');
+let fifteenCountSFX = new Audio('./soundfx/fifteen-count.wav')
 
 
 
