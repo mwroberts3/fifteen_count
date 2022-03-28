@@ -1338,7 +1338,7 @@ input[type="submit"] {
       "head head"
       "p4 p6"
       "p5 p6"
-      "img2 p7";
+      "p5 p7";
   }
 
   #arcade-howto-slide-three {
@@ -1374,6 +1374,14 @@ input[type="submit"] {
 
   #arcade-howto-img1 {
     grid-area: img1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 350px;
+
+    img {
+      transform: rotate(0.75turn);
+    }
   }
 
   #arcade-howto-p4 {
@@ -1707,6 +1715,9 @@ input[type="submit"] {
   }
 
   #ta-howto-img1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     grid-area: img1;
   }
 

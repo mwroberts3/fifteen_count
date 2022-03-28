@@ -84,7 +84,7 @@ if (themeSelection.themeName === 'Classic') {
 }
 
 let totalSeconds = 100;
-// let secondsLeft = 200;
+// let secondsLeft = 30;
 let threeTimerStart = 0;
 let elapsedTime = 0;
 const bonusTimeDisplay = document.querySelector(".bonus-time");
@@ -1266,7 +1266,9 @@ function setFifteenCountColor() {
   };
 
   if (fifteenCount === 15) {
-    fifteenCountSFX.play();
+    if (userSelectedSoundSettings.SFX) {
+      fifteenCountSFX.play();
+    }
 
     fifteenCountDisplay.style.color = '#fff';
     fifteenCountDisplay.textContent = `${fifteenCount}`;

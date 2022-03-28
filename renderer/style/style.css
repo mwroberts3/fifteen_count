@@ -1037,7 +1037,7 @@ input[type="submit"] {
   #arcade-how-to-play #arcade-howto-slide-two {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-areas: "head head" "p4 p6" "p5 p6" "img2 p7"; }
+    grid-template-areas: "head head" "p4 p6" "p5 p6" "p5 p7"; }
   #arcade-how-to-play #arcade-howto-slide-three {
     display: flex;
     justify-content: center;
@@ -1058,7 +1058,13 @@ input[type="submit"] {
   #arcade-how-to-play #arcade-howto-p3 {
     grid-area: p3; }
   #arcade-how-to-play #arcade-howto-img1 {
-    grid-area: img1; }
+    grid-area: img1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 350px; }
+    #arcade-how-to-play #arcade-howto-img1 img {
+      transform: rotate(0.75turn); }
   #arcade-how-to-play #arcade-howto-p4 {
     grid-area: p4; }
   #arcade-how-to-play #arcade-howto-p5 {
@@ -1307,6 +1313,9 @@ input[type="submit"] {
   #time-attack-how-to-play #ta-howto-p2 {
     grid-area: p2; }
   #time-attack-how-to-play #ta-howto-img1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     grid-area: img1; }
   #time-attack-how-to-play .btn-container {
     position: absolute;
