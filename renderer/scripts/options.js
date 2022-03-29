@@ -170,11 +170,11 @@ if (localStorage.getItem('highscore')) {
 }
   let tempArrayHousing = Array.from(document.querySelector('.theme-selection-menu').children);
   // Jungle theme check
-  if (tempHighscoreCheck >= 3000) {
+  if (tempHighscoreCheck >= 5000) {
     tempArrayHousing[1].classList.remove('locked');
     tempArrayHousing[1].classList.add('unlocked');
   } else {
-    tempArrayHousing[1].textContent = 'Jungle (3000pts)';
+    tempArrayHousing[1].textContent = 'Jungle (5000pts)';
   }
   // Cosmos theme check
   if (tempHighscoreCheck >= 15000) {

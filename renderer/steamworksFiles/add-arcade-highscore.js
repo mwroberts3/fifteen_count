@@ -40,13 +40,13 @@ exports.scoreReview = (hudMessage, currentHand, totalPoints, totalCardsPlayed, t
 
     function newThemeUnlockedPopup() {
       // Check if player scored enough points to unlock a new theme
-      if (previousHighscore < 500 && totalPoints >= 1000) {
+      if (previousHighscore < 5000 && totalPoints >= 15000) {
         newThemePopUp.classList.remove('hidden');
         newThemePopUp.children[1].innerHTML = '<em>Jungle</em> and <em>Cosmos</em>&nbsp;&nbsp;themes unlocked!';
-      } else if (previousHighscore < 500 && totalPoints >= 500) {
+      } else if (previousHighscore < 5000 && totalPoints >= 5000) {
         newThemePopUp.classList.remove('hidden');
         newThemePopUp.children[1].innerHTML = '<em>Jungle</em>&nbsp;&nbsp;theme unlocked!';
-      } else if (previousHighscore < 1000 && totalPoints >= 1000) {
+      } else if (previousHighscore < 15000 && totalPoints >= 15000) {
         newThemePopUp.classList.remove('hidden');
         newThemePopUp.children[1].innerHTML = '<em>Cosmos</em>&nbsp;&nbsp;theme unlocked!';
       } 
