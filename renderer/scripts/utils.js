@@ -194,13 +194,13 @@ exports.swapCardAni = (dblSwapCheck, cardsInHand, currentHand, playersHandArea) 
 exports.jackpotLevelAni = (jackpotLevelDisplay, jackpotMultiplierLvl) => {
   if (jackpotMultiplierLvl < 1) {
     jackpotLevelDisplay.style.animationName = "";
-  } else if (jackpotMultiplierLvl === 1) {
+  } else if (jackpotMultiplierLvl >= 1 && jackpotMultiplierLvl < 5) {
     jackpotLevelDisplay.style.animationName = "jackpotlevelflicker";
     jackpotLevelDisplay.style.color = "#aaa";
-  } else if (jackpotMultiplierLvl === 2) {
+  } else if (jackpotMultiplierLvl >= 5 && jackpotMultiplierLvl < 15) {
     jackpotLevelDisplay.style.animationDuration = "1.5s";
     jackpotLevelDisplay.style.color = "#ccc";
-  } else if (jackpotMultiplierLvl === 3) {
+  } else if (jackpotMultiplierLvl >= 15) {
     jackpotLevelDisplay.style.animationDuration = "0.5s";
     jackpotLevelDisplay.style.color = "#fff";
   }

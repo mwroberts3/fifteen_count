@@ -469,8 +469,8 @@ function cardsSubmit() {
         if (jackCheckedCheck.length === 0) {
           totalCardsPlayed = Math.round(totalCardsPlayed * 0.5);
 
-          // jackpotMultiplierLvl -= globalCardsInHand.length;
-          jackpotMultiplierLvl -= 2;
+          jackpotMultiplierLvl -= Math.floor(globalCardsInHand.length / 2);
+          console.log('jackpot level loss',Math.floor(globalCardsInHand.length / 2));
          
           if (jackpotMultiplierLvl <= 0) {
             jackpotMultiplierLvl = 1;
@@ -933,8 +933,8 @@ function swapButtonFunction() {
   if (jackpotLive) {
     totalCardsPlayed = Math.round(totalCardsPlayed * 0.5);
 
-    // jackpotMultiplierLvl -= globalCardsInHand.length;
-    jackpotMultiplierLvl -= 2;
+    jackpotMultiplierLvl -= Math.floor(globalCardsInHand.length / 2);
+    console.log('jackpot level loss',Math.floor(globalCardsInHand.length / 2));   
 
     if (jackpotMultiplierLvl < 0) {
       jackpotMultiplierLvl = 0;
