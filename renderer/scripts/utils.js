@@ -81,10 +81,6 @@ exports.jackpotBonusPointsAni = (totalCardsPlayed, jackpotSameColorCheck, totalC
   let jackpotBonusIndicator = document.createElement('div');
 
   jackpotBonusIndicator.textContent = `+${Math.round((totalCardsPlayed * jackpotMultiplier))}`;
-  // if (jackpotSameColorCheck) {
-  // } else {
-  //   jackpotBonusIndicator.textContent = `+${totalCardsPlayed}`;
-  // }
 
   jackpotBonusIndicator.classList.add('jackpot-bonus-indicator');
 
@@ -186,17 +182,10 @@ exports.swapCardAni = (dblSwapCheck, cardsInHand, currentHand, playersHandArea) 
       currentHand.style.transform = "translateX(0)";
     }
   }, 450);
-  
-  const dblSwapCorrection = setInterval(() => {
-    if (!dblSwapCheck && cardsInHand.length <= 10) {
-    swapCostDisplay.textContent = `-${11 - validCardsInHand}s`;
-    }
-    }, 200);
 
   setTimeout(() => {
     playersHandArea.removeChild(lastCardClone);
     dblSwapCheck = false;
-    clearInterval(dblSwapCorrection)
   }, 200);
 
   return validCardsInHand;
@@ -372,10 +361,7 @@ exports.jungleAndCosmosComboTrans = (playersHandArea) => {
           playersHandArea.style.backgroundImage = `url("./img/jungle-combo-trans/jungle-combo-${comboNumber}.png")`;
           comboNumber -= 10;
       }
-
-      // console.log(elapsed);
-      // console.log(previousTimeStamp - timestamp);
-      
+    
       if (elapsed < 600 && !firstLoop && comboNumber > -1) {
         console.log(-previousTimeStamp + timestamp);
         previousTimeStamp = timestamp;
@@ -386,19 +372,6 @@ exports.jungleAndCosmosComboTrans = (playersHandArea) => {
         window.requestAnimationFrame(step);
       } 
     }
-
-    // playersHandArea.style.backgroundImage = `url("./img/jungle-combo-trans/jungle-combo-90.png")`;
-
-    // const jungleComboTransInterval = setInterval(() => {
-    //   playersHandArea.style.backgroundImage = `url("./img/jungle-combo-trans/jungle-combo-${comboNumber}.png")`;
-
-    //   comboNumber -= 10;
-
-    //   if (comboNumber === 20) {
-    //     clearInterval(jungleComboTransInterval);
-    //   }
-
-    // }, 100);
   } else if (themeSelection["themeName"] === "Universe") {
     // console.log('ladies and gentleman we are floating in space');
     playersHandArea.style.backgroundImage = `url("./img/${themeSelection['bgImgCombo']}")`;

@@ -372,6 +372,12 @@ function reset() {
   submitCards.innerHTML = `Submit &nbsp;<span class="submit-cards-smaller-text">[${actionBtn}]</span>`;
 
   cardsInHand.length >= 10 ? swapCostDisplay.textContent = `-1s` : swapCostDisplay.textContent = `${cardsInHand.length - 10}s`;
+
+
+  // reset the swap cost display in case player did a double swap
+  setTimeout(() => {
+    document.querySelectorAll(".card-in-hand").length >= 10 ? swapCostDisplay.textContent = `-1s` : swapCostDisplay.textContent = `${document.querySelectorAll(".card-in-hand").length - 10}s`;
+  }, 1000)
   
   hudMessage.count(hudMessageDisplay);
 }
@@ -1064,19 +1070,6 @@ function reDeal(cardsInHand, hand) {
   <p></p>
   `;
 
-  // totalCardsPlayedDisplay.innerHTML = `
-  // <div style="
-  //   width: 60px; 
-  //   height: 60px;
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items: center;  
-  //   ">
-  //   ${totalCardsPlayed} 
-  // </div>
-  // `;
-  // <img src="img/cards-icon.png"/>
-
   // Check to see if all cards in hand were played, for possible replenish bonus
   let numberCheckedCards = 0;
   if (hand.length === 0 && sacrificedCards.length === 0 && cardsInHand.length > 1) {
@@ -1371,4 +1364,3 @@ function uncheckAllCards(e) {
     }
   }
 }
-

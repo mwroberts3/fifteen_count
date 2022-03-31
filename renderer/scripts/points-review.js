@@ -2,15 +2,12 @@ const pointsBreakdownView = document.getElementById('points-breakdown-view');
 
 const regCardPoints = document.querySelector('.reg-card-points'),
 comboCardPoints = document.querySelector('.combo-card-points'),
-fullClearPointsDisplay = document.querySelector('.full-clear-points'),
 jackpotPointsDisplay = document.querySelector('.jackpot-points'),
 timePointsDisplay = document.querySelector('.time-points');
 
 const totalPointsDisplay = document.querySelector('.total-points-review-display');
 
 const scoreReviewHeader = document.getElementById('score-review-header');
-
-let scoresCounted = 0;
 
 exports.pointsReview = (pointsBreakdown, totalPoints, hudMessageDisplay) => {
     hudMessageDisplay.style.opacity = "0";
@@ -37,8 +34,8 @@ exports.pointsReview = (pointsBreakdown, totalPoints, hudMessageDisplay) => {
     displayPointPct(totalPoints, pointsBreakdown.timePoints, timePointsDisplay);
     }
 
-    totalPointsDisplay.innerHTML = `${totalPoints}`;
-    totalPointsDisplay.style.visibility = 'hidden';
+    totalPointsCount(totalPoints);
+    themeUnlockCheck();
 }
 
 function displayPointPct(totalPoints, pointTypeTotal, pointTypeDisplay) {
@@ -55,32 +52,40 @@ function displayPointPct(totalPoints, pointTypeTotal, pointTypeDisplay) {
         if (i >= pointTypeTotal) {
             clearInterval(pointTypeTally);
             pointTypeDisplay.innerHTML = `${pointTypeTotal}`;
-            scoresCounted++;
-
-            if (scoresCounted >= 3) {
-                fastForwardReview();
-            }
+            
+            clearInterval(pointTypeTally);
+            pointTypeDisplay.innerHTML = `${pointTypeTotal}`;
+            pointTypeDisplay.nextElementSibling.value = `${pointTypeTotal}`;
         }
     }, 30)
+}
 
-    document.addEventListener('click', fastForwardReview);
+function themeUnlockCheck() {
+    setTimeout(() => {
+        document.getElementById("theme-unlocked-popup").style.zIndex = 6;
+    }, 500);
+    
+    document.addEventListener('click', () =>{       
+        document.getElementById("theme-unlocked-popup").style.zIndex = -10;
 
-    document.addEventListener('keyup', fastForwardReview);
+        document.getElementById("theme-unlocked-popup").classList.add('hidden');
+       });
+}
 
-    function fastForwardReview() {
-        clearInterval(pointTypeTally);
-        pointTypeDisplay.innerHTML = `${pointTypeTotal}`;
-        pointTypeDisplay.nextElementSibling.value = `${pointTypeTotal}`;
-        totalPointsDisplay.style.visibility = 'visible';
-        
-        setTimeout(() => {
-            document.getElementById("theme-unlocked-popup").style.zIndex = 6;
-        }, 500);
-        
-        document.addEventListener('click', () =>{       
-            document.getElementById("theme-unlocked-popup").style.zIndex = -10;
+function totalPointsCount(totalPoints) {
+    let i = 0;
 
-            document.getElementById("theme-unlocked-popup").classList.add('hidden');
-           });
-    }
+    const totalPointsTally = setInterval(() => {
+        if (totalPoints < 200) {
+            i += 4;
+        } else {
+            i += Math.round(totalPoints/50);
+        }
+
+        totalPointsDisplay.innerHTML = `${i}`;
+
+        if (i >= totalPoints) {
+            clearInterval(totalPointsTally);
+        }
+    }, 30);
 }

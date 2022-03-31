@@ -12,32 +12,32 @@
       }
 
       body {
-        cursor: default !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         opacity: 1;
       }
     </style>
   </head>
   <body>
     <div class="cursor"></div>
-    <section id="sdg-title-screen">
-      <div class="sdg-logo"></div>
-      <div id="steam-login-popup" style="display: none">
-        <h2>Verify Steam account to activate leaderboards</h2>
-        <p>(only have to do once)</p>
-        <div id="steam-popup-btn-container">
-          <a
-            href="http://localhost:5481/auth/steam/"
-            target="_blank"
-            draggable="false"
-          >
-            <div id="steam-login-btn" onclick="steamAuthLogin()"></div>
-          </a>
-          <button class="main-btn" onclick="skippedIntroSteamLogin()">
-            Skip
-          </button>
-        </div>
+    <div class="sdg-logo"></div>
+    <div id="steam-login-popup" style="display: none">
+      <h2>Verify Steam account to activate leaderboards</h2>
+      <p>(only have to do once)</p>
+      <div id="steam-popup-btn-container">
+        <a
+          href="http://localhost:5481/auth/steam/"
+          target="_blank"
+          draggable="false"
+        >
+          <div id="steam-login-btn" onclick="steamAuthLogin()"></div>
+        </a>
+        <button class="main-btn" onclick="skippedIntroSteamLogin()">
+          Skip
+        </button>
       </div>
-    </section>
+    </div>
     <div id="temp-login-info-container" style="display: none"></div>
     <script></script>
     <script src="./scripts/intro-screen.js"></script>

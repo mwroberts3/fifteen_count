@@ -11,7 +11,11 @@ count round:
     -to be granted the speed bonus cards must be submitted within six seconds
         0 - 3 seconds = 39% bonus
         3 - 6 seconds = 24% bonus
+
+        -looks like speed bonus gets nullified if a card was just swapped
+
     -time is still ticking even when game is paused
+
 
 combo round: 
     -face value of the checked card * the previously checked and sacrificed cards
