@@ -35,14 +35,14 @@ jackpot:
     -sucessfully playing a jackpot card with SAME COLORS raise jackpot level by 2
         -playing with DIFFERENT COLORS raise jackpot level by 1
     
-    -not playing jackpot card when it appears, jackpot level goes down 2
+    -not checking, (or swapping) jackpot card when it appears cause the jackpot level to go down based on the following formula:
+        -Math.floor(numberOfCardsInHand / 2)
 
-    -first play of jackpot doesn't count for anything
+    -jackpot total (# of cards played) is reduced by half if a jackpot card isn't played.
 
-    -jackpot total (from cards played) is reduced by half if a jackpot card isn't played
     -the amount of points added DOES NOT include the cards being played at that point in time, that include the jackpot card
 
 points breakdown:
     -after a round of arcade mode several factors make up the total amount of points
-        -speed and time points are combined for a total time points
-        -the time bonus consists of adding together all the speed bonuses during the course of a run and adding that to the total amount of added seconds
+    -speed and time points are combined for a total time points
+    -the time bonus is the total amount of speed bonuses plus the total amount of seconds added through half-hands and indigo loops

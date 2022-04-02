@@ -884,14 +884,15 @@ input[type="submit"] {
     display: flex;
     align-items: center;
     width: 600px;
-    margin-bottom: 5px; }
+    margin-bottom: 5px;
+    font-family: "Short Stack", cursive; }
     #points-breakdown-view .point-type-title {
-      width: 200px;
+      width: 300px;
       text-align: left; }
     #points-breakdown-view .point-type div:nth-child(2) {
       width: 100px; }
     #points-breakdown-view .point-type #points-breakdown-total-points {
-      width: 200px; }
+      width: 257.14px; }
   #points-breakdown-view #score-review-header {
     position: absolute;
     top: 0;

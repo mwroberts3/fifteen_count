@@ -1124,9 +1124,10 @@ input[type="submit"] {
     align-items: center;
     width: 600px;
     margin-bottom: 5px;
+    font-family: $gameplay-font-2;
 
     &-title {
-      width: 200px;
+      width: 300px;
       text-align: left;
     }
 
@@ -1135,7 +1136,7 @@ input[type="submit"] {
     }
 
     #points-breakdown-total-points {
-      width: 200px;
+      width: 257.14px;
     }
   }
 

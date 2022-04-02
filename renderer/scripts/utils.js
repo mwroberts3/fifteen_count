@@ -363,7 +363,6 @@ exports.jungleAndCosmosComboTrans = (playersHandArea) => {
       }
     
       if (elapsed < 600 && !firstLoop && comboNumber > -1) {
-        console.log(-previousTimeStamp + timestamp);
         previousTimeStamp = timestamp;
         window.requestAnimationFrame(step);
       } else if (firstLoop) {

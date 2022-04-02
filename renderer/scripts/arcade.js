@@ -41,7 +41,9 @@ totalCardsPlayedDisplay.innerHTML = `
   ${totalCardsPlayed} 
 <p></p>
 `;
-{/* <img src="img/cards-icon.png"/> */}
+
+// Dev tools
+let pointsPerPlayBreakdown = [];
 
 // Gameplay variables & switches
 let pointsValidity = false;
@@ -379,6 +381,8 @@ function reset() {
     document.querySelectorAll(".card-in-hand").length >= 10 ? swapCostDisplay.textContent = `-1s` : swapCostDisplay.textContent = `${document.querySelectorAll(".card-in-hand").length - 10}s`;
   }, 1000)
   
+  console.log(pointsPerPlayBreakdown);
+
   hudMessage.count(hudMessageDisplay);
 }
 
@@ -657,7 +661,18 @@ function roundBonusCheck() {
     
     pointsBreakdown.timePoints += roundBonusPoints;
     
-    console.log('time bonus level', diff, 'points', roundBonusPoints, 'multiplier', roundBonuses[diff]);
+    // console.log('time bonus level', diff, 'points', roundBonusPoints, 'multiplier', roundBonuses[diff]);
+
+    // add to points review array
+    pointsPerPlayBreakdown.push(
+      {
+        'points' : roundBonusPoints,
+        'type' : 'time(speed)',
+        'bonus-level' : diff,
+        'bonus-multiplier' : roundBonuses[diff]
+      }
+    )
+
   } else if (diff > 8 && firstSubmit === false && pointsValidity === true) {
     console.log('too slow for speed bonus');
     timeBonusLevelforAnimation = 0;
