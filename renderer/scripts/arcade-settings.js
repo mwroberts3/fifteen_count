@@ -130,7 +130,6 @@ allContentsContainer.classList.add(themeSelection['themeName']);
 let fifteenCountColRange = themeSelection['fifteenCountGradient'];
 
 if (themeSelection['index'] === 1 || themeSelection['index'] === 2) {
-  console.log('theme is 1 or 2');
   personalHighscoreDisplay.style.color = '#fff';
   personalHighscoreDisplay.childNodes[1].textContent = highscoreToBeat;
 }

@@ -32,9 +32,10 @@ const totalCardsPlayedDisplay = document.querySelector(".total-cards-played");
 const jackpotLevelDisplay = document.querySelector('.jackpot-level');
 const swapCostDisplay = document.querySelector(".two-sec-warning");
 let totalPoints = 0;
-const pointsBreakdown = {cardPoints: 0, comboPoints: 0, timePoints: 0, fullClearPoints: 0, jackpotPoints: 0, speedPoints: 0, fullClearTimes: 0};
+const pointsBreakdown = {cardPoints: 0, comboPoints: 0, timePoints: 0, jackpotPoints: 0, indigoLoopCount: 0};
 let fifteenCount = 0;
 let pointsInPlay = 0;
+let sameColorCheckCheck = false;
 let totalCardsPlayed = 0;
 totalPointsDisplay.innerHTML = `${totalPoints}`;
 totalCardsPlayedDisplay.innerHTML = `
@@ -60,7 +61,7 @@ let swappedCardTimeBonusNulify = false;
 let roundBonusTimer = 0;
 
 let secondsBonus = 12;
-let fullHandBonus = 35;
+let indigoLoopBonus = 35;
 
 let html = ``;
 
@@ -350,6 +351,7 @@ function reset() {
     utils.classicThemeTransition(document.querySelector('.players-hand').style, false);
   }
 
+  sameColorCheckCheck = false;
   pointsValidity = false;
   firstSubmit = false;
   comboSubmit = false;
@@ -359,6 +361,14 @@ function reset() {
   totalComboPoints = Math.round(totalComboPoints);
   totalPoints += totalComboPoints;
   pointsBreakdown.comboPoints += totalComboPoints;
+
+  // add to points review array
+  if (totalComboPoints > 0) {
+    pointsPerPlayBreakdown.unshift({
+      'points' : totalComboPoints,
+      'type' : 'combo'
+    })
+  }
 
   totalComboPoints = 0;
   comboPointsDisplay.textContent = '';
@@ -381,7 +391,9 @@ function reset() {
     document.querySelectorAll(".card-in-hand").length >= 10 ? swapCostDisplay.textContent = `-1s` : swapCostDisplay.textContent = `${document.querySelectorAll(".card-in-hand").length - 10}s`;
   }, 1000)
   
-  console.log(pointsPerPlayBreakdown);
+  pointsPerPlayBreakdown.unshift(totalPoints);
+  console.log('scoring review', pointsPerPlayBreakdown);
+  console.log('points breakdown', pointsBreakdown);
 
   hudMessage.count(hudMessageDisplay);
 }
@@ -414,7 +426,7 @@ function comboCheck() {
       checkedCardSuits.every(sameColorBlack) == true
     ) {
       pointsInPlay *= 1.25;
-      console.log('points in play', pointsInPlay);
+      sameColorCheckCheck = true;
     }
   }
 
@@ -448,6 +460,16 @@ function cardsSubmit() {
     totalPoints += pointsInPlay;
     pointsBreakdown.cardPoints += pointsInPlay;
 
+    // add to points review array
+    if (!firstSubmit) {
+      pointsPerPlayBreakdown.unshift({
+       'points' : pointsInPlay,
+       'type' : 'checked cards',
+       'amount' : checkedCards.length,
+       'same Color' : sameColorCheckCheck
+      });
+    }
+
     pointsInPlay = 0;
     fifteenCount = 0;
     submitCards.innerHTML = `Draw &nbsp;<span class="submit-cards-smaller-text">[${actionBtn}]</span>`;
@@ -474,7 +496,6 @@ function cardsSubmit() {
           totalCardsPlayed = Math.round(totalCardsPlayed * 0.5);
 
           jackpotMultiplierLvl -= Math.floor(globalCardsInHand.length / 2);
-          console.log('jackpot level loss',Math.floor(globalCardsInHand.length / 2));
          
           if (jackpotMultiplierLvl <= 0) {
             jackpotMultiplierLvl = 1;
@@ -490,17 +511,27 @@ function cardsSubmit() {
           checkedCards.forEach((card) => {
             if (card.classList.contains('jackpot-special-border')){
 
-              console.log('total points', totalPoints);
+              let jackpotPointsInPlay = 0;
 
               if (jackpotMultiplierLvl > 1) {
                 totalPoints += Math.round(totalCardsPlayed * jackpotMultiplier);
                 pointsBreakdown.jackpotPoints += Math.round(totalCardsPlayed * jackpotMultiplier);
+
+                jackpotPointsInPlay = Math.round(totalCardsPlayed * jackpotMultiplier);
               } else {
                 totalPoints += totalCardsPlayed;
                 pointsBreakdown.jackpotPoints += totalCardsPlayed;
+
+                jackpotPointsInPlay = totalCardsPlayed;
               };
 
-              console.log('jackpot Multiplayer Level', jackpotMultiplierLvl, 'jackpot Multiplier', jackpotMultiplier, 'jackpot points', Math.round(totalCardsPlayed * jackpotMultiplier));
+              // add to points review array
+              pointsPerPlayBreakdown.unshift({
+                'points' : jackpotPointsInPlay,
+                'type' : 'jackpot',
+                'level' : jackpotMultiplierLvl,
+                'Multiplier' : jackpotMultiplier
+              })
 
               utils.jackpotBonusPointsAni(totalCardsPlayed, jackpotSameColorCheck, totalCardsPlayedDisplay, jackpotMultiplierLvl, jackpotMultiplier);
 
@@ -512,7 +543,6 @@ function cardsSubmit() {
                 jackpotMultiplierLvl++;
                 jackpotSameColorCheck = false;
               }
-              console.log('total points', totalPoints)
 
               if (jackpotMultiplierLvl <= 1) {
                 jackpotMultiplierLvl = 1;
@@ -543,6 +573,12 @@ function cardsSubmit() {
 
       totalPoints += secondsBonus;  
       pointsBreakdown.timePoints += Math.round(secondsBonus);
+
+      // add to points review array
+      pointsPerPlayBreakdown.unshift({
+        'points' : secondsBonus,
+        'type' : 'time(halfhand)'
+      })
 
       bonusTimeDisplay.textContent = `+${secondsBonus}`
       setTimeout(() => {
@@ -575,33 +611,40 @@ function cardsSubmit() {
     setUncheckAllPermission();
 
     if (checkedCards.length === globalCardsInHand.length) {
-      secondsLeft += fullHandBonus;
-      totalSeconds += fullHandBonus;
+      secondsLeft += indigoLoopBonus;
+      totalSeconds += indigoLoopBonus;
 
-      totalPoints += fullHandBonus;
-      pointsBreakdown.timePoints += fullHandBonus
+      totalPoints += indigoLoopBonus;
+      pointsBreakdown.timePoints += indigoLoopBonus;
 
-      pointsBreakdown['fullClearTimes']++;
+      pointsBreakdown.indigoLoopCount++;
+
+      // add to points review array
+      pointsPerPlayBreakdown.unshift({
+        'points' : indigoLoopBonus,
+        'type' : 'time(indigo loop)',
+        'count' : pointsBreakdown.indigoLoopCount
+      })
 
       hudMessage.fullHandClear(hudMessageDisplay);
 
       // these will have game skip combo round after playing a full hand
       comboSubmit = true;
-      bonusTimeDisplay.textContent = `+${(secondsBonus + 1) + fullHandBonus}`
+      bonusTimeDisplay.textContent = `+${(secondsBonus + 1) + indigoLoopBonus}`
 
       setTimeout(() => {
         bonusTimeDisplay.textContent = ``;
       }, 1000)
 
       // subtract 5 seconds from full hand bonus until reaches 0
-      fullHandBonus -= 5;
-      if (fullHandBonus <= 0) {
-        fullHandBonus = 0;
+      indigoLoopBonus -= 5;
+      if (indigoLoopBonus <= 0) {
+        indigoLoopBonus = 0;
       }
 
-      // if Harmonia is acheived by playing ALL 10 cards, the fullhandbonus is reset to 35
+      // if Indigo Loop is acheived by playing ALL 10 cards, the indigoLoopBonus is reset to 35
       if (checkedCards.length === 10) {
-        fullHandBonus = 35;
+        indigoLoopBonus = 35;
       }
 
       // Full hand sound effect
@@ -659,12 +702,10 @@ function roundBonusCheck() {
     
     totalPoints += roundBonusPoints;
     
-    pointsBreakdown.timePoints += roundBonusPoints;
-    
-    // console.log('time bonus level', diff, 'points', roundBonusPoints, 'multiplier', roundBonuses[diff]);
+    pointsBreakdown.timePoints += roundBonusPoints;  
 
     // add to points review array
-    pointsPerPlayBreakdown.push(
+    pointsPerPlayBreakdown.unshift(
       {
         'points' : roundBonusPoints,
         'type' : 'time(speed)',
@@ -674,7 +715,6 @@ function roundBonusCheck() {
     )
 
   } else if (diff > 8 && firstSubmit === false && pointsValidity === true) {
-    console.log('too slow for speed bonus');
     timeBonusLevelforAnimation = 0;
   }
   

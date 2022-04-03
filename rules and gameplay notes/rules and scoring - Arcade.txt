@@ -21,8 +21,9 @@ combo round:
     -face value of the checked card * the previously checked and sacrificed cards
         -if same color as previously checked and sacrificed cards then value of sacrificed card is multiplied by 2
             -sacrificing a card that is not the same color as previous cards erases this point bonus for subsequently sacrificed cards
+    -sacrificing a card will add 3 seconds back to the halfhand bonus time gauge
 
-full clear (indigo loop):
+Indigo Loops:
     -35 seconds is added to timer upon first full clear and than 5 seconds fewer are added for each subsequent full clear (35, 30, 25, 20)
         -so, after 7 bonuses a full-hand play no longer adds any extra time
 

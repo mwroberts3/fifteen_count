@@ -76,8 +76,6 @@ if (themeSelection['themeName'] === "Universe") {
 
 // Select Animations & Transistions
 exports.jackpotBonusPointsAni = (totalCardsPlayed, jackpotSameColorCheck, totalCardsPlayedDisplay,jackpotMultiplierLvl, jackpotMultiplier) => {
-  console.log("jackpotMultiplierLvl", jackpotMultiplierLvl);
-  
   let jackpotBonusIndicator = document.createElement('div');
 
   jackpotBonusIndicator.textContent = `+${Math.round((totalCardsPlayed * jackpotMultiplier))}`;
