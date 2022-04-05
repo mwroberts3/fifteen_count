@@ -86,6 +86,7 @@ function totalPointsCount(totalPoints) {
 
         if (i >= totalPoints) {
             clearInterval(totalPointsTally);
+            totalPointsDisplay.innerHTML = totalPoints;
         }
     }, 30);
 }

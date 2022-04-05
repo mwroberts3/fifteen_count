@@ -1,3 +1,4 @@
+const res = require('express/lib/response');
 const steamworksInfo = require('../steamworksFiles/steamworksInfo.json')
 
 const scoreDisplay = document.querySelector(".score-display");
@@ -17,8 +18,8 @@ if (localStorage.getItem('highscore')) {
   personalHighscores = JSON.parse(localStorage.getItem('highscore'));
 }
 
-fetchArcadeLeaderboardScores();
 fetchTimeAttackLeaderboardScores();
+fetchArcadeLeaderboardScores();
 
 // Game mode select
 const highscoreSelect = document.querySelector('.high-score-mode-select');
@@ -56,9 +57,6 @@ displayPersonalArcadeScore();
 scoreDisplay.innerHTML = `
   <p>loading...</p>
 `;
-setTimeout(() => {
-  displayGlobalArcadeScores();
-},1000)
 
 function displayPersonalTimeAttackScore() {
   document.querySelector('h3').textContent = 'Time Attack'
@@ -144,11 +142,82 @@ function displayGlobalTimeAttackScores() {
   }
 }
 
-async function fetchArcadeLeaderboardScores() {
+ async function fetchArcadeLeaderboardScores() {
   globalArcadeScores = await fetch(`https://partner.steam-api.com/ISteamLeaderboards/GetLeaderboardEntries/v1/?key=${steamworksInfo.key}&appid=${steamworksInfo.appID}&rangestart=1&rangeend=100&leaderboardid=7434161&datarequest=RequestGlobal`);
 
   globalArcadeScores = await globalArcadeScores.json();
   globalArcadeScores = globalArcadeScores.leaderboardEntryInformation.leaderboardEntries;
+
+  await convertSteamIdsToNamesArcade(globalArcadeScores);
+}
+
+ async function fetchTimeAttackLeaderboardScores() {
+  globalTimeAttackScores = await fetch(`https://partner.steam-api.com/ISteamLeaderboards/GetLeaderboardEntries/v1/?key=${steamworksInfo.key}&appid=${steamworksInfo.appID}&rangestart=1&rangeend=100&leaderboardid=7487751&datarequest=RequestGlobal`);
+
+  globalTimeAttackScores = await globalTimeAttackScores.json();
+
+  globalTimeAttackScores = globalTimeAttackScores.leaderboardEntryInformation.leaderboardEntries;
+
+  convertSteamIdsToNamesTimeAttack(globalTimeAttackScores);
+}
+
+function hexToAsciiTADate(str1) {
+  let hex  = str1.toString();
+	let str = '';
+
+  for (let n = 0; n < hex.length; n += 2) {
+    str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
+  }
+
+  return str;
+}
+
+async function convertSteamIdsToNamesArcade(globalArcadeScores) {
+  let userRequestBuffer = []
+
+  for (let i = 0; i < globalArcadeScores.length; i++) {
+    for (let j = 0; j < 1; j++) {
+      userRequestBuffer.push(getScoreData(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${steamworksInfo.key}&steamids=${globalArcadeScores[i].steamID}`))
+    }
+
+    await Promise.all(userRequestBuffer).then((userData) => {
+      console.log(userData[0].response.players[0].personaname)
+      globalArcadeScoresNames.push(userData[0].response.players[0].personaname)
+    });
+
+    console.log(globalArcadeScoresNames);
+
+    userRequestBuffer.splice(0, userRequestBuffer.length);
+  }
+
+  displayGlobalArcadeScores();
+}
+
+async function convertSteamIdsToNamesTimeAttack(globalTimeAttackScores) {
+  let userRequestBuffer = []
+
+  for (let i = 0; i < globalTimeAttackScores.length; i++) {
+    for (let j = 0; j < 1; j++) {
+      userRequestBuffer.push(getScoreData(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${steamworksInfo.key}&steamids=${globalTimeAttackScores[i].steamID}`))
+    }
+
+    await Promise.all(userRequestBuffer).then((userData) => {
+      console.log(userData[0].response.players[0].personaname)
+      globalTimeAttackScoresNames.push(userData[0].response.players[0].personaname)
+    });
+
+    console.log(globalTimeAttackScoresNames);
+
+    userRequestBuffer.splice(0, userRequestBuffer.length);
+  }
+}
+
+async function getScoreData(url) {
+  return new Promise ((resolve, reject) => {
+    fetch(url)
+      .then((res) => res.json())
+      .then(data => resolve(data))
+  })
 }
 
 function hexToAsciiCardsPlayed(str1){
@@ -194,45 +263,3 @@ function hexToAsciiSeconds(str1){
 
 	return `${strParts[4]} ${strParts[6]} ${strParts[8]}`;
  }
-
- async function fetchTimeAttackLeaderboardScores() {
-  globalTimeAttackScores = await fetch(`https://partner.steam-api.com/ISteamLeaderboards/GetLeaderboardEntries/v1/?key=${steamworksInfo.key}&appid=${steamworksInfo.appID}&rangestart=1&rangeend=100&leaderboardid=7487751&datarequest=RequestGlobal`);
-
-  globalTimeAttackScores = await globalTimeAttackScores.json();
-
-  globalTimeAttackScores = globalTimeAttackScores.leaderboardEntryInformation.leaderboardEntries;
-
-  convertSteamIdsToNames(globalArcadeScores, globalTimeAttackScores);
-}
-
-function hexToAsciiTADate(str1) {
-  let hex  = str1.toString();
-	let str = '';
-
-  for (let n = 0; n < hex.length; n += 2) {
-    str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
-  }
-
-  return str;
-}
-
-async function convertSteamIdsToNames(globalArcadeScores, globalTimeAttackScores) {
-  for (let i=0; i<globalArcadeScores.length; i++) {
-    console.log(globalArcadeScores[i].steamID);
-    fetch(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${steamworksInfo.key}&steamids=${globalArcadeScores[i].steamID}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data.response.players[0].personaname);
-        globalArcadeScoresNames.push(data.response.players[0].personaname);
-      });
-  }
-
-  for (let i=0; i<globalTimeAttackScores.length; i++) {
-    console.log(globalTimeAttackScores[i].steamID);
-    fetch(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${steamworksInfo.key}&steamids=${globalTimeAttackScores[i].steamID}`)
-      .then((res) => res.json())
-      .then((data) => {
-        globalTimeAttackScoresNames.push(data.response.players[0].personaname);
-      });
-  }
-}
