@@ -36,8 +36,7 @@ jackpot:
     -sucessfully playing a jackpot card with SAME COLORS raise jackpot level by 2
         -playing with DIFFERENT COLORS raise jackpot level by 1
     
-    -not checking, (or swapping) jackpot card when it appears cause the jackpot level to go down based on the following formula:
-        -Math.floor(numberOfCardsInHand / 2)
+    -not checking, (or swapping) jackpot card when it appears cause the jackpot level to reduced by the number cards currently in the player's hand
 
     -jackpot total (# of cards played) is reduced by half if a jackpot card isn't played.
 

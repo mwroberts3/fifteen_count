@@ -36,6 +36,7 @@ const pointsBreakdown = {cardPoints: 0, comboPoints: 0, timePoints: 0, jackpotPo
 let fifteenCount = 0;
 let pointsInPlay = 0;
 let sameColorCheckCheck = false;
+let ultimateCardCount = 0;
 let totalCardsPlayed = 0;
 totalPointsDisplay.innerHTML = `${totalPoints}`;
 totalCardsPlayedDisplay.innerHTML = `
@@ -323,7 +324,7 @@ function timerFunction() {
       
       pointsReview(pointsBreakdown, totalPoints, hudMessageDisplay);
   
-      highScoresFunc.scoreReview(hudMessage, currentHand, totalPoints, totalCardsPlayed, totalSeconds);
+      highScoresFunc.scoreReview(hudMessage, currentHand, totalPoints, ultimateCardCount, totalSeconds);
     }
   
     if (!gamePaused && document.getElementById('arcade-how-to-play').classList.contains('hidden')) {
@@ -394,6 +395,7 @@ function reset() {
   pointsPerPlayBreakdown.unshift(totalPoints);
   console.log('scoring review', pointsPerPlayBreakdown);
   console.log('points breakdown', pointsBreakdown);
+  console.log('ultimate card count', ultimateCardCount);
 
   hudMessage.count(hudMessageDisplay);
 }
@@ -495,7 +497,7 @@ function cardsSubmit() {
         if (jackCheckedCheck.length === 0) {
           totalCardsPlayed = Math.round(totalCardsPlayed * 0.5);
 
-          jackpotMultiplierLvl -= Math.floor(globalCardsInHand.length / 2);
+          jackpotMultiplierLvl -= globalCardsInHand.length;
          
           if (jackpotMultiplierLvl <= 0) {
             jackpotMultiplierLvl = 1;
@@ -988,8 +990,8 @@ function swapButtonFunction() {
   if (jackpotLive) {
     totalCardsPlayed = Math.round(totalCardsPlayed * 0.5);
 
-    jackpotMultiplierLvl -= Math.floor(globalCardsInHand.length / 2);
-    console.log('jackpot level loss',Math.floor(globalCardsInHand.length / 2));   
+    jackpotMultiplierLvl -= globalCardsInHand.length;
+    console.log('jackpot level loss',globalCardsInHand.length);   
 
     if (jackpotMultiplierLvl < 0) {
       jackpotMultiplierLvl = 0;
@@ -1119,6 +1121,7 @@ function reDeal(cardsInHand, hand) {
   }
 
   totalCardsPlayed += cardsPlayed.length;
+  ultimateCardCount += cardsPlayed.length;
   
   totalCardsPlayedDisplay.innerHTML = `
   ${totalCardsPlayed} 

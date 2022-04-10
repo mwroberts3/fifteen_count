@@ -7,7 +7,7 @@ const newThemePopUp = document.getElementById('theme-unlocked-popup');
 let steamCreds = JSON.parse(localStorage.getItem('steam-credentials'));
 
 // Highscore check & ranking functions
-exports.scoreReview = (hudMessage, currentHand, totalPoints, totalCardsPlayed, totalSeconds) => {
+exports.scoreReview = (hudMessage, currentHand, totalPoints, ultimateCardCount, totalSeconds) => {
     let highscoreStats = [];
 
     hudMessage.innerText = "TIME IS UP!";
@@ -22,18 +22,21 @@ exports.scoreReview = (hudMessage, currentHand, totalPoints, totalCardsPlayed, t
 
       if (totalPoints > highscoreStats[0]['totalPoints']) {
         highscoreStats[0]['totalPoints'] = totalPoints;
-        highscoreStats[0]['totalCardsPlayed'] = totalCardsPlayed;
+        highscoreStats[0]['totalCardsPlayed'] = ultimateCardCount;
         highscoreStats[0]['totalSeconds'] = totalSeconds;
         highscoreStats[0]['date'] = moment().format('MMM Do YYYY');
         localStorage.setItem('highscore', JSON.stringify(highscoreStats));
 
-        uploadScoreToSteam(totalPoints, totalCardsPlayed, totalSeconds);
+        uploadScoreToSteam(totalPoints, ultimateCardCount, totalSeconds);
+      } else {
+        // should try to upload score to steam, even if less than local highscore. Just in case local score was set by a different steam user
+        uploadScoreToSteam(totalPoints, ultimateCardCount, totalSeconds);
       }
     } else {
-      highscoreStats.push({totalPoints, totalCardsPlayed, totalSeconds, date: moment().format('MMM Do YYYY'), timeAttack: 0, taDate: ''})
+      highscoreStats.push({totalPoints, totalCardsPlayed: ultimateCardCount, totalSeconds, date: moment().format('MMM Do YYYY'), timeAttack: 0, taDate: ''})
       localStorage.setItem('highscore', JSON.stringify(highscoreStats));
 
-      uploadScoreToSteam(totalPoints, totalCardsPlayed, totalSeconds);
+      uploadScoreToSteam(totalPoints, ultimateCardCount, totalSeconds);
     }
 
     newThemeUnlockedPopup();
@@ -52,7 +55,7 @@ exports.scoreReview = (hudMessage, currentHand, totalPoints, totalCardsPlayed, t
       } 
     }
 
-    function uploadScoreToSteam(totalPoints, totalCardsPlayed, totalSeconds) {
+    function uploadScoreToSteam(totalPoints, ultimateCardCount, totalSeconds) {
       let details = {
         'key': steamworksInfo.key,
         'appid': steamworksInfo.appID,
@@ -60,7 +63,7 @@ exports.scoreReview = (hudMessage, currentHand, totalPoints, totalCardsPlayed, t
         'steamid': BigInt(`${steamCreds.steamId}`),
         'score': totalPoints,
         'scoremethod': 'KeepBest',
-        'details': `cardsPlayed-${totalCardsPlayed} seconds-${totalSeconds} ${moment().format('MMM Do YYYY')}`
+        'details': `cardsPlayed-${ultimateCardCount} seconds-${totalSeconds} ${moment().format('MMM Do YYYY')}`
       };
 
       let formBody = [];

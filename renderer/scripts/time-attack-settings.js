@@ -88,7 +88,7 @@ if(localStorage.getItem('highscore')) {
 
     highscoreToBeat = highscoreStats[0]['timeAttack']
 } else {
-    highscoreStats.push({totalPoints: 0, totalCardsPlayed: 0, totalSeconds: 0, date: 'na', timeAttack: 0, taDate: ''})
+    highscoreStats.push({totalPoints: 0, totalCardsPlayed: 0, totalSeconds: 0, indigoLoops: 0, date: 'na', timeAttack: 0, taFullPassCount: 0, taDate: ''})
     localStorage.setItem('highscore', JSON.stringify(highscoreStats));
     highscoreToBeat = 0;
 }

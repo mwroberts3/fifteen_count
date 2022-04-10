@@ -23,6 +23,7 @@ let redrawAmount = 18;
 
 let score = 0;
 let count = 0;
+let fullPassCount = 0;
 let pointsAdded;
 let secondsLeft = 180;
 let threeSecCountdown = 2;
@@ -137,6 +138,7 @@ const timeAttackTimer = setInterval(() => {
         if (score > highscoreToBeat) {
             highscoreStats[0]['timeAttack'] = score;
             highscoreStats[0]['taDate'] = moment().format('MMM Do YYYY');
+            highscoreStats[0]['taFullPassCount'] = fullPassCount;
             localStorage.setItem('highscore', JSON.stringify(highscoreStats));
 
             highScoresFunc.uploadTAHighscoreToSteam(score);
@@ -367,6 +369,8 @@ function redealReset() {
     // Score bonus card if in final position
     if (tempBonusIndex === 17 && shownHand[tempBonusIndex].classList.contains('ta-checked')) {
         bonusUnleashed = false;
+
+        fullPassCount++;
 
         if (!bonusAdded) {
             bonusPoints = sameSuitCheck(score, true);

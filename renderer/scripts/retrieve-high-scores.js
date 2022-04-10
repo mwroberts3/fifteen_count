@@ -1,8 +1,8 @@
-const res = require('express/lib/response');
 const steamworksInfo = require('../steamworksFiles/steamworksInfo.json')
 
 const scoreDisplay = document.querySelector(".score-display");
 const personalHighscoreContainer = document.querySelector('.high-score-container').childNodes[3];
+const personalHighscoreContainerTimeAttack = document.querySelector('.personal-highscore-container-time-attack');
 
 let arcadeScoresDisplayed = true;
 let taScoresDisplayed = false;
@@ -61,17 +61,18 @@ scoreDisplay.innerHTML = `
 function displayPersonalTimeAttackScore() {
   document.querySelector('h3').textContent = 'Time Attack'
 
+  personalHighscoreContainer.classList.add('hidden');
+  personalHighscoreContainerTimeAttack.classList.remove('hidden');
+
   if (localStorage.getItem('highscore') && personalHighscores[0].timeAttack > 0) {
-    personalHighscoreContainer.children[1].textContent = `${personalHighscores[0]['timeAttack']}`;
-    personalHighscoreContainer.children[2].innerHTML = `<strong>Date:</strong>&nbsp;${personalHighscores[0]['taDate']}`;
-    personalHighscoreContainer.children[3].innerHTML = ` `;
-    personalHighscoreContainer.children[4].innerHTML = ` `;
+    personalHighscoreContainerTimeAttack.children[1].textContent = `${personalHighscores[0]['timeAttack']}`;
+    personalHighscoreContainerTimeAttack.children[2].innerHTML = `<strong>Passes:</strong>&nbsp;<span style="padding-top: 1px;">${personalHighscores[0]['taFullPassCount']}</span>`;
+    personalHighscoreContainerTimeAttack.children[3].innerHTML = `<strong>Date:</strong>&nbsp;<span style="padding-top: 1px;">${personalHighscores[0]['taDate']}</span>`;
     scoreDisplay.innerHTML = ``;
   } else {
-    personalHighscoreContainer.children[1].textContent = `0`;
-    personalHighscoreContainer.children[2].innerHTML = `<strong>Date:</strong>&nbsp;na`;
-    personalHighscoreContainer.children[3].innerHTML = ` `;
-    personalHighscoreContainer.children[4].innerHTML = ` `;
+    personalHighscoreContainerTimeAttack.children[1].textContent = `0`;
+    personalHighscoreContainerTimeAttack.children[2].innerHTML = `<strong>Passes:</strong>&nbsp;<span style="padding-top: 1px;">${personalHighscores[0]['taFullPassCount']}</span>`;
+    personalHighscoreContainerTimeAttack.children[3].innerHTML = `<strong>Date:</strong>&nbsp;na`;
     scoreDisplay.innerHTML = ``;
   }
 }
@@ -79,40 +80,49 @@ function displayPersonalTimeAttackScore() {
 function displayPersonalArcadeScore() {
   document.querySelector('h3').textContent = 'Arcade';
   
+  personalHighscoreContainerTimeAttack.classList.add('hidden');
+  personalHighscoreContainer.classList.remove('hidden');
+
   // Check for existing personal highscore
   if (localStorage.getItem('highscore')) {
     personalHighscoreContainer.childNodes[3].textContent = `${personalHighscores[0]['totalPoints']}`;
-    personalHighscoreContainer.childNodes[5].innerHTML = `<strong>Cards:</strong>&nbsp;${personalHighscores[0]['totalCardsPlayed']}`;
-    personalHighscoreContainer.childNodes[7].innerHTML = `<strong>Time:</strong>&nbsp;${personalHighscores[0]['totalSeconds']}`;
-    personalHighscoreContainer.childNodes[9].innerHTML = `<strong>Date:</strong>&nbsp;${personalHighscores[0]['date']}`;
+    personalHighscoreContainer.childNodes[5].innerHTML = `<strong>Cards:</strong>&nbsp;<span style="padding-top: 1px;">${personalHighscores[0]['totalCardsPlayed']}</span>`;
+    personalHighscoreContainer.childNodes[7].innerHTML = `<strong>Time:</strong>&nbsp;<span style="padding-top: 1px;">${personalHighscores[0]['totalSeconds']}</span>`;
+    personalHighscoreContainer.childNodes[9].innerHTML = `<strong>Loops:</strong>&nbsp;<span style="padding-top: 1px;">${personalHighscores[0]['indigoLoops']}</span>`;
+    personalHighscoreContainer.childNodes[11].innerHTML = `<strong>Date:</strong>&nbsp;<span style="padding-top: 1px;">${personalHighscores[0]['date']}</span>`;
   } else {
     personalHighscoreContainer.childNodes[3].textContent = `0`;
     personalHighscoreContainer.childNodes[5].innerHTML = `<strong>Cards Played:</strong>&nbsp;0`;
     personalHighscoreContainer.childNodes[7].innerHTML = `<strong>Time:</strong>&nbsp;0`;
+    personalHighscoreContainer.childNodes[8].innerHTML = `<strong>Loops:</strong>&nbsp;0`;
     personalHighscoreContainer.childNodes[9].innerHTML = `<strong>Date:</strong>&nbsp;na`;
   }
 }
 
 function displayGlobalArcadeScores() {
+  document.querySelector('table').style.width = '1100px';
+
   scoreDisplay.innerHTML = `
   <tr>
-    <th style="width: 115px">Rank</th>
-    <th style="width: 115px">Points</th>
-    <th style="width: 250px">Name</th>
-    <th style="width: 200px">Cards</th>
+    <th style="width: 100px">Rank</th>
+    <th style="width: 250px; text-align: left">Name</th>
+    <th style="width: 155px">Points</th>
+    <th style="width: 115px">Cards</th>
     <th style="width: 115px">Time</th>
-    <th style="width: 250px">Date</th>
+    <th style="width: 115px">Loops</th>
+    <th style="width: 250px; text-align: left">Date</th>
   </tr>
   `;
   for (let i=0; i < globalArcadeScores.length; i++) {
     let newHighscoreData = document.createElement('tr');
 
     newHighscoreData.innerHTML = `
-    <td>${globalArcadeScores[i].rank}</td>
-    <td>${globalArcadeScores[i].score}</td>
+    <td class="center">${globalArcadeScores[i].rank}</td>
     <td>${globalArcadeScoresNames[i]}</td>
-    <td>${hexToAsciiCardsPlayed(globalArcadeScores[i].detailData)}</td>
-    <td>${hexToAsciiSeconds(globalArcadeScores[i].detailData)}</td>
+    <td class="center">${globalArcadeScores[i].score}</td>
+    <td class="center">${hexToAsciiCardsPlayed(globalArcadeScores[i].detailData)}</td>
+    <td class="center">${hexToAsciiSeconds(globalArcadeScores[i].detailData)}</td>
+    <td class="center">0</td>
     <td>${hexToAsciiDate(globalArcadeScores[i].detailData)}</td>
     `
     scoreDisplay.appendChild(newHighscoreData);
@@ -120,12 +130,15 @@ function displayGlobalArcadeScores() {
 }
 
 function displayGlobalTimeAttackScores() {
+  document.querySelector('table').style.width = '910px';
+
   scoreDisplay.innerHTML = `
   <tr>
-    <th style="width: 115px">Rank</th>
-    <th style="width: 115px">Points</th>
-    <th style="width: 250px">Name</th>
-    <th style="width: 250px">Date</th>
+    <th style="width: 100px">Rank</th>
+    <th style="width: 250px; text-align: left">Name</th>
+    <th style="width: 155px">Points</th>
+    <th style="width: 155px">Passes</th>
+    <th style="width: 250px; text-align: left">Date</th>
   </tr>
   `;
 
@@ -133,9 +146,10 @@ function displayGlobalTimeAttackScores() {
     let newHighscoreData = document.createElement('tr');
 
     newHighscoreData.innerHTML = `
-    <td>${globalTimeAttackScores[i].rank}</td>
-    <td>${globalTimeAttackScores[i].score}</td>
+    <td class="center">${globalTimeAttackScores[i].rank}</td>
     <td>${globalTimeAttackScoresNames[i]}</td>
+    <td class="center">${globalTimeAttackScores[i].score}</td>
+    <td class="center">0</td>
     <td>${hexToAsciiTADate(globalTimeAttackScores[i].detailData)}</td>
     `
     scoreDisplay.appendChild(newHighscoreData);
