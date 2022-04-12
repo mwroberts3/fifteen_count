@@ -35,6 +35,10 @@ Indigo Loops:
 jackpot: 
     -sucessfully playing a jackpot card with SAME COLORS raise jackpot level by 2
         -playing with DIFFERENT COLORS raise jackpot level by 1
+
+    -players get jackpot total x 1.jackpot level
+
+    -so if at level 4, players get jackpotCardCount x 1.4 added to their score
     
     -not checking, (or swapping) jackpot card when it appears cause the jackpot level to reduced by the number cards currently in the player's hand
 

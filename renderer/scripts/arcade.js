@@ -133,7 +133,7 @@ let jackpotRandTiming;
 let jackpotSameColorCheck;
 let jackpotSecondsThreshold = 25;
 let jackpotMultiplierLvl = 1;
-let jackpotMultiplier = 1;
+let jackpotMultiplier = 1.1;
 
 let pointsOnDisplay = 0;
 let highscoreDefeated = false;
@@ -503,6 +503,8 @@ function cardsSubmit() {
             jackpotMultiplierLvl = 1;
           } 
           jackpotLevelDisplay.innerText = `${jackpotMultiplierLvl}`;
+
+          jackpotMultiplier = 1 + (jackpotMultiplierLvl*10) / 100;
           
           if (totalCardsPlayed < 0) totalCardsPlayed = 0;
         } else {
@@ -549,7 +551,6 @@ function cardsSubmit() {
               if (jackpotMultiplierLvl <= 1) {
                 jackpotMultiplierLvl = 1;
               }
-
                 jackpotMultiplier = 1 + (jackpotMultiplierLvl*10) / 100;    
 
               if (jackpotMultiplierLvl <= 0) {
@@ -991,8 +992,7 @@ function swapButtonFunction() {
     totalCardsPlayed = Math.round(totalCardsPlayed * 0.5);
 
     jackpotMultiplierLvl -= globalCardsInHand.length;
-    console.log('jackpot level loss',globalCardsInHand.length);   
-
+ 
     if (jackpotMultiplierLvl < 0) {
       jackpotMultiplierLvl = 0;
     }
@@ -1001,6 +1001,8 @@ function swapButtonFunction() {
       jackpotMultiplierLvl = 1;
     } 
     jackpotLevelDisplay.innerText = `${jackpotMultiplierLvl}`;
+
+    jackpotMultiplier = 1 + (jackpotMultiplierLvl*10) / 100;
 
     if (totalCardsPlayed < 0) totalCardsPlayed = 0;
     jackpotLive = false;
