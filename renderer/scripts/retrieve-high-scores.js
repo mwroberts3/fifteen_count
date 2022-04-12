@@ -122,7 +122,7 @@ function displayGlobalArcadeScores() {
     <td class="center">${globalArcadeScores[i].score}</td>
     <td class="center">${hexToAsciiCardsPlayed(globalArcadeScores[i].detailData)}</td>
     <td class="center">${hexToAsciiSeconds(globalArcadeScores[i].detailData)}</td>
-    <td class="center">0</td>
+    <td class="center">${hexToAsciiIndigoLoops(globalArcadeScores[i].detailData)}</td>
     <td>${hexToAsciiDate(globalArcadeScores[i].detailData)}</td>
     `
     scoreDisplay.appendChild(newHighscoreData);
@@ -264,6 +264,21 @@ function hexToAsciiSeconds(str1){
 	return strParts[2];
  }
 
+function hexToAsciiIndigoLoops(str1){
+	let hex  = str1.toString();
+	let str = '';
+  let strParts = [];
+
+	for (let n = 0; n < hex.length; n += 2) {
+    if (String.fromCharCode(parseInt(hex.substr(n, 2), 16)) > -1) {
+      str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
+    }
+	}
+
+  strParts = str.split(/(\s+)/);
+	return strParts[4];
+ }
+
  function hexToAsciiDate(str1){
   let hex  = str1.toString();
 	let str = '';
@@ -275,5 +290,5 @@ function hexToAsciiSeconds(str1){
 
   strParts = str.split(/(\s+)/);
 
-	return `${strParts[4]} ${strParts[6]} ${strParts[8]}`;
+	return `${strParts[6]} ${strParts[8]} ${strParts[10]}`;
  }

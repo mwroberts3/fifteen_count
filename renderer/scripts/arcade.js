@@ -159,11 +159,11 @@ setTimeout(() => {
 }, threeSecCountdown * 1000);
 
 // Button submit
-document.addEventListener("keyup", (e) => {
-  if (e.code === actionBtn) {
-    roundBonusCheck();
-  }
-}); 
+  document.addEventListener("keyup", (e) => {
+    if (e.code === actionBtn && threeSecCountdown <= 1) {
+      roundBonusCheck();
+    }
+  }); 
 
 // Bonus check
 submitCards.addEventListener("click", roundBonusCheck);
@@ -324,7 +324,7 @@ function timerFunction() {
       
       pointsReview(pointsBreakdown, totalPoints, hudMessageDisplay);
   
-      highScoresFunc.scoreReview(hudMessage, currentHand, totalPoints, ultimateCardCount, totalSeconds);
+      highScoresFunc.scoreReview(hudMessage, currentHand, totalPoints, ultimateCardCount, totalSeconds, pointsBreakdown.indigoLoopCount);
     }
   
     if (!gamePaused && document.getElementById('arcade-how-to-play').classList.contains('hidden')) {
@@ -1349,7 +1349,7 @@ let pausedTimerSet;
 
 // Button press
 document.addEventListener('keyup', (e) => {
-    if(e.code === pauseBtn) {
+    if(e.code === pauseBtn && threeSecCountdown <= 1 && secondsLeft >= 1) {
         if (pauseScreen.classList.contains('hidden')) {
             gamePaused = true;  
             pauseScreen.classList.remove('hidden');
