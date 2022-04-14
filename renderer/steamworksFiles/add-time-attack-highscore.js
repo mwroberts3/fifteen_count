@@ -4,7 +4,7 @@ const moment = require('moment');
 
 let steamCreds = JSON.parse(localStorage.getItem('steam-credentials'));
 
-exports.uploadTAHighscoreToSteam = (score) => {
+exports.uploadTAHighscoreToSteam = (score, fullPassCount) => {
     let details = {
         'key': steamworksInfo.key,
         'appid': steamworksInfo.appID,
@@ -12,7 +12,7 @@ exports.uploadTAHighscoreToSteam = (score) => {
         'steamid': BigInt(`${steamCreds.steamId}`),
         'score': score,
         'scoremethod': 'KeepBest',
-        'details': `${moment().format('MMM Do YYYY')}`
+        'details': `${fullPassCount} ${moment().format('MMM Do YYYY')}`
     }
 
     let formBody = [];

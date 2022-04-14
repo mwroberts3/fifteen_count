@@ -140,9 +140,10 @@ const timeAttackTimer = setInterval(() => {
             highscoreStats[0]['taDate'] = moment().format('MMM Do YYYY');
             highscoreStats[0]['taFullPassCount'] = fullPassCount;
             localStorage.setItem('highscore', JSON.stringify(highscoreStats));
-
-            highScoresFunc.uploadTAHighscoreToSteam(score);
         }
+
+        // upload score to steam
+        highScoresFunc.uploadTAHighscoreToSteam(score, fullPassCount);
     }
         
     if (document.getElementById('time-attack-how-to-play').classList.contains('hidden')) {

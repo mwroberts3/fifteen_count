@@ -149,7 +149,7 @@ function displayGlobalTimeAttackScores() {
     <td class="center">${globalTimeAttackScores[i].rank}</td>
     <td>${globalTimeAttackScoresNames[i]}</td>
     <td class="center">${globalTimeAttackScores[i].score}</td>
-    <td class="center">0</td>
+    <td class="center">${hexToAsciiTAFullPasses(globalTimeAttackScores[i].detailData)}</td>
     <td>${hexToAsciiTADate(globalTimeAttackScores[i].detailData)}</td>
     `
     scoreDisplay.appendChild(newHighscoreData);
@@ -175,15 +175,30 @@ function displayGlobalTimeAttackScores() {
   convertSteamIdsToNamesTimeAttack(globalTimeAttackScores);
 }
 
-function hexToAsciiTADate(str1) {
+function hexToAsciiTAFullPasses(str1) {
   let hex  = str1.toString();
 	let str = '';
+  let strParts = [];
 
   for (let n = 0; n < hex.length; n += 2) {
     str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
   }
 
-  return str;
+  strParts = str.split(/(\s+)/);
+	return strParts[0];
+}
+
+function hexToAsciiTADate(str1) {
+  let hex  = str1.toString();
+	let str = '';
+  let strParts = [];
+
+  for (let n = 0; n < hex.length; n += 2) {
+    str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
+  }
+
+  strParts = str.split(/(\s+)/);
+	return `${strParts[2]} ${strParts[4]} ${strParts[6]}`;
 }
 
 async function convertSteamIdsToNamesArcade(globalArcadeScores) {
