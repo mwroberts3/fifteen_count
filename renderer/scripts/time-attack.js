@@ -129,7 +129,7 @@ const timeAttackTimer = setInterval(() => {
         threeSecCountdown--;
     } else {
     // GAME OVER
-    if (secondsLeft === 0 && !gamePaused) {
+    if (secondsLeft === 1 && !gamePaused) {
         clearInterval(timeAttackTimer);
         
         document.querySelector('.ta-game-over').classList.remove('hidden');
