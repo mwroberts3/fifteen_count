@@ -97,20 +97,17 @@ let timeBonusLevelforAnimation = 0;
 
 let gamePaused = false;
 
-// prevent early lag bey priming background transistion
+// prevent early lag bey priming background transistion in both Classic and Jungle theme
+let playersHandBg = document.querySelector('.players-hand');
+
 if (themeSelection.themeName === 'Classic') {
-  if (JSON.parse(localStorage.getItem('first-boot'))) {
-    utils.classicThemeBgPrimer(document.querySelector('.players-hand').style, true);
-  }
-} else if (themeSelection.themeName === 'Jungle') {
-  utils.jungleAndCosmosComboTrans(document.querySelector('.players-hand'));
-  setTimeout(() => {
-    document.querySelector('.players-hand').style.removeProperty('background-image');
-  }, 100)
-  utils.jungleAndCosmosComboTrans(document.querySelector('.players-hand'));
-  setTimeout(() => {
-    document.querySelector('.players-hand').style.removeProperty('background-image');
-  }, 200)
+  // if (JSON.parse(localStorage.getItem('first-boot'))) {
+  //   utils.classicThemeBgPrimer(playersHandBg.style);
+  // } 
+  utils.classicThemeBgPrimer(playersHandBg.style);
+} else if (themeSelection.themeName === 'Jungle' &&JSON.parse(localStorage.getItem('first-boot'))) {
+  localStorage.setItem('first-boot', false);
+  window.location.reload();
 }
 
 // Setting up deck & displaying for play

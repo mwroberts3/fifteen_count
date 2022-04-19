@@ -307,11 +307,14 @@ exports.classicThemeTransition = (playersHandBg, comboRoundCheck) => {
   }
 }
 
-exports.classicThemeBgPrimer = (playersHandBg, comboRoundCheck) => {
+exports.classicThemeBgPrimer = (playersHandBg) => {
   classicThemeTransition(playersHandBg, true);
 setTimeout(() => {
   classicThemeTransition(playersHandBg, false);
 }, 200);
+setTimeout(() => {
+  classicThemeTransition(playersHandBg, false);
+}, 400);
 }
 
 exports.timeAttackBonusFinalPositionAni = () =>
@@ -341,7 +344,6 @@ function classicThemeTransition(playersHandBg, comboRoundCheck) {
 }
 
 exports.jungleAndCosmosComboTrans = (playersHandArea) => {
-  let start, previousTimeStamp;
   let comboNumber = 90;
   
   if (themeSelection["themeName"] === "Jungle") {
