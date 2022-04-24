@@ -1,3 +1,5 @@
+const allTimeTaScore = document.querySelector('.ta-alltime-score-display');
+
 // check to see if first time playing
 const timeAttackHowTo = document.getElementById('time-attack-how-to-play');
 let firsttimeCheck = {};
@@ -93,4 +95,4 @@ if(localStorage.getItem('highscore')) {
     highscoreToBeat = 0;
 }
 
-document.querySelector('.ta-alltime-score-display').textContent = highscoreToBeat;
+allTimeTaScore.textContent = highscoreToBeat;

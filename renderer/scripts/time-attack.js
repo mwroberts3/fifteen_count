@@ -363,9 +363,6 @@ function redealReset() {
   function checkAndScoreBonusCard() {
       let tempBonusIndex = getBonusCardIndex();
       shownHand = cardsDisplay.childNodes;
-
-    // Score checked cards
-    addPointsToScore();
       
     // Score bonus card if in final position
     if (tempBonusIndex === 17 && shownHand[tempBonusIndex].classList.contains('ta-checked')) {
@@ -377,6 +374,7 @@ function redealReset() {
             bonusPoints = sameSuitCheck(score, true);
             score += bonusPoints;
             bonusAdded = true;
+            
             if (userSelectedSoundSettings.SFX) {
                 bonusCardSFX.play();
             }
@@ -384,6 +382,9 @@ function redealReset() {
     } else if (shownHand[tempBonusIndex].classList.contains('ta-checked')) {
         bonusUnleashed = false;
     }
+
+    // Score checked cards
+    addPointsToScore();
   }
 
   function getBonusCardIndex() {
@@ -406,8 +407,8 @@ function redealReset() {
     cardsToReplace = document.querySelectorAll(".ta-checked").length;
 
     pointsAdded = sameSuitCheck(cardsToReplace, false);
-
     score += pointsAdded;
+    console.log('Current Score:', score);
 
     shownHand.forEach((card) => {
         if (card.classList.contains('ta-bomb-card') && card.classList.contains('ta-checked')) {
@@ -436,16 +437,27 @@ function redealReset() {
 
     if(checkedCardSuits.every(sameColorBlack) || checkedCardSuits.every(sameColorRed)) {
         if (forBonusCard) {
+            // adds half of current score as points if bonus card play from final position is all same color
             pointsInPlay = Math.round(score/2)
+
+            console.log('Bonus Play (same color):', pointsInPlay);
         } else {
+            // same color play not involving bonus card multiplies points added by 1.25
             pointsInPlay = Math.round(pointsInPlay * 1.25)
+
+            console.log('Standard Play (same color):', pointsInPlay);
         }
     } else {
         if (forBonusCard) {
+            // adds a fourth of current score as points if bonus card play from final position is all same color
             pointsInPlay = Math.round(score/4)
+
+            console.log('Bonus Play (diff color):', pointsInPlay);
+        } else {
+            console.log('Standard Play (diff color):', pointsInPlay);
         }
     }
-
+    
     return pointsInPlay;
   }
 
