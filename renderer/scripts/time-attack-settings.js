@@ -69,11 +69,6 @@ if (!localStorage.getItem('sound-settings')) {
   userSelectedSoundSettings = JSON.parse(localStorage.getItem('sound-settings'));
 }
 
-// Set BGM
-if (userSelectedSoundSettings.BGM) {
-  document.getElementById('bgm-selection').src = './bgm/covered-face.mp3';
-}
-
 // Load gameplay sound fx
 let checkCardSFX = new Audio('./soundfx/check-card.wav');
 let uncheckAllCardsSFX = new Audio('./soundfx/uncheck-all-cards.wav');

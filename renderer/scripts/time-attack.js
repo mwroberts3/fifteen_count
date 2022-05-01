@@ -109,12 +109,21 @@ class Card {
     }
 }
 
+// Set background 15
+countDisplay.style.color = '#555';
+countDisplay.textContent = '15';
+
 // Set 180 seconds timer and countdown timer
 const timeAttackTimer = setInterval(() => {
     if (threeSecCountdown > -1) {
         timerDisplay.textContent = `${threeSecCountdown}`;
         
         if (threeSecCountdown === 0) {
+            // Set BGM
+            if (userSelectedSoundSettings.BGM) {
+                document.getElementById('bgm-selection').src = './bgm/covered-face.mp3';
+            }
+
             document.querySelectorAll('.ta-card').forEach((card) => {
                 card.style.filter = 'grayscale(0)';
             });
@@ -191,13 +200,27 @@ setTimeout(() => {
         
         if (e.target.classList.contains('ta-card')) {
             activeHand[cardIndex].checkCard(cardIndex, shownHand);
-            countDisplay.textContent = `${count}`;    
+
+            if (count < 1) {
+                countDisplay.style.color = '#555';
+                countDisplay.textContent = '15';
+            } else {
+                countDisplay.style.color = '#fff';
+                countDisplay.textContent = `${count}`;    
+            }
         }  
     
         if (e.target.classList.contains('bonus-card-overlay') || e.target.classList.contains('bomb-icon')){
             cardIndex = [...e.target.parentNode.parentNode.children].indexOf(e.target.parentNode);
             activeHand[cardIndex].checkCard(cardIndex, shownHand);
-            countDisplay.textContent = `${count}`; 
+            
+            if (count < 1) {
+                countDisplay.style.color = '#555';
+                countDisplay.textContent = '15';
+            } else {
+                countDisplay.style.color = '#fff';
+                countDisplay.textContent = `${count}`;    
+            }
         }
     })
 }, 3000);
@@ -343,7 +366,13 @@ function shuffleTimeAttack() {
 function redealReset() {
     bonusAdded = false;
     count = 0;
-    countDisplay.textContent = `${count}`;
+    if (count < 1) {
+        countDisplay.style.color = '#555';
+        countDisplay.textContent = '15';
+    } else {
+        countDisplay.style.color = '#fff';
+        countDisplay.textContent = `${count}`;    
+    }
     cardsDisplay.innerHTML = '';
     buildAndShowHand(cardsToReplace);
 
@@ -468,7 +497,13 @@ function uncheckAllCards(e) {
     let checkedCards = document.querySelectorAll(".ta-checked");
     if(e.code === uncheckcardsBtn) {
       count = 0;
-      countDisplay.textContent = 0;
+      if (count < 1) {
+        countDisplay.style.color = '#555';
+        countDisplay.textContent = '15';
+    } else {
+        countDisplay.style.color = '#fff';
+        countDisplay.textContent = `${count}`;    
+    }
       checkedCards.forEach((card) => {
         card.classList.remove("ta-checked");
       });
@@ -486,7 +521,7 @@ let secondsLeftAtPause;
 let pausedTimerSet;
 // Button press
 document.addEventListener('keyup', (e) => {
-    if(e.code === pauseBtn) {
+    if(e.code === pauseBtn && threeSecCountdown < 0) {
         if (document.querySelector(".ta-pause-screen").classList.contains('hidden')) {
             gamePaused = true;
             document.querySelector(".ta-pause-screen").classList.remove('hidden');
