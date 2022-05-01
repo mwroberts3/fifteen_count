@@ -109,9 +109,10 @@ class Card {
     }
 }
 
-// Set background 15
+// Set background 15 and white timer color for countdown
 countDisplay.style.color = '#555';
 countDisplay.textContent = '15';
+timerDisplay.style.color = '#ddd';
 
 // Set 180 seconds timer and countdown timer
 const timeAttackTimer = setInterval(() => {
@@ -119,6 +120,8 @@ const timeAttackTimer = setInterval(() => {
         timerDisplay.textContent = `${threeSecCountdown}`;
         
         if (threeSecCountdown === 0) {
+            timerDisplay.style.color = 'rgb(152, 253, 0)';
+
             // Set BGM
             if (userSelectedSoundSettings.BGM) {
                 document.getElementById('bgm-selection').src = './bgm/covered-face.mp3';

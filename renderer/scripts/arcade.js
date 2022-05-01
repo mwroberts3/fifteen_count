@@ -77,6 +77,9 @@ let hand = [];
 // Timer variables
 const timer = document.querySelector(".timer");
 
+// Set timer color to white for countdown
+timer.style.color = '#ddd';
+
 if (themeSelection.themeName === 'Classic') {
   if (JSON.parse(localStorage.getItem('first-boot'))){
     threeSecCountdown = 4;
@@ -282,8 +285,9 @@ function countdownFunction() {
   if(threeSecCountdown < 4) {
     timer.textContent = `${threeSecCountdown}`;
   }
-
+  
   if (threeSecCountdown === 0) {
+    timer.style.color = 'rgb(152, 253, 0)';
     timer.textContent = `GO!`;
   } else if (threeSecCountdown < 0 && document.getElementById('arcade-how-to-play').classList.contains('hidden')) {
     clearInterval(countdownTimer);
