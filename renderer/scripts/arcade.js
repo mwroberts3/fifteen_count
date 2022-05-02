@@ -80,6 +80,10 @@ const timer = document.querySelector(".timer");
 // Set timer color to white for countdown
 timer.style.color = '#ddd';
 
+// Set fifteen count display indicator
+fifteenCountDisplay.style.color = `#666`;
+fifteenCountDisplay.textContent = `15`;
+
 if (themeSelection.themeName === 'Classic') {
   if (JSON.parse(localStorage.getItem('first-boot'))){
     threeSecCountdown = 4;
@@ -1043,7 +1047,8 @@ function swapButtonFunction() {
   }
 
   fifteenCount = 0;
-  fifteenCountDisplay.textContent = ``;
+  fifteenCountDisplay.style.color = `#666`;
+  fifteenCountDisplay.textContent = `15`;
   bonusTimeDisplay.style.color = "rgba(51, 131, 235, 0.9)";
 
   if (secondsLeft <= 5) {
@@ -1338,7 +1343,8 @@ function setFifteenCountColor() {
     fifteenCountDisplay.textContent = `${fifteenCount}`;
     fifteenCountAniReset();
   } else {
-    fifteenCountDisplay.textContent = ``;
+    fifteenCountDisplay.style.color = `#666`;
+    fifteenCountDisplay.textContent = `15`;
     fifteenCountAniReset();
   }
 }

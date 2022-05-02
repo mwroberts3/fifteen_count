@@ -145,7 +145,7 @@ const timeAttackTimer = setInterval(() => {
         clearInterval(timeAttackTimer);
         
         document.querySelector('.ta-game-over').classList.remove('hidden');
-        document.querySelector('.ta-game-over-inner-container').children[1].textContent = `${score}`;
+        document.querySelector('.ta-game-over-inner-container').children[1].innerHTML = `Points <span style="color: #ffff00">${score}</span>`;
         
         if (score > highscoreToBeat) {
             highscoreStats[0]['timeAttack'] = score;

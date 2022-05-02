@@ -1166,10 +1166,10 @@ input[type="submit"] {
   #score-review-header {
     position: absolute;
     top: 0;
-    right: 150px;
+    right: 125px;
     transform: translateX(-50%);
     color: #fff;
-    font-size: 45px;
+    font-size: 64px;
     font-family: $gameplay-font-2;
     opacity: 0;
     transition: all 3s linear;
@@ -1650,13 +1650,13 @@ input[type="submit"] {
     align-items: center;
 
     h1 {
-      font-size: 4rem;
+      font-size: 64px;
     }
 
     div:first-of-type {
-      font-family: $gameplay-font;
-      color: $gameplay-font-col;
-      font-size: 2rem;
+      font-family: $gameplay-font-2;
+      color: #fff;
+      font-size: 24px;
     }
   }
 }

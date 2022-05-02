@@ -82,11 +82,11 @@ function totalPointsCount(totalPoints) {
             i += Math.round(totalPoints/50);
         }
 
-        totalPointsDisplay.innerHTML = `${i}`;
+        totalPointsDisplay.innerHTML = `<span style="color: #ffff00">${i}</span>`;
 
         if (i >= totalPoints) {
             clearInterval(totalPointsTally);
-            totalPointsDisplay.innerHTML = totalPoints;
+            totalPointsDisplay.innerHTML = `<span style="color: #ffff00">${totalPoints}</span>`;
         }
     }, 30);
 }

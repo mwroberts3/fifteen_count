@@ -914,10 +914,10 @@ input[type="submit"] {
   #points-breakdown-view #score-review-header {
     position: absolute;
     top: 0;
-    right: 150px;
+    right: 125px;
     transform: translateX(-50%);
     color: #fff;
-    font-size: 45px;
+    font-size: 64px;
     font-family: "Short Stack", cursive;
     opacity: 0;
     transition: all 3s linear; }
@@ -1273,11 +1273,11 @@ input[type="submit"] {
     justify-content: space-evenly;
     align-items: center; }
     .ta-game-over .ta-game-over-inner-container h1 {
-      font-size: 4rem; }
+      font-size: 64px; }
     .ta-game-over .ta-game-over-inner-container div:first-of-type {
-      font-family: "Russo One", sans-serif;
-      color: #ffff00;
-      font-size: 2rem; }
+      font-family: "Short Stack", cursive;
+      color: #fff;
+      font-size: 24px; }
 
 #time-attack-how-to-play {
   position: absolute;
