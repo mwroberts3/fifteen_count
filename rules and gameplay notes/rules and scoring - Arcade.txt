@@ -24,16 +24,13 @@ combo round:
     -sacrificing a card will add 3 seconds back to the halfhand bonus time gauge
 
 Indigo Loops:
-    -35 seconds is added to timer upon first full clear and than 5 seconds fewer are added for each subsequent full clear (35, 30, 25, 20)
-        -so, after 7 bonuses a full-hand play no longer adds any extra time
+    -36 seconds is added to timer upon first Indigo Loop and than 3 seconds fewer are added for each subsequent Indigo Loop (36, 33, 30, 27)
+        -so, after 12 bonuses a full-hand play no longer adds any extra time
 
-    -full clear adds a second back to the secondBonus pot?
-        -maybe the thought is a full-clear shouldn't count against the seconds bonus
-
-    -if all 10 cards are played in hand, fullhand seconds bonus is reset to 35
+    -if all 10 cards are played in hand, full-hand seconds bonus is reset to 36
 
 jackpot: 
-    -sucessfully playing a jackpot card with SAME COLORS raise jackpot level by 2
+    -successfully playing a jackpot card with SAME COLORS raise jackpot level by 2
         -playing with DIFFERENT COLORS raise jackpot level by 1
 
     -players get jackpot total x 1.jackpot level
