@@ -62,7 +62,7 @@ let swappedCardTimeBonusNulify = false;
 let roundBonusTimer = 0;
 
 let secondsBonus = 12;
-let indigoLoopBonus = 35;
+let indigoLoopBonus = 36;
 
 let html = ``;
 
@@ -342,7 +342,8 @@ function timerFunction() {
 function reset() {
   let cardsInHand = document.querySelectorAll(".card-in-hand");
 
-  // refill some bonus time (3 secs per round with sacrifice)
+  // refill some bonus time (2 secs per round with sacrifice)
+  // effectively adds two seconds back to seconds bonus
   if (comboSubmit) {
     secondsBonus += 3;
     if (secondsBonus > 12) {
@@ -542,6 +543,10 @@ function cardsSubmit() {
                 'Multiplier' : jackpotMultiplier
               })
 
+              if (userSelectedSoundSettings.SFX) {
+                jackpotCheckSFX.play();
+              }
+              
               utils.jackpotBonusPointsAni(totalCardsPlayed, jackpotSameColorCheck, totalCardsPlayedDisplay, jackpotMultiplierLvl, jackpotMultiplier);
 
               if (checkedCardSuits.every(sameColorRed) ||
@@ -644,15 +649,15 @@ function cardsSubmit() {
         bonusTimeDisplay.textContent = ``;
       }, 1000)
 
-      // subtract 5 seconds from full hand bonus until reaches 0
-      indigoLoopBonus -= 5;
+      // subtract 3 seconds from full hand bonus until reaches 0
+      indigoLoopBonus -= 3;
       if (indigoLoopBonus <= 0) {
         indigoLoopBonus = 0;
       }
 
       // if Indigo Loop is acheived by playing ALL 10 cards, the indigoLoopBonus is reset to 35
       if (checkedCards.length === 10) {
-        indigoLoopBonus = 35;
+        indigoLoopBonus = 36;
       }
 
       // Full hand sound effect
@@ -730,6 +735,7 @@ function roundBonusCheck() {
 }
 
 // Selecting cards
+setSwapPermission();
 function selectCard() {
   setSwapPermission();
   setUncheckAllPermission();
@@ -905,11 +911,7 @@ function selectCard() {
 
         // checked card sound effect
         if (userSelectedSoundSettings.SFX) {
-          if (card.classList.contains('jackpot-special-border')) {
-            jackpotCheckSFX.play();
-          } else {
-            checkCardSFX.play();
-          }
+          checkCardSFX.play();
         }
         comboCheck();
       }

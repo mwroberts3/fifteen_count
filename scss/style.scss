@@ -24,6 +24,7 @@ body {
   opacity: 0;
   transition: opacity 0.5s ease;
   overflow: hidden;
+  filter: sepia(5%);
 }
 
 a {

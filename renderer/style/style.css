@@ -35,7 +35,8 @@ body {
   -ms-user-select: none;
   opacity: 0;
   transition: opacity 0.5s ease;
-  overflow: hidden; }
+  overflow: hidden;
+  filter: sepia(5%); }
 
 a {
   color: #777;

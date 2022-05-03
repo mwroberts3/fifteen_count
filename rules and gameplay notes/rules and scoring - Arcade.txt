@@ -5,7 +5,7 @@ jackpot - 25%
 time - 20%
 
 count round:
--eached checked card worth 10
+-each checked card worth 10
     -if same color *1.25
     -speed bonus is applied after cards are checked and submitted
     -to be granted the speed bonus cards must be submitted within six seconds
@@ -21,7 +21,7 @@ combo round:
     -face value of the checked card * the previously checked and sacrificed cards
         -if same color as previously checked and sacrificed cards then value of sacrificed card is multiplied by 2
             -sacrificing a card that is not the same color as previous cards erases this point bonus for subsequently sacrificed cards
-    -sacrificing a card will add 3 seconds back to the halfhand bonus time gauge
+    -sacrificing a card will add 2n seconds back to the halfhand bonus time gauge
 
 Indigo Loops:
     -36 seconds is added to timer upon first Indigo Loop and than 3 seconds fewer are added for each subsequent Indigo Loop (36, 33, 30, 27)
