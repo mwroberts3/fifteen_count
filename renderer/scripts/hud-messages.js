@@ -16,7 +16,7 @@ exports.count = (hudMessageDisplay) => {
         setTimeout(() => {
             hudMessageDisplay.innerText = 'Count!';
             hudMessageCache = 'Count!';
-        }, 1000);
+        }, 2000);
     }
 }
 
@@ -64,25 +64,14 @@ exports.newHighscore = (hudMessageDisplay) => {
 }
 
 exports.jackpotOnTable = (hudMessageDisplay) => {
-    setTimeout(() => {
-        hudMessageDisplay.innerText = 'Jackpot on the board!';
-    }, 50);
+    if (!specialMessage) {
+        setTimeout(() => {
+            hudMessageDisplay.innerText = 'Jackpot on the board!';
+        }, 50);
 
-    specialMessage = true;
+        specialMessage = true;
+    }
 
-    setTimeout(() => {
-        hudMessageDisplay.innerText = hudMessageCache
-
-        specialMessage = false;
-    }, 2000)
-}
-
-exports.jackpotLost = (hudMessageDisplay) => {
-    setTimeout(() => {
-        hudMessageDisplay.innerText = 'Jackpot lost!';
-    }, 50);
-
-    specialMessage = true;
 
     setTimeout(() => {
         hudMessageDisplay.innerText = hudMessageCache

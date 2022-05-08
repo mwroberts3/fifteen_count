@@ -58,6 +58,7 @@ let multiCardValueB = 0;
 
 let dblSwapCheck = false;
 let swappedCardTimeBonusNulify = false;
+let swapActive = false;
 
 let roundBonusTimer = 0;
 
@@ -96,7 +97,7 @@ if (themeSelection.themeName === 'Classic') {
 }
 
 let totalSeconds = 100;
-let secondsLeft = 500;
+// let secondsLeft = 500;
 let threeTimerStart = 0;
 let elapsedTime = 0;
 const bonusTimeDisplay = document.querySelector(".bonus-time");
@@ -109,9 +110,6 @@ let gamePaused = false;
 let playersHandBg = document.querySelector('.players-hand');
 
 if (themeSelection.themeName === 'Classic') {
-  // if (JSON.parse(localStorage.getItem('first-boot'))) {
-  //   utils.classicThemeBgPrimer(playersHandBg.style);
-  // } 
   utils.classicThemeBgPrimer(playersHandBg.style);
 } else if (themeSelection.themeName === 'Jungle' &&JSON.parse(localStorage.getItem('first-boot'))) {
   localStorage.setItem('first-boot', false);
@@ -136,10 +134,9 @@ let jackpotLive = false;
 let jackpotInit = false;
 let jackpotRandTiming;
 let jackpotSameColorCheck;
-// let jackpotSecondsThreshold = 5;
 let jackpotSecondsThreshold = 25;
 let jackpotMultiplierLvl = 1;
-let jackpotMultiplier = 1.1;
+let jackpotMultiplier = 1.091;
 
 let pointsOnDisplay = 0;
 let highscoreDefeated = false;
@@ -345,9 +342,9 @@ function reset() {
   let cardsInHand = document.querySelectorAll(".card-in-hand");
 
   // check for jackpot loss due to swap
-  let jackpotLostArr = Array.from(cardsInHand).filter((card) => card.classList.contains('jackpot-special-border'));
+  // let jackpotLostArr = Array.from(cardsInHand).filter((card) => card.classList.contains('jackpot-special-border'));
 
-  console.log(jackpotLostArr);
+  // console.log(jackpotLostArr);
 
   // refill some bonus time (2 secs per round with sacrifice)
   // effectively adds two seconds back to seconds bonus or three seconds if halfhand play
@@ -365,7 +362,7 @@ function reset() {
 
   halfHandPlay = false;
 
-  console.log('current seconds bonus', secondsBonus);
+  // console.log('current seconds bonus', secondsBonus);
 
   // reset players hand background
   if (themeSelection['themeName'] !== 'Classic') {
@@ -526,7 +523,9 @@ function cardsSubmit() {
           } 
           jackpotLevelDisplay.innerText = `${jackpotMultiplierLvl}`;
 
-          jackpotMultiplier = 1 + (jackpotMultiplierLvl*10) / 100;
+          jackpotMultiplier = (1 + (jackpotMultiplierLvl*10) / 110).toFixed(3);
+                
+          console.log(jackpotMultiplier);
           
           if (totalCardsPlayed < 0) totalCardsPlayed = 0;
         } else {
@@ -539,17 +538,24 @@ function cardsSubmit() {
 
               let jackpotPointsInPlay = 0;
 
-              if (jackpotMultiplierLvl > 1) {
-                totalPoints += Math.round(totalCardsPlayed * jackpotMultiplier);
-                pointsBreakdown.jackpotPoints += Math.round(totalCardsPlayed * jackpotMultiplier);
+              totalPoints += Math.round(totalCardsPlayed * jackpotMultiplier);
+              
+              pointsBreakdown.jackpotPoints += Math.round(totalCardsPlayed * jackpotMultiplier);
 
-                jackpotPointsInPlay = Math.round(totalCardsPlayed * jackpotMultiplier);
-              } else {
-                totalPoints += totalCardsPlayed;
-                pointsBreakdown.jackpotPoints += totalCardsPlayed;
+              jackpotPointsInPlay = Math.round(totalCardsPlayed * jackpotMultiplier);
 
-                jackpotPointsInPlay = totalCardsPlayed;
-              };
+              // if (jackpotMultiplierLvl > 1) {
+              //   totalPoints += Math.round(totalCardsPlayed * jackpotMultiplier);
+              //   pointsBreakdown.jackpotPoints += Math.round(totalCardsPlayed * jackpotMultiplier);
+
+              //   jackpotPointsInPlay = Math.round(totalCardsPlayed * jackpotMultiplier);
+              // } else {
+              //   console.log('LEVEL ONE')
+              //   totalPoints += totalCardsPlayed;
+              //   pointsBreakdown.jackpotPoints += totalCardsPlayed;
+
+              //   jackpotPointsInPlay = totalCardsPlayed;
+              // };
 
               // add to points review array
               pointsPerPlayBreakdown.unshift({
@@ -577,7 +583,11 @@ function cardsSubmit() {
               if (jackpotMultiplierLvl <= 1) {
                 jackpotMultiplierLvl = 1;
               }
-                jackpotMultiplier = 1 + (jackpotMultiplierLvl*10) / 100;    
+
+
+                jackpotMultiplier = (1 + (jackpotMultiplierLvl*10) / 110).toFixed(3);
+                
+                console.log(jackpotMultiplier);
 
               if (jackpotMultiplierLvl <= 0) {
                 jackpotMultiplierLvl = 1;
@@ -657,7 +667,7 @@ function cardsSubmit() {
         'count' : pointsBreakdown.indigoLoopCount
       })
 
-      console.log('indigo loop bonus', indigoLoopBonus);
+      // console.log('indigo loop bonus', indigoLoopBonus);
 
       hudMessage.fullHandClear(hudMessageDisplay);
 
@@ -998,6 +1008,12 @@ function swapButtonPush(e) {
 }
 
 function swapButtonFunction() {
+  swapActive = true;
+
+  setTimeout(() => {
+    swapActive = false;
+  }, 100);
+
   // nulify potential time bonus on next submit after card is swapped
   swappedCardTimeBonusNulify = true;
 
@@ -1012,15 +1028,7 @@ function swapButtonFunction() {
   })
 
   // Swap Card Animation
-  let returnPackage = utils.swapCardAni(dblSwapCheck, cardsInHand, currentHand, playersHandArea);
-
-  let validCardsInHand = returnPackage.validCardsInHand;
-
-  console.log(returnPackage.jackpotLost);
-
-  if (returnPackage.jackpotLost) {
-    hudMessage.jackpotLost(hudMessageDisplay); 
-  }
+  let validCardsInHand = utils.swapCardAni(dblSwapCheck, cardsInHand, currentHand, playersHandArea);
       
   // swapping with jackpot card in hand erases jackpot
   if (jackpotLive) {
@@ -1037,7 +1045,9 @@ function swapButtonFunction() {
     } 
     jackpotLevelDisplay.innerText = `${jackpotMultiplierLvl}`;
 
-    jackpotMultiplier = 1 + (jackpotMultiplierLvl*10) / 100;
+    jackpotMultiplier = (1 + (jackpotMultiplierLvl*10) / 110).toFixed(3);
+                
+    console.log(jackpotMultiplier);
 
     if (totalCardsPlayed < 0) totalCardsPlayed = 0;
     jackpotLive = false;
@@ -1211,13 +1221,21 @@ function jackpotSelect() {
 
     jackpotInit = true;
     
-    // FOR JACKPOT TESTS
-    console.log(jackpotRandTiming);
-    jackpotRandTiming = 10;
+    // // FOR JACKPOT TESTS
+    // console.log(jackpotRandTiming);
+    // jackpotRandTiming = 10;
   }
 
     if (elapsedTime >= jackpotRandTiming && jackpotInit) {
+
         let jackpotRandIndex = Math.floor(Math.random() * (cardsInHand.length - 0) + 0);
+
+        // correct for swap/jackpot glitch when player is swapping and jackpot in last position
+        if (jackpotRandIndex === cardsInHand.length - 1) {
+          if (swapActive) {
+            jackpotRandIndex--;
+          } 
+        }
   
         let jackpotOverlay = document.createElement('div');
   

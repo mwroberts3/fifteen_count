@@ -136,7 +136,6 @@ exports.fullClearBorderAni = (themeSelection,totalCardsPlayed, jackpotSameColorC
 }
 
 exports.swapCardAni = (dblSwapCheck, cardsInHand, currentHand, playersHandArea) => {
-  let returnPackage = {validCardsInHand: 0, jackpotLost: false};
   let swapSlideAnimationLength;
   let validCardsInHand = 0;
 
@@ -157,13 +156,6 @@ exports.swapCardAni = (dblSwapCheck, cardsInHand, currentHand, playersHandArea) 
   lastCardClone.classList.add('lastCardSwapAnimation');
   if (cardsInHand.length <= 5) {
     lastCardClone.style.right = "120px";
-  }
-
-  // console.log('last card in hand classlist', lastCardClone.classList);
-
-  if (lastCardClone.classList.contains('jackpot-special-border')) {
-    console.log('JACKPOT SWAPPED', lastCardClone.classList);
-    returnPackage.jackpotLost = true;
   }
 
   currentHand.after(lastCardClone);
@@ -194,9 +186,7 @@ exports.swapCardAni = (dblSwapCheck, cardsInHand, currentHand, playersHandArea) 
     dblSwapCheck = false;
   }, 200);
 
-  returnPackage.validCardsInHand = validCardsInHand;
-
-  return returnPackage;
+  return validCardsInHand;
 }
 
 exports.jackpotLevelAni = (jackpotLevelDisplay, jackpotMultiplierLvl) => {
