@@ -123,7 +123,7 @@ const timeAttackTimer = setInterval(() => {
             timerDisplay.style.color = 'rgb(152, 253, 0)';
 
             // Set BGM
-            if (userSelectedSoundSettings.BGM) {
+            if (userSelectedSoundSettings.BGM && document.getElementById('time-attack-how-to-play').classList.contains('hidden')) {
                 document.getElementById('bgm-selection').src = './bgm/covered-face.mp3';
             }
 

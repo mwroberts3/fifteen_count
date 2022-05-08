@@ -65,7 +65,21 @@ exports.newHighscore = (hudMessageDisplay) => {
 
 exports.jackpotOnTable = (hudMessageDisplay) => {
     setTimeout(() => {
-        hudMessageDisplay.innerText = 'Jackpot on the Board!';
+        hudMessageDisplay.innerText = 'Jackpot on the board!';
+    }, 50);
+
+    specialMessage = true;
+
+    setTimeout(() => {
+        hudMessageDisplay.innerText = hudMessageCache
+
+        specialMessage = false;
+    }, 2000)
+}
+
+exports.jackpotLost = (hudMessageDisplay) => {
+    setTimeout(() => {
+        hudMessageDisplay.innerText = 'Jackpot lost!';
     }, 50);
 
     specialMessage = true;

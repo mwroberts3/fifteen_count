@@ -63,6 +63,7 @@ let roundBonusTimer = 0;
 
 let secondsBonus = 12;
 let indigoLoopBonus = 36;
+let halfHandPlay = false;
 
 let html = ``;
 
@@ -95,7 +96,7 @@ if (themeSelection.themeName === 'Classic') {
 }
 
 let totalSeconds = 100;
-// let secondsLeft = 30;
+let secondsLeft = 500;
 let threeTimerStart = 0;
 let elapsedTime = 0;
 const bonusTimeDisplay = document.querySelector(".bonus-time");
@@ -135,6 +136,7 @@ let jackpotLive = false;
 let jackpotInit = false;
 let jackpotRandTiming;
 let jackpotSameColorCheck;
+// let jackpotSecondsThreshold = 5;
 let jackpotSecondsThreshold = 25;
 let jackpotMultiplierLvl = 1;
 let jackpotMultiplier = 1.1;
@@ -150,7 +152,7 @@ hudMessage.countdown(hudMessageDisplay);
 
 setTimeout(() => {
   // set BGM
-  if (userSelectedSoundSettings.BGM) {
+  if (userSelectedSoundSettings.BGM && document.getElementById('arcade-how-to-play').classList.contains('hidden')) {
     document.getElementById('bgm-selection').src = themeSelection['bgm'];
   }
 
@@ -343,13 +345,22 @@ function reset() {
   let cardsInHand = document.querySelectorAll(".card-in-hand");
 
   // refill some bonus time (2 secs per round with sacrifice)
-  // effectively adds two seconds back to seconds bonus
+  // effectively adds two seconds back to seconds bonus or three seconds if halfhand play
   if (comboSubmit) {
-    secondsBonus += 3;
+    if (halfHandPlay) {
+      secondsBonus += 4;
+    } else {
+      secondsBonus += 2;
+    }
+
     if (secondsBonus > 12) {
       secondsBonus = 12;
     }
   }
+
+  halfHandPlay = false;
+
+  console.log('current seconds bonus', secondsBonus);
 
   // reset players hand background
   if (themeSelection['themeName'] !== 'Classic') {
@@ -546,7 +557,7 @@ function cardsSubmit() {
               if (userSelectedSoundSettings.SFX) {
                 jackpotCheckSFX.play();
               }
-              
+
               utils.jackpotBonusPointsAni(totalCardsPlayed, jackpotSameColorCheck, totalCardsPlayedDisplay, jackpotMultiplierLvl, jackpotMultiplier);
 
               if (checkedCardSuits.every(sameColorRed) ||
@@ -599,6 +610,8 @@ function cardsSubmit() {
       }, 1000)
 
       secondsBonus--;
+
+      halfHandPlay = true;
     }
 
     valueOptionOne.innerText = "-";
@@ -638,6 +651,8 @@ function cardsSubmit() {
         'type' : 'time(indigo loop)',
         'count' : pointsBreakdown.indigoLoopCount
       })
+
+      console.log('indigo loop bonus', indigoLoopBonus);
 
       hudMessage.fullHandClear(hudMessageDisplay);
 
@@ -1180,36 +1195,55 @@ function jackpotSelect() {
 
   if (!jackpotInit) {
     jackpotRandTiming = Math.floor(Math.random() * (jackpotSecondsThreshold - (jackpotSecondsThreshold - 24)) + (jackpotSecondsThreshold - 24));
+
     jackpotInit = true;
+    
+    // FOR JACKPOT TESTS
+    console.log(jackpotRandTiming);
+    jackpotRandTiming = 10;
   }
 
-  if (elapsedTime >= jackpotRandTiming && jackpotInit) {
-      let jackpotRandIndex = Math.floor(Math.random() * (cardsInHand.length - 0) + 0);
+    if (elapsedTime >= jackpotRandTiming && jackpotInit) {
+        let jackpotRandIndex = Math.floor(Math.random() * (cardsInHand.length - 0) + 0);
+  
+        let jackpotOverlay = document.createElement('div');
+  
+        jackpotOverlay.classList.add('jackpot-overlay');
+  
+        let style = getComputedStyle(cardsInHand[jackpotRandIndex]);
+  
+        jackpotOverlay.style.background = `${style.background}`;
+  
+        let backgroundShiftX = (jackpotOverlay.style.backgroundPositionX.substr(0, jackpotOverlay.style.backgroundPositionX.length - 2)) - 10;
+  
+        let backgroundShiftY = (jackpotOverlay.style.backgroundPositionY.substr(0, jackpotOverlay.style.backgroundPositionY.length - 2)) - 10;
+  
+        jackpotOverlay.style.backgroundPosition = `${backgroundShiftX}px ${backgroundShiftY}px`;
+  
+        cardsInHand[jackpotRandIndex].appendChild(jackpotOverlay);
+  
+        cardsInHand[jackpotRandIndex].classList.add('jackpot-special-border');
+  
+        jackpotInit = false;
+        jackpotSecondsThreshold += 25;
+        jackpotLive = true;
 
-      let jackpotOverlay = document.createElement('div');
+        hudMessage.jackpotOnTable(hudMessageDisplay);
+        
+        // setTimeout(() => {
 
-      jackpotOverlay.classList.add('jackpot-overlay');
-
-      let style = getComputedStyle(cardsInHand[jackpotRandIndex]);
-
-      jackpotOverlay.style.background = `${style.background}`;
-
-      let backgroundShiftX = (jackpotOverlay.style.backgroundPositionX.substr(0, jackpotOverlay.style.backgroundPositionX.length - 2)) - 10;
-
-      let backgroundShiftY = (jackpotOverlay.style.backgroundPositionY.substr(0, jackpotOverlay.style.backgroundPositionY.length - 2)) - 10;
-
-      jackpotOverlay.style.backgroundPosition = `${backgroundShiftX}px ${backgroundShiftY}px`;
-
-      cardsInHand[jackpotRandIndex].appendChild(jackpotOverlay);
-
-      cardsInHand[jackpotRandIndex].classList.add('jackpot-special-border');
-
-      jackpotInit = false;
-      jackpotSecondsThreshold += 25;
-      jackpotLive = true;
-
-      hudMessage.jackpotOnTable(hudMessageDisplay);
-  }
+        //   // check for jackpot loss due to swap
+        //   let jackpotLostArr = Array.from(cardsInHand).filter((card) => card.classList.contains('jackpot-special-border'));
+  
+        //   console.log(jackpotLostArr);
+  
+        //   if (jackpotLostArr.length >= 1) {
+        //     hudMessage.jackpotLost(hudMessageDisplay);
+        //     hudMessage.jackpotOnTable(hudMessageDisplay);
+        //   } else { 
+        //   }
+        // },500);
+    }
 }
 
 // Live points updates

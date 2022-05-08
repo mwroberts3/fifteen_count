@@ -131,7 +131,7 @@ const arcadeThemes = [
       "#ffe34c",
       "#ffd700"
     ], cardSprites: "style/junglesprites.css", bgm: "bgm/Clouds-Jungle.mp3", fifteenCountGradient: ['#ddd', '#ddd', '#ddd', '#ddd', '#ddd', '#ddd', '#ddd', '#ddd', '#ddd', '#ddd', '#ddd', '#ddd', '#ddd', '#ddd', '#ddd', '#fff'] },
-    { index: 2, themeName: "Universe", bgImgPlayersHand: ["universe-bg.png"], bgImgCombo: "universe-bg-combo-round.png", bgCol: "#000", brdCol: "#000", fullClearBrdGrd: [
+    { index: 2, themeName: "Universe", bgImgPlayersHand: ["universe-bg.png"], bgImgCombo: "universe-bg-combo-round.png", bgCol: "#000", brdCol: "rgba(0,0,0,0)", fullClearBrdGrd: [
       "#111",
       "#222",
       "#333",

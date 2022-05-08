@@ -116,7 +116,7 @@
           <div id="points-breakdown-view" class="hidden">
             <p id="score-review-header">Score Review</p>
             <div class="point-type">
-              <div class="point-type-title">Checked Cards</div>
+              <div class="point-type-title">Counted Cards</div>
               <div class="reg-card-points"></div>
               <progress value="" max=""></progress>
             </div>
@@ -203,10 +203,16 @@
             <p>
               The game moves in two phases: the <strong>Count!</strong> phase
               followed by the <strong>Combo!</strong> phase. In the count phase
-              the goal is to check cards, (by clicking on them), whose values
-              add up to 15. Once the count is up to fifteen. Press the Shift key
-              (or click the submit button in the UI) to move on to the combo
-              phase.
+              the goal is to count cards, (by clicking on them), to get a total
+              value of 15. Once the count is up to 15. Press the Shift key (or
+              click the submit button in the UI) to move on to the
+              <strong>Combo!</strong> phase.
+            </p>
+            <br />
+            <p>
+              Cards that show 2 values can be selected by pressing [Shift] for
+              the high value or [Ctrl] for the low value. (Controls can be
+              changed in settings)
             </p>
           </div>
           <div id="arcade-howto-img1">
@@ -214,66 +220,27 @@
           </div>
           <div id="arcade-howto-p2">
             <p>
-              Cards that show 2 values can be selected by pressing [Shift] for
-              the high value or [Ctrl] for the low value. (Controls can be
-              changed in settings)
+              <strong>IMPORTANT!</strong> you can select the lower value for
+              several cards with one click. Click all the multi-value cards you
+              want to count first and <em>then</em> click [Ctrl] to count all
+              the low values at once.
             </p>
           </div>
           <div id="arcade-howto-p3">
             <p>
-              TIP : you can select the lower value for several cards with one
-              click. Click all the multi-value cards you want to count first and
-              <em>then</em> click [Ctrl] to count all the low values at once.
+              Jackpot cards will randomly pop up. Count them to rack up nice
+              high scores!
             </p>
           </div>
         </div>
         <div id="arcade-howto-slide-two" class="hidden">
-          <div id="arcade-howto-p4">
-            <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et
-              aliquam amet, minus perferendis facilis quis dolorem placeat
-              consectetur consequuntur laudantium qui tenetur exercitationem
-              officiis explicabo optio dolore veritatis. Asperiores enim dicta
-              labore similique deserunt aut dignissimos, accusamus voluptate
-              soluta accusantium fugit eius velit dolorum voluptatum nihil
-              repellat hic, consequatur architecto.
-            </p>
-          </div>
-          <div id="arcade-howto-p5">
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fuga,
-              quas maxime porro a voluptatibus sed illo obcaecati voluptates
-              eius natus ipsa, neque explicabo necessitatibus, deleniti
-              doloremque excepturi vero! Modi at recusandae iusto tenetur!
-              Officiis suscipit possimus vel quae quod reiciendis enim ad ab.
-            </p>
-            <br />
-            <p>
-              In the combo phase, you can click extra cards to get a higher
-              score. Cards clicked on in the combo phase will rack up extra
-              points. But beware, cards sacrificed in the combo phase are
-              removed from your hand.
-            </p>
-          </div>
-          <div id="arcade-howto-p6">
-            <p>
-              These basics should get you going for your first try, but see the
-              full instructions set for information on adding time and restoring
-              cards.
-            </p>
-          </div>
-          <div id="arcade-howto-p7">
-            <p></p>
-          </div>
-        </div>
-        <div id="arcade-howto-slide-three" class="hidden">
           <h2>Controls</h2>
           <p>
             <span id="arcade-action-btn"></span>submit cards / choose higher
             value option
           </p>
           <p><span id="arcade-lowval-btn"></span>choose lower value option</p>
-          <p><span id="arcade-uncheck-btn"></span>uncheck all cards</p>
+          <p><span id="arcade-uncheck-btn"></span>uncount all cards</p>
           <p><span id="arcade-swap-btn"></span>swap last card in hand</p>
           <p><span id="arcade-pause-btn"></span>pause game</p>
         </div>

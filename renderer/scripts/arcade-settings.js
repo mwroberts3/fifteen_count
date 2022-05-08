@@ -37,12 +37,9 @@ function howToSlideShow() {
 
         document.getElementById('arcade-howto-slide-one').classList.add('hidden');
         document.getElementById('arcade-howto-slide-two').classList.remove('hidden');
-      } else if (e.target.textContent === "Next" && document.getElementById('arcade-howto-slide-one').classList.contains('hidden')) {
+
         e.target.textContent = "Close";
-
-        document.getElementById('arcade-howto-slide-two').classList.add('hidden');
-        document.getElementById('arcade-howto-slide-three').classList.remove('hidden');
-
+        
         document.getElementById('arcade-action-btn').textContent = controls.actionBtn;
 
         document.getElementById('arcade-lowval-btn').textContent = controls.lowValBtn;
@@ -52,6 +49,8 @@ function howToSlideShow() {
         document.getElementById('arcade-swap-btn').textContent = controls.swapBtn;
 
         document.getElementById('arcade-pause-btn').textContent = controls.pauseBtn;
+      } else if (e.target.textContent === "Next" && document.getElementById('arcade-howto-slide-one').classList.contains('hidden')) {
+        
       }
     }
   })

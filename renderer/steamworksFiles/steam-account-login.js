@@ -27,7 +27,6 @@ const steamAuthLogin = () => {
 
               tempInfoCont.innerHTML = data.substring(500);
               credentialExtraction();
-              // clearInterval(steamLoginCheck);
             }
           });
       }, 2000);
