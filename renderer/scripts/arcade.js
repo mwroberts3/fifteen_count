@@ -539,7 +539,7 @@ function cardsSubmit() {
               let jackpotPointsInPlay = 0;
 
               totalPoints += Math.round(totalCardsPlayed * jackpotMultiplier);
-              
+
               pointsBreakdown.jackpotPoints += Math.round(totalCardsPlayed * jackpotMultiplier);
 
               jackpotPointsInPlay = Math.round(totalCardsPlayed * jackpotMultiplier);
