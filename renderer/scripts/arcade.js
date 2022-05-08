@@ -344,6 +344,11 @@ function timerFunction() {
 function reset() {
   let cardsInHand = document.querySelectorAll(".card-in-hand");
 
+  // check for jackpot loss due to swap
+  let jackpotLostArr = Array.from(cardsInHand).filter((card) => card.classList.contains('jackpot-special-border'));
+
+  console.log(jackpotLostArr);
+
   // refill some bonus time (2 secs per round with sacrifice)
   // effectively adds two seconds back to seconds bonus or three seconds if halfhand play
   if (comboSubmit) {
@@ -1007,7 +1012,15 @@ function swapButtonFunction() {
   })
 
   // Swap Card Animation
-  let validCardsInHand = utils.swapCardAni(dblSwapCheck, cardsInHand, currentHand, playersHandArea);
+  let returnPackage = utils.swapCardAni(dblSwapCheck, cardsInHand, currentHand, playersHandArea);
+
+  let validCardsInHand = returnPackage.validCardsInHand;
+
+  console.log(returnPackage.jackpotLost);
+
+  if (returnPackage.jackpotLost) {
+    hudMessage.jackpotLost(hudMessageDisplay); 
+  }
       
   // swapping with jackpot card in hand erases jackpot
   if (jackpotLive) {
