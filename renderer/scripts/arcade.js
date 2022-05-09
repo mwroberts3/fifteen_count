@@ -47,6 +47,11 @@ totalCardsPlayedDisplay.innerHTML = `
 // Dev tools
 let pointsPerPlayBreakdown = [];
 
+// Scoring variable
+// Count Phase
+let pointsPerCardCountPhase = 9;
+let sameColorMultCountPhase = 1.25;
+
 // Gameplay variables & switches
 let pointsValidity = false;
 let firstSubmit = false;
@@ -432,7 +437,7 @@ function comboCheck() {
       fifteenCount === 15 &&
       checkedCards.length === 1
     ) {
-      pointsInPlay = 10;
+      pointsInPlay = pointsPerCardCountPhase;
       pointsValidity = true;
     } else {
       checkedCardSuits.push(card.children[0].getAttribute("suit"));
@@ -440,13 +445,13 @@ function comboCheck() {
     }
   });
   if (comboCardcount > 1 && fifteenCount === 15) {
-    pointsInPlay = comboCardcount * 10;
+    pointsInPlay = comboCardcount * pointsPerCardCountPhase;
     pointsValidity = true;
     if (
       checkedCardSuits.every(sameColorRed) == true ||
       checkedCardSuits.every(sameColorBlack) == true
     ) {
-      pointsInPlay *= 1.25;
+      pointsInPlay *= sameColorMultCountPhase;
       sameColorCheckCheck = true;
     }
   }
@@ -718,13 +723,13 @@ function roundBonusCheck() {
   let roundBonusTimerCheck = new Date();
   let roundBonusPoints = 0;
   let roundBonuses = [
-    1.39,
-    1.39,
-    1.39,
-    1.39,
-    1.24,
-    1.24,
-    1.24,
+    1.45,
+    1.45,
+    1.45,
+    1.45,
+    1.3,
+    1.3,
+    1.3,
   ];
   let diff =
     (roundBonusTimerCheck.getTime() - roundBonusTimer.getTime()) / 1000;
