@@ -15,7 +15,9 @@ body {
   height: 100vh;
   font-size: 1.25rem;
   font-family: $body-font;
-  background: $preloadandMainBg;
+  // background: $preloadandMainBg;
+  background: url("../img/page-background.png") no-repeat center center;
+  background-size: cover;
   user-select: none;
   -moz-user-select: none;
   -webkit-user-drag: none;
