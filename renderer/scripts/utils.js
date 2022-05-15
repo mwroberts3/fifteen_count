@@ -4,6 +4,16 @@ document.querySelector('body').style.
 opacity = 0;
 let fadeTime = 0;
 
+// this should only happen in Arcade if classic 
+// document.querySelector('body').style.opacity = 0;
+
+// setTimeout(() => {
+//   document.querySelector('body').style.background = "url('./img/title-screen-bg.png') no-repeat center center"
+  
+//   document.querySelector('body').style.backgroundSize = "cover";
+// }, 250);
+
+
 const gamescreenFadein = setInterval(() => {
   document.querySelector('body').style.opacity = fadeTime;
   fadeTime += 0.1;
@@ -14,8 +24,7 @@ const gamescreenFadein = setInterval(() => {
 }
 
 exports.timeAttackFadeIn = () => {
-  document.querySelector('body').style.
-opacity = 0;
+document.querySelector('body').style.opacity = 0;
 let fadeTime = 0;
 
 setTimeout(() => {
