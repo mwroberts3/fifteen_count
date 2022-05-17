@@ -128,8 +128,8 @@
 }
 
 .hud-message {
-  color: #fff;
-  -webkit-text-stroke: 1.5px #fff;
+  color: #ccc;
+  -webkit-text-stroke: 1.5px #ccc;
 }
 
 .fifteen-count {
@@ -137,7 +137,7 @@
 }
 
 #personal-highscore-display {
-  color: #fff;
+  color: #ccc;
 }
 
 .gui-container {

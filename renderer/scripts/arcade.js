@@ -116,9 +116,9 @@ let playersHandBg = document.querySelector('.players-hand');
 
 if (themeSelection.themeName === 'Classic') {
   utils.classicThemeBgPrimer(playersHandBg.style);
-} else if (themeSelection.themeName === 'Jungle' &&JSON.parse(localStorage.getItem('first-boot'))) {
+} else if (themeSelection.themeName === 'Jungle' && JSON.parse(localStorage.getItem('first-boot'))) {
   localStorage.setItem('first-boot', false);
-  window.location.reload();
+  // window.location.reload();
 }
 
 // Setting up deck & displaying for play

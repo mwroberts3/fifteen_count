@@ -18,7 +18,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  cursor: default !important; }
+  cursor: none !important; }
 
 body {
   position: relative;
@@ -88,6 +88,16 @@ img {
   height: 26px;
   position: absolute;
   background: url("../img/cursor.png"); }
+
+.background-helper-menu {
+  position: absolute;
+  top: -10vh;
+  left: -100vw;
+  width: 200vw;
+  height: 110vh;
+  background: url("../img/title-screen-bg.png");
+  background-repeat: no-repeat;
+  background-size: cover; }
 
 .container {
   position: relative;
@@ -160,7 +170,7 @@ img {
   margin-top: 5px;
   border-radius: 5px;
   font-family: "Didact Gothic", sans-serif;
-  cursor: default !important;
+  cursor: none !important;
   background-image: linear-gradient(#444, #666);
   color: white;
   font-size: 1.25rem; }
@@ -404,7 +414,7 @@ img {
       padding: 10px; }
       .options-container section p span {
         font-weight: bold;
-        cursor: default !important;
+        cursor: none !important;
         display: inline-block;
         width: 170px; }
         .options-container section p span:hover {
@@ -465,7 +475,7 @@ img {
     #theme .theme-selection-menu div {
       text-align: center;
       padding: 3px 5px;
-      cursor: default !important; }
+      cursor: none !important; }
     #theme .theme-selection-menu .selected-theme {
       background: #fff;
       border-radius: 5px; }
@@ -626,7 +636,7 @@ img {
 .menu-options {
   display: flex; }
   .menu-options div {
-    cursor: default !important;
+    cursor: none !important;
     margin-left: 10px; }
     .menu-options div:hover {
       color: #ddd; }
@@ -644,8 +654,7 @@ img {
 .hud-message {
   text-align: center;
   font-size: 45px;
-  font-family: "Short Stack", cursive;
-  transition: all 1s linear; }
+  font-family: "Short Stack", cursive; }
 
 .time-bonus-indicator {
   position: absolute;
@@ -712,7 +721,7 @@ input[type="submit"] {
   .players-hand h4 {
     text-align: center; }
   .players-hand input[type="button"] {
-    cursor: default !important;
+    cursor: none !important;
     width: 30%;
     padding: 10px;
     font-size: 1.25rem;
@@ -725,7 +734,7 @@ input[type="submit"] {
     .players-hand input[type="button"] :focus {
       border: none; }
   .players-hand card-t {
-    cursor: default !important;
+    cursor: none !important;
     transition: all 0.2s ease;
     border-radius: 10px; }
   .players-hand .show-hand {
@@ -769,7 +778,7 @@ input[type="submit"] {
     border-collapse: collapse;
     text-align: center;
     font-size: 2rem;
-    cursor: default !important;
+    cursor: none !important;
     background: #eee;
     transition: all 0.2s ease; }
   .players-hand .value-options-two {
@@ -784,7 +793,7 @@ input[type="submit"] {
     text-align: center;
     padding-top: 20px;
     background: #eee;
-    cursor: default !important;
+    cursor: none !important;
     transition: all 0.2s ease; }
   .players-hand .fifteen-count {
     position: relative;
@@ -835,7 +844,7 @@ input[type="submit"] {
     width: 160px;
     height: 80px;
     background: #eee;
-    cursor: default !important;
+    cursor: none !important;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1137,7 +1146,7 @@ input[type="submit"] {
       font-size: 0.9rem;
       color: #777; }
       .ta-outer-boundaries .ta-timer-score-display .menu-options div {
-        cursor: default !important;
+        cursor: none !important;
         margin: 0 10px; }
         .ta-outer-boundaries .ta-timer-score-display .menu-options div:hover {
           color: #ddd; }

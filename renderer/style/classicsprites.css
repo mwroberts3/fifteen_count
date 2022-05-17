@@ -119,7 +119,22 @@ body {
   animation-direction: alternate;
 }
 
+.background-helper {
+  position: absolute;
+  top: 0;
+  left: -100vw;
+  width: 200vw;
+  height: 100vh;
+  background: url("../img/classic-theme-bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1;
+  filter: blur(10px);
+}
+
 .hud-message {
+  color: #333;
+  -webkit-text-stroke: 1.5px #333;
   animation-name: color-shift;
   animation-duration: 100s;
   animation-iteration-count: infinite;
@@ -127,7 +142,8 @@ body {
 }
 
 #personal-highscore-display {
-  animation-name: color-shift;
+  color: #333;
+  animation-name: color-shift-highscore;
   animation-duration: 100s;
   animation-iteration-count: infinite;
   animation-direction: alternate-reverse;
@@ -196,10 +212,30 @@ body {
 }
 
 @keyframes color-shift {
+  0% {
+    -webkit-text-stroke: 1.5px #333;
+    color: #333;
+  }
+
   52% {
-    color: #fff;
+    -webkit-text-stroke: 1.5px #ccc;
+    color: #ccc;
   }
   70% {
-    color: #fff;
+    -webkit-text-stroke: 1.5px #ccc;
+    color: #ccc;
+  }
+}
+
+@keyframes color-shift-highscore {
+  0% {
+    color: #333;
+  }
+
+  52% {
+    color: #ccc;
+  }
+  70% {
+    color: #ccc;
   }
 }
