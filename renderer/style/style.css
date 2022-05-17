@@ -930,14 +930,15 @@ input[type="submit"] {
       width: 257.14px; }
   #points-breakdown-view #score-review-header {
     position: absolute;
-    top: 0;
+    top: 32px;
     right: 125px;
     transform: translateX(-50%);
     color: #fff;
     font-size: 64px;
     font-family: "Short Stack", cursive;
+    -webkit-text-stroke: 1px #fff;
     opacity: 0;
-    transition: all 3s linear; }
+    transition: all 0.5s linear; }
   #points-breakdown-view progress[value] {
     -webkit-appearance: none;
     appearance: none;

@@ -22,7 +22,8 @@ const steamAuthLogin = () => {
               // change contents of steam login popup after steam login
               if (steamLoginPopup) {
                 steamLoginPopupBtnContainer.style.display = 'none';
-                steamLoginPopup.textContent = 'Thanks for logging in!'
+                steamLoginPopup.style.fontSize = '32px';
+                steamLoginPopup.textContent = 'Thanks for logging in!';
               }
 
               tempInfoCont.innerHTML = data.substring(500);

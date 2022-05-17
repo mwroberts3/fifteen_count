@@ -71,7 +71,7 @@ function displayPersonalTimeAttackScore() {
     scoreDisplay.innerHTML = ``;
   } else {
     personalHighscoreContainerTimeAttack.children[1].textContent = `0`;
-    personalHighscoreContainerTimeAttack.children[2].innerHTML = `<strong>Passes:</strong>&nbsp;<span style="padding-top: 1px;">${personalHighscores[0]['taFullPassCount']}</span>`;
+    personalHighscoreContainerTimeAttack.children[2].innerHTML = `<strong>Passes:</strong>&nbsp;<span style="padding-top: 1px;">0</span>`;
     personalHighscoreContainerTimeAttack.children[3].innerHTML = `<strong>Date:</strong>&nbsp;na`;
     scoreDisplay.innerHTML = ``;
   }

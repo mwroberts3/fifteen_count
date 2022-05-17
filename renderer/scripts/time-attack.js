@@ -568,6 +568,10 @@ function newHighscoreCheckAndUpdate() {
     if (pointsOnDisplay > highscoreToBeat && !highscoreDefeated) {
         highscoreDefeated = true;
 
+        if (userSelectedSoundSettings.SFX) {
+            newHighscoreSFX.play();
+        }
+
         setInterval(() => {
             taHighscoreDisplay.innerText = `${pointsOnDisplay}`
         }, 100);

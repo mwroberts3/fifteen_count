@@ -1,7 +1,7 @@
 {
   "name": "indigoloop",
   "version": "1.0.0",
-  "description": "Game of quick count and combos",
+  "description": "Game of quick-counting, strategy and luck",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
