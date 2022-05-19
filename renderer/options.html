@@ -24,7 +24,7 @@
           <li class="controls option-selected">Controls</li>
           <li class="display">Display</li>
           <li class="theme">Theme / Sounds</li>
-          <li class="steam">Steam</li>
+          <li class="steam">User</li>
           <li class="about-game">About</li>
         </ul>
       </nav>
@@ -118,11 +118,18 @@
           </div>
         </section>
         <section id="steam" class="hidden">
+          <h3>Steam User</h3>
           <div class="xy-center">
             <div id="steam-login-prompt" class="xy-center">
-              <p id="options-steam-user-display"></p>
+              <p id="options-steam-user-display" style="padding-top: 0"></p>
               <button class="main-btn" onclick="steamLogout()">Logout</button>
             </div>
+          </div>
+          <h3 style="margin-top: 30px">Reset Score Data</h3>
+          <div class="xy-center">
+            <button id="reset-scores-btn" class="main-btn light-menu-btn">
+              Reset
+            </button>
           </div>
         </section>
         <section id="about-game" class="hidden">
