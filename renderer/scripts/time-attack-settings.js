@@ -41,10 +41,10 @@ function closeHowTo() {
 // get controls
 if (!localStorage.getItem('controls')) {
   controls = {
-    actionBtn: "ShiftLeft",
-    lowValBtn: "ControlLeft",
-    uncheckcardsBtn: "KeyZ",
-    swapBtn: "KeyX",
+    actionBtn: "KeyS",
+    lowValBtn: "KeyZ",
+    uncheckcardsBtn: "KeyC",
+    swapBtn: "KeyV",
     pauseBtn: "Space"
   }
 

@@ -39,10 +39,10 @@ const resetControlsBtn = document.querySelector('#reset-controls-btn');
 
 let controls = {};
 let defaultControls = {
-  actionBtn: "ShiftLeft",
-  lowValBtn: "ControlLeft",
-  uncheckcardsBtn: "KeyZ",
-  swapBtn: "KeyX",
+  actionBtn: "KeyS",
+  lowValBtn: "KeyZ",
+  uncheckcardsBtn: "KeyC",
+  swapBtn: "KeyV",
   pauseBtn: "Space"
 };
 
@@ -301,4 +301,26 @@ function steamLoginCheck() {
 
 function steamLogout() {
   localStorage.setItem('steam-credentials', JSON.stringify({userName: '', steamId: ''}))
+}
+
+// Reset score data
+function resetLocalScores() {
+  let tempScores = JSON.parse(localStorage.getItem('highscore'));
+
+  tempScores[0].date = null;
+  tempScores[0].totalPoints = 0;
+  tempScores[0].indigoLoops = 0;
+  tempScores[0].totalCardsPlayed = 0;
+  tempScores[0].totalSeconds = 0;
+
+  tempScores[0].taDate = null;
+  tempScores[0].timeAttack = 0;
+  if (tempScores[0].taFullPassCount) {
+    tempScores[0].taFullPassCount = 0
+  };
+
+
+  localStorage.setItem('highscore', JSON.stringify(tempScores));
+
+  console.log(tempScores);
 }
