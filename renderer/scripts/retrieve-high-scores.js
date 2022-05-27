@@ -3,6 +3,7 @@ const steamworksInfo = require('../steamworksFiles/steamworksInfo.json')
 const scoreDisplay = document.querySelector(".score-display");
 const personalHighscoreContainer = document.querySelector('.high-score-container').childNodes[3];
 const personalHighscoreContainerTimeAttack = document.querySelector('.personal-highscore-container-time-attack');
+const inGameAchievementsList =  document.querySelector('.in-game-achievements');
 
 let arcadeScoresDisplayed = true;
 let taScoresDisplayed = false;
@@ -28,29 +29,56 @@ highscoreSelect.addEventListener('click', e => {
   if (e.target.tagName === 'LI') {
     if (e.target.nextElementSibling) {
       e.target.nextElementSibling.classList.remove('option-selected');
-    } else {
-      e.target.previousElementSibling.classList.remove('option-selected');
+
+      if (e.target.nextElementSibling.nextElementSibling) {
+        e.target.nextElementSibling.nextElementSibling.classList.remove('option-selected');
+      }
     }
+
+    if (e.target.previousElementSibling) {
+      e.target.previousElementSibling.classList.remove('option-selected');
+
+      if (e.target.previousElementSibling.previousElementSibling) {
+        e.target.previousElementSibling.previousElementSibling.classList.remove('option-selected');
+      }
+    } 
+
     e.target.classList.add('option-selected');
   }
+ 
+  if (e.target.textContent === "Arcade") {
+    inGameAchievementsList.classList.add('hidden');
 
-  if (highscoreSelect.childNodes[1].children[1].classList.contains('option-selected')) {
-    // don't retrieve scores again on click if they're already displayed
-    if (!taScoresDisplayed) {
-      displayPersonalTimeAttackScore();
-      displayGlobalTimeAttackScores();
-      taScoresDisplayed = true;
-      arcadeScoresDisplayed = false;
-    }
-  } else {
-    if (!arcadeScoresDisplayed) {
-      displayPersonalArcadeScore();
-      displayGlobalArcadeScores();
-      arcadeScoresDisplayed = true;
-      taScoresDisplayed = false;
-    }
+    displayPersonalArcadeScore();
+    displayGlobalArcadeScores();
+    arcadeScoresDisplayed = true;
+    taScoresDisplayed = false;
+  }
+
+  if (e.target.textContent === "Time Attack") {
+    inGameAchievementsList.classList.add('hidden');
+
+    displayPersonalTimeAttackScore();
+    displayGlobalTimeAttackScores();
+    taScoresDisplayed = true;
+    arcadeScoresDisplayed = false;
+  }
+
+  if (e.target.textContent === "Achievements") {
+    displayAchievements();
   }
 }) 
+
+function displayAchievements() {
+  document.querySelector('h3').textContent = 'Achievements'
+
+  personalHighscoreContainerTimeAttack.classList.add('hidden');
+  personalHighscoreContainer.classList.add('hidden');
+  
+  scoreDisplay.innerHTML = ``
+  
+  inGameAchievementsList.classList.remove('hidden');
+}
 
 // display arcade score by default
 displayPersonalArcadeScore();
