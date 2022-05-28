@@ -486,6 +486,30 @@ img {
   }
 }
 
+.in-game-achievements {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .achievements-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 900px;
+  }
+
+  .achievement-group {
+    margin-bottom: 10px;
+    // width: 300px;
+
+    li {
+      list-style: none;
+    }
+  }
+}
+
 // SETTINGS
 .how-to-nav,
 .high-score-mode-select,

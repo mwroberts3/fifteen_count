@@ -382,6 +382,22 @@ img {
     .high-score-container table .points-display {
       font-size: 1.65rem; }
 
+.in-game-achievements {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .in-game-achievements .achievements-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 900px; }
+  .in-game-achievements .achievement-group {
+    margin-bottom: 10px; }
+    .in-game-achievements .achievement-group li {
+      list-style: none; }
+
 .how-to-nav ul,
 .high-score-mode-select ul,
 .how-to-play-mode-select ul {

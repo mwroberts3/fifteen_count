@@ -75,7 +75,7 @@ function displayAchievements() {
   personalHighscoreContainerTimeAttack.classList.add('hidden');
   personalHighscoreContainer.classList.add('hidden');
   
-  scoreDisplay.innerHTML = ``
+  scoreDisplay.innerHTML = ``;
   
   inGameAchievementsList.classList.remove('hidden');
 }
@@ -128,7 +128,10 @@ function displayPersonalArcadeScore() {
 }
 
 function displayGlobalArcadeScores() {
-  document.querySelector('table').style.width = '1100px';
+
+  // don't display global highscores, if achievements option clicked while scores are still loading
+  if (!document.querySelector('ul').children[2].classList.contains('option-selected')) {
+    document.querySelector('table').style.width = '1100px';
 
   scoreDisplay.innerHTML = `
   <tr>
@@ -154,6 +157,7 @@ function displayGlobalArcadeScores() {
     <td>${hexToAsciiDate(globalArcadeScores[i].detailData)}</td>
     `
     scoreDisplay.appendChild(newHighscoreData);
+  }
   }
 }
 
