@@ -87,7 +87,7 @@ exports.jackpotBonusPointsAni = (totalCardsPlayed, jackpotSameColorCheck, totalC
     jackpotBonusIndicator.style.transform = `translateY(-30px)`;
     jackpotBonusIndicator.style.opacity = `0`;
     jackpotBonusIndicator.style.color = `#fff`;
-  }, 15);
+  }, 100);
 
   // card icon rotation animation
   document.querySelector('#cards-icon').style.transition = "all 1s ease";

@@ -49,11 +49,11 @@ let pointsPerPlayBreakdown = [];
 
 // Scoring variable
 // Count Phase
-let pointsPerCardCountPhase = 9;
-let sameColorMultCountPhase = 1.25;
+let pointsPerCardCountPhase = 5;
+let sameColorMultCountPhase = 1.9;
 
 // Gameplay variables & switches
-let pointsValidity = false;
+let countValidity = false;
 let firstSubmit = false;
 let comboSubmit = false;
 let comboSkip = false;
@@ -66,6 +66,7 @@ let swappedCardTimeBonusNulify = false;
 let swapActive = false;
 
 let roundBonusTimer = 0;
+let offsetDiff = 0;
 
 let secondsBonus = 12;
 let indigoLoopBonus = 36;
@@ -377,7 +378,7 @@ function reset() {
   }
 
   sameColorCheckCheck = false;
-  pointsValidity = false;
+  countValidity = false;
   firstSubmit = false;
   comboSubmit = false;
   comboSkip = false;
@@ -430,7 +431,7 @@ function comboCheck() {
   let checkedCards = document.querySelectorAll(".checked");
   comboCardcount = 0;
   pointsInPlay = 0;
-  pointsValidity = false;
+  countValidity = false;
   checkedCards.forEach((card) => {
     if (
       card.children[0].getAttribute("rank") == "fifteen-one" &&
@@ -438,7 +439,7 @@ function comboCheck() {
       checkedCards.length === 1
     ) {
       pointsInPlay = pointsPerCardCountPhase;
-      pointsValidity = true;
+      countValidity = true;
     } else {
       checkedCardSuits.push(card.children[0].getAttribute("suit"));
       comboCardcount++;
@@ -446,7 +447,7 @@ function comboCheck() {
   });
   if (comboCardcount > 1 && fifteenCount === 15) {
     pointsInPlay = comboCardcount * pointsPerCardCountPhase;
-    pointsValidity = true;
+    countValidity = true;
     if (
       checkedCardSuits.every(sameColorRed) == true ||
       checkedCardSuits.every(sameColorBlack) == true
@@ -464,7 +465,7 @@ function cardsSubmit() {
   // make sure multi-value cards have a value selected
   let checkedCards = document.querySelectorAll(".checked");
   checkedCards.forEach((card) => {
-    if (!card.classList.contains("value-selected") && pointsValidity) {
+    if (!card.classList.contains("value-selected") && countValidity) {
       if (card.children[0].getAttribute("rank") === "ten-one" || card.children[0].getAttribute("rank") === "eleven-one" || card.children[0].getAttribute("rank") === "twelve-one" || card.children[0].getAttribute("rank") === "fifteen-one"){
         card.classList.remove("checked");
       }
@@ -481,7 +482,7 @@ function cardsSubmit() {
     selectCard();    
   }
 
-  if (pointsValidity === true) {
+  if (countValidity === true) {
     pointsInPlay = Math.round(pointsInPlay);
     totalPoints += pointsInPlay;
     pointsBreakdown.cardPoints += pointsInPlay;
@@ -702,7 +703,7 @@ function cardsSubmit() {
       utils.fullClearBorderAni(themeSelection, totalCardsPlayed, jackpotSameColorCheck,jackpotMultiplierLvl, jackpotMultiplier);
     }
   }
-  if (pointsValidity === true && comboSubmit === true) { 
+  if (countValidity === true && comboSubmit === true) { 
     // combo submit sound effect
     if (userSelectedSoundSettings.SFX) {
     comboSubmitSFX.play();
@@ -720,53 +721,80 @@ function cardsSubmit() {
 }
 
 function roundBonusCheck() {
-  let roundBonusTimerCheck = new Date();
-  let roundBonusPoints = 0;
-  let roundBonuses = [
-    1.45,
-    1.45,
-    1.45,
-    1.45,
-    1.3,
-    1.3,
-    1.3,
-  ];
-  let diff =
-    (roundBonusTimerCheck.getTime() - roundBonusTimer.getTime()) / 1000;
-  diff = Math.round(diff);
+  if (!firstSubmit && countValidity) {
+    let roundBonusTimerCheck = new Date();
+    let roundBonusPoints = 0;
+    let roundBonuses = [
+      1.45,
+      1.45,
+      1.45,
+      1.45,
+      1.3,
+      1.3,
+      1.3,
+    ];
+    let diff =
+      (roundBonusTimerCheck.getTime() - roundBonusTimer.getTime()) / 1000;
 
-  if (diff <= 6 && firstSubmit === false && pointsValidity === true && swappedCardTimeBonusNulify === false) {
-    roundBonusPoints = (pointsInPlay * roundBonuses[diff]) - pointsInPlay;
+    if (offsetDiff > 0) {
+      diff = Math.round(diff) + offsetDiff;
 
-    if (diff >= 3) {
-      // show level 1 animation
-      timeBonusLevelforAnimation = 1;
+      offsetDiff = 0; 
     } else {
-      // show level 2 animation
-      timeBonusLevelforAnimation = 2;
+      diff = Math.round(diff);
     }
-    
-    roundBonusPoints = Math.round(roundBonusPoints);
-    
-    totalPoints += roundBonusPoints;
-    
-    pointsBreakdown.timePoints += roundBonusPoints;  
-
-    // add to points review array
-    pointsPerPlayBreakdown.unshift(
-      {
-        'points' : roundBonusPoints,
-        'type' : 'time(speed)',
-        'bonus-level' : diff,
-        'bonus-multiplier' : roundBonuses[diff]
-      }
-    )
-
-  } else if (diff > 8 && firstSubmit === false && pointsValidity === true) {
-    timeBonusLevelforAnimation = 0;
-  }
   
+    console.log('diff', diff);
+  
+    if (diff <= 6 && firstSubmit === false && countValidity === true && swappedCardTimeBonusNulify === false) {
+      roundBonusPoints = (pointsInPlay * roundBonuses[diff]) - pointsInPlay;
+  
+      if (diff >= 3) {
+        // show level 1 animation
+        timeBonusLevelforAnimation = 1;
+      } else {
+        // show level 2 animation
+        timeBonusLevelforAnimation = 2;
+      }
+      
+      roundBonusPoints = Math.round(roundBonusPoints);
+      
+      totalPoints += roundBonusPoints;
+      
+      pointsBreakdown.timePoints += roundBonusPoints;  
+  
+      // add to points review array
+      pointsPerPlayBreakdown.unshift(
+        {
+          'points' : roundBonusPoints,
+          'type' : 'time(speed)',
+          'bonus-level' : diff,
+          'bonus-multiplier' : roundBonuses[diff]
+        }
+      )
+  
+    } else if (diff > 8 && firstSubmit === false && countValidity === true) {
+      timeBonusLevelforAnimation = 0;
+    }
+  }
+
   cardsSubmit();
+}
+
+function speedBonusTimerPauseOffset() {
+  let speedBonusOffset = new Date();
+
+  if (offsetDiff <= 0) {
+    offsetDiff =
+    (speedBonusOffset.getTime() - roundBonusTimer.getTime()) / 1000;
+  } else {
+    offsetDiff +=
+    (speedBonusOffset.getTime() - roundBonusTimer.getTime()) / 1000;
+  }
+
+  offsetDiff = Math.round(offsetDiff); 
+
+  console.log('offset Diff', offsetDiff);
 }
 
 // Selecting cards
@@ -1436,12 +1464,18 @@ document.addEventListener('keyup', (e) => {
             pauseScreen.classList.remove('hidden');
             secondsLeftAtPause = secondsLeft;
             displaySecondsWhilePaused();
+
+            // pause speed bonus timer and store offset
+            speedBonusTimerPauseOffset();
         } else {
           gamePaused = false;
             pauseScreen.classList.add('hidden');
             secondsLeft = secondsLeftAtPause;
             timer.textContent = `${secondsLeftAtPause + 1}`; 
             clearInterval(pausedTimerSet);
+
+            // reset speed bonus timer
+            roundBonusTimer = new Date();
         }
     }
 })
@@ -1485,7 +1519,7 @@ function uncheckAllCards(e) {
   if(e.code === uncheckcardsBtn) {
     multiCardValueB = 0;
     fifteenCount = 0;
-    pointsValidity = false;
+    countValidity = false;
     checkedCards.forEach((card) => {
       card.classList.toggle("checked");
       card.classList.remove("value-selected");
