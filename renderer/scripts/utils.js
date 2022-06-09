@@ -374,6 +374,24 @@ exports.jungleAndCosmosComboTrans = (playersHandArea) => {
     // console.log('ladies and gentleman we are floating in space');
     playersHandArea.style.backgroundImage = `url("./img/${themeSelection['bgImgCombo']}")`;
   }
+}
 
+exports.achievementsCheck = (code, stat, threshold) => {
+  let achievementExists = false;
 
+  let tempAchievementsContainer = JSON.parse(localStorage.getItem('achievements'));
+
+  for (i=0; i<tempAchievementsContainer.length; i++) {
+    console.log(tempAchievementsContainer[i])
+
+    if (tempAchievementsContainer[i] === code) {
+      achievementExists = true;
+    }
+  }
+
+  if (!achievementExists && stat >= threshold) {
+    tempAchievementsContainer.push(code);
+
+    localStorage.setItem('achievements', JSON.stringify(tempAchievementsContainer));
+  }
 }

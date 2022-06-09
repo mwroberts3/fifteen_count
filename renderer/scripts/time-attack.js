@@ -402,6 +402,10 @@ function redealReset() {
 
         fullPassCount++;
 
+        // check achievement
+        utils.achievementsCheck("ach-ta-1", fullPassCount, 3);
+        utils.achievementsCheck("ach-ta-2", fullPassCount, 5);
+
         if (!bonusAdded) {
             bonusPoints = sameSuitCheck(score, true);
             score += bonusPoints;

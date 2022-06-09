@@ -78,6 +78,27 @@ function displayAchievements() {
   scoreDisplay.innerHTML = ``;
   
   inGameAchievementsList.classList.remove('hidden');
+
+  checkForCompletedAchievements();
+}
+
+function checkForCompletedAchievements() {
+  let LSAchievementsContainer = JSON.parse(localStorage.getItem('achievements'));
+
+  const achievementsList = Array.from(document.querySelector('.achievements-container').querySelectorAll('LI'));
+
+  for(let i=0; i<achievementsList.length; i++) {
+    for(let k=0; k<LSAchievementsContainer.length; k++) {
+      if (achievementsList[i].id === LSAchievementsContainer[k]) {
+        achievementsList[i].innerHTML += `&nbsp;<img
+        src="./img/achievement-checkmark.png"
+        style="width: 16px; height: 18px"/>`;
+
+        achievementsList[i].style.color = "#777";
+        achievementsList[i].style.marginLeft = "17px";
+      }
+    }
+  }
 }
 
 // display arcade score by default

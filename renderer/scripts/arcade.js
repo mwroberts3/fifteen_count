@@ -520,9 +520,11 @@ function cardsSubmit() {
         jackCheckedCheck = jackCheckedCheck.filter(card => card.classList.contains('jackpot-special-border'));
 
         if (jackCheckedCheck.length === 0) {
-          totalCardsPlayed = Math.round(totalCardsPlayed * 0.5);
+          totalCardsPlayed = 0;
+          // totalCardsPlayed = Math.round(totalCardsPlayed * 0.5);
 
-          jackpotMultiplierLvl -= globalCardsInHand.length;
+          // jackpotMultiplierLvl -= globalCardsInHand.length;
+          jackpotMultiplierLvl = 0;
          
           if (jackpotMultiplierLvl <= 0) {
             jackpotMultiplierLvl = 1;
@@ -586,6 +588,10 @@ function cardsSubmit() {
                 jackpotSameColorCheck = false;
               }
 
+              // check achievement
+              utils.achievementsCheck("ach-jl-1", jackpotMultiplierLvl, 10);
+              utils.achievementsCheck("ach-jl-2", jackpotMultiplierLvl, 15);
+
               if (jackpotMultiplierLvl <= 1) {
                 jackpotMultiplierLvl = 1;
               }
@@ -624,6 +630,13 @@ function cardsSubmit() {
         'points' : secondsBonus,
         'type' : 'time(halfhand)'
       })
+
+      // check achievement
+      utils.achievementsCheck("ach-tis-1", secondsLeft, 150);
+      utils.achievementsCheck("ach-tis-2", secondsLeft, 200);
+
+      utils.achievementsCheck("ach-tots-1", totalSeconds, 450);
+      utils.achievementsCheck("ach-tots-2", totalSeconds, 1000);
 
       bonusTimeDisplay.textContent = `+${secondsBonus}`
       setTimeout(() => {
@@ -666,15 +679,21 @@ function cardsSubmit() {
 
       pointsBreakdown.indigoLoopCount++;
 
+      
       // add to points review array
       pointsPerPlayBreakdown.unshift({
         'points' : indigoLoopBonus,
         'type' : 'time(indigo loop)',
         'count' : pointsBreakdown.indigoLoopCount
       })
+      
+      // check achievement
+      utils.achievementsCheck("ach-lc-1", pointsBreakdown.indigoLoopCount, 5);
+      utils.achievementsCheck("ach-lc-2", pointsBreakdown.indigoLoopCount, 10);
 
-      // console.log('indigo loop bonus', indigoLoopBonus);
-
+      utils.achievementsCheck("ach-tots-1", totalSeconds, 450);
+      utils.achievementsCheck("ach-tots-2", totalSeconds, 1000);
+      
       hudMessage.fullHandClear(hudMessageDisplay);
 
       // these will have game skip combo round after playing a full hand
@@ -1065,9 +1084,11 @@ function swapButtonFunction() {
       
   // swapping with jackpot card in hand erases jackpot
   if (jackpotLive) {
-    totalCardsPlayed = Math.round(totalCardsPlayed * 0.5);
+    totalCardsPlayed = 0;
+    // totalCardsPlayed = Math.round(totalCardsPlayed * 0.5);
 
-    jackpotMultiplierLvl -= globalCardsInHand.length;
+    // jackpotMultiplierLvl -= globalCardsInHand.length;
+    jackpotMultiplierLvl = 0;
  
     if (jackpotMultiplierLvl < 0) {
       jackpotMultiplierLvl = 0;
@@ -1203,6 +1224,10 @@ function reDeal(cardsInHand, hand) {
 
   totalCardsPlayed += cardsPlayed.length;
   ultimateCardCount += cardsPlayed.length;
+
+  // check achievement
+  utils.achievementsCheck("ach-totc-1", ultimateCardCount, 300);
+  utils.achievementsCheck("ach-totc-2", ultimateCardCount, 600);
   
   totalCardsPlayedDisplay.innerHTML = `
   ${totalCardsPlayed} 

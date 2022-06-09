@@ -501,11 +501,38 @@ img {
   }
 
   .achievement-group {
+    margin: 0 10px;
     margin-bottom: 10px;
-    // width: 300px;
+    padding: 10px;
+    width: 300px;
+    // border: 1px dashed #777;
+    background-color: #eee;
+    border-radius: 10px;
+    
+    h4 {
+      text-align: center;
+    }
+
+    img {
+      // position: absolute;
+      // top: 5px;
+      // right: 20px;
+    }
 
     li {
+      // position: relative;
       list-style: none;
+      color: #333;
+      margin-bottom: 5px;
+      text-align: center;
+    }
+
+    li:first-of-type {
+      margin-top: 5px;
+    }
+
+    li:last-of-type {
+      margin-bottom: 0;
     }
   }
 }

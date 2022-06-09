@@ -394,9 +394,23 @@ img {
     flex-wrap: wrap;
     width: 900px; }
   .in-game-achievements .achievement-group {
-    margin-bottom: 10px; }
+    margin: 0 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 300px;
+    background-color: #eee;
+    border-radius: 10px; }
+    .in-game-achievements .achievement-group h4 {
+      text-align: center; }
     .in-game-achievements .achievement-group li {
-      list-style: none; }
+      list-style: none;
+      color: #333;
+      margin-bottom: 5px;
+      text-align: center; }
+    .in-game-achievements .achievement-group li:first-of-type {
+      margin-top: 5px; }
+    .in-game-achievements .achievement-group li:last-of-type {
+      margin-bottom: 0; }
 
 .how-to-nav ul,
 .high-score-mode-select ul,

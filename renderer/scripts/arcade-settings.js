@@ -1,4 +1,4 @@
-let secondsLeft = 99;
+let secondsLeft = 59;
 let threeSecCountdown;
 document.querySelector(".timer").textContent = "100";
 
@@ -118,6 +118,10 @@ if (!localStorage.getItem('theme-selection')) {
   localStorage.setItem('theme-selection', JSON.stringify(themeSelection));
 } else {
   themeSelection = JSON.parse(localStorage.getItem('theme-selection'))
+}
+
+if (!localStorage.getItem('achievements')) {
+  localStorage.setItem('achievements', JSON.stringify([]));
 }
 
 // Apply selected theme settings

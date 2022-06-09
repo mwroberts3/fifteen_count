@@ -57,6 +57,11 @@ if (localStorage.getItem('controls')) {
   pauseBtn = controls.pauseBtn;
   }
 
+// initialize achievements if first time playing or reset
+if (!localStorage.getItem('achievements')) {
+  localStorage.setItem('achievements', JSON.stringify([]));
+}
+
 // Set sound option settings
 let userSelectedSoundSettings = {};
 if (!localStorage.getItem('sound-settings')) {
