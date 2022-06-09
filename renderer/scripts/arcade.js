@@ -546,11 +546,11 @@ function cardsSubmit() {
 
               let jackpotPointsInPlay = 0;
 
-              totalPoints += Math.round(totalCardsPlayed * jackpotMultiplier);
+              totalPoints += Math.round((totalCardsPlayed + checkedCards.length) * jackpotMultiplier);
 
-              pointsBreakdown.jackpotPoints += Math.round(totalCardsPlayed * jackpotMultiplier);
+              pointsBreakdown.jackpotPoints += Math.round((totalCardsPlayed + checkedCards.length) * jackpotMultiplier);
 
-              jackpotPointsInPlay = Math.round(totalCardsPlayed * jackpotMultiplier);
+              jackpotPointsInPlay = Math.round((totalCardsPlayed + checkedCards.length) * jackpotMultiplier);
 
               // if (jackpotMultiplierLvl > 1) {
               //   totalPoints += Math.round(totalCardsPlayed * jackpotMultiplier);
@@ -577,7 +577,7 @@ function cardsSubmit() {
                 jackpotCheckSFX.play();
               }
 
-              utils.jackpotBonusPointsAni(totalCardsPlayed, jackpotSameColorCheck, totalCardsPlayedDisplay, jackpotMultiplierLvl, jackpotMultiplier);
+              utils.jackpotBonusPointsAni((totalCardsPlayed + checkedCards.length), jackpotSameColorCheck, totalCardsPlayedDisplay, jackpotMultiplierLvl, jackpotMultiplier);
 
               if (checkedCardSuits.every(sameColorRed) ||
               checkedCardSuits.every(sameColorBlack)) {
@@ -656,6 +656,11 @@ function cardsSubmit() {
     if (userSelectedSoundSettings.SFX) {
       firstSubmitSFX.play();
     }
+
+    totalCardsPlayedDisplay.innerHTML = `
+    ${totalCardsPlayed + checkedCards.length} 
+    <p></p>
+    `;
 
     // reset potential time bonus if card was swapped before submit
     swappedCardTimeBonusNulify = false;
