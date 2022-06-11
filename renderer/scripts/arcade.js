@@ -591,6 +591,7 @@ function cardsSubmit() {
               // check achievement
               utils.achievementsCheck("ach-jl-1", jackpotMultiplierLvl, 10);
               utils.achievementsCheck("ach-jl-2", jackpotMultiplierLvl, 15);
+              utils.achievementsCheck("ach-jl-3", jackpotMultiplierLvl, 20);
 
               if (jackpotMultiplierLvl <= 1) {
                 jackpotMultiplierLvl = 1;
@@ -632,11 +633,13 @@ function cardsSubmit() {
       })
 
       // check achievement
-      utils.achievementsCheck("ach-tis-1", secondsLeft, 150);
-      utils.achievementsCheck("ach-tis-2", secondsLeft, 200);
+      utils.achievementsCheck("ach-tis-1", secondsLeft, 100);
+      utils.achievementsCheck("ach-tis-2", secondsLeft, 150);
+      utils.achievementsCheck("ach-tis-3", secondsLeft, 200);
 
-      utils.achievementsCheck("ach-tots-1", totalSeconds, 450);
-      utils.achievementsCheck("ach-tots-2", totalSeconds, 1000);
+      utils.achievementsCheck("ach-tots-1", totalSeconds, 300);
+      utils.achievementsCheck("ach-tots-2", totalSeconds, 600);
+      utils.achievementsCheck("ach-tots-3", totalSeconds, 1000);
 
       bonusTimeDisplay.textContent = `+${secondsBonus}`
       setTimeout(() => {
@@ -695,9 +698,11 @@ function cardsSubmit() {
       // check achievement
       utils.achievementsCheck("ach-lc-1", pointsBreakdown.indigoLoopCount, 5);
       utils.achievementsCheck("ach-lc-2", pointsBreakdown.indigoLoopCount, 10);
+      utils.achievementsCheck("ach-lc-3", pointsBreakdown.indigoLoopCount, 15);
 
-      utils.achievementsCheck("ach-tots-1", totalSeconds, 450);
-      utils.achievementsCheck("ach-tots-2", totalSeconds, 1000);
+      utils.achievementsCheck("ach-tots-1", totalSeconds, 300);
+      utils.achievementsCheck("ach-tots-2", totalSeconds, 600);
+      utils.achievementsCheck("ach-tots-3", totalSeconds, 1000);
       
       hudMessage.fullHandClear(hudMessageDisplay);
 
@@ -1151,7 +1156,7 @@ function swapButtonFunction() {
   bonusTimeDisplay.style.color = "rgba(51, 131, 235, 0.9)";
 
   if (secondsLeft <= 5) {
-    timer.style.color = 'red'
+    timer.style.color = '#ff3232'
   }
 
   if (secondsLeft <= 0) {
@@ -1233,6 +1238,7 @@ function reDeal(cardsInHand, hand) {
   // check achievement
   utils.achievementsCheck("ach-totc-1", ultimateCardCount, 300);
   utils.achievementsCheck("ach-totc-2", ultimateCardCount, 600);
+  utils.achievementsCheck("ach-totc-2", ultimateCardCount, 1000);
   
   totalCardsPlayedDisplay.innerHTML = `
   ${totalCardsPlayed} 

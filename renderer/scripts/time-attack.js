@@ -163,7 +163,7 @@ const timeAttackTimer = setInterval(() => {
     }
 
     if (secondsLeft <= 5) {
-        timerDisplay.style.color = 'red'
+        timerDisplay.style.color = '#ff3232'
     }
     
     if (secondsLeft > -1) {
@@ -288,13 +288,19 @@ function shuffleTimeAttack() {
     for (let i = 0; i < drawAmount; i++) {
         activeHand.unshift(deck.pop()); 
     }
-    
+
     activeHand.forEach((card, index) => {
         let cardInHand = document.createElement('div');
         
         cardInHand.classList.add('ta-card');
         cardInHand.textContent = card.value;
         cardInHand.style.background = card.suit;
+
+        console.log(card.value)
+
+        if (card.value === 0) {
+            cardInHand.style.color = '#fdfd69';
+        }
         
         if (!bonusUnleashed && index === 0) {
             let bonusCardOverlay = document.createElement('div');
@@ -405,6 +411,7 @@ function redealReset() {
         // check achievement
         utils.achievementsCheck("ach-ta-1", fullPassCount, 3);
         utils.achievementsCheck("ach-ta-2", fullPassCount, 5);
+        utils.achievementsCheck("ach-ta-3", fullPassCount, 6);
 
         if (!bonusAdded) {
             bonusPoints = sameSuitCheck(score, true);

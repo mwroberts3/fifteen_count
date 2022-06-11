@@ -319,8 +319,7 @@ function resetLocalScores() {
     tempScores[0].taFullPassCount = 0
   };
 
-
   localStorage.setItem('highscore', JSON.stringify(tempScores));
 
-  console.log(tempScores);
+  localStorage.setItem('achievements', JSON.stringify([]));
 }
