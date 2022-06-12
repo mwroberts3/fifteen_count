@@ -1238,7 +1238,7 @@ function reDeal(cardsInHand, hand) {
   // check achievement
   utils.achievementsCheck("ach-totc-1", ultimateCardCount, 300);
   utils.achievementsCheck("ach-totc-2", ultimateCardCount, 600);
-  utils.achievementsCheck("ach-totc-2", ultimateCardCount, 1000);
+  utils.achievementsCheck("ach-totc-3", ultimateCardCount, 1000);
   
   totalCardsPlayedDisplay.innerHTML = `
   ${totalCardsPlayed} 
