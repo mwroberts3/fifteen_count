@@ -371,16 +371,26 @@ img {
   .high-score-container h3 {
     text-align: center; }
   .high-score-container table {
-    width: 1100px;
-    margin: 0 auto; }
+    width: 950px;
+    margin: 0 auto;
+    border-collapse: collapse; }
     .high-score-container table th {
       text-align: center;
-      padding: 10px 30px; }
+      padding: 5px 30px; }
     .high-score-container table td {
       text-align: left;
       padding: 10px 30px; }
     .high-score-container table .points-display {
       font-size: 1.65rem; }
+    .high-score-container table tr:nth-child(even) {
+      background: #efefef; }
+    .high-score-container table td:first-of-type {
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px; }
+    .high-score-container table td:last-of-type {
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+      padding-right: 10px; }
 
 .in-game-achievements {
   display: flex;

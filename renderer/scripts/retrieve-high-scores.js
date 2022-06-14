@@ -152,30 +152,30 @@ function displayGlobalArcadeScores() {
 
   // don't display global highscores, if achievements option clicked while scores are still loading
   if (!document.querySelector('ul').children[2].classList.contains('option-selected')) {
-    document.querySelector('table').style.width = '1100px';
+    document.querySelector('table').style.width = '1000px';
 
   scoreDisplay.innerHTML = `
   <tr>
-    <th style="width: 100px">Rank</th>
+    <th style="width: 50px;"></th>
     <th style="width: 250px; text-align: left">Name</th>
     <th style="width: 155px">Points</th>
     <th style="width: 115px">Cards</th>
     <th style="width: 115px">Time</th>
     <th style="width: 115px">Loops</th>
-    <th style="width: 250px; text-align: left">Date</th>
+    <th style="width: 200px; text-align: left">Date</th>
   </tr>
   `;
   for (let i=0; i < globalArcadeScores.length; i++) {
     let newHighscoreData = document.createElement('tr');
 
     newHighscoreData.innerHTML = `
-    <td class="center">${globalArcadeScores[i].rank}</td>
-    <td>${globalArcadeScoresNames[i]}</td>
-    <td class="center">${globalArcadeScores[i].score}</td>
-    <td class="center">${hexToAsciiCardsPlayed(globalArcadeScores[i].detailData)}</td>
-    <td class="center">${hexToAsciiSeconds(globalArcadeScores[i].detailData)}</td>
-    <td class="center">${hexToAsciiIndigoLoops(globalArcadeScores[i].detailData)}</td>
-    <td>${hexToAsciiDate(globalArcadeScores[i].detailData)}</td>
+      <td class="center" style="font-size: 18px">${globalArcadeScores[i].rank}</td>
+      <td>${globalArcadeScoresNames[i]}</td>
+      <td class="center">${globalArcadeScores[i].score}</td>
+      <td class="center">${hexToAsciiCardsPlayed(globalArcadeScores[i].detailData)}</td>
+      <td class="center">${hexToAsciiSeconds(globalArcadeScores[i].detailData)}</td>
+      <td class="center">${hexToAsciiIndigoLoops(globalArcadeScores[i].detailData)}</td>
+      <td style="font-size: 18px">${hexToAsciiDate(globalArcadeScores[i].detailData)}</td>
     `
     scoreDisplay.appendChild(newHighscoreData);
   }
@@ -183,15 +183,15 @@ function displayGlobalArcadeScores() {
 }
 
 function displayGlobalTimeAttackScores() {
-  document.querySelector('table').style.width = '910px';
+  document.querySelector('table').style.width = '810px';
 
   scoreDisplay.innerHTML = `
   <tr>
-    <th style="width: 100px">Rank</th>
+    <th style="width: 50px"></th>
     <th style="width: 250px; text-align: left">Name</th>
     <th style="width: 155px">Points</th>
     <th style="width: 155px">Passes</th>
-    <th style="width: 250px; text-align: left">Date</th>
+    <th style="width: 200px; text-align: left">Date</th>
   </tr>
   `;
 
@@ -199,11 +199,11 @@ function displayGlobalTimeAttackScores() {
     let newHighscoreData = document.createElement('tr');
 
     newHighscoreData.innerHTML = `
-    <td class="center">${globalTimeAttackScores[i].rank}</td>
+    <td class="center" style="font-size: 18px">${globalTimeAttackScores[i].rank}</td>
     <td>${globalTimeAttackScoresNames[i]}</td>
     <td class="center">${globalTimeAttackScores[i].score}</td>
     <td class="center">${hexToAsciiTAFullPasses(globalTimeAttackScores[i].detailData)}</td>
-    <td>${hexToAsciiTADate(globalTimeAttackScores[i].detailData)}</td>
+    <td style="font-size: 18px">${hexToAsciiTADate(globalTimeAttackScores[i].detailData)}</td>
     `
     scoreDisplay.appendChild(newHighscoreData);
   }
