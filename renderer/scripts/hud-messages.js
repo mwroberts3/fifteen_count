@@ -98,6 +98,22 @@ exports.gameOver = (hudMessageDisplay) => {
     hudMessageDisplay.innerText = 'Game Over';
 }
 
+exports.achievementComplete = (hudMessageDisplay) => {
+    let numberOfAchievements = JSON.parse(localStorage.getItem('achievements')).length;
+
+    setTimeout(() => {
+        hudMessageDisplay.innerText = `Achievement Unlocked ${numberOfAchievements} / 18`;
+    }, 60);
+
+    specialMessage = true;
+
+    setTimeout(() => {
+        hudMessageDisplay.innerText = hudMessageCache
+
+        specialMessage = false;
+    }, 2000)
+}
+
 
 
 

@@ -552,7 +552,7 @@ document.addEventListener('keyup', (e) => {
 })
 // Menu click
 document.getElementById('pause-game-btn').addEventListener('click', () => {
-    if (document.querySelector(".ta-pause-screen").classList.contains('hidden')) {
+    if (document.querySelector(".ta-pause-screen").classList.contains('hidden')  && threeSecCountdown < 0) {
         gamePaused = true;
         document.querySelector(".ta-pause-screen").classList.remove('hidden');
         secondsLeftAtPause = secondsLeft;
@@ -565,6 +565,14 @@ document.getElementById('pause-game-btn').addEventListener('click', () => {
         timerDisplay.textContent = `${secondsLeftAtPause}`; 
         clearInterval(pausedTimerSet);
     })
+})
+
+document.querySelector(".ta-pause-screen").addEventListener('click', () => {
+    gamePaused = false;
+    document.querySelector(".ta-pause-screen").classList.add('hidden');
+    secondsLeft = secondsLeftAtPause;
+    timerDisplay.textContent = `${secondsLeftAtPause}`; 
+    clearInterval(pausedTimerSet);
 })
 
 function displaySecondsWhilePaused() {

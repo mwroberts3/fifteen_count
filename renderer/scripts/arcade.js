@@ -62,7 +62,6 @@ let comboCardcount = 0;
 let multiCardValueB = 0;
 
 let dblSwapCheck = false;
-let swappedCardTimeBonusNulify = false;
 let swapActive = false;
 
 let roundBonusTimer = 0;
@@ -168,11 +167,11 @@ setTimeout(() => {
 }, threeSecCountdown * 1000);
 
 // Button submit
-  document.addEventListener("keyup", (e) => {
-    if (e.code === actionBtn && threeSecCountdown <= 1) {
-      roundBonusCheck();
-    }
-  }); 
+document.addEventListener("keyup", (e) => {
+  if (e.code === actionBtn && threeSecCountdown <= 1) {
+    roundBonusCheck();
+  }
+}); 
 
 // Bonus check
 submitCards.addEventListener("click", roundBonusCheck);
@@ -665,9 +664,6 @@ function cardsSubmit() {
     <p></p>
     `;
 
-    // reset potential time bonus if card was swapped before submit
-    swappedCardTimeBonusNulify = false;
-
     if (document.querySelector('.jackpot-special-border')) {
       document.querySelector('.jackpot-special-border').classList.remove('jackpot-special-border');
     }
@@ -703,6 +699,10 @@ function cardsSubmit() {
       utils.achievementsCheck("ach-tots-1", totalSeconds, 300);
       utils.achievementsCheck("ach-tots-2", totalSeconds, 600);
       utils.achievementsCheck("ach-tots-3", totalSeconds, 1000);
+
+      utils.achievementsCheck("ach-tis-1", secondsLeft, 100);
+      utils.achievementsCheck("ach-tis-2", secondsLeft, 150);
+      utils.achievementsCheck("ach-tis-3", secondsLeft, 200);      
       
       hudMessage.fullHandClear(hudMessageDisplay);
 
@@ -773,10 +773,12 @@ function roundBonusCheck() {
       diff = Math.round(diff);
     }
   
-    console.log('diff', diff);
+    console.log(' REALdiff', diff);
   
-    if (diff <= 6 && firstSubmit === false && countValidity === true && swappedCardTimeBonusNulify === false) {
+    if (diff <= 6 && firstSubmit === false && countValidity === true) {
       roundBonusPoints = (pointsInPlay * roundBonuses[diff]) - pointsInPlay;
+
+      console.log('roudn bonus points', roundBonusPoints);
   
       if (diff >= 3) {
         // show level 1 animation
@@ -1076,9 +1078,6 @@ function swapButtonFunction() {
     swapActive = false;
   }, 100);
 
-  // nulify potential time bonus on next submit after card is swapped
-  swappedCardTimeBonusNulify = true;
-
   let cardsInHand = document.querySelectorAll(".card-in-hand");
 
   // uncheck already checked cards
@@ -1189,6 +1188,15 @@ function swapButtonFunction() {
   if (userSelectedSoundSettings.SFX) {
     swapCardSFX.play();
   }
+
+  // reset speed bonus timer
+  // offsetDiff = 0;
+  // roundBonusCheck(true);
+  // roundBonusTimer = new Date();
+
+  console.log('first submit', firstSubmit,countValidity);
+
+  roundBonusTimer = new Date();
 }
     
 // Redeal
@@ -1494,44 +1502,50 @@ let pausedTimerSet;
 
 // Button press
 document.addEventListener('keyup', (e) => {
-    if(e.code === pauseBtn && threeSecCountdown <= 1 && secondsLeft >= 1) {
-        if (pauseScreen.classList.contains('hidden')) {
-            gamePaused = true;  
-            pauseScreen.classList.remove('hidden');
-            secondsLeftAtPause = secondsLeft;
-            displaySecondsWhilePaused();
-
-            // pause speed bonus timer and store offset
-            speedBonusTimerPauseOffset();
-        } else {
-          gamePaused = false;
-            pauseScreen.classList.add('hidden');
-            secondsLeft = secondsLeftAtPause;
-            timer.textContent = `${secondsLeftAtPause + 1}`; 
-            clearInterval(pausedTimerSet);
-
-            // reset speed bonus timer
-            roundBonusTimer = new Date();
-        }
-    }
-})
+  if (e.code === pauseBtn) {
+    pauseScreenFunction(e)
+  }
+});
 
 // Menu click
-document.getElementById('pause-game-btn').addEventListener('click', () => {
-  if (pauseScreen.classList.contains('hidden')) {
-      gamePaused = true;  
-      pauseScreen.classList.remove('hidden');
-      secondsLeftAtPause = secondsLeft;
-      displaySecondsWhilePaused();
-  } 
-  pauseScreen.addEventListener('click', () => {
-    gamePaused = false;
-      pauseScreen.classList.add('hidden');
-      secondsLeft = secondsLeftAtPause;
-      timer.textContent = `${secondsLeftAtPause + 1}`; 
-      clearInterval(pausedTimerSet);
-  })
+document.getElementById('pause-game-btn').addEventListener('click', (e) => {
+  pauseScreenFunction(e)
 })
+
+// To close pause screen with click
+pauseScreen.addEventListener('click', (e) => {
+  gamePaused = false;
+  pauseScreen.classList.add('hidden');
+  secondsLeft = secondsLeftAtPause;
+  timer.textContent = `${secondsLeftAtPause + 1}`; 
+  clearInterval(pausedTimerSet);
+
+  // reset speed bonus timer
+  roundBonusTimer = new Date();
+})
+
+function pauseScreenFunction(e) {
+  if(threeSecCountdown <= 1 && secondsLeft >= 1) {
+    if (pauseScreen.classList.contains('hidden')) {
+        gamePaused = true;  
+        pauseScreen.classList.remove('hidden');
+        secondsLeftAtPause = secondsLeft;
+        displaySecondsWhilePaused();
+
+        // pause speed bonus timer and store offset
+        speedBonusTimerPauseOffset();
+    } else {
+        gamePaused = false;
+        pauseScreen.classList.add('hidden');
+        secondsLeft = secondsLeftAtPause;
+        timer.textContent = `${secondsLeftAtPause + 1}`; 
+        clearInterval(pausedTimerSet);
+
+        // reset speed bonus timer
+        roundBonusTimer = new Date();
+    }
+}
+}
 
 function displaySecondsWhilePaused() {
   document.getElementById('resume-game-key').textContent = `${pauseBtn}`;

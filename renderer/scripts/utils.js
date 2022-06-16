@@ -1,3 +1,5 @@
+const hudMessage = require('./hud-messages');
+
 // Quick fadein when starting arcade and time attack mode
 exports.gamescreenFadeinFunc = () => {
 document.querySelector('body').style.
@@ -382,8 +384,6 @@ exports.achievementsCheck = (code, stat, threshold) => {
   let tempAchievementsContainer = JSON.parse(localStorage.getItem('achievements'));
 
   for (i=0; i<tempAchievementsContainer.length; i++) {
-    console.log(tempAchievementsContainer[i])
-
     if (tempAchievementsContainer[i] === code) {
       achievementExists = true;
     }
@@ -393,5 +393,7 @@ exports.achievementsCheck = (code, stat, threshold) => {
     tempAchievementsContainer.push(code);
 
     localStorage.setItem('achievements', JSON.stringify(tempAchievementsContainer));
+
+    hudMessage.achievementComplete(document.querySelector(".hud-message"));
   }
 }

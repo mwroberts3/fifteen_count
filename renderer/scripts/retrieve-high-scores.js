@@ -157,12 +157,12 @@ function displayGlobalArcadeScores() {
   scoreDisplay.innerHTML = `
   <tr>
     <th style="width: 50px;"></th>
-    <th style="width: 250px; text-align: left">Name</th>
+    <th style="width: 250px; text-align: left"></th>
     <th style="width: 155px">Points</th>
     <th style="width: 115px">Cards</th>
     <th style="width: 115px">Time</th>
     <th style="width: 115px">Loops</th>
-    <th style="width: 200px; text-align: left">Date</th>
+    <th style="width: 200px; text-align: left"></th>
   </tr>
   `;
   for (let i=0; i < globalArcadeScores.length; i++) {
@@ -188,10 +188,10 @@ function displayGlobalTimeAttackScores() {
   scoreDisplay.innerHTML = `
   <tr>
     <th style="width: 50px"></th>
-    <th style="width: 250px; text-align: left">Name</th>
+    <th style="width: 250px; text-align: left"></th>
     <th style="width: 155px">Points</th>
     <th style="width: 155px">Passes</th>
-    <th style="width: 200px; text-align: left">Date</th>
+    <th style="width: 200px; text-align: left"></th>
   </tr>
   `;
 
