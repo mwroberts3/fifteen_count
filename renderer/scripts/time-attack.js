@@ -15,6 +15,8 @@ scoreDisplay = document.querySelector('.ta-score-display');
 const cardsDisplay = document.querySelector(".ta-cards-display");
 const taHighscoreDisplay = document.querySelector(".ta-alltime-score-display");
 
+const pausedTimerDisplay = document.querySelector('.seconds-left');
+
 let deck = [];
 let activeHand = [];
 let testHand = [];
@@ -163,7 +165,9 @@ const timeAttackTimer = setInterval(() => {
     }
 
     if (secondsLeft <= 5) {
-        timerDisplay.style.color = '#ff3232'
+        timerDisplay.style.color = '#ff4b7a'
+    } else {
+        timerDisplay.style.color = '#98fd00';
     }
     
     if (secondsLeft > -1) {
@@ -540,11 +544,21 @@ document.addEventListener('keyup', (e) => {
             gamePaused = true;
             document.querySelector(".ta-pause-screen").classList.remove('hidden');
             secondsLeftAtPause = secondsLeft;
+            if (secondsLeftAtPause <= 5) {
+                pausedTimerDisplay.style.color = '#ff4b7a'
+            } else {
+                pausedTimerDisplay.style.color = '#98fd00';
+            }
             displaySecondsWhilePaused();
         } else {
             gamePaused = false;
             document.querySelector(".ta-pause-screen").classList.add('hidden');
             secondsLeft = secondsLeftAtPause;
+            if (secondsLeft <= 5) {
+                timerDisplay.style.color = '#ff4b7a'
+            } else {
+                timerDisplay.style.color = '#98fd00';
+            }
             timerDisplay.textContent = `${secondsLeftAtPause}`; 
             clearInterval(pausedTimerSet);
         }
@@ -556,12 +570,22 @@ document.getElementById('pause-game-btn').addEventListener('click', () => {
         gamePaused = true;
         document.querySelector(".ta-pause-screen").classList.remove('hidden');
         secondsLeftAtPause = secondsLeft;
+        if (secondsLeftAtPause <= 5) {
+            pausedTimerDisplay.style.color = '#ff4b7a'
+        } else {
+            pausedTimerDisplay.style.color = '#98fd00';
+        }
         displaySecondsWhilePaused();
     } 
     document.querySelector(".ta-pause-screen").addEventListener('click', () => {
         gamePaused = false;
         document.querySelector(".ta-pause-screen").classList.add('hidden');
         secondsLeft = secondsLeftAtPause;
+        if (secondsLeft <= 5) {
+            timerDisplay.style.color = '#ff4b7a'
+        } else {
+            timerDisplay.style.color = '#98fd00';
+        }
         timerDisplay.textContent = `${secondsLeftAtPause}`; 
         clearInterval(pausedTimerSet);
     })
@@ -571,15 +595,20 @@ document.querySelector(".ta-pause-screen").addEventListener('click', () => {
     gamePaused = false;
     document.querySelector(".ta-pause-screen").classList.add('hidden');
     secondsLeft = secondsLeftAtPause;
+    if (secondsLeft <= 5) {
+        timerDisplay.style.color = '#ff4b7a'
+    } else {
+        timerDisplay.style.color = '#98fd00';
+    }
     timerDisplay.textContent = `${secondsLeftAtPause}`; 
     clearInterval(pausedTimerSet);
 })
 
 function displaySecondsWhilePaused() {
     document.getElementById('resume-game-key').textContent = `${pauseBtn}`;
-    document.querySelector('.seconds-left').textContent = `${secondsLeftAtPause}`;
+    pausedTimerDisplay.textContent = `${secondsLeftAtPause}`;
     pausedTimerSet = setInterval(() => { 
-        document.querySelector('.seconds-left').classList.toggle('hidden-vis');
+        pausedTimerDisplay.classList.toggle('hidden-vis');
     }, 500);
 }
 

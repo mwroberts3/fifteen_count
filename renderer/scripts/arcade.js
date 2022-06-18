@@ -315,7 +315,7 @@ function timerFunction() {
       }
     }
     if (secondsLeft <= 5) {
-      timer.style.color = 'red';
+      timer.style.color = '#ff4b7a';
     } else {
       timer.style.color = 'rgb(152, 253, 0)';
     }
@@ -1155,7 +1155,7 @@ function swapButtonFunction() {
   bonusTimeDisplay.style.color = "rgba(51, 131, 235, 0.9)";
 
   if (secondsLeft <= 5) {
-    timer.style.color = '#ff3232'
+    timer.style.color = '#ff4b7a'
   }
 
   if (secondsLeft <= 0) {
@@ -1549,6 +1549,11 @@ function pauseScreenFunction(e) {
 
 function displaySecondsWhilePaused() {
   document.getElementById('resume-game-key').textContent = `${pauseBtn}`;
+
+  if (secondsLeftAtPause <= 4) {
+    document.querySelector('.seconds-left').style.color = '#ff4b7a';
+  }
+
   document.querySelector('.seconds-left').textContent = `${secondsLeftAtPause + 1}`;
   pausedTimerSet = setInterval(() => {
       document.querySelector('.seconds-left').classList.toggle('hidden-vis');

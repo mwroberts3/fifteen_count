@@ -4,6 +4,7 @@ const scoreDisplay = document.querySelector(".score-display");
 const personalHighscoreContainer = document.querySelector('.high-score-container').childNodes[3];
 const personalHighscoreContainerTimeAttack = document.querySelector('.personal-highscore-container-time-attack');
 const inGameAchievementsList =  document.querySelector('.in-game-achievements');
+let achievementsShown = false;
 
 let arcadeScoresDisplayed = true;
 let taScoresDisplayed = false;
@@ -89,16 +90,18 @@ function checkForCompletedAchievements() {
 
   for(let i=0; i<achievementsList.length; i++) {
     for(let k=0; k<LSAchievementsContainer.length; k++) {
-      if (achievementsList[i].id === LSAchievementsContainer[k]) {
+      if (achievementsList[i].id === LSAchievementsContainer[k] && !achievementsShown) {
         achievementsList[i].innerHTML += `&nbsp;<img
         src="./img/achievement-checkmark.png"
         style="width: 16px; height: 18px"/>`;
-
+        
         achievementsList[i].style.color = "#777";
         achievementsList[i].style.marginLeft = "17px";
       }
     }
   }
+
+  achievementsShown = true;
 }
 
 // display arcade score by default
