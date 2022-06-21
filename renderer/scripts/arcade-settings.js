@@ -87,6 +87,16 @@ if (localStorage.getItem('controls')) {
   pauseBtn = controls.pauseBtn;
   }
 
+// Check for auto-submit
+let arcadeAutoSubmitSetting;
+
+if (localStorage.getItem('auto-submit')) {
+  arcadeAutoSubmitSetting = JSON.parse(localStorage.getItem('auto-submit'));
+} else {
+  localStorage.setItem('auto-submit', JSON.stringify(false));
+  arcadeAutoSubmitSetting = false;
+}
+
 // Check for highscore
 const personalHighscoreDisplay = document.querySelector('#personal-highscore-display');
 

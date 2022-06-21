@@ -439,6 +439,10 @@ function comboCheck() {
     ) {
       pointsInPlay = pointsPerCardCountPhase;
       countValidity = true;
+
+      if (arcadeAutoSubmitSetting) {
+        roundBonusCheck();
+      }
     } else {
       checkedCardSuits.push(card.children[0].getAttribute("suit"));
       comboCardcount++;
@@ -453,6 +457,10 @@ function comboCheck() {
     ) {
       pointsInPlay *= sameColorMultCountPhase;
       sameColorCheckCheck = true;
+    }
+
+    if (arcadeAutoSubmitSetting) {
+      roundBonusCheck();
     }
   }
 
@@ -637,8 +645,8 @@ function cardsSubmit() {
       utils.achievementsCheck("ach-tis-3", secondsLeft, 200);
 
       utils.achievementsCheck("ach-tots-1", totalSeconds, 300);
-      utils.achievementsCheck("ach-tots-2", totalSeconds, 600);
-      utils.achievementsCheck("ach-tots-3", totalSeconds, 1000);
+      utils.achievementsCheck("ach-tots-2", totalSeconds, 900);
+      utils.achievementsCheck("ach-tots-3", totalSeconds, 1800);
 
       bonusTimeDisplay.textContent = `+${secondsBonus}`
       setTimeout(() => {

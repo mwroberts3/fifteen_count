@@ -107,6 +107,30 @@ let buttonName;
     buttonsDisplay();
   })
 
+// Arcade auto-submit
+const arcadeAutoSubmitCheckbox = document.querySelector('#auto-submit-checkbox');
+let tempAutoSubmitSetting;
+
+if (localStorage.getItem('auto-submit')) {
+  tempAutoSubmitSetting = JSON.parse(localStorage.getItem('auto-submit'));
+} else {
+  localStorage.setItem('auto-submit', JSON.stringify(false));
+  tempAutoSubmitSetting = false;
+}
+
+if (tempAutoSubmitSetting) {
+  arcadeAutoSubmitCheckbox.checked = true;
+} else {
+  arcadeAutoSubmitCheckbox.check = false;
+}
+
+arcadeAutoSubmitCheckbox.addEventListener('click', () => {
+  tempAutoSubmitSetting = !tempAutoSubmitSetting
+
+  localStorage.setItem('auto-submit', JSON.stringify(tempAutoSubmitSetting));
+})
+
+
 // Select theme dropdown
 const arcadeThemes = [
   { index: 0, themeName: "Classic", bgImgPlayersHand: ["classic-bg.png"], bgImgCombo: "classic-bg-combo-round.png", bgCol: "#b3edff", brdCol: "#fff", fullClearBrdGrd: [
