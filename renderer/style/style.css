@@ -303,7 +303,9 @@ img {
   font-style: italic; }
 
 .how-to-container {
-  font-size: 20px; }
+  font-size: 20px;
+  width: 1080px;
+  margin: auto; }
   .how-to-container h4 {
     font-size: 28px;
     text-align: center; }
@@ -323,16 +325,24 @@ img {
       font-style: italic;
       color: #777; }
 
-#how-to-phases, #how-to-card-types {
+#how-to-phases,
+#how-to-card-types,
+#adding-time-and-seconds {
   display: flex;
   flex-direction: row;
   width: 100%;
   justify-content: center; }
-  #how-to-phases div, #how-to-card-types div {
+  #how-to-phases div,
+  #how-to-card-types div,
+  #adding-time-and-seconds div {
     width: 50%; }
-  #how-to-phases div:first-of-type, #how-to-card-types div:first-of-type {
+  #how-to-phases div:first-of-type,
+  #how-to-card-types div:first-of-type,
+  #adding-time-and-seconds div:first-of-type {
     margin-right: 12px; }
-  #how-to-phases div:last-of-type, #how-to-card-types div:last-of-type {
+  #how-to-phases div:last-of-type,
+  #how-to-card-types div:last-of-type,
+  #adding-time-and-seconds div:last-of-type {
     margin-left: 12px; }
 
 .minor-how-to-header {
@@ -343,6 +353,9 @@ img {
 
 .no-bottom-margin {
   margin-bottom: 0 !important; }
+
+.extra-bottom-margin {
+  margin-bottom: 15px; }
 
 hr {
   width: 900px;

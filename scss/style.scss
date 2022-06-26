@@ -369,6 +369,8 @@ img {
 // HOW TO PLAY
 .how-to-container {
   font-size: 20px;
+  width: 1080px;
+  margin: auto;
 
   h4 {
     font-size: 28px;
@@ -403,7 +405,9 @@ img {
   }
 }
 
-#how-to-phases, #how-to-card-types {
+#how-to-phases, 
+#how-to-card-types,
+#adding-time-and-seconds {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -432,6 +436,10 @@ img {
 
 .no-bottom-margin {
   margin-bottom: 0 !important;
+}
+
+.extra-bottom-margin {
+  margin-bottom: 15px ;
 }
 
 hr {
