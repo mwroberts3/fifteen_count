@@ -30,36 +30,51 @@
           <h2 class="sub-topic-header">Arcade</h2>
           <div class="how-to-play-section">
             <p>
-              Arcade is the primary mode of Indigo Loop. The goal of Arcade mode is to score as many points as possible before time runs out. The player is presented with 10 cards of two differents colors and starts with 100 seconds on the clock, but more time can be added during play. There are multiple ways to score points, across two unique gameplay phases. Focusing on cards of the same color generally results in more points.
+              Arcade is the primary mode of Indigo Loop. The goal of Arcade mode is to score as many points as possible before time runs out. To start, the player is presented with 10 cards of two differents colors and 60 seconds on the clock; more time can be added during play.
             </p>
-            <h4>Phases</h4>
             <p>
-              There are two distinct gameplay phases in Arcade mode. The <strong>Count!</strong> phase and the <strong>Combo!</strong> phase, which immediately follows. Points can be scored in each phase.
+              There are multiple ways to score points, across two unique gameplay phases. Focusing on cards of the same color generally results in more points.
             </p>
-            <div class="how-to-img-container" id="arcade-howto-vid-1">
-              <img
-                class="static-vid"
-                src="img/how-to-images/arcade-howto-vid-1-static.png"
-              />
-            </div>
-            <h4>Count!</h4>
+            <h4 class="mid-page-margin">Phases</h4>
+            <p>
+              There are two distinct gameplay phases in Arcade mode. The <strong>Count!</strong> and <strong>Combo!</strong> phases. The Combo! phase immediately follows the Count! phase. Points can be scored in either.
+            </p>
+            <section id="how-to-phases">
+              <div>
+            <h4 class="minor-how-to-header">Count!</h4>
             <p>
               At the start of a game, players are presented with 10 cards in one of two colors with values ranging from 2 to 15. The player can click on any of the cards shown to 'count' it. Multiple cards can be counted at any time and the total sum of their values is shown in the center, translucent container in the bottom center of the player’s ui.
             </p>
             <p>
-              <strong>IMPORTANT!</strong> The goal of the count phase is to ‘count’ any number of cards whose values add up to 15. Once a 15 count is reached the player can submit the counted cards and move on to the Combo! phase.
+              <strong>The goal of the count phase is to count any number of cards whose values add up to 15</strong>. Once a 15 count is reached the player can submit the counted cards and move on to the Combo! phase.
             </p>
             <p>
-              The player also has the option to <strong>swap</strong> the last card in their hand for a new one. They can either press the swap button or click the button on the player’s ui. Time is subtracted from the countdown when a card is swapped, so it must be used carefully.
+              The player also has the option to <strong>swap</strong> the last card in their hand for a new one. They can either press the swap button or click the button on the player’s ui. Time is subtracted from the countdown when a card is swapped, so use this carefully.
             </p>
-            <h4>Combo!</h4>
-            <p>
-              In the combo round players can choose to sacrifice cards and rack up combo points. Beware though, a card comboed in this phase will be removed from their hand.
+            </div>
+            <div>
+              <h4 class="minor-how-to-header">Combo!</h4>
+              <p>
+                In the combo round players can choose to sacrifice cards and rack up combo points. Beware though, a card comboed in this phase will be removed from their hand.
+              </p>
+            </div>
+          </section>
+          <div class="how-to-img-container" id="arcade-howto-vid-1">
+            <img
+              class="static-vid"
+              src="img/how-to-images/arcade-howto-vid-1-static.png"
+              style="margin-top: 20px"
+            />
+            <small>shows transition between phases and Combo! sacrifices</small>
+          </div>
+          <hr>
+            <h4 class="mid-page-margin">Card Types</h4>
+            <p class="no-bottom-margin">
+              There are three main types of cards: Cards with a single value, compound cards with two values and cards with a -1 value. These values have to considered during the Count! phase, as the players goal is to click on cards whose values add up to 15. There is also a modified card, the jackpot card.
             </p>
-            <h4>Card Types</h4>
-            <p>
-              There are three main types of cards in play. Cards with a single value, compound cards with two values and cards with a -1 value. The first and latter cards are self explanatory.
-            </p>
+            <section id="how-to-card-types">
+              <div>
+            <h4 class="minor-how-to-header">Compound</h4>
             <p>
               Compound cards with two values let the player choose which value to use. The player chooses which value to use by pressing the right key or by clicking on the option in the values displayed on the ui. 
             </p>
@@ -67,21 +82,26 @@
               <img src="img/how-to-images/arcade-howto-vid-compound.gif" />
             </div>
             <p>
-              <strong>IMPORTANT!</strong> Values on multiple compound cards can be triggered at once, so you can count multiple compound cards and add up their values all at once–big time saver!
+              <strong>Values on multiple compound cards can be triggered at once, so you can count multiple compound cards and add up their values all at once–big time saver!</strong>
             </p>
             <p>
-            <h4>Jackpot</h4>
+            </div>
+            <div>
+            <h4 class="minor-how-to-header">Jackpot</h4>
               During the course of a game, random cards will be selected as jackpot cards. Try to count and play the jackpot card when they appear to rack up more points. The amount of points added depends on the current jackpot level and the number of cards played throughout the game up to that point.
             </p>
             <div class="how-to-img-container">
               <img src="img/how-to-images/arcade-howto-vid-jackpot.gif" />
             </div>
-            <p>Jackpot cards are indicated by a color changing border.</p>
-            <h4>Adding Time</h4>
+            <p>Jackpot cards are indicated by a color changing border and a notification above the game board.</p>
+          </div>
+          </section>
+          <hr>
+            <h4 class="mid-page-margin">Adding Time and Cards</h4>
             <p>
               Extra time can be added to the countdown timer if a player counts and plays at least half of the cards in their hand. Strategically counting cards to add extra time is essential to racking up good high scores.
             </p>
-            <h4>Indigo Loops</h4>
+            <h4 class="mid-page-margin">Indigo Loops</h4>
             <p>
               If a player successfully counts and plays all the cards in their hand, they’ll complete an Indigo Loop and <em>all ten cards will be replenished.</em>
             </p>

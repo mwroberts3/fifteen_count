@@ -303,9 +303,9 @@ img {
   font-style: italic; }
 
 .how-to-container {
-  font-size: 1.25rem; }
+  font-size: 20px; }
   .how-to-container h4 {
-    font-size: 24px;
+    font-size: 28px;
     text-align: center; }
   .how-to-container p {
     margin-bottom: 15px; }
@@ -313,22 +313,40 @@ img {
     margin-bottom: 0; }
   .how-to-container .how-to-img-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-bottom: 15px; }
     .how-to-container .how-to-img-container img {
       border-radius: 10px; }
+    .how-to-container .how-to-img-container small {
+      font-style: italic;
+      color: #777; }
 
-.how-to-tip-container {
-  display: inline-block;
-  background: #eee;
-  border: 2px dashed #aaa;
-  border-radius: 5px;
-  color: #333;
-  padding: 10px;
-  margin: 15px 0 15px 213.78px; }
-  .how-to-tip-container li {
-    margin-left: 32px; }
+#how-to-phases, #how-to-card-types {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center; }
+  #how-to-phases div, #how-to-card-types div {
+    width: 50%; }
+  #how-to-phases div:first-of-type, #how-to-card-types div:first-of-type {
+    margin-right: 12px; }
+  #how-to-phases div:last-of-type, #how-to-card-types div:last-of-type {
+    margin-left: 12px; }
+
+.minor-how-to-header {
+  font-size: 22px !important; }
+
+.mid-page-margin {
+  margin-top: 32px; }
+
+.no-bottom-margin {
+  margin-bottom: 0 !important; }
+
+hr {
+  width: 900px;
+  margin: auto; }
 
 .high-score-container {
   border-radius: 10px; }

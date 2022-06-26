@@ -33,5 +33,5 @@ arcadeHowtoVidOne.addEventListener('click', (e) => {
     setTimeout(() => {
         e.target.src = "img/how-to-images/arcade-howto-vid-1-static.png";
         e.target.classList.add('static-vid');
-    }, 8000);
+    }, 5500);
 })
