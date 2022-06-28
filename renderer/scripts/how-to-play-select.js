@@ -1,5 +1,7 @@
 const howToPlayModeSelect = document.querySelector('.how-to-play-mode-select');
 const arcadeHowtoVidOne = document.getElementById('arcade-howto-vid-1');
+const arcadeHowtoVidTwo = document.getElementById('arcade-howto-vid-2');
+const timeAttackHowtoVidOne = document.getElementById('timeattack-howto-vid-1');
 
 howToPlayModeSelect.addEventListener('click', (e) => {
     if (!e.target.classList.contains('option-selected')) {
@@ -35,3 +37,34 @@ arcadeHowtoVidOne.addEventListener('click', (e) => {
         e.target.classList.add('static-vid');
     }, 5500);
 })
+
+arcadeHowtoVidTwo.addEventListener('click', (e) => {
+    if (e.target.classList.contains('static-vid')) {
+        e.target.src = "img/how-to-images/arcade-how-to-gif2.gif";
+        e.target.classList.remove('static-vid');
+    } else {
+        e.target.src = "img/how-to-images/arcade-howto-vid-2-static.png";
+        e.target.classList.add('static-vid');
+    }
+
+    setTimeout(() => {
+        e.target.src = "img/how-to-images/arcade-howto-vid-2-static.png";
+        e.target.classList.add('static-vid');
+    }, 7200);
+})
+
+timeAttackHowtoVidOne.addEventListener('click', (e) => {
+    if (e.target.classList.contains('static-vid')) {
+        e.target.src = "img/how-to-images/bonus-card-final-position.gif";
+        e.target.classList.remove('static-vid');
+    } else {
+        e.target.src = "img/how-to-images/timeattack-howto-static.png";
+        e.target.classList.add('static-vid');
+    }
+
+    setTimeout(() => {
+        e.target.src = "img/how-to-images/timeattack-howto-static.png";
+        e.target.classList.add('static-vid');
+    }, 1500);
+})
+

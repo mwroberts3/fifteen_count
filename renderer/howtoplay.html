@@ -30,131 +30,254 @@
           <h2 class="sub-topic-header">Arcade</h2>
           <div class="how-to-play-section">
             <p>
-              Arcade is the primary mode of Indigo Loop. The goal of Arcade mode is to score as many points as possible before time runs out. To start, the player is presented with 10 cards of two differents colors and 60 seconds on the clock; more time can be added during play.
+              Arcade is the primary mode of Indigo Loop. The goal of Arcade mode
+              is to score as many points as possible before time runs out. To
+              start, the player is presented with 10 cards of two differents
+              colors and 60 seconds on the clock; more time can be added during
+              play. There are multiple ways to score points, across two unique
+              gameplay phases. Focusing on cards of the same color generally
+              results in more points.
             </p>
+            <h4>Phases</h4>
             <p>
-              There are multiple ways to score points, across two unique gameplay phases. Focusing on cards of the same color generally results in more points.
-            </p>
-            <h4 class="mid-page-margin">Phases</h4>
-            <p>
-              There are two distinct gameplay phases in Arcade mode. The <strong>Count!</strong> and <strong>Combo!</strong> phases. The Combo! phase immediately follows the Count! phase. Points can be scored in either.
+              There are two distinct gameplay phases in Arcade mode. The
+              <strong>Count!</strong> and <strong>Combo!</strong> phases. The
+              Combo! phase immediately follows the Count! phase. Points can be
+              scored in either.
             </p>
             <section id="how-to-phases">
               <div>
-            <h4 class="minor-how-to-header">Count!</h4>
-            <p>
-              At the start of a game, players are presented with 10 cards in one of two colors with values ranging from 2 to 15. The player can click on any of the cards shown to 'count' it. Multiple cards can be counted at any time and the total sum of their values is shown in the center, translucent container in the bottom center of the player’s ui.
-            </p>
-            <p>
-              <strong>The goal of the count phase is to count any number of cards whose values add up to 15</strong>. Once a 15 count is reached the player can submit the counted cards and move on to the Combo! phase.
-            </p>
-            <p>
-              The player also has the option to <strong>swap</strong> the last card in their hand for a new one. They can either press the swap button or click the button on the player’s ui. Time is subtracted from the countdown when a card is swapped, so use this carefully.
-            </p>
+                <h4 class="minor-how-to-header">Count!</h4>
+                <p>
+                  At the start of a game, players are presented with 10 cards in
+                  one of two colors with values ranging from -1 to 15. The
+                  player can click on any of the cards shown to
+                  <em>count</em> it. Multiple cards can be counted at any time
+                  and the total sum of their values is shown in the translucent,
+                  rounded container on the bottom center of the player’s ui.
+                </p>
+                <p>
+                  <strong
+                    >The goal of the Count! phase is to count any number of
+                    cards whose values add up to 15</strong
+                  >. Once a 15 count is reached the player can submit the
+                  counted cards and move on to the Combo! phase.
+                </p>
+              </div>
+              <div>
+                <p>
+                  The player also has the option to <em>swap</em> the last card
+                  in their hand for a new one. They can either press the swap
+                  button or click the button on the player’s ui. Time is
+                  subtracted from the countdown when a card is swapped, so use
+                  this carefully. The swap penalty is indicated on the button in
+                  the lower right section of the ui.
+                </p>
+                <h4 class="minor-how-to-header">Combo!</h4>
+                <p>
+                  In the Combo! phase players can choose to sacrifice cards and
+                  rack up combo points. Beware though, a card combo'd in this
+                  phase will be removed from your hand.
+                </p>
+                <p>
+                  Strategically choosing when to , and playing the cards in the
+                  right sequence, will result in big point gains.
+                </p>
+              </div>
+            </section>
+            <div class="how-to-img-container" id="arcade-howto-vid-1">
+              <img
+                class="static-vid"
+                src="img/how-to-images/arcade-howto-vid-1-static.png"
+                style="margin-top: 20px"
+              />
+              <small>transition between phases and Combo! sacrifices</small>
             </div>
-            <div>
-              <h4 class="minor-how-to-header">Combo!</h4>
-              <p>
-                In the combo round players can choose to sacrifice cards and rack up combo points. Beware though, a card comboed in this phase will be removed from their hand.
-              </p>
-            </div>
-          </section>
-          <div class="how-to-img-container" id="arcade-howto-vid-1">
-            <img
-              class="static-vid"
-              src="img/how-to-images/arcade-howto-vid-1-static.png"
-              style="margin-top: 20px"
-            />
-            <small>shows transition between phases and Combo! sacrifices</small>
-          </div>
-          <hr>
+            <hr />
             <h4 class="mid-page-margin">Card Types</h4>
             <p class="no-bottom-margin">
-              There are three main types of cards: Cards with a single value, compound cards with two values and cards with a -1 value. These values have to considered during the Count! phase, as the players goal is to click on cards whose values add up to 15. There is also a modified card, the jackpot card.
+              There are three main types of cards: Cards with a single value,
+              compound cards with two values and cards with a -1 value. These
+              values have to considered during the Count! phase, as the player's
+              goal is to click on cards whose values add up to 15. There is also
+              a modified card, the jackpot card.
             </p>
             <section id="how-to-card-types">
               <div>
-            <h4 class="minor-how-to-header">Compound</h4>
-            <p>
-              Compound cards with two values let the player choose which value to use. The player chooses which value to use by pressing the right key or by clicking on the option in the values displayed on the ui. 
-            </p>
-            <div class="how-to-img-container">
-              <img src="img/how-to-images/arcade-howto-vid-compound.gif" />
+                <div
+                  style="
+                    width: 400px;
+                    height: 240px;
+                    margin: 0 auto;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                >
+                  <img
+                    src="img/how-to-images/arcade-howto-card-types.png"
+                    style="border-radius: 10px"
+                  />
+                </div>
+                <h4 class="minor-how-to-header">Compound</h4>
+                <p>
+                  Compound cards have two values, and allow the player choose
+                  which value to use. The player chooses the value by pressing
+                  the right key or by clicking value displayed in the ui.
+                </p>
+              </div>
+              <div>
+                <p>
+                  <strong
+                    >Values on multiple compound cards can be counted at
+                    once</strong
+                  >. Watch the short video to see a demonstration.
+                </p>
+                <h4 class="minor-how-to-header">Jackpot</h4>
+                <p>
+                  During the course of a game, random cards will be selected as
+                  jackpot cards. Try to count and play the jackpot card when it
+                  appears to rack up points. The amount of points added depends
+                  on the current jackpot level and the number of cards played
+                  throughout the game up to that point.
+                </p>
+                <p>
+                  Jackpot cards are indicated by a color changing border and a
+                  notification above the game board.
+                </p>
+                <p>
+                  The jackpot level will change during the course of gameplay.
+                  Skilled players should be able to consistently keep it at a
+                  high level.
+                </p>
+              </div>
+            </section>
+            <div class="how-to-img-container" id="arcade-howto-vid-2">
+              <img
+                class="static-vid"
+                src="img/how-to-images/arcade-howto-vid-2-static.png"
+                style="margin-top: 20px"
+              />
+              <small>adding lower values of multiple compound cards</small>
             </div>
-            <p>
-              <strong>Values on multiple compound cards can be triggered at once, so you can count multiple compound cards and add up their values all at once–big time saver!</strong>
-            </p>
-            <p>
-            </div>
-            <div>
-            <h4 class="minor-how-to-header">Jackpot</h4>
-              During the course of a game, random cards will be selected as jackpot cards. Try to count and play the jackpot card when they appear to rack up more points. The amount of points added depends on the current jackpot level and the number of cards played throughout the game up to that point.
-            </p>
-            <div class="how-to-img-container">
-              <img src="img/how-to-images/arcade-howto-vid-jackpot.gif" />
-            </div>
-            <p>Jackpot cards are indicated by a color changing border and a notification above the game board.</p>
+            <hr style="margin-top: 15px" />
+            <h4 class="mid-page-margin">Adding Time and Cards</h4>
+            <section id="adding-time-and-seconds" style="margin-bottom: 25px">
+              <div>
+                <h4 class="minor-how-to-header">Half-Hand Bonus</h4>
+                <p>
+                  Extra time can be added to the countdown timer if a player
+                  plays at least half of the cards in their hand during the
+                  Count! phase. Strategically counting cards to add extra time
+                  is essential to racking up good high scores.
+                </p>
+                <p>
+                  The amount of time added depends on the current level of the
+                  bonus meter, which is shown underneath the countdown timer
+                  display. The bonus meter is replenished by sacrificing cards
+                  in the Combo! phase.
+                </p>
+              </div>
+              <div>
+                <h4 class="minor-how-to-header">Indigo Loops</h4>
+                <p>
+                  If a player successfully counts and plays all the cards in
+                  their hand, they’ll complete an Indigo Loop and
+                  <strong>all ten cards will be replenished.</strong> They will
+                  also get an additional seconds added to the timer.
+                </p>
+                <p>
+                  In other words, if a player recognizes that all the cards in
+                  their hand adds up to 15, they can play then all and replinish
+                  the sacrificed cards.
+                </p>
+              </div>
+            </section>
           </div>
-          </section>
-          <hr style="margin-top: 15px">
-          <h4 class="mid-page-margin">Adding Time and Cards</h4>
-          <section id="adding-time-and-seconds" style="margin-bottom: 25px">
-            <div>
-              <h4 class="minor-how-to-header">Half-Hand Bonus</h4>
-              <p>
-                Extra time can be added to the countdown timer if a player plays at least half of the cards in their hand during the Count! phase. Strategically counting cards to add extra time is essential to racking up good high scores.
-              </p>
-            </div>
-            <div>
-              <h4 class="minor-how-to-header">Indigo Loops</h4>
-              <p>
-                If a player successfully counts and plays all the cards in their hand, they’ll complete an Indigo Loop and <em>all ten cards will be replenished.</em> They will also get an additional seconds added to the timer.
-              </p>
-            </div>
-          </section>
-        </div>
-      </section>
+        </section>
 
         <!-- Time Attack - How to Play -->
         <section id="ta-how-to-instructions" class="hidden">
           <div class="how-to-play-section">
             <h2 class="sub-topic-header">Time Attack</h2>
-            <h4>Time Limit</h4>
-            <p>
-              Time attack has a set time limit of 180 seconds, and there is no way to add more seconds to the timer.
+            <p style="margin-bottom: 16px">
+              Time attack has a set time limit of 180 seconds. Unlike Arcade
+              mode, there is no way to add more seconds to the timer. The player
+              is presented with 18 cards of two colors and random values at the
+              start of play. Like Arcade mode, the player needs to click cards
+              to <em>count</em> them and have their values add up to 15. The
+              cards are automatically submitted once a 15-count is reached.
             </p>
-            <p>
-              The player is presented with 18 cards with random values, in two different colors, at the start of a Time Attack round. Like Arcade mode, the player needst to click cards to count them and have their values add up to 15. A key difference from Arcade mode is that once a 15-count is reached, the cards are automatically submitted.
-            </p>
-            <h4>Types of Cards</h4>
-            <p>
-              Cards come in a mix of two colors, with values of -1 to 12. Counting cards of the same color will result in more points.
-            </p>
-            <p>
-              Additionally, there are two specialty cards: 
-              <strong>Bonus</strong> and <strong>Shuffle</strong> cards. The
-              Bonus card starts in the first position at the start of each
-              round. The player should try to get the Bonus card in the final position,
-              by submitting 15-count combos in between its current and end position.
-            </p>
-            <div class="how-to-img-container">
-              <img
-                src="img/how-to-images/time-attack-howto-pic1.png"
-                style="width: 400px; height: 300px"
-              />
-            </div>
-            <p>
-              <em>
-                  A Bonus card played from the final position will result in
-                  a large points bonus.
-              </em>
-            </p>
-            <p>
-              Random cards will be selected as Shuffle cards each turn, indicated by an explosion icon in the top left corner. If this card is played, the player's entire hand will be redealt and the Bonus card will be reset to the first position.
-            </p>
-            <p>
-              The number of Shuffle cards can change during the course of a round.
-            </p>
+            <section id="time-attack-howto-columns">
+              <div>
+                <p>
+                  Cards come in a mix of two colors, with values of -1 to 12.
+                  Counting cards of the same color will result in more points.
+                  Additionally, there are two specialty cards:
+                  <strong>Bonus</strong> and <strong>Shuffle</strong> cards.
+                </p>
+                <div
+                  style="
+                    width: 400px;
+                    height: 240px;
+                    margin: 0 auto;
+                    margin-bottom: 12px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                >
+                  <img
+                    src="img/how-to-images/time-attack-howto-picsmall.png"
+                    style="border-radius: 10px"
+                  />
+                </div>
+                <p>
+                  Random cards will be selected as Shuffle cards each turn,
+                  indicated by an explosion icon in the top right corner. If
+                  this card is played, the player's entire hand will be redealt
+                  and the Bonus card will be reset to the first position. The
+                  number of shuffle cards in play increases as time goes on.
+                </p>
+              </div>
+              <div>
+                <p>
+                  The Bonus card starts in the first, top left, position at the
+                  start of each round. The player should try to get the Bonus
+                  card in the final position, bottom right, by submitting
+                  15-count combos in between the card's current and end
+                  position.
+                </p>
+                <div
+                  class="how-to-img-container"
+                  id="timeattack-howto-vid-1"
+                  style="
+                    width: 400px;
+                    height: 240px;
+                    margin: 0 auto;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                >
+                  <img
+                    class="static-vid"
+                    src="img/how-to-images/timeattack-howto-static.png"
+                  />
+                  <small>Bonus card will spin in final position</small>
+                </div>
+                <p>
+                  <strong
+                    >Bonus cards played from the final position will produce
+                    many points. </strong
+                  >. After a bonus card is played, it'll be reset to the first
+                  position. A player should try to submit as many bonus cards
+                  from the final position as they can. Shuffle cards played
+                  along with Bonus card in final position, will not effect
+                  points bonus.
+                </p>
+              </div>
+            </section>
           </div>
         </section>
       </div>

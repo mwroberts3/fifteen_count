@@ -407,7 +407,8 @@ img {
 
 #how-to-phases, 
 #how-to-card-types,
-#adding-time-and-seconds {
+#adding-time-and-seconds,
+#time-attack-howto-columns {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -1462,7 +1463,8 @@ input[type="submit"] {
     grid-area: head;
     text-align: center;
     font-family: $title-font;
-    font-size: 36px;
+    font-size: 30px;
+    margin-bottom: 21px;
   }
 
   img {
@@ -1471,6 +1473,7 @@ input[type="submit"] {
 
   p {
     width: calc(100% - 10px);
+    margin-bottom: 10px;
   }
 
   #arcade-howto-slide-one {
@@ -1488,6 +1491,7 @@ input[type="submit"] {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin-left: 20px;
 
     p {
       width: 550px;
@@ -1519,7 +1523,8 @@ input[type="submit"] {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 350px;
+    height: 220px;
+    margin-top: -7px;
 
     img {
       transform: rotate(0.75turn);

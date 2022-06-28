@@ -208,7 +208,7 @@ setTimeout(() => {
         if (e.target.classList.contains('ta-card')) {
             activeHand[cardIndex].checkCard(cardIndex, shownHand);
 
-            if (count < 1) {
+            if (count === 0) {
                 countDisplay.style.color = '#555';
                 countDisplay.textContent = '15';
             } else {
@@ -221,7 +221,7 @@ setTimeout(() => {
             cardIndex = [...e.target.parentNode.parentNode.children].indexOf(e.target.parentNode);
             activeHand[cardIndex].checkCard(cardIndex, shownHand);
             
-            if (count < 1) {
+            if (count === 0) {
                 countDisplay.style.color = '#555';
                 countDisplay.textContent = '15';
             } else {
@@ -300,7 +300,7 @@ function shuffleTimeAttack() {
         cardInHand.textContent = card.value;
         cardInHand.style.background = card.suit;
 
-        console.log(card.value)
+        // console.log(card.value)
 
         if (card.value === 0) {
             cardInHand.style.color = '#fdfd69';
@@ -379,7 +379,7 @@ function shuffleTimeAttack() {
 function redealReset() {
     bonusAdded = false;
     count = 0;
-    if (count < 1) {
+    if (count === 0) {
         countDisplay.style.color = '#555';
         countDisplay.textContent = '15';
     } else {
@@ -403,8 +403,17 @@ function redealReset() {
   }
 
   function checkAndScoreBonusCard() {
-      let tempBonusIndex = getBonusCardIndex();
-      shownHand = cardsDisplay.childNodes;
+    let preBombHandCopy = [];
+    let tempBonusIndex = getBonusCardIndex();
+    shownHand = cardsDisplay.childNodes;
+
+    // make copy of hand, in case bomb card is being played
+    activeHand.forEach((card) => {
+        preBombHandCopy.push(card);
+    })
+
+    // Score checked cards
+    addPointsToScore();
       
     // Score bonus card if in final position
     if (tempBonusIndex === 17 && shownHand[tempBonusIndex].classList.contains('ta-checked')) {
@@ -418,7 +427,7 @@ function redealReset() {
         utils.achievementsCheck("ach-ta-3", fullPassCount, 6);
 
         if (!bonusAdded) {
-            bonusPoints = sameSuitCheck(score, true);
+            bonusPoints = sameSuitCheck(score, preBombHandCopy, true);
             score += bonusPoints;
             bonusAdded = true;
             
@@ -429,9 +438,6 @@ function redealReset() {
     } else if (shownHand[tempBonusIndex].classList.contains('ta-checked')) {
         bonusUnleashed = false;
     }
-
-    // Score checked cards
-    addPointsToScore();
   }
 
   function getBonusCardIndex() {
@@ -453,7 +459,7 @@ function redealReset() {
   function addPointsToScore() {
     cardsToReplace = document.querySelectorAll(".ta-checked").length;
 
-    pointsAdded = sameSuitCheck(cardsToReplace, false);
+    pointsAdded = sameSuitCheck(cardsToReplace, [], false);
     score += pointsAdded;
     console.log('Current Score:', score);
 
@@ -473,14 +479,24 @@ function redealReset() {
     } 
   }
 
-  function sameSuitCheck(pointsInPlay, forBonusCard) {
+  function sameSuitCheck(pointsInPlay, preBombHandCopy, forBonusCard) {
     let checkedCardSuits = [];
-    
-    activeHand.forEach(card => {
-        if (card.checked) {
-            checkedCardSuits.push(card.suit);
-        }
-    })
+
+    if (preBombHandCopy.length > 0) {
+        preBombHandCopy.forEach(card => {
+            if (card.checked) {
+                checkedCardSuits.push(card.suit);
+            }
+        })
+    } else {
+        activeHand.forEach(card => {
+            if (card.checked) {
+                checkedCardSuits.push(card.suit);
+            }
+        })
+    }
+
+    console.log(checkedCardSuits);
 
     if(checkedCardSuits.every(sameColorBlack) || checkedCardSuits.every(sameColorRed)) {
         if (forBonusCard) {
@@ -515,7 +531,7 @@ function uncheckAllCards(e) {
     let checkedCards = document.querySelectorAll(".ta-checked");
     if(e.code === uncheckcardsBtn) {
       count = 0;
-      if (count < 1) {
+      if (count === 0) {
         countDisplay.style.color = '#555';
         countDisplay.textContent = '15';
     } else {

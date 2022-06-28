@@ -327,22 +327,26 @@ img {
 
 #how-to-phases,
 #how-to-card-types,
-#adding-time-and-seconds {
+#adding-time-and-seconds,
+#time-attack-howto-columns {
   display: flex;
   flex-direction: row;
   width: 100%;
   justify-content: center; }
   #how-to-phases div,
   #how-to-card-types div,
-  #adding-time-and-seconds div {
+  #adding-time-and-seconds div,
+  #time-attack-howto-columns div {
     width: 50%; }
   #how-to-phases div:first-of-type,
   #how-to-card-types div:first-of-type,
-  #adding-time-and-seconds div:first-of-type {
+  #adding-time-and-seconds div:first-of-type,
+  #time-attack-howto-columns div:first-of-type {
     margin-right: 12px; }
   #how-to-phases div:last-of-type,
   #how-to-card-types div:last-of-type,
-  #adding-time-and-seconds div:last-of-type {
+  #adding-time-and-seconds div:last-of-type,
+  #time-attack-howto-columns div:last-of-type {
     margin-left: 12px; }
 
 .minor-how-to-header {
@@ -1124,11 +1128,13 @@ input[type="submit"] {
     grid-area: head;
     text-align: center;
     font-family: "Ink Free", sans-serif;
-    font-size: 36px; }
+    font-size: 30px;
+    margin-bottom: 21px; }
   #arcade-how-to-play img {
     border-radius: 15px; }
   #arcade-how-to-play p {
-    width: calc(100% - 10px); }
+    width: calc(100% - 10px);
+    margin-bottom: 10px; }
   #arcade-how-to-play #arcade-howto-slide-one {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1137,7 +1143,8 @@ input[type="submit"] {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column; }
+    flex-direction: column;
+    margin-left: 20px; }
     #arcade-how-to-play #arcade-howto-slide-two p {
       width: 550px;
       padding: 10px; }
@@ -1157,7 +1164,8 @@ input[type="submit"] {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 350px; }
+    height: 220px;
+    margin-top: -7px; }
     #arcade-how-to-play #arcade-howto-img1 img {
       transform: rotate(0.75turn); }
   #arcade-how-to-play #arcade-howto-p4 {

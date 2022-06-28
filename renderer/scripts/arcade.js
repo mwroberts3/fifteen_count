@@ -367,7 +367,7 @@ function reset() {
 
   halfHandPlay = false;
 
-  // console.log('current seconds bonus', secondsBonus);
+  console.log('current seconds bonus', secondsBonus);
 
   // reset players hand background
   if (themeSelection['themeName'] !== 'Classic') {
@@ -419,7 +419,7 @@ function reset() {
   pointsPerPlayBreakdown.unshift(totalPoints);
   console.log('scoring review', pointsPerPlayBreakdown);
   console.log('points breakdown', pointsBreakdown);
-  console.log('ultimate card count', ultimateCardCount);
+  // console.log('ultimate card count', ultimateCardCount);
 
   hudMessage.count(hudMessageDisplay);
 }
@@ -730,6 +730,7 @@ function cardsSubmit() {
 
       // if Indigo Loop is acheived by playing ALL 10 cards, the indigoLoopBonus is reset to 35
       if (checkedCards.length === 10) {
+        console.log('Indigo loop 10 count');
         indigoLoopBonus = 36;
       }
 
@@ -781,12 +782,12 @@ function roundBonusCheck() {
       diff = Math.round(diff);
     }
   
-    console.log(' REALdiff', diff);
+    // console.log(' REALdiff', diff);
   
     if (diff <= 6 && firstSubmit === false && countValidity === true) {
       roundBonusPoints = (pointsInPlay * roundBonuses[diff]) - pointsInPlay;
 
-      console.log('roudn bonus points', roundBonusPoints);
+      // console.log('roudn bonus points', roundBonusPoints);
   
       if (diff >= 3) {
         // show level 1 animation
@@ -833,7 +834,7 @@ function speedBonusTimerPauseOffset() {
 
   offsetDiff = Math.round(offsetDiff); 
 
-  console.log('offset Diff', offsetDiff);
+  // console.log('offset Diff', offsetDiff);
 }
 
 // Selecting cards
