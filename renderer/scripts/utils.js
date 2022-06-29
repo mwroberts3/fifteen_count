@@ -191,7 +191,7 @@ exports.swapCardAni = (dblSwapCheck, cardsInHand, currentHand, playersHandArea) 
 }
 
 exports.jackpotLevelAni = (jackpotLevelDisplay, jackpotMultiplierLvl) => {
-  if (jackpotMultiplierLvl < 1) {
+  if (jackpotMultiplierLvl === 1) {
     jackpotLevelDisplay.style.animationName = "";
   } else if (jackpotMultiplierLvl >= 1 && jackpotMultiplierLvl < 5) {
     jackpotLevelDisplay.style.animationName = "jackpotlevelflicker";

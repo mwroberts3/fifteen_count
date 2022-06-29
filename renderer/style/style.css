@@ -1122,7 +1122,7 @@ input[type="submit"] {
   transform: translateX(-50%);
   width: 1000px;
   height: 650px;
-  background: #ddd;
+  background: linear-gradient(331deg, #dddddd 48%, white 83%);
   border-radius: 10px; }
   #arcade-how-to-play h2 {
     grid-area: head;
@@ -1138,20 +1138,20 @@ input[type="submit"] {
   #arcade-how-to-play #arcade-howto-slide-one {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-areas: "head head" "p1 p2" "p1 img1" "p1 p3"; }
+    grid-template-areas: "head head" "p1 p2" "p1 img1" "p1 p3";
+    padding-left: 10px; }
   #arcade-how-to-play #arcade-howto-slide-two {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    margin-left: 20px; }
+    flex-direction: column; }
     #arcade-how-to-play #arcade-howto-slide-two p {
-      width: 550px;
-      padding: 10px; }
+      width: 325px;
+      padding: 5px; }
       #arcade-how-to-play #arcade-howto-slide-two p span {
         font-weight: bold;
         display: inline-block;
-        width: 170px; }
+        width: 140px; }
   #arcade-how-to-play #arcade-howto-p1 {
     grid-area: p1;
     padding-right: 10px; }
@@ -1180,7 +1180,7 @@ input[type="submit"] {
     grid-area: img2; }
   #arcade-how-to-play #arcade-howto-buttons1 {
     position: absolute;
-    top: calc(100% - 55px);
+    top: calc(100% - 65px);
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
@@ -1376,6 +1376,7 @@ input[type="submit"] {
       font-size: 24px; }
 
 #time-attack-how-to-play {
+  padding: 10px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -1383,45 +1384,54 @@ input[type="submit"] {
   width: 1000px;
   height: 650px;
   padding: 10px;
-  background: #ddd;
-  border-radius: 5px;
+  background: linear-gradient(331deg, #dddddd 48%, white 83%);
+  border-radius: 10px;
   z-index: 3; }
   #time-attack-how-to-play .time-attack-howtoplay-slide-one {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-areas: "head head" "p1 img1" "p1 p2" "p1 p2"; }
+    grid-template-areas: "head head" "p1 img1" "p1 p2" "p1 p2";
+    padding-left: 10px; }
+    #time-attack-how-to-play .time-attack-howtoplay-slide-one small {
+      font-style: italic;
+      color: #777; }
   #time-attack-how-to-play .time-attack-howtoplay-slide-two {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column; }
     #time-attack-how-to-play .time-attack-howtoplay-slide-two p {
-      width: 400px;
-      padding: 10px; }
+      width: 325px;
+      padding: 5px; }
       #time-attack-how-to-play .time-attack-howtoplay-slide-two p span {
         font-weight: bold;
         display: inline-block;
-        width: 170px; }
+        width: 140px; }
   #time-attack-how-to-play h2 {
     grid-area: head;
     text-align: center;
     font-family: "Ink Free", sans-serif;
-    font-size: 36px; }
+    font-size: 30px;
+    margin-bottom: 21px; }
   #time-attack-how-to-play img {
-    border-radius: 15px; }
+    border-radius: 15px;
+    margin-right: 34px; }
   #time-attack-how-to-play p {
-    width: calc(100% - 10px); }
+    width: calc(100% - 10px);
+    margin-bottom: 10px; }
   #time-attack-how-to-play #ta-howto-p1 {
-    grid-area: p1; }
+    grid-area: p1;
+    padding-right: 10px; }
   #time-attack-how-to-play #ta-howto-p2 {
+    margin-top: -24px;
     grid-area: p2; }
   #time-attack-how-to-play #ta-howto-img1 {
+    height: 300px;
     display: flex;
     justify-content: center;
-    align-items: center;
     grid-area: img1; }
   #time-attack-how-to-play .btn-container {
     position: absolute;
-    top: calc(100% - 55px);
+    top: calc(100% - 65px);
     left: 50%;
     transform: translateX(-50%); }
