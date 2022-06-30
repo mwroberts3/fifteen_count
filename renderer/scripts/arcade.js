@@ -871,6 +871,9 @@ function selectCard() {
         
         card.classList.toggle("checked");
 
+        // avoid that specific bug when one compound card has already been submitted and another compound card is checked then unchecked(but not submitted)
+        valueOptionOne.textContent = '-'
+
         // check for value b's to update display
         if (card.querySelector("card-t").getAttribute("valueb") > 0) {
           multiCardValueB--;

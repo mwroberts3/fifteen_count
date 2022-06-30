@@ -78,6 +78,10 @@ img {
 ::-webkit-scrollbar-thumb:hover {
   background: #555; }
 
+.gameplay2-font {
+  font-family: "Short Stack", cursive;
+  color: #111; }
+
 .show-overflow {
   overflow: visible; }
 
@@ -365,6 +369,11 @@ hr {
   width: 900px;
   margin: auto; }
 
+.mini-header {
+  font-family: "Short Stack", cursive;
+  font-size: 18px;
+  color: #111; }
+
 .high-score-container {
   border-radius: 10px; }
   .high-score-container h3 {
@@ -449,7 +458,10 @@ hr {
     background-color: #eee;
     border-radius: 10px; }
     .in-game-achievements .achievement-group h4 {
-      text-align: center; }
+      text-align: center;
+      font-family: "Short Stack", cursive;
+      font-size: 18px;
+      color: #222; }
     .in-game-achievements .achievement-group li {
       list-style: none;
       color: #333;
@@ -501,6 +513,23 @@ hr {
         width: 170px; }
         .options-container section p span:hover {
           color: #cc9200; }
+
+.controls-select div:first-of-type {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px; }
+  .controls-select div:first-of-type h3 {
+    margin-bottom: 0px; }
+
+.small-for-settings {
+  line-height: 0.75;
+  padding-top: 0;
+  margin-top: 0;
+  margin-left: 5px;
+  font-style: italic;
+  color: #777; }
 
 .display-container {
   display: flex;
@@ -590,6 +619,10 @@ hr {
   height: 59px; }
   #personal-highscore-display span {
     font-weight: normal; }
+
+#about-game p {
+  width: 500px;
+  text-align: center; }
 
 .all-contents-container {
   position: relative;
@@ -1123,7 +1156,8 @@ input[type="submit"] {
   width: 1000px;
   height: 650px;
   background: linear-gradient(331deg, #dddddd 48%, white 83%);
-  border-radius: 10px; }
+  border-radius: 10px;
+  border: 2px solid #eee; }
   #arcade-how-to-play h2 {
     grid-area: head;
     text-align: center;
@@ -1386,6 +1420,7 @@ input[type="submit"] {
   padding: 10px;
   background: linear-gradient(331deg, #dddddd 48%, white 83%);
   border-radius: 10px;
+  border: 2px solid #eee;
   z-index: 3; }
   #time-attack-how-to-play .time-attack-howtoplay-slide-one {
     display: grid;

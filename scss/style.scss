@@ -80,6 +80,11 @@ img {
 }
 
 // UTILITIES
+.gameplay2-font {
+  font-family: $gameplay-font-2;
+  color: #111;
+}
+
 .show-overflow {
   overflow: visible;
 }
@@ -448,6 +453,12 @@ hr {
 }
 
 // HIGHSCORES
+.mini-header {
+  font-family: $gameplay-font-2;
+  font-size: 18px;
+  color: #111;
+}
+
 .high-score-container {
   border-radius: 10px;
 
@@ -570,6 +581,9 @@ hr {
     
     h4 {
       text-align: center;
+      font-family: $gameplay-font-2;
+      font-size: 18px;
+      color: #222;
     }
 
     img {
@@ -653,6 +667,29 @@ hr {
       }
     }
   }
+}
+
+.controls-select {
+  div:first-of-type {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h3 {
+      margin-bottom: 0px;
+    }
+  }
+}
+
+.small-for-settings {
+  line-height: 0.75;
+  padding-top: 0;
+  margin-top: 0;
+  margin-left: 5px;
+  font-style: italic;
+  color: #777
 }
 
 // custom checkbox and radio
@@ -765,6 +802,13 @@ hr {
 
   span {
     font-weight: normal;
+  }
+}
+
+#about-game {
+  p {
+    width: 500px;
+    text-align: center;
   }
 }
 
@@ -1457,6 +1501,7 @@ input[type="submit"] {
   height: 650px;
   background: linear-gradient(331deg, rgba(221,221,221,1) 48%, rgba(255,255,255,1) 83%); 
   border-radius: 10px;
+  border: $menu-border;
 
   h2 {
     grid-area: head;
@@ -1809,6 +1854,7 @@ input[type="submit"] {
   padding: 10px;
   background: linear-gradient(331deg, rgba(221,221,221,1) 48%, rgba(255,255,255,1) 83%); 
   border-radius: 10px;
+  border: $menu-border;
   z-index: 3;
 
   .time-attack-howtoplay-slide-one {

@@ -118,14 +118,14 @@ function displayPersonalTimeAttackScore() {
 
   if (localStorage.getItem('highscore') && personalHighscores[0].timeAttack > 0) {
     personalHighscoreContainerTimeAttack.children[1].textContent = `${personalHighscores[0]['timeAttack']}`;
-    personalHighscoreContainerTimeAttack.children[2].innerHTML = `<strong>Passes:</strong>&nbsp;<span style="padding-top: 1px;">${personalHighscores[0]['taFullPassCount']}</span>`;
-    personalHighscoreContainerTimeAttack.children[3].innerHTML = `<strong>Date:</strong>&nbsp;<span style="padding-top: 1px;">${personalHighscores[0]['taDate']}</span>`;
+    personalHighscoreContainerTimeAttack.children[2].innerHTML = `<strong>Passes:</strong>&nbsp;<span style="padding-top: 2px;">${personalHighscores[0]['taFullPassCount']}</span>`;
+    personalHighscoreContainerTimeAttack.children[3].innerHTML = `<span style="padding-top: 2px;">${personalHighscores[0]['taDate']}</span>`;
     scoreDisplay.innerHTML = ``;
   } else {
-    personalHighscoreContainerTimeAttack.children[1].textContent = `0`;
-    personalHighscoreContainerTimeAttack.children[2].innerHTML = `<strong>Passes:</strong>&nbsp;<span style="padding-top: 1px;">0</span>`;
-    personalHighscoreContainerTimeAttack.children[3].innerHTML = `<strong>Date:</strong>&nbsp;na`;
-    scoreDisplay.innerHTML = ``;
+    // personalHighscoreContainerTimeAttack.children[1].textContent = `0`;
+    // personalHighscoreContainerTimeAttack.children[2].innerHTML = `<strong>Passes:</strong>&nbsp;<span style="padding-top: 2px;">0</span>`;
+    // personalHighscoreContainerTimeAttack.children[3].innerHTML = ``;
+    // scoreDisplay.innerHTML = ``;
   }
 }
 
@@ -138,16 +138,20 @@ function displayPersonalArcadeScore() {
   // Check for existing personal highscore
   if (localStorage.getItem('highscore')) {
     personalHighscoreContainer.childNodes[3].textContent = `${personalHighscores[0]['totalPoints']}`;
-    personalHighscoreContainer.childNodes[5].innerHTML = `<strong>Cards:</strong>&nbsp;<span style="padding-top: 1px;">${personalHighscores[0]['totalCardsPlayed']}</span>`;
-    personalHighscoreContainer.childNodes[7].innerHTML = `<strong>Time:</strong>&nbsp;<span style="padding-top: 1px;">${personalHighscores[0]['totalSeconds']}</span>`;
-    personalHighscoreContainer.childNodes[9].innerHTML = `<strong>Loops:</strong>&nbsp;<span style="padding-top: 1px;">${personalHighscores[0]['indigoLoops']}</span>`;
-    personalHighscoreContainer.childNodes[11].innerHTML = `<strong>Date:</strong>&nbsp;<span style="padding-top: 1px;">${personalHighscores[0]['date']}</span>`;
+    personalHighscoreContainer.childNodes[5].innerHTML = `<strong>Cards:</strong>&nbsp;<span style="padding-top: 2px;">${personalHighscores[0]['totalCardsPlayed']}</span>`;
+    personalHighscoreContainer.childNodes[7].innerHTML = `<strong>Time:</strong>&nbsp;<span style="padding-top: 2px;">${personalHighscores[0]['totalSeconds']}</span>`;
+    personalHighscoreContainer.childNodes[9].innerHTML = `<strong>Loops:</strong>&nbsp;<span style="padding-top: 2px;">${personalHighscores[0]['indigoLoops']}</span>`;
+
+    // don't display date as 'null' if no score stored
+    if (personalHighscores[0]['date'] != null) {
+      personalHighscoreContainer.childNodes[11].innerHTML = `<span style="padding-top: 2px;">${personalHighscores[0]['date']}</span>`;
+    }
   } else {
-    personalHighscoreContainer.childNodes[3].textContent = `0`;
-    personalHighscoreContainer.childNodes[5].innerHTML = `<strong>Cards Played:</strong>&nbsp;0`;
-    personalHighscoreContainer.childNodes[7].innerHTML = `<strong>Time:</strong>&nbsp;0`;
-    personalHighscoreContainer.childNodes[8].innerHTML = `<strong>Loops:</strong>&nbsp;0`;
-    personalHighscoreContainer.childNodes[9].innerHTML = `<strong>Date:</strong>&nbsp;na`;
+    // personalHighscoreContainer.childNodes[3].textContent = `0`;
+    // personalHighscoreContainer.childNodes[5].innerHTML = `<strong>Cards:</strong>&nbsp;<span style="padding-top: 2px;">0</span>`;
+    // personalHighscoreContainer.childNodes[7].innerHTML = `<strong>Time:</strong>&nbsp;<span style="padding-top: 2px;">0</span>`;
+    // personalHighscoreContainer.childNodes[8].innerHTML = `<strong>Loops:</strong>&nbsp;<span style="padding-top: 2px;">0</span>`;
+    // personalHighscoreContainer.childNodes[9].innerHTML = ``;
   }
 }
 
@@ -161,10 +165,10 @@ function displayGlobalArcadeScores() {
   <tr>
     <th style="width: 50px;"></th>
     <th style="width: 250px; text-align: left"></th>
-    <th style="width: 155px">Points</th>
-    <th style="width: 115px">Cards</th>
-    <th style="width: 115px">Time</th>
-    <th style="width: 115px">Loops</th>
+    <th class="mini-header" style="width: 155px">Points</th>
+    <th class="mini-header" style="width: 115px">Cards</th>
+    <th class="mini-header" style="width: 115px">Time</th>
+    <th class="mini-header" style="width: 115px">Loops</th>
     <th style="width: 200px; text-align: left"></th>
   </tr>
   `;
@@ -192,8 +196,8 @@ function displayGlobalTimeAttackScores() {
   <tr>
     <th style="width: 50px"></th>
     <th style="width: 250px; text-align: left"></th>
-    <th style="width: 155px">Points</th>
-    <th style="width: 155px">Passes</th>
+    <th class="mini-header" style="width: 155px">Points</th>
+    <th class="mini-header" style="width: 155px">Passes</th>
     <th style="width: 200px; text-align: left"></th>
   </tr>
   `;

@@ -32,7 +32,10 @@
         <section id="controls">
           <div class="controls-select">
             <!-- <h2>Controls</h2> -->
-            <p>Click to change key:</p>
+            <div>
+              <h3>Current Controls</h3>
+              <small class="small-for-settings">click to change</small>
+            </div>
             <div class="button-options-container">
               <p><span class="game-btn actionBtn"></span>submit / high value</p>
               <p><span class="game-btn lowValBtn"></span>low value</p>
@@ -57,7 +60,7 @@
           </label>
         </section>
         <section id="display" class="hidden">
-          <!-- <h2>Display</h2> -->
+          <h3>Display Options</h3>
           <div class="display-container">
             <div class="display-options-inner-container">
               <label class="checkbox-container">
@@ -79,8 +82,12 @@
                 <span class="checkmark"></span>
               </label>
             </div>
-            <p>Recommended Resolution (1366 x 768)</p>
-            <p>Minimum Resolution (1280 x 720)</p>
+            <small class="small-for-settings" style="margin-bottom: 10px"
+              >Recommended Resolution (1366 x 768)</small
+            >
+            <small class="small-for-settings"
+              >Minimum Resolution (1280 x 720)</small
+            >
           </div>
         </section>
         <section id="theme" class="hidden">
@@ -138,9 +145,17 @@
         </section>
         <section id="about-game" class="hidden">
           <p>Version 1.0.0 - July 1, 2022</p>
-          <p>Developed by Mike Roberts</p>
-          <p>Music by Marauders</p>
-          <p>Sky Drips Green</p>
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            <small>Developed by Mike Roberts</small>
+            <small style="margin-bottom: 5px">Music by Marauders</small>
+          </div>
         </section>
       </div>
       <div class="back-btn-container">
