@@ -632,7 +632,7 @@ function newHighscoreCheckAndUpdate() {
     if (pointsOnDisplay > highscoreToBeat && !highscoreDefeated) {
         highscoreDefeated = true;
 
-        if (userSelectedSoundSettings.SFX) {
+        if (userSelectedSoundSettings.SFX && highscoreToBeat > 0) {
             newHighscoreSFX.play();
         }
 

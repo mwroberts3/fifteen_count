@@ -68,7 +68,7 @@ function createWindowedwindow() {
   })
   
   // Removes app menu (no need for it)
-  windowedWindow.removeMenu();
+  // windowedWindow.removeMenu();
 
   // loads windowed window & closes previous
   windowedWindow.loadFile('renderer/options.html')
@@ -99,7 +99,7 @@ function createWindow() {
   })
 
   // Removes app menu (no need for it)
-  mainWindow.removeMenu();
+  // mainWindow.removeMenu();
 
   // Load index.html into the new BrowserWindow
   mainWindow.loadFile('renderer/intro-screen.html')

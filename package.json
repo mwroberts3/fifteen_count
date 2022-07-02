@@ -1,5 +1,5 @@
 {
-  "name": "indigoloop",
+  "name": "indigoloops",
   "version": "1.0.0",
   "description": "Game of quick-counting, strategy and luck",
   "main": "main.js",
@@ -13,7 +13,7 @@
   "repository": "",
   "homepage": "",
   "keywords": [
-    "Indigo Loop",
+    "Indigo Loops",
     "Casual",
     "Puzzle"
   ],
@@ -36,8 +36,8 @@
     "passport-steam": "^1.0.17"
   },
   "build": {
-    "appId": "com.indigoloop.www",
-    "copyright": "Copyright Indigo Loop",
+    "appId": "com.indigoloops.www",
+    "copyright": "Copyright Indigo Loops",
     "win": {
       "target": "zip"
     },

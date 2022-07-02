@@ -198,14 +198,14 @@ if (localStorage.getItem('highscore')) {
     tempArrayHousing[1].classList.remove('locked');
     tempArrayHousing[1].classList.add('unlocked');
   } else {
-    tempArrayHousing[1].textContent = 'Jungle (5000pts)';
+    tempArrayHousing[1].innerHTML = 'Jungle<small class="small-for-settings">(5000pts)</small>';
   }
   // Cosmos theme check
   if (tempHighscoreCheck >= 15000) {
     tempArrayHousing[2].classList.remove('locked');
     tempArrayHousing[2].classList.add('unlocked'); 
   } else {
-    tempArrayHousing[2].textContent = 'Cosmos (15000pts)';
+    tempArrayHousing[2].innerHTML = 'Cosmos<small class="small-for-settings">(15000pts)</small>';
   }
 
 // Select new active theme
@@ -346,4 +346,41 @@ function resetLocalScores() {
   localStorage.setItem('highscore', JSON.stringify(tempScores));
 
   localStorage.setItem('achievements', JSON.stringify([]));
+
+  // reset theme to Classic
+  localStorage.setItem('theme-selection', JSON.stringify(arcadeThemes[0]));
+    
+  console.log(document.querySelector('.theme-selection-menu').children[0]);
+  document.querySelector('.theme-selection-menu').children[0].classList.add('selected-theme');
+
+  document.querySelector('.theme-selection-menu').children[1].classList.remove('selected-theme');
+  document.querySelector('.theme-selection-menu').children[1].classList.remove('unlocked');
+  document.querySelector('.theme-selection-menu').children[1].classList.add('locked');
+
+  document.querySelector('.theme-selection-menu').children[2].classList.remove('selected-theme');
+  document.querySelector('.theme-selection-menu').children[2].classList.remove('unlocked');
+  document.querySelector('.theme-selection-menu').children[2].classList.add('locked');
+
+  // needs to be refactored
+  if (localStorage.getItem('highscore')) {
+    tempHighscoreCheck = JSON.parse(localStorage.getItem('highscore'))[0]['totalPoints'];
+    console.log(tempHighscoreCheck);
+  } else {
+    tempHighscoreCheck = 0;
+  }
+    let tempArrayHousing = Array.from(document.querySelector('.theme-selection-menu').children);
+    // Jungle theme check
+    if (tempHighscoreCheck >= 5000) {
+      tempArrayHousing[1].classList.remove('locked');
+      tempArrayHousing[1].classList.add('unlocked');
+    } else {
+      tempArrayHousing[1].innerHTML = 'Jungle<small class="small-for-settings">(5000pts)</small>';
+    }
+    // Cosmos theme check
+    if (tempHighscoreCheck >= 15000) {
+      tempArrayHousing[2].classList.remove('locked');
+      tempArrayHousing[2].classList.add('unlocked'); 
+    } else {
+      tempArrayHousing[2].innerHTML = 'Cosmos<small class="small-for-settings">(15000pts)</small>';
+    }
 }
